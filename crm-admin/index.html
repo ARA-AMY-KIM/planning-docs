@@ -24,9 +24,10 @@
 
   /* ===== Header ===== */
   header{margin-bottom:36px;}
-  .eyebrow{font-size:13px; letter-spacing:.12em; color:var(--primary); font-weight:700; text-transform:uppercase; margin-bottom:9px;}
-  header h1{font-size:34px; font-weight:800; letter-spacing:-.02em; line-height:1.3; margin-bottom:12px;}
-  header .desc{font-size:16px; color:var(--g500); margin-bottom:20px;}
+  .eyebrow{font-size:18px; letter-spacing:.06em; color:var(--primary); font-weight:700; text-transform:uppercase; margin-bottom:11px;}
+  header h1{font-size:38px; font-weight:800; letter-spacing:-.02em; line-height:1.2; margin-bottom:14px;}
+  header .owner{font-size:14px; color:var(--g600); margin:0;}
+  header .owner strong{color:var(--g900); font-weight:600;}
   .meta{display:flex; gap:24px; flex-wrap:wrap; font-size:14px; color:var(--g600); border-top:1px solid var(--g100); padding-top:16px;}
   .meta strong{color:var(--g900); font-weight:600; margin-right:6px;}
 
@@ -64,7 +65,8 @@
   /* ===== Mobile ===== */
   @media(max-width:600px){
     body{padding:32px 14px; font-size:15px;}
-    header h1{font-size:27px;}
+    header h1{font-size:29px;}
+    header h1 .sub{font-size:15px;}
     .policy{grid-template-columns:1fr;}
     .menu-row{flex-direction:column; align-items:flex-start;}
     .menu-links{width:100%;}
@@ -76,10 +78,10 @@
 <div class="wrap">
 
   <header>
-    <div class="eyebrow">Planning Docs</div>
-    <h1>CRM Admin ─ 화면 목업 · 기능정의서 통합 인덱스</h1>
+    <div class="eyebrow">CRM Admin</div>
+    <h1>메뉴별 목업 · 기능정의서 모음</h1>
     <!-- 담당자 이름은 여기서 수정 -->
-    <p class="desc">기획 담당 : 김아라</p>
+    <p class="owner"><strong>기획 담당</strong> : 김아라</p>
   </header>
 
   <!-- ============================================================
