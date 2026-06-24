@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920">
+<title>권한 없음 · CRM Admin</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/[email protected]/dist/web/static/pretendard.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'] },
+      colors: {
+        blue: { 50:'#ECF2FF',100:'#D9E6FF',200:'#A3C0F7',300:'#719DF0',400:'#427CEB',500:'#145CE6',600:'#0D49BD',700:'#073894',800:'#03276B',900:'#001742' },
+        lightblue: { 50:'#E4F7FF',100:'#C9EEFF',200:'#9BDCFA',300:'#6DC8F2',400:'#40B6ED',500:'#14A3E6',600:'#0B85BD',700:'#066794',800:'#024A6B',900:'#002D42' },
+        green: { 50:'#E0FCE0',500:'#10A10E',600:'#0A8208' },
+        orange: { 50:'#FDEBE3',500:'#D75011' },
+        red: { 50:'#FEE6E6',500:'#C31518',700:'#7A0709' },
+        purple: { 50:'#F2ECFF',500:'#5714E6',600:'#450DBD' },
+        gray: { 25:'#F5F6F7',50:'#EFEFF1',100:'#DEE0E3',200:'#C3C5C9',300:'#A9ABB0',400:'#8D8F94',500:'#73767A',600:'#5A5C61',700:'#424447',800:'#2A2C2E',900:'#131314' },
+      },
+      borderRadius: { r1:'4px', r2:'6px', r3:'8px', r4:'10px', r5:'12px' }
+    }
+  }
+}
+</script>
+<style>
+  html, body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; -webkit-font-smoothing: antialiased; background: #fff; color: #131314; }
+  .btn-outlined { background: #fff; border: 1px solid #C3C5C9; border-radius: 8px; padding: 6px 12px; font-size: 14px; line-height: 20px; letter-spacing: -0.3px; font-weight: 600; color: #131314; cursor: pointer; display: inline-flex; align-items: center; }
+  .btn-outlined:hover { background: #F5F6F7; }
+  .btn-solid { background: #145CE6; border-radius: 8px; padding: 8px 16px; font-size: 14px; line-height: 20px; letter-spacing: -0.3px; font-weight: 600; color: #fff; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: none; }
+  .btn-solid:hover { background: #073894; }
+  .mini-gnb { background: #fff; border-bottom: 1px solid #DEE0E3; padding: 10px 40px; display: flex; align-items: center; gap: 16px; }
+  .mini-gnb-logo { background: #145CE6; color: #fff; font-size: 9px; font-weight: 700; border-radius: 4px; padding: 2px 4px; line-height: 1; }
+  .mini-gnb-title { font-weight: 700; font-size: 12px; color: #424447; }
+  .mini-gnb-nav { display: flex; gap: 12px; flex: 1; }
+  .mini-gnb-nav span { font-size: 11px; font-weight: 600; color: #A9ABB0; padding: 4px 8px; }
+  .mini-gnb-icon { width: 22px; height: 22px; border-radius: 4px; background: #F5F6F7; display: flex; align-items: center; justify-content: center; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: #DEE0E3; border-radius: 6px; }
+</style>
+</head>
+<body class="min-w-[1440px]">
+
+<!-- ============================================================ -->
+<!-- 실제 화면 — GNB + 권한 없음 (전 케이스 동일)                    -->
+<!-- ============================================================ -->
+<header class="bg-white border-b border-gray-100">
+  <div class="max-w-[1920px] mx-auto px-[264px] py-[12px]">
+    <div class="flex gap-[20px] items-center">
+      <div class="flex gap-[4px] items-center w-[215px] shrink-0">
+        <div class="w-[57px] h-[32px] flex items-center justify-center">
+          <div class="bg-blue-500 text-white text-[11px] font-bold rounded-r1 px-[6px] py-[3px] leading-none tracking-tight">OXC</div>
+        </div>
+        <p class="font-bold text-[16px] leading-[24px] tracking-[-0.3px] text-gray-700 pb-[2px]">CRM Admin</p>
+      </div>
+      <nav class="flex gap-[20px] items-center flex-1">
+        <a href="#" class="bg-white px-[12px] py-[6px] rounded-r3 font-semibold text-[14px] leading-[20px] tracking-[-0.3px] text-gray-900 hover:bg-gray-25">업체 관리</a>
+        <a href="#" class="bg-white px-[12px] py-[6px] rounded-r3 font-semibold text-[14px] leading-[20px] tracking-[-0.3px] text-gray-900 hover:bg-gray-25">운영 관리</a>
+        <a href="#" class="bg-white px-[12px] py-[6px] rounded-r3 font-semibold text-[14px] leading-[20px] tracking-[-0.3px] text-gray-900 hover:bg-gray-25">시스템 관리</a>
+        <a href="#" class="bg-white px-[12px] py-[6px] rounded-r3 font-semibold text-[14px] leading-[20px] tracking-[-0.3px] text-gray-900 hover:bg-gray-25">어드민 운영</a>
+      </nav>
+      <div class="flex gap-[8px] items-center">
+        <button class="w-[32px] h-[32px] p-[4px] rounded-r2 hover:bg-gray-25 flex items-center justify-center">
+          <svg class="w-[24px] h-[24px] text-gray-900" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+        </button>
+        <button class="w-[32px] h-[32px] p-[4px] rounded-r2 hover:bg-gray-25 flex items-center justify-center">
+          <svg class="w-[24px] h-[24px] text-gray-900" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="bg-white" style="min-height:calc(100vh - 57px);">
+  <div class="max-w-[1920px] mx-auto px-[264px] flex flex-col items-center justify-center" style="min-height:calc(100vh - 57px);">
+    <div class="w-[80px] h-[80px] rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center mb-[28px]">
+      <svg class="w-[40px] h-[40px] text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+      </svg>
+    </div>
+    <h2 class="font-bold text-[24px] leading-[32px] tracking-[-0.5px] text-gray-900 mb-[12px]">접근 권한이 없습니다</h2>
+    <p class="text-[15px] leading-[24px] tracking-[-0.3px] text-gray-500 text-center mb-[32px]">
+      해당 페이지에 접근할 수 있는 권한이 없습니다.<br>권한이 필요하다면 관리자에게 문의해주세요.
+    </p>
+    <div class="flex gap-[12px]">
+      <button class="btn-outlined">이전 페이지로</button>
+      <button class="btn-solid">홈으로 이동</button>
+    </div>
+  </div>
+</main>
+
+<!-- ============================================================ -->
+<!-- 목업 문서 영역                                                 -->
+<!-- ============================================================ -->
+<section class="bg-gray-25 pt-[48px] pb-[80px]" style="border-top:2px dashed #DEE0E3;">
+  <div class="max-w-[1920px] mx-auto px-[264px]">
+
+    <div class="mb-[40px]">
+      <p class="text-[11px] uppercase tracking-[0.12em] text-gray-300 font-semibold mb-[6px]">Mockup · v5</p>
+      <h1 class="font-bold text-[20px] leading-[28px] tracking-[-0.4px] text-gray-900">[CRM Admin] 권한 없음 페이지</h1>
+      <p class="text-[13px] leading-[20px] tracking-[-0.3px] text-gray-500 mt-[4px]">공통 자산 · GNB 유지 / 브레드크럼 미노출 / 메인 영역 수직 중앙 정렬 · 단일 화면 (C-1 · C-2 · C-3 통합)</p>
+    </div>
+
+    <!-- 단일 케이스 시안 -->
+    <div class="mb-[8px] flex items-center gap-[10px]">
+      <span class="inline-flex items-center justify-center w-[24px] h-[24px] text-[12px] font-bold rounded-full bg-blue-500 text-white">A</span>
+      <span class="font-semibold text-[14px] leading-[20px] tracking-[-0.3px] text-gray-900">단일 화면 — C-1 · C-2 · C-3 통합</span>
+      <span class="inline-flex items-center h-[20px] px-[8px] rounded-r1 text-[11px] font-bold bg-blue-100 text-blue-700">노출 OFF+접근 OFF</span>
+      <span class="inline-flex items-center h-[20px] px-[8px] rounded-r1 text-[11px] font-bold bg-blue-100 text-blue-700">노출 ON+접근 OFF</span>
+      <span class="inline-flex items-center h-[20px] px-[8px] rounded-r1 text-[11px] font-bold bg-blue-100 text-blue-700">세션 중 권한 변경</span>
+    </div>
+
+    <div class="bg-white rounded-r5 border border-gray-100 overflow-hidden mb-[8px]" style="box-shadow:0 2px 12px rgba(0,0,0,0.06);">
+      <div class="mini-gnb">
+        <div class="flex gap-[4px] items-center"><span class="mini-gnb-logo">OXC</span><span class="mini-gnb-title">CRM Admin</span></div>
+        <div class="mini-gnb-nav"><span>업체 관리</span><span>운영 관리</span><span>시스템 관리</span><span>어드민 운영</span></div>
+        <div class="flex gap-[4px]">
+          <div class="mini-gnb-icon"><svg class="w-[14px] h-[14px] text-gray-300" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg></div>
+          <div class="mini-gnb-icon"><svg class="w-[14px] h-[14px] text-gray-300" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke-linecap="round"/></svg></div>
+        </div>
+      </div>
+      <div class="flex flex-col items-center justify-center py-[80px] px-[40px]">
+        <div class="w-[80px] h-[80px] rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center mb-[28px]">
+          <svg class="w-[40px] h-[40px] text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/>
+          </svg>
+        </div>
+        <h2 class="font-bold text-[24px] leading-[32px] tracking-[-0.5px] text-gray-900 mb-[12px]">접근 권한이 없습니다</h2>
+        <p class="text-[15px] leading-[24px] tracking-[-0.3px] text-gray-500 text-center mb-[32px]">
+          해당 페이지에 접근할 수 있는 권한이 없습니다.<br>권한이 필요하다면 관리자에게 문의해주세요.
+        </p>
+        <div class="flex gap-[12px]">
+          <button class="btn-outlined">이전 페이지로</button>
+          <button class="btn-solid">홈으로 이동</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 스펙 주석 -->
+    <div class="mb-[64px] space-y-[6px]">
+      <p class="text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ [이전 페이지로] : <code class="text-[11px] bg-gray-50 px-[4px] py-[1px] rounded text-gray-500">history.go(-2)</code> — 권한 없음 페이지 진입 전 사용자가 정상적으로 사용하던 페이지로 이동. 히스토리가 부족하거나 이동 불가 시 홈(<code class="text-[11px] bg-gray-50 px-[4px] py-[1px] rounded text-gray-500">/</code>)으로 이동 (fallback)</p>
+      <p class="text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ [홈으로 이동] : 홈(<code class="text-[11px] bg-gray-50 px-[4px] py-[1px] rounded text-gray-500">/</code>)으로 이동</p>
+      <p class="text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ C-1 · C-2 · C-3 모두 동일 화면·동일 문구로 처리. 프론트에서 케이스 분기 없음</p>
+      <p class="text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 비활성 역할 사용자(C-4)는 세션 호출 시 로그인 페이지로 자동 리다이렉트 — 본 페이지 도달 불가</p>
+    </div>
+
+    <!-- 노출 조건 요약표 -->
+    <div class="pt-[48px] border-t border-dashed border-gray-200">
+      <p class="text-[11px] uppercase tracking-[0.12em] text-gray-300 font-semibold mb-[16px]">노출 조건 요약</p>
+      <table class="w-full border-collapse" style="border-spacing:0;">
+        <thead>
+          <tr>
+            <th class="text-left text-[12px] leading-[16px] tracking-[-0.2px] font-normal text-gray-500 h-[32px] px-[16px] bg-white border-b border-t border-gray-100" style="border-left:1px solid #DEE0E3;border-top-left-radius:12px;width:80px;">케이스</th>
+            <th class="text-left text-[12px] leading-[16px] tracking-[-0.2px] font-normal text-gray-500 h-[32px] px-[16px] bg-white border-b border-t border-gray-100" style="width:300px;">발생 조건</th>
+            <th class="text-left text-[12px] leading-[16px] tracking-[-0.2px] font-normal text-gray-500 h-[32px] px-[16px] bg-white border-b border-t border-gray-100">화면 처리</th>
+            <th class="text-left text-[12px] leading-[16px] tracking-[-0.2px] font-normal text-gray-500 h-[32px] px-[16px] bg-white border-b border-t border-gray-100" style="border-right:1px solid #DEE0E3;border-top-right-radius:12px;width:180px;">액션 버튼</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-900 border-b border-gray-100 align-top font-semibold" style="border-left:1px solid #DEE0E3;">C-1</td>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-700 border-b border-gray-100 align-top">노출 OFF + 접근 OFF</td>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-700 border-b border-gray-100 align-top" rowspan="3" style="background:#F5F6F7;">단일 화면 · 단일 문구<br><span class="text-[12px] text-gray-400">프론트 케이스 분기 없음</span></td>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-700 border-b border-gray-100 align-top" rowspan="3" style="border-right:1px solid #DEE0E3;background:#F5F6F7;">[이전 페이지로]<br>[홈으로 이동]</td>
+          </tr>
+          <tr>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-900 border-b border-gray-100 align-top font-semibold" style="border-left:1px solid #DEE0E3;">C-2</td>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-700 border-b border-gray-100 align-top">노출 ON + 접근 OFF</td>
+          </tr>
+          <tr>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-900 border-b border-gray-100 align-top font-semibold" style="border-left:1px solid #DEE0E3;">C-3</td>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-700 border-b border-gray-100 align-top">세션 중 권한 변경 후 재진입</td>
+          </tr>
+          <tr>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-400 align-top font-semibold" style="border-left:1px solid #DEE0E3;border-bottom-left-radius:12px;">C-4</td>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-400 align-top">비활성 역할 사용자 진입</td>
+            <td class="px-[16px] py-[14px] text-[13px] leading-[20px] tracking-[-0.3px] text-gray-400 align-top" colspan="2" style="border-right:1px solid #DEE0E3;border-bottom-right-radius:12px;">본 페이지 도달 불가 — 세션 호출 시 로그인 페이지로 자동 리다이렉트</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 기획 반영 메모 -->
+    <div class="mt-[32px] bg-gray-25 border border-gray-100 rounded-r3 px-[24px] py-[20px]">
+      <p class="text-[11px] uppercase tracking-[0.12em] text-gray-300 font-semibold mb-[12px]">기획 반영 메모 · 미확정 항목</p>
+      <ul class="text-[13px] leading-[20px] tracking-[-0.3px] text-gray-700 space-y-[6px] list-disc pl-[20px]">
+        <li><span class="font-semibold">아이콘/일러스트 디자인</span> — 자물쇠 SVG 아이콘 + gray 단일 톤 임시 적용. 실제 일러스트 자산 확정 시 교체 필요.</li>
+        <li><span class="font-semibold">C-3 감지 방식</span> — API 401/403 기준인지, 별도 권한 재조회 로직 기준인지에 따라 실제 구현 범위 달라짐. 개발팀 선확인 필요.</li>
+        <li><span class="font-semibold">권한 없음 페이지 URL</span> — <code class="text-[12px] bg-white border border-gray-100 px-[4px] py-[1px] rounded">/access-denied</code> 예시 표기. 실제 라우팅 경로는 개발팀 협의 필요.</li>
+        <li><span class="font-semibold">원본 URL 보존 여부</span> — 진입 시 원본 URL을 query param 등으로 보존할지 여부는 기획 결정 필요.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+</body>
+</html>
