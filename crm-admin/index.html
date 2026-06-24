@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM Admin · 기획 문서</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --primary:#145CE6; --primary-strong:#073894;
+    --g25:#F5F6F7; --g50:#EFEFF1; --g100:#DEE0E3; --g200:#C3C5C9;
+    --g400:#8D8F94; --g500:#73767A; --g600:#5A5C61; --g900:#131314;
+    --radius:6px;
+    --shadow:0 0 2px 0 rgba(0,0,0,.20);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+    background:var(--g25); color:var(--g900); line-height:1.6;
+    padding:48px 20px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px; margin:0 auto;}
+
+  /* ===== Header ===== */
+  header{margin-bottom:36px;}
+  .eyebrow{font-size:12px; letter-spacing:.12em; color:var(--primary); font-weight:700; text-transform:uppercase; margin-bottom:8px;}
+  header h1{font-size:28px; font-weight:800; letter-spacing:-.02em; margin-bottom:8px;}
+  header .desc{font-size:14px; color:var(--g500); margin-bottom:18px;}
+  .meta{display:flex; gap:24px; flex-wrap:wrap; font-size:13px; color:var(--g600); border-top:1px solid var(--g100); padding-top:16px;}
+  .meta strong{color:var(--g900); font-weight:600; margin-right:6px;}
+
+  /* ===== Section ===== */
+  section{margin-bottom:28px;}
+  .sec-title{font-size:13px; font-weight:700; color:var(--g500); letter-spacing:.04em; margin-bottom:12px; padding-left:2px;}
+
+  /* ===== Policy cards ===== */
+  .policy{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .policy a{
+    display:block; background:#fff; border:1px solid var(--g100); border-radius:var(--radius);
+    padding:18px 20px; text-decoration:none; box-shadow:var(--shadow); transition:border-color .15s;
+  }
+  .policy a:hover{border-color:var(--primary);}
+  .policy .label{font-size:11px; font-weight:700; color:var(--primary); letter-spacing:.08em; margin-bottom:6px;}
+  .policy .name{font-size:15px; font-weight:600; color:var(--g900);}
+  .policy .open{font-size:13px; color:var(--g400); margin-top:8px;}
+
+  /* ===== Menu list ===== */
+  .menu-list{background:#fff; border:1px solid var(--g100); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden;}
+  .menu-row{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 20px; border-bottom:1px solid var(--g50);}
+  .menu-row:last-child{border-bottom:none;}
+  .menu-name{font-size:15px; font-weight:600; color:var(--g900);}
+  .menu-slug{font-size:12px; color:var(--g400); margin-top:2px;}
+  .menu-links{display:flex; gap:8px; flex-shrink:0;}
+  .btn{font-size:13px; font-weight:600; text-decoration:none; padding:7px 14px; border-radius:var(--radius); white-space:nowrap; transition:.15s;}
+  .btn-mock{background:var(--primary); color:#fff;}
+  .btn-mock:hover{background:var(--primary-strong);}
+  .btn-doc{background:#fff; color:var(--primary); border:1px solid var(--g200);}
+  .btn-doc:hover{border-color:var(--primary);}
+
+  /* ===== Footer ===== */
+  footer{margin-top:36px; padding-top:18px; border-top:1px solid var(--g100); font-size:12px; color:var(--g400); text-align:center;}
+
+  /* ===== Mobile ===== */
+  @media(max-width:600px){
+    body{padding:28px 14px;}
+    header h1{font-size:23px;}
+    .policy{grid-template-columns:1fr;}
+    .menu-row{flex-direction:column; align-items:flex-start;}
+    .menu-links{width:100%;}
+    .btn{flex:1; text-align:center;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Planning Docs</div>
+    <h1>CRM Admin</h1>
+    <p class="desc">화면 목업 · 기능정의서 통합 인덱스</p>
+    <div class="meta">
+      <!-- 담당자 이름은 여기서 수정 -->
+      <span><strong>기획 담당</strong>김아라</span>
+    </div>
+  </header>
+
+  <!-- ============================================================
+     주요 정책 문서 (마스터 · 정책서)
+  ============================================================ -->
+  <section>
+    <div class="sec-title">주요 정책 문서</div>
+    <div class="policy">
+      <a href="https://ajnetworks.atlassian.net/wiki/x/HoBDVw" target="_blank" rel="noopener">
+        <div class="label">MASTER</div>
+        <div class="name">역할·메뉴 마스터 문서</div>
+        <div class="open">문서 열기 &rarr;</div>
+      </a>
+      <a href="https://ajnetworks.atlassian.net/wiki/x/FQBUUQ" target="_blank" rel="noopener">
+        <div class="label">POLICY</div>
+        <div class="name">역할·계정 정책서</div>
+        <div class="open">문서 열기 &rarr;</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       화면별 목업 & 기능정의서
+       * 새 메뉴 추가: 아래 <div class="menu-row"> ... </div> 블록 하나를
+         통째로 복사해서 [메뉴명 / slug / 목업경로 / 기능정의서 링크]만 바꾸면 됩니다.
+  ============================================================ -->
+  <section>
+    <div class="sec-title">화면별 목업 &amp; 기능정의서</div>
+    <div class="menu-list">
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">홈</div>
+          <div class="menu-slug">/crm-admin/home/</div>
+        </div>
+        <div class="menu-links">
+          <a class="btn btn-mock" href="/crm-admin/home/" target="_blank">화면 목업</a>
+          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/GwBkVQ" target="_blank" rel="noopener">기능정의서</a>
+        </div>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">메뉴 관리</div>
+          <div class="menu-slug">/crm-admin/menus/</div>
+        </div>
+        <div class="menu-links">
+          <a class="btn btn-mock" href="/crm-admin/menus/" target="_blank">화면 목업</a>
+          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/HgAjU" target="_blank" rel="noopener">기능정의서</a>
+        </div>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">역할 관리</div>
+          <div class="menu-slug">/crm-admin/roles/</div>
+        </div>
+        <div class="menu-links">
+          <a class="btn btn-mock" href="/crm-admin/roles/" target="_blank">화면 목업</a>
+          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/VIAgU" target="_blank" rel="noopener">기능정의서</a>
+        </div>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">역할별 권한 관리</div>
+          <div class="menu-slug">/crm-admin/role-permissions/</div>
+        </div>
+        <div class="menu-links">
+          <a class="btn btn-mock" href="/crm-admin/role-permissions/" target="_blank">화면 목업</a>
+          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/B4AJU" target="_blank" rel="noopener">기능정의서</a>
+        </div>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">계정별 역할 설정</div>
+          <div class="menu-slug">/crm-admin/account-roles/</div>
+        </div>
+        <div class="menu-links">
+          <a class="btn btn-mock" href="/crm-admin/account-roles/" target="_blank">화면 목업</a>
+          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/FAB5U" target="_blank" rel="noopener">기능정의서</a>
+        </div>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">권한 없음</div>
+          <div class="menu-slug">/crm-admin/access-denied/</div>
+        </div>
+        <div class="menu-links">
+          <a class="btn btn-mock" href="/crm-admin/access-denied/" target="_blank">화면 목업</a>
+          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/EYAcV" target="_blank" rel="noopener">기능정의서</a>
+        </div>
+      </div>
+
+      <!-- ▲ 새 메뉴는 이 줄 위에 menu-row 블록을 복사해 추가하세요 -->
+
+    </div>
+  </section>
+
+  <footer>
+    CRM Admin 기획 문서 인덱스 · 기획 김아라
+  </footer>
+
+</div>
+</body>
+</html>
