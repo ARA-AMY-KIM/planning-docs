@@ -171,19 +171,10 @@ tailwind.config = {
 
     <!-- ============================================ -->
     <!-- Search · Filter · Count · Action Row          -->
-    <!-- 좌측: 총 N건 + 검색 + 필터 / 우측: 메뉴 추가    -->
+    <!-- 좌측: 필터(1 Depth · 사용 여부) + 검색 / 우측: 메뉴 추가. 총 N건은 테이블 바로 위 별도 행 -->
     <!-- ============================================ -->
-    <div class="flex items-center justify-between gap-[12px] mb-[20px]">
-      <div class="flex items-center gap-[16px]">
-        <!-- 총 N건 (가장 좌측) -->
-        <div class="text-[14px] leading-[20px] tracking-[-0.3px]">
-          <span class="text-gray-500">총 </span><span class="font-bold text-gray-900">11</span><span class="text-gray-500">건</span>
-        </div>
-        <!-- Search -->
-        <div class="relative">
-          <svg class="w-[16px] h-[16px] text-gray-300 absolute left-[12px] top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-          <input type="text" placeholder="메뉴명 · 경로 · 메뉴 설명 (2자 이상)" class="input-field" style="width:320px; padding-left:36px;">
-        </div>
+    <div class="flex items-center justify-between gap-[12px] mb-[16px]">
+      <div class="flex items-center gap-[12px]">
         <!-- 1 Depth filter -->
         <select class="select-field" style="width:200px;">
           <option value="all" selected>1 Depth · 전체</option>
@@ -199,6 +190,11 @@ tailwind.config = {
           <option value="on">사용</option>
           <option value="off">미사용</option>
         </select>
+        <!-- Search -->
+        <div class="relative">
+          <svg class="w-[16px] h-[16px] text-gray-300 absolute left-[12px] top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+          <input type="text" placeholder="메뉴명 · 경로 · 메뉴 설명 (2자 이상)" class="input-field" style="width:320px; padding-left:36px;">
+        </div>
       </div>
       <div>
         <button class="btn-solid">
@@ -206,6 +202,11 @@ tailwind.config = {
           메뉴 추가
         </button>
       </div>
+    </div>
+
+    <!-- 총 N건 — 테이블 바로 위 별도 행 -->
+    <div class="mb-[12px] text-[14px] leading-[20px] tracking-[-0.3px]">
+      <span class="text-gray-500">총 </span><span class="font-bold text-gray-900">11</span><span class="text-gray-500">건</span>
     </div>
 
     <!-- ============================================ -->
@@ -390,15 +391,8 @@ tailwind.config = {
           </div>
         </div>
 
-        <div class="flex items-center justify-between gap-[12px] mb-[20px]">
-          <div class="flex items-center gap-[16px]">
-            <div class="text-[14px] leading-[20px] tracking-[-0.3px]">
-              <span class="text-gray-500">총 </span><span class="font-bold text-gray-900">5</span><span class="text-gray-500">건</span>
-            </div>
-            <div class="relative">
-              <svg class="w-[16px] h-[16px] text-gray-300 absolute left-[12px] top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-              <input type="text" placeholder="메뉴명 · 경로 · 메뉴 설명 (2자 이상)" class="input-field" style="width:320px; padding-left:36px;">
-            </div>
+        <div class="flex items-center justify-between gap-[12px] mb-[16px]">
+          <div class="flex items-center gap-[12px]">
             <select class="select-field" style="width:200px;">
               <option>1 Depth · 전체</option>
               <option selected>어드민 운영</option>
@@ -406,6 +400,10 @@ tailwind.config = {
             <select class="select-field" style="width:160px;">
               <option selected>사용 여부 · 전체</option>
             </select>
+            <div class="relative">
+              <svg class="w-[16px] h-[16px] text-gray-300 absolute left-[12px] top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+              <input type="text" placeholder="메뉴명 · 경로 · 메뉴 설명 (2자 이상)" class="input-field" style="width:320px; padding-left:36px;">
+            </div>
           </div>
           <div>
             <button class="btn-solid">
@@ -413,6 +411,10 @@ tailwind.config = {
               메뉴 추가
             </button>
           </div>
+        </div>
+
+        <div class="mb-[12px] text-[14px] leading-[20px] tracking-[-0.3px]">
+          <span class="text-gray-500">총 </span><span class="font-bold text-gray-900">5</span><span class="text-gray-500">건</span>
         </div>
 
         <table class="w-full border-collapse list-table" style="border-spacing:0;">
@@ -491,7 +493,7 @@ tailwind.config = {
             </tr>
           </tbody>
         </table>
-        <p class="mt-[12px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 핸들 드래그 종료 시 Auto Save → 토스트(green) "저장되었습니다." / 실패 시 원래 순서로 롤백 + 토스트(red) "순서 저장에 실패했습니다. 다시 시도해주세요."</p>
+        <div class="mt-[12px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">핸들 드래그 종료 시 Auto Save → 토스트(green) "저장되었습니다." / 실패 시 원래 순서로 롤백 + 토스트(red) "순서 저장에 실패했습니다. 다시 시도해주세요."</p></div>
       </div>
 
       <!-- ============================================ -->
@@ -504,17 +506,14 @@ tailwind.config = {
           <span class="text-[12px] leading-[16px] tracking-[-0.2px] text-gray-500">검색어 또는 필터 조건에 부합하는 메뉴 없음</span>
         </div>
 
-        <div class="flex items-center justify-between gap-[12px] mb-[20px]">
-          <div class="flex items-center gap-[16px]">
-            <div class="text-[14px] leading-[20px] tracking-[-0.3px]">
-              <span class="text-gray-500">총 </span><span class="font-bold text-gray-900">0</span><span class="text-gray-500">건</span>
-            </div>
+        <div class="flex items-center justify-between gap-[12px] mb-[16px]">
+          <div class="flex items-center gap-[12px]">
+            <select class="select-field" style="width:200px;"><option>1 Depth · 전체</option></select>
+            <select class="select-field" style="width:160px;"><option>사용 여부 · 전체</option></select>
             <div class="relative">
               <svg class="w-[16px] h-[16px] text-gray-300 absolute left-[12px] top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
               <input type="text" value="존재하지 않는 메뉴" class="input-field" style="width:320px; padding-left:36px;">
             </div>
-            <select class="select-field" style="width:200px;"><option>1 Depth · 전체</option></select>
-            <select class="select-field" style="width:160px;"><option>사용 여부 · 전체</option></select>
           </div>
           <div>
             <button class="btn-solid">
@@ -522,6 +521,10 @@ tailwind.config = {
               메뉴 추가
             </button>
           </div>
+        </div>
+
+        <div class="mb-[12px] text-[14px] leading-[20px] tracking-[-0.3px]">
+          <span class="text-gray-500">총 </span><span class="font-bold text-gray-900">0</span><span class="text-gray-500">건</span>
         </div>
 
         <table class="w-full border-collapse list-table" style="border-spacing:0;">
@@ -563,14 +566,15 @@ tailwind.config = {
           <a href="#" class="tab-item">2 Depth 메뉴 관리</a>
         </div>
 
-        <div class="flex items-center justify-between gap-[12px] mb-[20px]">
-          <div class="text-[14px] leading-[20px] tracking-[-0.3px]">
-            <span class="text-gray-500">총 </span><span class="font-bold text-gray-900">5</span><span class="text-gray-500">건</span>
-          </div>
+        <div class="flex items-center justify-end gap-[12px] mb-[16px]">
           <button class="btn-solid">
             <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/></svg>
             1 Depth 추가
           </button>
+        </div>
+
+        <div class="mb-[12px] text-[14px] leading-[20px] tracking-[-0.3px]">
+          <span class="text-gray-500">총 </span><span class="font-bold text-gray-900">5</span><span class="text-gray-500">건</span>
         </div>
 
         <table class="w-full border-collapse list-table" style="border-spacing:0;">
@@ -638,7 +642,7 @@ tailwind.config = {
             </tr>
           </tbody>
         </table>
-        <p class="mt-[12px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 미사용 1 Depth 행: 핸들 비활성 + 배경 gray-25 + 텍스트 gray-300. 사용 ON 전환 시 정상 행으로 복귀.</p>
+        <div class="mt-[12px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">미사용 1 Depth 행: 핸들 비활성 + 배경 gray-25 + 텍스트 gray-300. 사용 ON 전환 시 정상 행으로 복귀.</p></div>
       </div>
 
       <!-- ============================================ -->
@@ -732,7 +736,7 @@ tailwind.config = {
               <button class="btn-solid" disabled style="padding:8px 16px">저장</button>
             </div>
           </div>
-          <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ [저장] 활성 조건: 필수 항목 모두 입력. 미사용 1 Depth는 선택 불가(disabled).</p>
+          <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">[저장] 활성 조건: 필수 항목 모두 입력. 미사용 1 Depth는 선택 불가(disabled).</p></div>
         </div>
 
         <!-- ② 2 Depth 메뉴 수정 모달 (기본) -->
@@ -820,7 +824,7 @@ tailwind.config = {
               <button class="btn-solid" style="padding:8px 16px">저장</button>
             </div>
           </div>
-          <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 변경 불가 필드 표기는 역할 관리 목업과 동일 패턴 적용 (label 우측 '변경 불가' 라벨 + readonly input).</p>
+          <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">변경 불가 필드 표기는 역할 관리 목업과 동일 패턴 적용 (label 우측 '변경 불가' 라벨 + readonly input).</p></div>
         </div>
 
         <!-- ③ 2 Depth 수정 — 1 Depth 변경 감지 -->
@@ -909,7 +913,7 @@ tailwind.config = {
               <button class="btn-solid" style="padding:8px 16px">저장</button>
             </div>
           </div>
-          <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 1 Depth 변경 시에도 전체 필드 노출 유지. 저장 시 ④ 확인 모달 노출.</p>
+          <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">1 Depth 변경 시에도 전체 필드 노출 유지. 저장 시 ④ 확인 모달 노출.</p></div>
         </div>
 
         <!-- ④ 1 Depth 이동 확인 모달 -->
@@ -941,7 +945,7 @@ tailwind.config = {
               <button class="btn-solid" style="padding:8px 16px">이동 확인</button>
             </div>
           </div>
-          <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ [취소] 클릭 시 본 모달만 닫히고 수정 모달은 유지 + 1 Depth 셀렉박스 값 복원.</p>
+          <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">[취소] 클릭 시 본 모달만 닫히고 수정 모달은 유지 + 1 Depth 셀렉박스 값 복원.</p></div>
         </div>
 
         <!-- ⑤ 1 Depth 추가/수정 모달 — 하위 메뉴 보유 -->
@@ -986,7 +990,7 @@ tailwind.config = {
               <!-- 삭제 영역 - 하위 메뉴 존재 시 disabled -->
               <div class="pt-[20px] border-t border-gray-100">
                 <h4 class="font-semibold text-[14px] leading-[20px] tracking-[-0.3px] text-gray-900 mb-[8px]">1 Depth 삭제</h4>
-                <p class="text-[12px] leading-[18px] tracking-[-0.2px] text-gray-500 mb-[12px]">하위 2 Depth 메뉴가 존재하는 동안에는 삭제할 수 없습니다. 모든 하위 메뉴를 다른 1 Depth로 이동하거나 미사용 처리해주세요.</p>
+                <p class="text-[12px] leading-[18px] tracking-[-0.2px] text-gray-500 mb-[12px]">하위 2 Depth 메뉴가 존재하는 동안에는 삭제할 수 없습니다. 모든 하위 메뉴를 다른 1 Depth로 이동해주세요.</p>
                 <button class="btn-outlined" disabled>삭제 불가 (하위 메뉴 존재)</button>
               </div>
             </div>
@@ -995,7 +999,7 @@ tailwind.config = {
               <button class="btn-solid" style="padding:8px 16px">저장</button>
             </div>
           </div>
-          <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 추가 모달도 동일 구조. 추가 시 삭제 영역 미노출. 사용→미사용 저장 성공 시 토스트(green) <span class="font-mono">"1 Depth가 미사용 처리되었습니다. 하위 메뉴 5개가 함께 미사용 전환되었습니다."</span></p>
+          <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">추가 모달도 동일 구조. 추가 시 삭제 영역 미노출. 사용→미사용 저장 성공 시 토스트(green) <span class="font-mono">"1 Depth가 미사용 처리되었습니다. 하위 메뉴 5개가 함께 미사용 전환되었습니다."</span></p></div>
         </div>
 
         <!-- ⑥ 1 Depth 수정 — 하위 메뉴 없음 (삭제 가능) -->
@@ -1044,7 +1048,7 @@ tailwind.config = {
               <button class="btn-solid" style="padding:8px 16px">저장</button>
             </div>
           </div>
-          <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ [삭제] 클릭 시 ⑦ 삭제 확인 모달 노출.</p>
+          <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">[삭제] 클릭 시 ⑦ 삭제 확인 모달 노출.</p></div>
         </div>
 
         <!-- ⑦ 1 Depth 삭제 확인 모달 -->
@@ -1076,7 +1080,7 @@ tailwind.config = {
               <button class="btn-danger">삭제</button>
             </div>
           </div>
-          <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 오버레이/ESC 닫기 차단. 우상단 X 클릭 시 수정 모달까지 모두 닫힘.</p>
+          <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">오버레이/ESC 닫기 차단. 우상단 X 클릭 시 수정 모달까지 모두 닫힘.</p></div>
         </div>
 
       </div>
@@ -1135,7 +1139,7 @@ tailwind.config = {
               <button class="btn-solid" style="padding:8px 16px">저장</button>
             </div>
           </div>
-          <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 미사용 1 Depth 선택 차단(예비 fallback)은 인라인 에러 유지. URL·메뉴 코드·메뉴명 중복 등 서버 검증 실패는 실패 토스트(B-2)로 처리 + 모달 유지.</p>
+          <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">미사용 1 Depth 선택 차단(예비 fallback)은 인라인 에러 유지. URL·메뉴 코드·메뉴명 중복 등 서버 검증 실패는 실패 토스트(B-2)로 처리 + 모달 유지.</p></div>
         </div>
       </div>
 
@@ -1224,7 +1228,7 @@ tailwind.config = {
             </tr>
           </tbody>
         </table>
-        <p class="mt-[12px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ <span style="color:#C31518;font-weight:600">빨간색 셀</span>: 컨펌 성격 모달의 ESC / 오버레이 클릭 = 닫힘 비허용</p>
+        <div class="mt-[12px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900"><span style="color:#C31518;font-weight:600">빨간색 셀</span>: 컨펌 성격 모달의 ESC / 오버레이 클릭 = 닫힘 비허용</p></div>
       </div>
 
       <!-- ============================================ -->
@@ -1339,7 +1343,7 @@ tailwind.config = {
                 </tr>
               </tbody>
             </table>
-            <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 1 Depth 메뉴명 10자 초과: 에러 메시지 없음. 11번째 글자 입력 자동 차단 (7.1 명시)</p>
+            <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">1 Depth 메뉴명 10자 초과: 에러 메시지 없음. 11번째 글자 입력 자동 차단 (7.1 명시)</p></div>
           </div>
 
           <!-- A-4 안내 박스 -->
@@ -1379,7 +1383,7 @@ tailwind.config = {
                 <tr>
                   <td class="td-cell" style="border-left:1px solid #DEE0E3;">모달 ⑤ 삭제 영역</td>
                   <td class="td-cell text-gray-700">하위 2 Depth 존재 시</td>
-                  <td class="td-cell">"하위 2 Depth 메뉴가 존재하는 동안에는 삭제할 수 없습니다. 모든 하위 메뉴를 다른 1 Depth로 이동하거나 미사용 처리해주세요."</td>
+                  <td class="td-cell">"하위 2 Depth 메뉴가 존재하는 동안에는 삭제할 수 없습니다. 모든 하위 메뉴를 다른 1 Depth로 이동해주세요."</td>
                   <td class="td-cell" style="border-right:1px solid #DEE0E3;"><span class="badge bg-gray-50 text-gray-500">텍스트</span></td>
                 </tr>
                 <tr>
@@ -1475,7 +1479,7 @@ tailwind.config = {
                 </tr>
               </tbody>
             </table>
-            <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ <span style="background:#F2ECFF;padding:0 4px">보라색 행</span>: cascade 동작이 있는 케이스. 토스트 문구에 영향 받은 하위 메뉴 개수 {N}을 명시 (기획서 5.2 / 4.5)</p>
+            <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900"><span style="background:#F2ECFF;padding:0 4px">보라색 행</span>: cascade 동작이 있는 케이스. 토스트 문구에 영향 받은 하위 메뉴 개수 {N}을 명시 (기획서 5.2 / 4.5)</p></div>
           </div>
 
           <!-- B-2 실패 토스트 -->
@@ -1520,7 +1524,7 @@ tailwind.config = {
                 </tr>
               </tbody>
             </table>
-            <p class="mt-[8px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ 서버 검증 실패(URL·메뉴 코드·메뉴명 중복)와 서버 정합성·네트워크 오류는 <span class="font-semibold text-gray-700">실패 토스트(B-2)</span>로 처리 + 모달 유지. 프론트 형식 검증(메뉴 코드 형식)만 포커스 아웃 시 인라인 에러(A-3)로 처리. 필수 미입력은 [저장] 버튼 disabled로만 처리(별도 인라인 에러 미노출). 토스트 전환 시 input border 강조는 적용하지 않음(MVP).</p>
+            <div class="mt-[8px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">서버 검증 실패(URL·메뉴 코드·메뉴명 중복)와 서버 정합성·네트워크 오류는 <span class="font-semibold text-gray-700">실패 토스트(B-2)</span>로 처리 + 모달 유지. 프론트 형식 검증(메뉴 코드 형식)만 포커스 아웃 시 인라인 에러(A-3)로 처리. 필수 미입력은 [저장] 버튼 disabled로만 처리(별도 인라인 에러 미노출). 토스트 전환 시 input border 강조는 적용하지 않음(MVP).</p></div>
           </div>
         </div>
 
