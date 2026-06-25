@@ -230,6 +230,11 @@ tailwind.config = {
 
     <p class="mt-[40px] text-[12px] leading-[18px] tracking-[-0.2px] text-gray-500">※ 위 화면은 즐겨찾기가 <span class="font-semibold text-gray-700">1개 이상 등록된 상태</span>의 기본 진입 화면입니다. 즐겨찾기 미등록(0개) 시안은 아래 [참고 시안] 섹션 참조.</p>
 
+    <div class="mt-[12px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]">
+      <div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div>
+      <p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900">인사말 「<span class="font-semibold">안녕하세요, 김아라 님</span>」은 고정 문구가 아니라, 진입 시점의 <span class="font-semibold text-gray-700">사용자 디바이스 로컬 시간</span> 기준으로 자동 분기됩니다. (백엔드 호출 없이 프론트 자체 처리 · 재진입 시 재평가 · 경계값은 시작 시각 포함/종료 시각 미포함 · {이름}은 로그인 계정 이름으로 동적 치환)<br>· 06:00 ~ 10:00 — "좋은 아침이에요, {이름} 님"<br>· 10:00 ~ 13:00 — "안녕하세요, {이름} 님"<br>· 13:00 ~ 17:00 — "활기찬 오후 보내세요, {이름} 님"<br>· 17:00 ~ 익일 06:00 — "오늘도 수고하셨어요, {이름} 님"</p>
+    </div>
+
 
     <!-- ============================================ -->
     <!-- 참고 시안 — 변형 상태                          -->
@@ -343,7 +348,7 @@ tailwind.config = {
 
         </div>
 
-        <p class="mt-[10px] text-[11px] leading-[16px] tracking-[-0.2px] text-gray-300">※ <span class="text-gray-400">빈 상태 트리거</span> : 즐겨찾기 등록 수 = 0 / <span class="text-gray-400">메인 카피</span> : "아직 등록된 즐겨찾기가 없습니다" / <span class="text-gray-400">보조 카피</span> : "상단 메뉴에서 자주 쓰는 페이지를 찾아 페이지 제목 옆 ★ 아이콘을 눌러 추가해보세요." / 인사·도움말 영역은 메인 화면과 동일.</p>
+        <div class="mt-[10px] border-l-[3px] border-gray-500 bg-gray-25 pl-[14px] pr-[14px] pt-[10px] pb-[10px]"><div class="text-[11px] font-medium text-gray-600 tracking-[0.3px] mb-[4px]">DESCRIPTION</div><p class="text-[13px] leading-[21px] tracking-[-0.2px] text-gray-900"><span class="text-gray-400">빈 상태 트리거</span> : 즐겨찾기 등록 수 = 0 / <span class="text-gray-400">메인 카피</span> : "아직 등록된 즐겨찾기가 없습니다" / <span class="text-gray-400">보조 카피</span> : "상단 메뉴에서 자주 쓰는 페이지를 찾아 페이지 제목 옆 ★ 아이콘을 눌러 추가해보세요." / 인사·도움말 영역은 메인 화면과 동일.</p></div>
       </div>
 
     </section>
