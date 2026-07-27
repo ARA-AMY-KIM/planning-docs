@@ -108,6 +108,11 @@
   .idx{color:var(--ink-mute);font-variant-numeric:tabular-nums;}
   .chan{font-weight:600;color:var(--ink);}
   .cnt-row td{background:#f8f9fb;font-weight:700;border-top:2px solid var(--line);}
+  .msearch{width:220px;padding:7px 11px;font-size:12px;}
+  .filter-note{color:var(--blue);font-weight:600;}
+  .no-match td{text-align:center;color:var(--ink-mute);padding:18px;}
+  tr.hl td{background:#fffbe6;}
+  tr.hl td.x{background:var(--x-cell);}
 
   .toast{
     position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
@@ -167,9 +172,10 @@
   <div class="panel" id="matrixPanel" style="display:none;">
     <div class="matrix-head">
       <h2 style="margin:0;"><span class="step-num">3</span> 발신프로필 매트릭스</h2>
-      <div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <input type="text" id="matrixSearch" class="msearch" placeholder="발신프로필 · 프로필명 검색" autocomplete="off" oninput="onSearch(this.value)">
         <span class="totals" id="totals"></span>
-        <button class="btn primary small" style="margin-left:12px;" onclick="copyTSV()">시트용으로 복사</button>
+        <button class="btn primary small" onclick="copyTSV()">시트용으로 복사</button>
       </div>
     </div>
     <div class="table-scroll">
@@ -189,6 +195,12 @@
 // ===== 상태 =====
 // responses: [{ label, profiles: [{senderKey, uuid, name, createdAt, status}] }]
 let responses = [];
+let matrixFilter = "";  // 발신프로필/프로필명 검색어 (소문자)
+
+function onSearch(v){
+  matrixFilter = (v||"").trim().toLowerCase();
+  renderMatrix();
+}
 
 // ===== 저장 (브라우저 localStorage) =====
 const STORE_KEY = "bizppurio_profile_matrix_v1";
@@ -345,8 +357,9 @@ function renderMatrix(){
   if(responses.length === 0){ panel.style.display="none"; return; }
   panel.style.display="block";
 
-  const rows = buildUnion();
+  const allRows = buildUnion();
   const cols = responses.map(r=>r.label);
+  const colspan = 5 + responses.length;
 
   let html = "";
   // header
@@ -358,10 +371,20 @@ function renderMatrix(){
   }
   html += "</tr></thead><tbody>";
 
-  rows.forEach((p, i)=>{
-    const rowCls = p.status==="휴면" ? ' class="dormant"' : '';
+  let shown = 0;
+  allRows.forEach((p, i)=>{
+    // 검색: 발신프로필(uuid) 또는 발신프로필명(name) 부분일치
+    if(matrixFilter){
+      const hay = ((p.uuid||"") + " " + (p.name||"")).toLowerCase();
+      if(!hay.includes(matrixFilter)) return;
+    }
+    shown++;
+    const cls = [];
+    if(p.status==="휴면") cls.push("dormant");
+    if(matrixFilter) cls.push("hl");
+    const rowCls = cls.length ? ' class="'+cls.join(" ")+'"' : '';
     html += "<tr"+rowCls+">";
-    html += '<td class="idx">'+(i+1)+'</td>';
+    html += '<td class="idx">'+(i+1)+'</td>';   // 번호는 전체 기준(복사본과 일치)
     html += '<td class="chan">'+esc(p.uuid)+'</td>';
     html += '<td>'+esc(p.name)+'</td>';
     html += '<td>'+esc(p.createdAt)+'</td>';
@@ -373,21 +396,33 @@ function renderMatrix(){
     html += "</tr>";
   });
 
-  // 합계 행
-  html += '<tr class="cnt-row"><td></td><td>합계 (등록 수)</td><td></td><td></td><td></td>';
-  for(const r of responses){
-    html += '<td class="center">'+r.profiles.length+'</td>';
+  if(matrixFilter && shown===0){
+    html += '<tr class="no-match"><td colspan="'+colspan+'">검색 결과가 없습니다.</td></tr>';
   }
-  html += "</tr>";
+
+  // 합계 행 — 검색 중에는 숨김(전체 기준 요약이라 필터 결과와 혼동 방지)
+  if(!matrixFilter){
+    html += '<tr class="cnt-row"><td></td><td>합계 (등록 수)</td><td></td><td></td><td></td>';
+    for(const r of responses){
+      html += '<td class="center">'+r.profiles.length+'</td>';
+    }
+    html += "</tr>";
+  }
   html += "</tbody>";
 
   document.getElementById("matrix").innerHTML = html;
 
-  const totalUnique = rows.length;
-  const dormantCnt = rows.filter(r=>r.status==="휴면").length;
-  document.getElementById("totals").textContent =
-    "전체 고유 프로필 " + totalUnique + "건 · bizId " + cols.length + "개" +
-    (dormantCnt ? " · 휴면 " + dormantCnt + "건" : "");
+  const totalUnique = allRows.length;
+  const dormantCnt = allRows.filter(r=>r.status==="휴면").length;
+  if(matrixFilter){
+    document.getElementById("totals").innerHTML =
+      '<span class="filter-note">검색 "' + esc(matrixFilter) + '" · ' + shown + '건 표시</span>' +
+      " (전체 " + totalUnique + "건 중)";
+  }else{
+    document.getElementById("totals").textContent =
+      "전체 고유 프로필 " + totalUnique + "건 · bizId " + cols.length + "개" +
+      (dormantCnt ? " · 휴면 " + dormantCnt + "건" : "");
+  }
 }
 
 // 시트 붙여넣기용 TSV
