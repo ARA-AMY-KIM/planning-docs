@@ -108,7 +108,10 @@
   .idx{color:var(--ink-mute);font-variant-numeric:tabular-nums;}
   .chan{font-weight:600;color:var(--ink);}
   .cnt-row td{background:#f8f9fb;font-weight:700;border-top:2px solid var(--line);}
-  .msearch{width:220px;padding:7px 11px;font-size:12px;}
+  .matrix-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .matrix-actions .totals{white-space:nowrap;}
+  .matrix-toolbar{margin-bottom:12px;}
+  .msearch{width:260px;max-width:100%;padding:8px 12px;font-size:13px;}
   .filter-note{color:var(--blue);font-weight:600;}
   .no-match td{text-align:center;color:var(--ink-mute);padding:18px;}
   tr.hl td{background:#fffbe6;}
@@ -172,11 +175,13 @@
   <div class="panel" id="matrixPanel" style="display:none;">
     <div class="matrix-head">
       <h2 style="margin:0;"><span class="step-num">3</span> 발신프로필 매트릭스</h2>
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-        <input type="text" id="matrixSearch" class="msearch" placeholder="발신프로필 · 프로필명 검색" autocomplete="off" oninput="onSearch(this.value)">
+      <div class="matrix-actions">
         <span class="totals" id="totals"></span>
         <button class="btn primary small" onclick="copyTSV()">시트용으로 복사</button>
       </div>
+    </div>
+    <div class="matrix-toolbar">
+      <input type="text" id="matrixSearch" class="msearch" placeholder="🔍 발신프로필 · 프로필명 검색" autocomplete="off" oninput="onSearch(this.value)">
     </div>
     <div class="table-scroll">
       <table id="matrix"></table>
