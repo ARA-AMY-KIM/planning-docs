@@ -81,6 +81,8 @@
   .resp-item .rmeta .dup{color:var(--warn);font-weight:600;}
   .resp-item .del{margin-left:auto;color:var(--ink-mute);cursor:pointer;font-size:12px;
     border:none;background:none;text-decoration:underline;}
+  .resp-item .rupd{font-size:12px;color:var(--ink-mute);}
+  .colupd{display:block;font-size:10px;font-weight:500;color:var(--blue);opacity:.8;margin-top:3px;}
   .empty-note{font-size:13px;color:var(--ink-mute);padding:6px 0;}
 
   /* matrix */
@@ -149,7 +151,13 @@
 
   <!-- 추가된 응답 목록 -->
   <div class="panel">
-    <h2><span class="step-num">2</span> 추가된 bizId</h2>
+    <div class="matrix-head">
+      <h2 style="margin:0;"><span class="step-num">2</span> 추가된 bizId</h2>
+      <div>
+        <span class="totals" id="savedInfo"></span>
+        <button class="btn ghost small" style="margin-left:12px;" onclick="clearState()">전체 초기화</button>
+      </div>
+    </div>
     <div class="resp-list" id="respList">
       <div class="empty-note">아직 추가된 응답이 없습니다.</div>
     </div>
@@ -181,6 +189,44 @@
 // ===== 상태 =====
 // responses: [{ label, profiles: [{senderKey, uuid, name, createdAt, status}] }]
 let responses = [];
+
+// ===== 저장 (브라우저 localStorage) =====
+const STORE_KEY = "bizppurio_profile_matrix_v1";
+
+function saveState(){
+  try{
+    localStorage.setItem(STORE_KEY, JSON.stringify({ savedAt: new Date().toISOString(), responses }));
+  }catch(e){ /* 미리보기 환경 등 저장 불가 시 무시 */ }
+}
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return null;
+    const data = JSON.parse(raw);
+    if(data && Array.isArray(data.responses)){
+      responses = data.responses;
+      return data.savedAt || null;
+    }
+  }catch(e){ /* 손상된 데이터는 무시 */ }
+  return null;
+}
+
+function clearState(){
+  if(!confirm("추가된 모든 bizId를 지웁니다. 계속할까요?\n(스프레드시트에 이미 붙여넣은 내용은 영향받지 않습니다.)")) return;
+  responses = [];
+  try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+  render();
+  toast("전체 초기화됨");
+}
+
+function fmtSavedAt(iso){
+  if(!iso) return "";
+  const d = new Date(iso);
+  if(isNaN(d)) return "";
+  const p = n => String(n).padStart(2,"0");
+  return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+" "+p(d.getHours())+":"+p(d.getMinutes());
+}
 
 function statusOf(p){
   if(p.block) return "차단";
@@ -225,21 +271,33 @@ function addResponse(){
 
   const dup = parsed.raw - parsed.profiles.length;
   const existing = responses.findIndex(r => r.label === label);
-  const entry = { label, profiles:parsed.profiles, raw:parsed.raw, dup };
+  const entry = { label, profiles:parsed.profiles, raw:parsed.raw, dup, updatedAt: new Date().toISOString() };
   if(existing >= 0){ responses[existing] = entry; toast(label + " 갱신됨 (" + parsed.profiles.length + "건)"); }
   else{ responses.push(entry); toast(label + " 추가됨 (" + parsed.profiles.length + "건)"); }
 
   document.getElementById("labelInput").value = "";
   document.getElementById("jsonInput").value = "";
+  saveState();
   render();
 }
 
 function removeResponse(label){
   responses = responses.filter(r => r.label !== label);
+  saveState();
   render();
 }
 
 function render(){
+  // 저장 시각 표시
+  const info = document.getElementById("savedInfo");
+  if(info){
+    if(responses.length === 0){ info.textContent = ""; }
+    else{
+      const iso = (function(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"{}").savedAt; }catch(e){ return null; } })();
+      const t = fmtSavedAt(iso);
+      info.textContent = t ? ("마지막 저장 " + t) : "";
+    }
+  }
   // 응답 목록
   const list = document.getElementById("respList");
   if(responses.length === 0){
@@ -247,9 +305,11 @@ function render(){
   }else{
     list.innerHTML = responses.map(r => {
       const dupTxt = r.dup > 0 ? ' · <span class="dup">중복 '+r.dup+'건 제거됨</span>' : '';
+      const upd = r.updatedAt ? '<span class="rupd">' + fmtSavedAt(r.updatedAt) + ' 조회</span>' : '';
       return '<div class="resp-item">'
         + '<span class="rname">'+esc(r.label)+'</span>'
         + '<span class="rmeta">고유 '+r.profiles.length+'건 (응답 '+r.raw+'건'+dupTxt+')</span>'
+        + upd
         + '<button class="del" onclick="removeResponse(\''+escAttr(r.label)+'\')">삭제</button>'
         + '</div>';
     }).join("");
@@ -292,7 +352,10 @@ function renderMatrix(){
   // header
   html += "<thead><tr>";
   html += "<th>번호</th><th>발신프로필</th><th>발신프로필명</th><th>등록일</th><th>채널 상태</th>";
-  for(const c of cols){ html += '<th class="bizcol">'+esc(c)+'</th>'; }
+  for(const r of responses){
+    const upd = r.updatedAt ? '<span class="colupd">'+fmtSavedAt(r.updatedAt)+' 조회</span>' : '';
+    html += '<th class="bizcol">'+esc(r.label)+upd+'</th>';
+  }
   html += "</tr></thead><tbody>";
 
   rows.forEach((p, i)=>{
@@ -333,6 +396,8 @@ function copyTSV(){
   const rows = buildUnion();
   const cols = responses.map(r=>r.label);
   const lines = [];
+  const fmtDate = iso => { const t=fmtSavedAt(iso); return t ? t.split(" ")[0] : ""; };
+  lines.push(["조회일","","","","", ...responses.map(r=>fmtDate(r.updatedAt))].join("\t"));
   lines.push(["번호","발신프로필","발신프로필명","등록일","채널 상태", ...cols].join("\t"));
   rows.forEach((p,i)=>{
     const cells = responses.map(r=> has(r,p.senderKey) ? "O" : "X");
@@ -372,6 +437,15 @@ function loadSample(){
   }, null, 2);
   toast("예시가 채워졌습니다. 추가하기를 눌러보세요.");
 }
+
+// ===== 페이지 로드 시 저장된 상태 복원 =====
+(function init(){
+  const savedAt = loadState();
+  render();
+  if(savedAt && responses.length > 0){
+    toast("이전 작업을 불러왔습니다 (" + responses.length + "개 bizId)");
+  }
+})();
 </script>
 </body>
 </html>
