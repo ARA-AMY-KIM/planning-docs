@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>발신프로필 매트릭스 정리</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --blue:#145CE6;
+    --blue-soft:#eaf1fe;
+    --ink:#1a1a1a;
+    --ink-soft:#4a4a4a;
+    --ink-mute:#8a8a8a;
+    --line:#e5e7eb;
+    --line-soft:#f0f1f3;
+    --bg:#f6f7f9;
+    --card:#ffffff;
+    --ok:#e8f5ec;
+    --ok-ink:#1a7f4b;
+    --x-cell:#fff6cc;
+    --dormant:#f2f2f2;
+    --warn:#b45309;
+    --danger:#c0392b;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;font-size:14px;
+    padding:28px 20px 80px;
+  }
+  .wrap{max-width:1200px;margin:0 auto;}
+  header.top{margin-bottom:22px;}
+  header.top h1{font-size:20px;font-weight:700;letter-spacing:-0.02em;}
+  header.top p{font-size:13px;color:var(--ink-mute);margin-top:4px;}
+
+  .panel{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;margin-bottom:16px;
+  }
+  .panel h2{font-size:14px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .step-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:20px;height:20px;border-radius:5px;background:var(--blue);color:#fff;
+    font-size:11px;font-weight:700;
+  }
+
+  .input-row{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;}
+  .input-row .label-field{flex:0 0 200px;}
+  .input-row .json-field{flex:1;min-width:280px;}
+  label.fld{display:block;font-size:12px;color:var(--ink-soft);font-weight:600;margin-bottom:5px;}
+  input[type=text],textarea{
+    width:100%;border:1px solid var(--line);border-radius:var(--radius);
+    padding:9px 11px;font-family:inherit;font-size:13px;color:var(--ink);
+    background:#fff;resize:vertical;
+  }
+  input[type=text]:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft);}
+  textarea{min-height:96px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.45;}
+
+  .btn{
+    border:none;border-radius:var(--radius);padding:9px 16px;font-family:inherit;
+    font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s;
+  }
+  .btn:hover{opacity:.88;}
+  .btn.primary{background:var(--blue);color:#fff;}
+  .btn.ghost{background:#fff;color:var(--ink-soft);border:1px solid var(--line);}
+  .btn.small{padding:5px 11px;font-size:12px;}
+  .btn-row{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;}
+
+  .hint{font-size:12px;color:var(--ink-mute);margin-top:8px;}
+
+  /* added responses chips */
+  .resp-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+  .resp-item{
+    display:flex;align-items:center;gap:12px;padding:10px 12px;
+    border:1px solid var(--line);border-radius:var(--radius);background:#fcfcfd;
+  }
+  .resp-item .rname{font-weight:700;color:var(--blue);font-size:13px;}
+  .resp-item .rmeta{font-size:12px;color:var(--ink-soft);}
+  .resp-item .rmeta .dup{color:var(--warn);font-weight:600;}
+  .resp-item .del{margin-left:auto;color:var(--ink-mute);cursor:pointer;font-size:12px;
+    border:none;background:none;text-decoration:underline;}
+  .empty-note{font-size:13px;color:var(--ink-mute);padding:6px 0;}
+
+  /* matrix */
+  .matrix-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px;flex-wrap:wrap;}
+  .matrix-head h2{margin-bottom:0;}
+  .totals{font-size:12px;color:var(--ink-soft);}
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);}
+  table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap;}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);text-align:left;}
+  th{background:#f8f9fb;font-weight:700;font-size:12px;position:sticky;top:0;}
+  th.bizcol{text-align:center;background:var(--blue-soft);color:var(--blue);}
+  th.countcell{text-align:center;font-size:13px;color:var(--blue);background:var(--blue-soft);}
+  td.center{text-align:center;font-weight:700;}
+  td.o{color:var(--ok-ink);}
+  td.x{color:var(--ink-mute);background:var(--x-cell);}
+  tr.dormant td{background:var(--dormant);color:var(--ink-mute);}
+  tr.dormant td.x{background:var(--x-cell);}
+  .status-pill{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;}
+  .st-ok{background:var(--ok);color:var(--ok-ink);}
+  .st-dormant{background:#e9e9e9;color:#666;}
+  .st-block{background:#fdeaea;color:var(--danger);}
+  .st-off{background:#fdeaea;color:var(--danger);}
+  .idx{color:var(--ink-mute);font-variant-numeric:tabular-nums;}
+  .chan{font-weight:600;color:var(--ink);}
+  .cnt-row td{background:#f8f9fb;font-weight:700;border-top:2px solid var(--line);}
+
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+    background:var(--ink);color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;
+    opacity:0;pointer-events:none;transition:opacity .2s;z-index:50;
+  }
+  .toast.show{opacity:1;}
+  .warnbox{
+    background:#fff8e6;border:1px solid #f5d78a;border-radius:var(--radius);
+    padding:10px 13px;font-size:12.5px;color:#8a6100;margin-top:12px;line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <h1>발신프로필 매트릭스 정리</h1>
+    <p>bizId별 응답을 붙여넣으면 중복 제거 후 O/X 매트릭스를 자동으로 만듭니다.</p>
+  </header>
+
+  <!-- STEP 1: 입력 -->
+  <div class="panel">
+    <h2><span class="step-num">1</span> bizId 응답 추가</h2>
+    <div class="input-row">
+      <div class="label-field">
+        <label class="fld">bizId 이름 (컬럼명)</label>
+        <input type="text" id="labelInput" placeholder="예: ajungnetworks" autocomplete="off">
+      </div>
+      <div class="json-field">
+        <label class="fld">응답 JSON 붙여넣기</label>
+        <textarea id="jsonInput" placeholder='{ "code":"200", "data":{ "success":[ ... ] } } 전체를 그대로 붙여넣기'></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn primary" onclick="addResponse()">추가하기</button>
+      <button class="btn ghost" onclick="loadSample()">예시로 채우기</button>
+    </div>
+    <p class="hint">같은 이름으로 다시 추가하면 최신 응답으로 덮어씁니다. senderKey가 중복된 항목은 자동으로 1건으로 합칩니다.</p>
+  </div>
+
+  <!-- 추가된 응답 목록 -->
+  <div class="panel">
+    <h2><span class="step-num">2</span> 추가된 bizId</h2>
+    <div class="resp-list" id="respList">
+      <div class="empty-note">아직 추가된 응답이 없습니다.</div>
+    </div>
+  </div>
+
+  <!-- STEP 3: 매트릭스 -->
+  <div class="panel" id="matrixPanel" style="display:none;">
+    <div class="matrix-head">
+      <h2 style="margin:0;"><span class="step-num">3</span> 발신프로필 매트릭스</h2>
+      <div>
+        <span class="totals" id="totals"></span>
+        <button class="btn primary small" style="margin-left:12px;" onclick="copyTSV()">시트용으로 복사</button>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table id="matrix"></table>
+    </div>
+    <div class="warnbox">
+      O = 해당 bizId에 등록됨 · X(노란칸) = 미등록 · 회색 행 = 휴면 프로필.
+      맨 아래 <b>합계</b> 행은 각 bizId의 등록 수(휴면 포함)입니다. 발송 가능 수만 보려면 휴면 행을 빼고 세면 됩니다.
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== 상태 =====
+// responses: [{ label, profiles: [{senderKey, uuid, name, createdAt, status}] }]
+let responses = [];
+
+function statusOf(p){
+  if(p.block) return "차단";
+  if(p.dormant) return "휴면";
+  if(p.profileStatus && p.profileStatus !== "A") return "비활성";
+  return "정상";
+}
+function dateOnly(s){ return (s||"").split(" ")[0] || ""; }
+
+// 응답 파싱 + senderKey 기준 dedup
+function parseResponse(text){
+  const data = JSON.parse(text);
+  const arr = data && data.data && Array.isArray(data.data.success) ? data.data.success : null;
+  if(!arr) throw new Error("data.success 배열을 찾을 수 없습니다.");
+  const map = new Map();
+  let raw = 0;
+  for(const it of arr){
+    raw++;
+    const key = it.senderKey;
+    if(!key) continue;
+    if(!map.has(key)){
+      map.set(key, {
+        senderKey:key,
+        uuid:it.uuid || "",
+        name:it.name || "",
+        createdAt:dateOnly(it.createdAt),
+        status:statusOf(it)
+      });
+    }
+  }
+  return { profiles:[...map.values()], raw };
+}
+
+function addResponse(){
+  const label = document.getElementById("labelInput").value.trim();
+  const text = document.getElementById("jsonInput").value.trim();
+  if(!label){ toast("bizId 이름을 입력하세요."); return; }
+  if(!text){ toast("응답 JSON을 붙여넣으세요."); return; }
+  let parsed;
+  try{ parsed = parseResponse(text); }
+  catch(e){ toast("JSON을 읽지 못했습니다: " + e.message); return; }
+
+  const dup = parsed.raw - parsed.profiles.length;
+  const existing = responses.findIndex(r => r.label === label);
+  const entry = { label, profiles:parsed.profiles, raw:parsed.raw, dup };
+  if(existing >= 0){ responses[existing] = entry; toast(label + " 갱신됨 (" + parsed.profiles.length + "건)"); }
+  else{ responses.push(entry); toast(label + " 추가됨 (" + parsed.profiles.length + "건)"); }
+
+  document.getElementById("labelInput").value = "";
+  document.getElementById("jsonInput").value = "";
+  render();
+}
+
+function removeResponse(label){
+  responses = responses.filter(r => r.label !== label);
+  render();
+}
+
+function render(){
+  // 응답 목록
+  const list = document.getElementById("respList");
+  if(responses.length === 0){
+    list.innerHTML = '<div class="empty-note">아직 추가된 응답이 없습니다.</div>';
+  }else{
+    list.innerHTML = responses.map(r => {
+      const dupTxt = r.dup > 0 ? ' · <span class="dup">중복 '+r.dup+'건 제거됨</span>' : '';
+      return '<div class="resp-item">'
+        + '<span class="rname">'+esc(r.label)+'</span>'
+        + '<span class="rmeta">고유 '+r.profiles.length+'건 (응답 '+r.raw+'건'+dupTxt+')</span>'
+        + '<button class="del" onclick="removeResponse(\''+escAttr(r.label)+'\')">삭제</button>'
+        + '</div>';
+    }).join("");
+  }
+  renderMatrix();
+}
+
+function buildUnion(){
+  // senderKey 기준 union, 각 프로필의 메타는 최초 발견 응답 기준 + 상태는 "가장 최근에 본 것" 대신 첫 등장 유지
+  const map = new Map();
+  for(const r of responses){
+    for(const p of r.profiles){
+      if(!map.has(p.senderKey)) map.set(p.senderKey, {...p});
+    }
+  }
+  const rows = [...map.values()];
+  // 등록일 최신순
+  rows.sort((a,b)=> (b.createdAt||"").localeCompare(a.createdAt||""));
+  return rows;
+}
+
+function has(resp, senderKey){
+  return resp.profiles.some(p => p.senderKey === senderKey);
+}
+
+function statusPill(s){
+  const cls = s==="정상" ? "st-ok" : s==="휴면" ? "st-dormant" : "st-block";
+  return '<span class="status-pill '+cls+'">'+s+'</span>';
+}
+
+function renderMatrix(){
+  const panel = document.getElementById("matrixPanel");
+  if(responses.length === 0){ panel.style.display="none"; return; }
+  panel.style.display="block";
+
+  const rows = buildUnion();
+  const cols = responses.map(r=>r.label);
+
+  let html = "";
+  // header
+  html += "<thead><tr>";
+  html += "<th>번호</th><th>발신프로필</th><th>발신프로필명</th><th>등록일</th><th>채널 상태</th>";
+  for(const c of cols){ html += '<th class="bizcol">'+esc(c)+'</th>'; }
+  html += "</tr></thead><tbody>";
+
+  rows.forEach((p, i)=>{
+    const rowCls = p.status==="휴면" ? ' class="dormant"' : '';
+    html += "<tr"+rowCls+">";
+    html += '<td class="idx">'+(i+1)+'</td>';
+    html += '<td class="chan">'+esc(p.uuid)+'</td>';
+    html += '<td>'+esc(p.name)+'</td>';
+    html += '<td>'+esc(p.createdAt)+'</td>';
+    html += '<td>'+statusPill(p.status)+'</td>';
+    for(const r of responses){
+      if(has(r, p.senderKey)) html += '<td class="center o">O</td>';
+      else html += '<td class="center x">X</td>';
+    }
+    html += "</tr>";
+  });
+
+  // 합계 행
+  html += '<tr class="cnt-row"><td></td><td>합계 (등록 수)</td><td></td><td></td><td></td>';
+  for(const r of responses){
+    html += '<td class="center">'+r.profiles.length+'</td>';
+  }
+  html += "</tr>";
+  html += "</tbody>";
+
+  document.getElementById("matrix").innerHTML = html;
+
+  const totalUnique = rows.length;
+  const dormantCnt = rows.filter(r=>r.status==="휴면").length;
+  document.getElementById("totals").textContent =
+    "전체 고유 프로필 " + totalUnique + "건 · bizId " + cols.length + "개" +
+    (dormantCnt ? " · 휴면 " + dormantCnt + "건" : "");
+}
+
+// 시트 붙여넣기용 TSV
+function copyTSV(){
+  if(responses.length===0){ toast("먼저 응답을 추가하세요."); return; }
+  const rows = buildUnion();
+  const cols = responses.map(r=>r.label);
+  const lines = [];
+  lines.push(["번호","발신프로필","발신프로필명","등록일","채널 상태", ...cols].join("\t"));
+  rows.forEach((p,i)=>{
+    const cells = responses.map(r=> has(r,p.senderKey) ? "O" : "X");
+    lines.push([i+1, p.uuid, p.name, p.createdAt, p.status, ...cells].join("\t"));
+  });
+  lines.push(["","합계","","","", ...responses.map(r=>r.profiles.length)].join("\t"));
+  const tsv = lines.join("\n");
+  navigator.clipboard.writeText(tsv).then(
+    ()=>toast("복사됨. 시트에 붙여넣기(Ctrl+V) 하세요."),
+    ()=>toast("복사 실패. 브라우저 권한을 확인하세요.")
+  );
+}
+
+// 유틸
+function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m])); }
+function escAttr(s){ return String(s).replace(/'/g,"\\'"); }
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove("show"),2200);
+}
+
+// 예시
+function loadSample(){
+  document.getElementById("labelInput").value = "ajung_cs1";
+  document.getElementById("jsonInput").value = JSON.stringify({
+    code:"200", message:"요청 성공",
+    data:{ success:[
+      {senderKey:"27dd808a",uuid:"@아정당모바일상담",name:"아정당모바일",dormant:false,block:false,profileStatus:"A",createdAt:"2026-05-07 16:03:59"},
+      {senderKey:"af21a0d0",uuid:"@아정당접수확인",name:"아정당 접수확인",dormant:false,block:false,profileStatus:"A",createdAt:"2026-04-06 16:52:31"},
+      {senderKey:"3d83c148",uuid:"@아정당알림톡",name:"아정당 알림톡",dormant:false,block:false,profileStatus:"A",createdAt:"2025-07-24 16:13:30"},
+      {senderKey:"976cf335",uuid:"@아정당통신",name:"아정당",dormant:false,block:false,profileStatus:"A",createdAt:"2025-04-07 13:21:12"},
+      {senderKey:"25be13b4",uuid:"@아정당모바일셀프가입",name:"아정당모바일 셀프가입",dormant:false,block:false,profileStatus:"A",createdAt:"2025-12-26 11:27:03"}
+    ], fail:[] }
+  }, null, 2);
+  toast("예시가 채워졌습니다. 추가하기를 눌러보세요.");
+}
+</script>
+</body>
+</html>
