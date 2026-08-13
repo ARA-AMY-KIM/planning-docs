@@ -69,6 +69,16 @@
   .btn-row{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;}
 
   .hint{font-size:12px;color:var(--ink-mute);margin-top:8px;}
+  .text-link{margin-left:auto;align-self:center;font-size:12.5px;color:var(--blue);font-weight:600;text-decoration:none;white-space:nowrap;}
+  .text-link:hover{text-decoration:underline;}
+
+  /* 직전 조회 대비 변경 배지 */
+  .dwrap{display:inline-flex;gap:5px;flex-wrap:wrap;}
+  .dbadge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;line-height:1.5;}
+  .d-add{background:var(--ok);color:var(--ok-ink);}
+  .d-del{background:#fdeaea;color:var(--danger);}
+  .d-chg{background:var(--x-cell);color:#8a6100;}
+  .d-none{background:var(--line-soft);color:var(--ink-mute);}
 
   /* added responses chips */
   .resp-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
@@ -153,6 +163,7 @@
     <div class="btn-row">
       <button class="btn primary" onclick="addResponse()">추가하기</button>
       <button class="btn ghost" onclick="loadSample()">예시로 채우기</button>
+      <a class="text-link" href="https://docs.google.com/spreadsheets/d/1gpjL77PY5IM8ZjkuwQCqo81tdzOhF6JS4nVTkwKLJJ4/edit?usp=sharing" target="_blank" rel="noopener noreferrer">🔑 계정별 API KEY 확인 (스프레드시트) ↗</a>
     </div>
     <p class="hint">같은 이름으로 다시 추가하면 최신 응답으로 덮어씁니다. senderKey가 중복된 항목은 자동으로 1건으로 합칩니다.</p>
   </div>
@@ -277,6 +288,28 @@ function parseResponse(text){
   return { profiles:[...map.values()], raw };
 }
 
+// 직전 조회 대비 변경 계산 (senderKey 기준)
+function computeDiff(oldProfiles, newProfiles){
+  const oldMap = new Map((oldProfiles||[]).map(p=>[p.senderKey,p]));
+  const newMap = new Map((newProfiles||[]).map(p=>[p.senderKey,p]));
+  let added=0, removed=0, changed=0;
+  for(const k of newMap.keys()) if(!oldMap.has(k)) added++;      // 신규 등록
+  for(const k of oldMap.keys()) if(!newMap.has(k)) removed++;    // 삭제됨
+  for(const [k,np] of newMap){ const op=oldMap.get(k); if(op && op.status!==np.status) changed++; } // 상태 전환
+  return { added, removed, changed };
+}
+
+// 변경 배지 HTML (기본 표시안 — 조정 가능)
+function diffBadges(d){
+  if(!d) return '<span class="dwrap"><span class="dbadge d-none">최초 조회 (비교 대상 없음)</span></span>';  // 최초 조회
+  const parts = [];
+  if(d.added)   parts.push('<span class="dbadge d-add">+'+d.added+' 신규</span>');
+  if(d.removed) parts.push('<span class="dbadge d-del">−'+d.removed+' 삭제</span>');
+  if(d.changed) parts.push('<span class="dbadge d-chg">~'+d.changed+' 상태변경</span>');
+  if(parts.length===0) parts.push('<span class="dbadge d-none">직전 대비 변동 없음</span>');
+  return '<span class="dwrap">'+parts.join('')+'</span>';
+}
+
 function addResponse(){
   const label = document.getElementById("labelInput").value.trim();
   const text = document.getElementById("jsonInput").value.trim();
@@ -289,8 +322,17 @@ function addResponse(){
   const dup = parsed.raw - parsed.profiles.length;
   const existing = responses.findIndex(r => r.label === label);
   const entry = { label, profiles:parsed.profiles, raw:parsed.raw, dup, updatedAt: new Date().toISOString() };
-  if(existing >= 0){ responses[existing] = entry; toast(label + " 갱신됨 (" + parsed.profiles.length + "건)"); }
-  else{ responses.push(entry); toast(label + " 추가됨 (" + parsed.profiles.length + "건)"); }
+  if(existing >= 0){
+    const prev = responses[existing];
+    entry.prevUpdatedAt = prev.updatedAt || null;
+    entry.diff = computeDiff(prev.profiles, parsed.profiles);  // 직전 조회 대비
+    responses[existing] = entry;
+    toast(label + " 갱신됨 (" + parsed.profiles.length + "건)");
+  }else{
+    entry.diff = null;  // 최초 조회 — 비교 대상 없음
+    responses.push(entry);
+    toast(label + " 추가됨 (" + parsed.profiles.length + "건)");
+  }
 
   document.getElementById("labelInput").value = "";
   document.getElementById("jsonInput").value = "";
@@ -327,6 +369,7 @@ function render(){
         + '<span class="rname">'+esc(r.label)+'</span>'
         + '<span class="rmeta">고유 '+r.profiles.length+'건 (응답 '+r.raw+'건'+dupTxt+')</span>'
         + upd
+        + diffBadges(r.diff)
         + '<button class="del" onclick="removeResponse(\''+escAttr(r.label)+'\')">삭제</button>'
         + '</div>';
     }).join("");
