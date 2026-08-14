@@ -78,7 +78,8 @@
   .d-add{background:var(--ok);color:var(--ok-ink);}
   .d-del{background:#fdeaea;color:var(--danger);}
   .d-chg{background:var(--x-cell);color:#8a6100;}
-  .d-none{background:var(--line-soft);color:var(--ink-mute);}
+  .d-first{background:var(--blue-soft);color:var(--blue);}          /* 최초 조회 — 구분되게 강조 */
+  .d-none{background:none;color:var(--ink-mute);font-weight:500;padding:2px 0;}  /* 변동 없음 — 덜 강조(무배경) */
 
   /* added responses chips */
   .resp-list{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
@@ -86,6 +87,10 @@
     display:flex;align-items:center;gap:12px;padding:10px 12px;
     border:1px solid var(--line);border-radius:var(--radius);background:#fcfcfd;
   }
+  .resp-item .handle{cursor:grab;color:var(--ink-mute);font-size:15px;line-height:1;user-select:none;letter-spacing:-1px;}
+  .resp-item .handle:active{cursor:grabbing;}
+  .resp-item.dragging{opacity:.45;}
+  .resp-item.drop-target{border-top:2px solid var(--blue);}
   .resp-item .rname{font-weight:700;color:var(--blue);font-size:13px;}
   .resp-item .rmeta{font-size:12px;color:var(--ink-soft);}
   .resp-item .rmeta .dup{color:var(--warn);font-weight:600;}
@@ -100,10 +105,11 @@
   .matrix-head h2{margin-bottom:0;}
   .totals{font-size:12px;color:var(--ink-soft);}
   .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);}
-  table{border-collapse:collapse;width:100%;font-size:13px;white-space:nowrap;}
-  th,td{padding:8px 10px;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);text-align:left;}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;white-space:nowrap;}
+  th,td{padding:6px 8px;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);text-align:left;}
   th{background:#f8f9fb;font-weight:700;font-size:12px;position:sticky;top:0;}
-  th.bizcol{text-align:center;background:var(--blue-soft);color:var(--blue);}
+  th.bizcol{text-align:center;background:var(--blue-soft);color:var(--blue);padding-left:6px;padding-right:6px;}
+  td.center{padding-left:6px;padding-right:6px;}
   th.countcell{text-align:center;font-size:13px;color:var(--blue);background:var(--blue-soft);}
   td.center{text-align:center;font-weight:700;}
   td.o{color:var(--ok-ink);}
@@ -301,7 +307,7 @@ function computeDiff(oldProfiles, newProfiles){
 
 // 변경 배지 HTML (기본 표시안 — 조정 가능)
 function diffBadges(d){
-  if(!d) return '<span class="dwrap"><span class="dbadge d-none">최초 조회 (비교 대상 없음)</span></span>';  // 최초 조회
+  if(!d) return '<span class="dwrap"><span class="dbadge d-first">최초 조회</span></span>';  // 최초 조회 — 비교 대상 없음
   const parts = [];
   if(d.added)   parts.push('<span class="dbadge d-add">+'+d.added+' 신규</span>');
   if(d.removed) parts.push('<span class="dbadge d-del">−'+d.removed+' 삭제</span>');
@@ -346,6 +352,39 @@ function removeResponse(label){
   render();
 }
 
+// ===== 계정(응답) 순서 드래그 정렬 — 목록/매트릭스 컬럼 함께 반영 =====
+let dragSrc = -1;
+function dragStart(e, i){
+  dragSrc = i;
+  e.dataTransfer.effectAllowed = "move";
+  try{ e.dataTransfer.setData("text/plain", String(i)); }catch(_){}
+  e.currentTarget.classList.add("dragging");
+}
+function dragOver(e){
+  e.preventDefault();
+  e.dataTransfer.dropEffect = "move";
+  const el = e.currentTarget;
+  if(!el.classList.contains("dragging")) el.classList.add("drop-target");
+}
+function dragLeave(e){ e.currentTarget.classList.remove("drop-target"); }
+function dropAt(e, i){
+  e.preventDefault();
+  e.currentTarget.classList.remove("drop-target");
+  if(dragSrc < 0 || dragSrc === i) return;
+  const item = responses.splice(dragSrc, 1)[0];
+  const target = dragSrc < i ? i - 1 : i;   // 제거로 밀린 인덱스 보정
+  responses.splice(target, 0, item);
+  dragSrc = -1;
+  saveState();
+  render();
+  toast("순서 변경됨");
+}
+function dragEnd(e){
+  e.currentTarget.classList.remove("dragging");
+  document.querySelectorAll(".resp-item.drop-target").forEach(el => el.classList.remove("drop-target"));
+  dragSrc = -1;
+}
+
 function render(){
   // 저장 시각 표시
   const info = document.getElementById("savedInfo");
@@ -362,10 +401,13 @@ function render(){
   if(responses.length === 0){
     list.innerHTML = '<div class="empty-note">아직 추가된 응답이 없습니다.</div>';
   }else{
-    list.innerHTML = responses.map(r => {
+    list.innerHTML = responses.map((r, i) => {
       const dupTxt = r.dup > 0 ? ' · <span class="dup">중복 '+r.dup+'건 제거됨</span>' : '';
       const upd = r.updatedAt ? '<span class="rupd">' + fmtSavedAt(r.updatedAt) + ' 조회</span>' : '';
-      return '<div class="resp-item">'
+      return '<div class="resp-item" draggable="true" data-i="'+i+'"'
+        + ' ondragstart="dragStart(event,'+i+')" ondragover="dragOver(event)" ondragleave="dragLeave(event)"'
+        + ' ondrop="dropAt(event,'+i+')" ondragend="dragEnd(event)">'
+        + '<span class="handle" title="드래그해서 순서 변경" aria-label="순서 변경 핸들">⠿</span>'
         + '<span class="rname">'+esc(r.label)+'</span>'
         + '<span class="rmeta">고유 '+r.profiles.length+'건 (응답 '+r.raw+'건'+dupTxt+')</span>'
         + upd
@@ -414,7 +456,7 @@ function renderMatrix(){
   html += "<thead><tr>";
   html += "<th>번호</th><th>발신프로필</th><th>발신프로필명</th><th>등록일</th><th>채널 상태</th>";
   for(const r of responses){
-    const upd = r.updatedAt ? '<span class="colupd">'+fmtSavedAt(r.updatedAt)+' 조회</span>' : '';
+    const upd = r.updatedAt ? '<span class="colupd">'+fmtSavedAt(r.updatedAt).slice(5)+'</span>' : '';
     html += '<th class="bizcol">'+esc(r.label)+upd+'</th>';
   }
   html += "</tr></thead><tbody>";
