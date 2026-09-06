@@ -59,6 +59,15 @@
   .btn-doc{background:#fff; color:var(--primary); border:1px solid var(--g200);}
   .btn-doc:hover{border-color:var(--primary);}
 
+  /* ===== Section head (title + action) ===== */
+  .sec-head{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px;}
+  .sec-head .sec-title{margin-bottom:0;}
+  .btn-wbs{background:#fff; color:var(--primary); border:1px solid var(--g200);}
+  .btn-wbs:hover{border-color:var(--primary);}
+  .btn-disabled{background:var(--g50); color:var(--g400); border:1px solid var(--g100); cursor:default;}
+  .btn-jira{background:#fff; color:var(--g600); border:1px solid var(--g200); font-variant-numeric:tabular-nums;}
+  .btn-jira:hover{border-color:var(--g400); color:var(--g900);}
+
   /* ===== Footer ===== */
   footer{margin-top:40px; padding-top:18px; border-top:1px solid var(--g100); font-size:13px; color:var(--g400); text-align:center;}
 
@@ -100,6 +109,35 @@
         <div class="name">역할·계정 정책서</div>
         <div class="open">문서 열기 &rarr;</div>
       </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       인터넷 상품 구조 개선 (프로젝트 단위 섹션)
+       * 화면 추가: 아래 menu-row 블록을 복사해서
+         [화면명 / 메뉴경로 / 목업경로 / 기능정의서 / 지라티켓]만 바꾸면 됩니다.
+  ============================================================ -->
+  <section>
+    <div class="sec-head">
+      <div class="sec-title">인터넷 상품 구조 개선</div>
+      <a class="btn btn-wbs" href="/crm-admin/internet-product/wbs/" target="_blank">전체 일정 (WBS)</a>
+    </div>
+    <div class="menu-list">
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">[Phase 1] 태그 관리</div>
+          <div class="menu-slug">/crm/internet/tags</div>
+        </div>
+        <div class="menu-links">
+          <a class="btn btn-mock" href="/crm-admin/internet-tags/" target="_blank">화면 목업</a>
+          <span class="btn btn-disabled" aria-disabled="true" title="준비 중">기능정의서</span>
+          <a class="btn btn-jira" href="https://ajnetworks.atlassian.net/browse/PNB-1670" target="_blank" rel="noopener">PNB-1670</a>
+        </div>
+      </div>
+
+      <!-- ▲ 새 화면은 이 줄 위에 menu-row 블록을 복사해 추가하세요 -->
+
     </div>
   </section>
 

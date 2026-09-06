@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PNB 인터넷 상품 구조 개선 프로젝트</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+:root{--ink:#1a1a1a;--soft:#4a4a4a;--mute:#8a8a8a;--line:#e0e0e0;--line2:#f2f2f2;
+--p1:#2c5f8d;--p2:#b85c00;--be:#6b4c7a;--hol:#c0392b;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+color:var(--ink);background:#fff;font-size:16.2px;line-height:1.5;padding:30px 27.5px}
+.wrap{max-width:1325px;margin:0 auto}
+header{border-bottom:2px solid var(--ink);padding-bottom:12.5px;margin-bottom:17.5px}
+.dt{font-size:12.5px;letter-spacing:.14em;color:var(--mute);margin-bottom:3.8px}
+h1{font-size:23.8px;font-weight:700;letter-spacing:-.02em;margin-bottom:7.5px}
+.meta{display:flex;gap:20px;flex-wrap:wrap;font-size:15px;color:var(--soft)}
+.meta b{color:var(--ink);font-weight:600;margin-right:5px}
+.rnr{margin-top:7.5px;font-size:15px;color:var(--soft)}
+.rnr b{color:var(--ink);font-weight:700}
+.rnr .tbd{color:var(--hol)}
+h2{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:32.5px 0 11.2px;
+display:flex;align-items:baseline;gap:11.2px}
+h2 span{font-size:13.8px;font-weight:400;color:var(--mute)}
+h4{font-size:15.6px;font-weight:700;margin:25px 0 7.5px;color:var(--ink)}
+h4.first{margin-top:0}
+h4 i{font-style:normal;font-weight:400;color:var(--mute);font-size:13.8px}
+.tabs{display:flex;margin-bottom:12.5px}
+.tab{border:1px solid var(--line);background:#fff;color:var(--soft);font-size:15px;
+padding:6.2px 20px;cursor:pointer;font-family:inherit;margin-left:-1.2px}
+.tab:first-child{margin-left:0;border-radius:3.8px 0 0 3.8px}
+.tab:last-child{border-radius:0 3.8px 3.8px 0}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:15.6px}
+th,td{text-align:left;padding:7.5px 11.2px;border-bottom:1px solid var(--line2);vertical-align:top}
+th{background:#f7f7f5;font-size:14.4px;font-weight:600;border-bottom:1px solid var(--line)}
+td{color:var(--soft)}
+td i{font-style:normal;color:var(--mute);font-size:13.8px}
+td b{color:var(--ink)}
+td b.hol{color:var(--hol)}
+th.c1{width:17%}th.c2,th.c3{width:41.5%}
+.gwrap{overflow-x:auto;padding-bottom:5px}
+.g{display:grid;grid-template-columns:297.5px repeat(61,minmax(16.2px,1fr));min-width:1287.5px;align-items:center}
+.bgc{border-right:1px solid var(--line2);align-self:stretch}
+.wk{font-size:11.9px;color:var(--mute);text-align:center;padding:3.8px 0;
+border-right:1px solid var(--line);border-bottom:1px solid var(--line);white-space:nowrap;overflow:hidden}
+.dy{font-size:11.2px;color:var(--mute);text-align:center;padding:2.5px 0;
+border-bottom:1px solid var(--ink);position:relative;z-index:2}
+.dy.h{color:var(--hol);font-weight:700}
+.rl{font-size:14.4px;padding:3.8px 12.5px 3.8px 2.5px;white-space:nowrap;color:var(--soft);overflow:hidden;text-overflow:ellipsis}
+.rl i{font-style:normal;color:var(--mute);font-size:13.1px}
+.rl.gp{font-size:13.8px;font-weight:700;letter-spacing:.08em;padding-top:11.2px}
+.rl.gp.p1{color:var(--p1)}.rl.gp.p2{color:var(--p2)}.rl.gp.be{color:var(--be)}
+.gl{height:1.2px;background:var(--line);margin:6.2px 0}
+.bar{height:17.5px;border-radius:3.8px;margin:3.8px 0;position:relative;z-index:2}
+.bar.p1{background:var(--p1)}.bar.p2{background:var(--p2)}.bar.be{background:var(--be)}
+.dia{position:relative;z-index:2;text-align:center;font-size:12.5px;line-height:1;margin:3.8px 0}
+.dia.p1{color:var(--p1)}.dia.p2{color:var(--p2)}.dia.be{color:var(--be)}
+.lgd{display:flex;gap:20px;flex-wrap:wrap;font-size:13.8px;color:var(--mute);margin:10px 0 2.5px}
+.lgd span{display:flex;align-items:center;gap:6.2px}
+.lgd .sw{width:17.5px;height:11.2px;border-radius:2.5px;display:inline-block}
+.lgd .sw.p1{background:var(--p1)}.lgd .sw.p2{background:var(--p2)}.lgd .sw.be{background:var(--be)}
+.lgd .dm{width:10px;height:10px;background:var(--ink);transform:rotate(45deg);display:inline-block}
+.note{border-left:3px solid var(--line);padding:2.5px 0 2.5px 13.8px;margin-bottom:13.8px}
+.note b{display:block;font-size:15px;margin-bottom:2.5px}
+.note p{font-size:15.6px;color:var(--soft)}
+.note.w{border-left-color:var(--p2)}.note.w b{color:var(--p2)}
+.note.b{border-left-color:var(--p1)}.note.b b{color:var(--p1)}
+ul{list-style:none}
+li{position:relative;padding-left:16.2px;margin-bottom:3.8px;color:var(--soft);font-size:15.6px}
+li:before{content:"\00b7";position:absolute;left:3px;color:var(--mute);font-weight:700}
+li b{color:var(--ink);font-weight:600}
+footer{margin-top:27.5px;padding-top:11.2px;border-top:1px solid var(--line);
+font-size:13.8px;color:var(--mute);text-align:center}
+@media print{.tabs{display:none}[hidden]{display:block!important}}
+</style></head><body><div class="wrap">
+
+<header>
+<div class="dt">PROJECT SCHEDULE</div>
+<h1>PNB 인터넷 상품 구조 개선 프로젝트</h1>
+<div class="meta">
+<span><b>일자</b>2026.09.04</span>
+<span><b>작성</b>김아라</span>
+<span><b>배포 예정일</b>PHASE 1 &nbsp;10/12(월) &nbsp;/&nbsp; PHASE 2 &nbsp;11/02(월) 잠정</span>
+</div>
+<div class="rnr"><b>기획</b> 김아라 &middot; <b>디자인</b> 장재혁 &middot; <b>FE</b> 유가람 &middot; <b>BE</b> 박영철 &middot; <b>QA</b> <span class="tbd">미정</span></div>
+</header>
+
+<h2>PHASE 구분</h2>
+<table><thead><tr><th style="width:13%">구분</th><th style="width:35%">범위</th><th>영향 페이지</th></tr></thead><tbody>
+<tr><td><b style="color:#2c5f8d">PHASE 1</b></td><td>인터넷 상품 개선 &mdash; 태그 구조 / 관리 개선</td><td>태그 관리, 인터넷 태그 관리, 인터넷 상품 관리</td></tr>
+<tr><td><b style="color:#b85c00">PHASE 2</b></td><td>인터넷 상품 개선 &mdash; 인터넷 상품 개선</td><td>인터넷 상품 관리 페이지 전체</td></tr>
+</tbody></table>
+<div class="note"><p>PHASE 1&middot;2는 동일 과제(인터넷 상품 개선)의 연속 단계로, BE 작업은 두 PHASE의 경계를 넘어 연속 진행됩니다. 이에 BE 일정은 PHASE별로 분리하지 않고 별도 트랙으로 표기합니다.</p></div>
+
+<h2>전체 일정<span>영업일 기준 &middot; 공휴일 제외</span></h2>
+<div class="tabs" role="tablist">
+<button class="tab" role="tab" aria-selected="true" data-v="t">표 보기</button>
+<button class="tab" role="tab" aria-selected="false" data-v="g">타임라인 보기</button>
+</div>
+<div id="v-t">
+<h4 class="first">PHASE 1 / PHASE 2 일정</h4>
+<table><thead><tr><th class="c1">기간</th><th class="c2">PHASE 1</th><th class="c3">PHASE 2</th></tr></thead><tbody>
+<tr><td>9/4(금)~9/8(화)</td><td>상세 기획 <i>김아라</i></td><td>&mdash;</td></tr>
+<tr><td>9/8(화)~9/10(목)</td><td>CS 본부 의견 수렴<br>인터넷 스쿼드 협의 <i>PNB</i></td><td>&mdash;</td></tr>
+<tr><td>9/9(수)~9/11(금)</td><td>화면 디자인 + CS 의견 반영한 기획 수정 <i>김아라</i></td><td>&mdash;</td></tr>
+<tr><td>9/11(금)</td><td><b>API 스펙 Freeze</b> <i>김아라·박영철</i></td><td>&mdash;</td></tr>
+<tr><td>9/14(월)~9/18(금)</td><td>FE 개발 1~5일차 <i>유가람</i></td><td>9/14~ 상세 기획 <i>김아라</i><br>9/17~ 디자인 초안 <i>장재혁</i></td></tr>
+<tr><td>9/21(월)~9/23(수)</td><td>FE 개발 6~7일차 → 9/22 완료 <i>유가람</i><br>9/23 통합 확인 / 버퍼 <i>PNB</i></td><td>9/22 상세 기획 완료<br>9/23 디자인 초안 완료</td></tr>
+<tr><td>9/24(목)~9/27(일)</td><td><b class='hol'>추석 연휴</b></td><td><b class='hol'>추석 연휴</b></td></tr>
+<tr><td>9/28(월)~10/2(금)</td><td>QA (테스트 3d + 수정·재검증 2d) <i>미정</i></td><td><b>9/28 API 스펙 Freeze</b><br>9/28~30 디자인 디테일 수정 <i>장재혁</i></td></tr>
+<tr><td>10/5(월)</td><td><b class='hol'>개천절 대체공휴일</b></td><td><b class='hol'>개천절 대체공휴일</b></td></tr>
+<tr><td>10/6(화)~10/8(목)</td><td>&mdash;</td><td>FE 개발 1~3일차 <i>유가람</i></td></tr>
+<tr><td>10/9(금)</td><td><b class='hol'>한글날</b></td><td><b class='hol'>한글날</b></td></tr>
+<tr><td>10/12(월)</td><td><b>배포</b></td><td>FE 개발 4일차 <i>유가람</i></td></tr>
+<tr><td>10/13(화)~10/16(금)</td><td>&mdash;</td><td>FE 개발 5~8일차 <i>유가람</i></td></tr>
+<tr><td>10/19(월)~10/23(금)</td><td>&mdash;</td><td>10/21 FE 개발 완료 (11일차) <i>유가람</i><br>10/22 통합 확인 / 버퍼<br>10/23 QA 착수 <i>미정</i></td></tr>
+<tr><td>10/26(월)~10/29(목)</td><td>&mdash;</td><td>10/29 QA 완료 <i>미정</i></td></tr>
+<tr><td>11/2(월)</td><td>&mdash;</td><td><b>배포</b></td></tr>
+</tbody></table>
+<h4>BE 상세 일정 <i>박영철</i></h4>
+<table><thead><tr><th style="width:26%">기간</th><th>작업 내용</th></tr></thead><tbody>
+<tr><td>8/10(월) ~ 8/21(금)</td><td>인터넷 태그 설계</td></tr>
+<tr><td>8/24(월) ~ 9/2(수)</td><td>인터넷 상품 설계 및 태그 설계 영향도 확인</td></tr>
+<tr><td>9/3(목) ~ 9/7(월)</td><td>태그 초안 기준 API 스펙 정의 및 MOCK 컨트롤러 개발</td></tr>
+<tr><td>9/8(화) ~ 9/10(목)</td><td>태그 개선 전/후 데이터 맵핑 표 작성 및 어드민 외 노출 영향도 확인</td></tr>
+<tr><td>9/11(금) ~ 10/2(금)</td><td>태그 API 개발</td></tr>
+<tr><td>10/6(화) ~ 10/16(금)</td><td>테스트 및 QA 데이터 마이그레이션 (개발, 베타)</td></tr>
+<tr><td>10/19(월) ~ 10/29(목)</td><td>QA 대응 및 데이터 마이그레이션 (운영)</td></tr>
+<tr><td>11/2(월)</td><td><b>배포</b></td></tr>
+</tbody></table></div>
+<div id="v-g" hidden><div class="gwrap"><div class="g">
+<div style="grid-column:1;grid-row:1/3;align-self:stretch;border-bottom:1px solid #1a1a1a"></div>
+<div class="bgc" style="grid-column:2;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:3;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:4;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:5;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:6;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:7;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:8;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:9;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:10;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:11;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:12;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:13;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:14;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:15;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:16;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:17;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:18;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:19;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:20;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:21;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:22;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:23;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:24;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:25;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:26;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:27;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:28;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:29;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:30;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:31;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:32;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:33;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:34;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:35;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:36;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:37;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:38;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:39;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:40;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:41;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:42;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:43;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:44;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:45;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:46;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:47;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:48;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:49;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:50;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:51;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:52;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:53;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:54;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:55;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:56;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:57;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:58;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:59;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:60;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:61;grid-row:3/30"></div>
+<div class="bgc" style="grid-column:62;grid-row:3/30"></div>
+<div class="wk" style="grid-column:2/span 5;grid-row:1;border-left:1px solid var(--line)">8/10 ~ 8/14</div>
+<div class="wk" style="grid-column:7/span 5;grid-row:1">8/17 ~ 8/21</div>
+<div class="wk" style="grid-column:12/span 5;grid-row:1">8/24 ~ 8/28</div>
+<div class="wk" style="grid-column:17/span 5;grid-row:1">8/31 ~ 9/4</div>
+<div class="wk" style="grid-column:22/span 5;grid-row:1">9/7 ~ 9/11</div>
+<div class="wk" style="grid-column:27/span 5;grid-row:1">9/14 ~ 9/18</div>
+<div class="wk" style="grid-column:32/span 5;grid-row:1">9/21 ~ 9/25</div>
+<div class="wk" style="grid-column:37/span 5;grid-row:1">9/28 ~ 10/2</div>
+<div class="wk" style="grid-column:42/span 5;grid-row:1">10/5 ~ 10/9</div>
+<div class="wk" style="grid-column:47/span 5;grid-row:1">10/12 ~ 10/16</div>
+<div class="wk" style="grid-column:52/span 5;grid-row:1">10/19 ~ 10/23</div>
+<div class="wk" style="grid-column:57/span 6;grid-row:1">10/26 ~ 11/2</div>
+<div class="dy" style="grid-column:2;grid-row:2">10</div>
+<div class="dy" style="grid-column:3;grid-row:2">11</div>
+<div class="dy" style="grid-column:4;grid-row:2">12</div>
+<div class="dy" style="grid-column:5;grid-row:2">13</div>
+<div class="dy" style="grid-column:6;grid-row:2">14</div>
+<div class="dy" style="grid-column:7;grid-row:2">17</div>
+<div class="dy" style="grid-column:8;grid-row:2">18</div>
+<div class="dy" style="grid-column:9;grid-row:2">19</div>
+<div class="dy" style="grid-column:10;grid-row:2">20</div>
+<div class="dy" style="grid-column:11;grid-row:2">21</div>
+<div class="dy" style="grid-column:12;grid-row:2">24</div>
+<div class="dy" style="grid-column:13;grid-row:2">25</div>
+<div class="dy" style="grid-column:14;grid-row:2">26</div>
+<div class="dy" style="grid-column:15;grid-row:2">27</div>
+<div class="dy" style="grid-column:16;grid-row:2">28</div>
+<div class="dy" style="grid-column:17;grid-row:2">31</div>
+<div class="dy" style="grid-column:18;grid-row:2">1</div>
+<div class="dy" style="grid-column:19;grid-row:2">2</div>
+<div class="dy" style="grid-column:20;grid-row:2">3</div>
+<div class="dy" style="grid-column:21;grid-row:2">4</div>
+<div class="dy" style="grid-column:22;grid-row:2">7</div>
+<div class="dy" style="grid-column:23;grid-row:2">8</div>
+<div class="dy" style="grid-column:24;grid-row:2">9</div>
+<div class="dy" style="grid-column:25;grid-row:2">10</div>
+<div class="dy" style="grid-column:26;grid-row:2">11</div>
+<div class="dy" style="grid-column:27;grid-row:2">14</div>
+<div class="dy" style="grid-column:28;grid-row:2">15</div>
+<div class="dy" style="grid-column:29;grid-row:2">16</div>
+<div class="dy" style="grid-column:30;grid-row:2">17</div>
+<div class="dy" style="grid-column:31;grid-row:2">18</div>
+<div class="dy" style="grid-column:32;grid-row:2">21</div>
+<div class="dy" style="grid-column:33;grid-row:2">22</div>
+<div class="dy" style="grid-column:34;grid-row:2">23</div>
+<div class="dy h" style="grid-column:35;grid-row:2">24</div>
+<div class="dy h" style="grid-column:36;grid-row:2">25</div>
+<div class="dy" style="grid-column:37;grid-row:2">28</div>
+<div class="dy" style="grid-column:38;grid-row:2">29</div>
+<div class="dy" style="grid-column:39;grid-row:2">30</div>
+<div class="dy" style="grid-column:40;grid-row:2">1</div>
+<div class="dy" style="grid-column:41;grid-row:2">2</div>
+<div class="dy h" style="grid-column:42;grid-row:2">5</div>
+<div class="dy" style="grid-column:43;grid-row:2">6</div>
+<div class="dy" style="grid-column:44;grid-row:2">7</div>
+<div class="dy" style="grid-column:45;grid-row:2">8</div>
+<div class="dy h" style="grid-column:46;grid-row:2">9</div>
+<div class="dy" style="grid-column:47;grid-row:2">12</div>
+<div class="dy" style="grid-column:48;grid-row:2">13</div>
+<div class="dy" style="grid-column:49;grid-row:2">14</div>
+<div class="dy" style="grid-column:50;grid-row:2">15</div>
+<div class="dy" style="grid-column:51;grid-row:2">16</div>
+<div class="dy" style="grid-column:52;grid-row:2">19</div>
+<div class="dy" style="grid-column:53;grid-row:2">20</div>
+<div class="dy" style="grid-column:54;grid-row:2">21</div>
+<div class="dy" style="grid-column:55;grid-row:2">22</div>
+<div class="dy" style="grid-column:56;grid-row:2">23</div>
+<div class="dy" style="grid-column:57;grid-row:2">26</div>
+<div class="dy" style="grid-column:58;grid-row:2">27</div>
+<div class="dy" style="grid-column:59;grid-row:2">28</div>
+<div class="dy" style="grid-column:60;grid-row:2">29</div>
+<div class="dy" style="grid-column:61;grid-row:2">30</div>
+<div class="dy" style="grid-column:62;grid-row:2">2</div>
+<div class="rl gp p1" style="grid-column:1;grid-row:3">PHASE 1</div>
+<div style="grid-column:2/span 61;grid-row:3"><div class="gl"></div></div>
+<div class="rl" style="grid-column:1;grid-row:4">상세 기획 <i>김아라</i></div>
+<div class="bar p1" style="grid-column:21/span 3;grid-row:4"></div>
+<div class="rl" style="grid-column:1;grid-row:5">유관부서 협의 <i>PNB</i></div>
+<div class="bar p1" style="grid-column:23/span 3;grid-row:5"></div>
+<div class="rl" style="grid-column:1;grid-row:6">화면 디자인 · 기획 수정 <i>김아라</i></div>
+<div class="bar p1" style="grid-column:24/span 3;grid-row:6"></div>
+<div class="rl" style="grid-column:1;grid-row:7">API 스펙 Freeze <i>김아라·박영철</i></div>
+<div class="dia p1" style="grid-column:26;grid-row:7">&#9670;</div>
+<div class="rl" style="grid-column:1;grid-row:8">FE 개발 <i>유가람</i></div>
+<div class="bar p1" style="grid-column:27/span 7;grid-row:8"></div>
+<div class="rl" style="grid-column:1;grid-row:9">통합 확인 / 버퍼 <i>PNB</i></div>
+<div class="bar p1" style="grid-column:34/span 1;grid-row:9"></div>
+<div class="rl" style="grid-column:1;grid-row:10">QA <i>미정</i></div>
+<div class="bar p1" style="grid-column:37/span 5;grid-row:10"></div>
+<div class="rl" style="grid-column:1;grid-row:11">배포 <i>전체</i></div>
+<div class="dia p1" style="grid-column:47;grid-row:11">&#9670;</div>
+<div class="rl gp p2" style="grid-column:1;grid-row:12">PHASE 2</div>
+<div style="grid-column:2/span 61;grid-row:12"><div class="gl"></div></div>
+<div class="rl" style="grid-column:1;grid-row:13">상세 기획 <i>김아라</i></div>
+<div class="bar p2" style="grid-column:27/span 7;grid-row:13"></div>
+<div class="rl" style="grid-column:1;grid-row:14">디자인 초안 <i>장재혁</i></div>
+<div class="bar p2" style="grid-column:30/span 5;grid-row:14"></div>
+<div class="rl" style="grid-column:1;grid-row:15">API 스펙 Freeze <i>김아라·박영철</i></div>
+<div class="dia p2" style="grid-column:37;grid-row:15">&#9670;</div>
+<div class="rl" style="grid-column:1;grid-row:16">디자인 디테일 수정 <i>장재혁</i></div>
+<div class="bar p2" style="grid-column:37/span 3;grid-row:16"></div>
+<div class="rl" style="grid-column:1;grid-row:17">FE 개발 <i>유가람</i></div>
+<div class="bar p2" style="grid-column:43/span 12;grid-row:17"></div>
+<div class="rl" style="grid-column:1;grid-row:18">통합 확인 / 버퍼 <i>PNB</i></div>
+<div class="bar p2" style="grid-column:55/span 1;grid-row:18"></div>
+<div class="rl" style="grid-column:1;grid-row:19">QA <i>미정</i></div>
+<div class="bar p2" style="grid-column:56/span 5;grid-row:19"></div>
+<div class="rl" style="grid-column:1;grid-row:20">배포 <i>전체</i></div>
+<div class="dia p2" style="grid-column:62;grid-row:20">&#9670;</div>
+<div class="rl gp be" style="grid-column:1;grid-row:21">BE (박영철)</div>
+<div style="grid-column:2/span 61;grid-row:21"><div class="gl"></div></div>
+<div class="rl" style="grid-column:1;grid-row:22">인터넷 태그 설계</div>
+<div class="bar be" style="grid-column:2/span 10;grid-row:22"></div>
+<div class="rl" style="grid-column:1;grid-row:23">인터넷 상품 설계 · 태그 영향도 확인</div>
+<div class="bar be" style="grid-column:12/span 8;grid-row:23"></div>
+<div class="rl" style="grid-column:1;grid-row:24">API 스펙 정의 · MOCK 컨트롤러 개발</div>
+<div class="bar be" style="grid-column:20/span 3;grid-row:24"></div>
+<div class="rl" style="grid-column:1;grid-row:25">데이터 맵핑 표 작성 · 노출 영향도 확인</div>
+<div class="bar be" style="grid-column:23/span 3;grid-row:25"></div>
+<div class="rl" style="grid-column:1;grid-row:26">태그 API 개발</div>
+<div class="bar be" style="grid-column:26/span 16;grid-row:26"></div>
+<div class="rl" style="grid-column:1;grid-row:27">테스트 · QA 데이터 마이그레이션 (개발/베타)</div>
+<div class="bar be" style="grid-column:43/span 9;grid-row:27"></div>
+<div class="rl" style="grid-column:1;grid-row:28">QA 대응 · 데이터 마이그레이션 (운영)</div>
+<div class="bar be" style="grid-column:52/span 9;grid-row:28"></div>
+<div class="rl" style="grid-column:1;grid-row:29">배포</div>
+<div class="dia be" style="grid-column:62;grid-row:29">&#9670;</div>
+</div></div>
+<div class="lgd"><span><i class="sw p1"></i>PHASE 1</span><span><i class="sw p2"></i>PHASE 2</span><span><i class="sw be"></i>BE (박영철)</span><span><i class="dm"></i>마일스톤 (Freeze / 배포)</span><span style="color:#c0392b">붉은 일자 = 공휴일</span></div>
+</div>
+
+<h2>참고사항</h2>
+
+<div class="note b"><b>PHASE 1 &middot; 유관부서 협의</b>
+<p>CS 본부 의견 수렴 및 플랫폼 프로덕트실 인터넷 스쿼드 협의(9/8~9/10) 결과에 따라 기획&middot;디자인 및 후속 일정이 조정될 수 있습니다.</p></div>
+
+<div class="note w"><b>PHASE 2 &middot; 일정 변동 가능 요인</b>
+<ul>
+<li><b>스펙 확정도</b> &mdash; 현 시점(9월 초) 기준 PHASE 2 스펙은 100% 확정된 상태가 아니며, 상세 기획 진행 과정에서 범위가 변동될 수 있습니다.</li>
+<li><b>디자인 리소스</b> &mdash; PHASE 2부터 디자이너(장재혁)가 신규 투입될 예정으로, 디자인 진행 일정에 따라 전체 일정에 영향이 있을 수 있습니다.</li>
+</ul>
+<p>위 사유로 PHASE 2의 FE&middot;QA&middot;배포 일정은 현 시점 산정치이며 확정 일정이 아닙니다.</p></div>
+
+<h2>향후 보고 계획</h2>
+<table><thead><tr><th style="width:30%">시점</th><th>보고 내용</th></tr></thead><tbody>
+<tr><td>추석 연휴 전 (9/22~9/23)</td><td>PHASE 2 상세 기획 완료 &rarr; FE&middot;QA 공수 재산정 후 <b>확정 일정</b> 보고</td></tr>
+<tr><td>9월 마지막 주 (9/28~10/2)</td><td>PHASE 2 <b>배포일 확정</b> 보고</td></tr>
+</tbody></table>
+
+<footer>작성일 2026.09.04 &middot; PNB 스쿼드 (상품&amp;BO) &middot; 작성자 김아라</footer>
+</div>
+<script>
+var tabs=document.querySelectorAll('.tab');
+tabs.forEach(function(t){t.addEventListener('click',function(){
+  tabs.forEach(function(x){x.setAttribute('aria-selected', x===t?'true':'false');});
+  document.getElementById('v-t').hidden=(t.dataset.v!=='t');
+  document.getElementById('v-g').hidden=(t.dataset.v!=='g');
+});});
+</script>
+</body></html>
