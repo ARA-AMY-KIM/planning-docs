@@ -39,12 +39,13 @@
   .policy{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
   .policy a{
     display:block; background:#fff; border:1px solid var(--g100); border-radius:var(--radius);
-    padding:20px 22px; text-decoration:none; box-shadow:var(--shadow); transition:border-color .15s;
+    padding:15px 20px; text-decoration:none; box-shadow:var(--shadow); transition:border-color .15s;
   }
+  .policy .prow{display:flex; align-items:baseline; justify-content:space-between; gap:14px;}
   .policy a:hover{border-color:var(--primary);}
-  .policy .label{font-size:12px; font-weight:700; color:var(--primary); letter-spacing:.08em; margin-bottom:7px;}
+  .policy .label{font-size:12px; font-weight:700; color:var(--primary); letter-spacing:.08em; margin-bottom:5px;}
   .policy .name{font-size:17px; font-weight:600; color:var(--g900);}
-  .policy .open{font-size:14px; color:var(--g400); margin-top:9px;}
+  .policy .open{font-size:14px; color:var(--g400); white-space:nowrap; flex-shrink:0;}
 
   /* ===== Menu list ===== */
   .menu-list{background:#fff; border:1px solid var(--g100); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden;}
@@ -103,13 +104,17 @@
     <div class="policy">
       <a href="https://ajnetworks.atlassian.net/wiki/x/HoBDVw" target="_blank" rel="noopener">
         <div class="label">MASTER</div>
-        <div class="name">역할·메뉴 마스터 문서</div>
-        <div class="open">문서 열기 &rarr;</div>
+        <div class="prow">
+          <div class="name">역할·메뉴 마스터 문서</div>
+          <div class="open">문서 열기 &rarr;</div>
+        </div>
       </a>
       <a href="https://ajnetworks.atlassian.net/wiki/x/FQBUUQ" target="_blank" rel="noopener">
         <div class="label">POLICY</div>
-        <div class="name">역할·계정 정책서</div>
-        <div class="open">문서 열기 &rarr;</div>
+        <div class="prow">
+          <div class="name">역할·계정 정책서</div>
+          <div class="open">문서 열기 &rarr;</div>
+        </div>
       </a>
     </div>
   </section>
@@ -142,10 +147,22 @@
       <div class="menu-row">
         <div>
           <div class="menu-name">[Phase 1] 태그 관리 &gt; 상품속성 관리</div>
+          <div class="menu-slug">/crm/internet/attributes</div>
+        </div>
+        <div class="menu-links">
+          <a class="btn btn-mock" href="/crm-admin/attributes/" target="_blank">화면 목업</a>
+          <span class="btn btn-disabled" aria-disabled="true" title="준비 중">기능정의서</span>
+        </div>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">[Phase 1] 인터넷 상품 관리 &gt; 상품 연결 관리</div>
           <div class="menu-slug">경로 미정</div>
         </div>
         <div class="menu-links">
-          <a class="btn btn-mock" href="/crm-admin/internet-tags/attributes/" target="_blank">화면 목업</a>
+          <span class="btn btn-disabled" aria-disabled="true" title="준비 중">화면 목업</span>
+          <a class="btn btn-alt" href="https://claude.ai/code/artifact/3a4e0062-e288-45cf-be97-3057dcdc3969" target="_blank" rel="noopener">화면 구성안</a>
           <span class="btn btn-disabled" aria-disabled="true" title="준비 중">기능정의서</span>
         </div>
       </div>
