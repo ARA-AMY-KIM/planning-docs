@@ -51,6 +51,8 @@
   .menu-row{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 22px; border-bottom:1px solid var(--g50);}
   .menu-row:last-child{border-bottom:none;}
   .menu-name{font-size:17px; font-weight:600; color:var(--g900);}
+  .menu-name a{color:var(--primary); text-decoration:none; border-bottom:1px solid transparent;}
+  .menu-name a:hover{border-bottom-color:var(--primary);}
   .menu-slug{font-size:13px; color:var(--g400); margin-top:3px;}
   .menu-links{display:flex; gap:8px; flex-shrink:0;}
   .btn{font-size:14px; font-weight:600; text-decoration:none; padding:9px 16px; border-radius:var(--radius); white-space:nowrap; transition:.15s;}
@@ -65,8 +67,8 @@
   .btn-wbs{background:#fff; color:var(--primary); border:1px solid var(--g200);}
   .btn-wbs:hover{border-color:var(--primary);}
   .btn-disabled{background:var(--g50); color:var(--g400); border:1px solid var(--g100); cursor:default;}
-  .btn-jira{background:#fff; color:var(--g600); border:1px solid var(--g200); font-variant-numeric:tabular-nums;}
-  .btn-jira:hover{border-color:var(--g400); color:var(--g900);}
+  .btn-alt{background:#fff; color:var(--g600); border:1px solid var(--g200);}
+  .btn-alt:hover{border-color:var(--g400); color:var(--g900);}
 
   /* ===== Footer ===== */
   footer{margin-top:40px; padding-top:18px; border-top:1px solid var(--g100); font-size:13px; color:var(--g400); text-align:center;}
@@ -115,24 +117,36 @@
   <!-- ============================================================
        인터넷 상품 구조 개선 (프로젝트 단위 섹션)
        * 화면 추가: 아래 menu-row 블록을 복사해서
-         [화면명 / 메뉴경로 / 목업경로 / 기능정의서 / 지라티켓]만 바꾸면 됩니다.
+         [화면명 / 메뉴경로 / 목업경로 / 화면구성안 / 기능정의서]만 바꾸면 됩니다.
   ============================================================ -->
   <section>
     <div class="sec-head">
       <div class="sec-title">인터넷 상품 구조 개선</div>
-      <a class="btn btn-wbs" href="/crm-admin/internet-product/wbs/" target="_blank">전체 일정 (WBS)</a>
+      <!-- WBS 갱신 시 아래 기준일만 수정 -->
+      <a class="btn btn-wbs" href="/crm-admin/internet-product/wbs/" target="_blank">WBS (기준일 : 9/4)</a>
     </div>
     <div class="menu-list">
 
       <div class="menu-row">
         <div>
-          <div class="menu-name">[Phase 1] 태그 관리</div>
+          <div class="menu-name"><a href="https://ajnetworks.atlassian.net/browse/PNB-1670" target="_blank" rel="noopener">[Phase 1] 태그 관리</a></div>
           <div class="menu-slug">/crm/internet/tags</div>
         </div>
         <div class="menu-links">
           <a class="btn btn-mock" href="/crm-admin/internet-tags/" target="_blank">화면 목업</a>
+          <a class="btn btn-alt" href="https://claude.ai/code/artifact/0f3d48fb-c1c2-469b-9e5f-b2949fe0f42d?org=d5581a7b-5dcd-44b9-a387-101f729c6e1d" target="_blank" rel="noopener">화면 구성안</a>
           <span class="btn btn-disabled" aria-disabled="true" title="준비 중">기능정의서</span>
-          <a class="btn btn-jira" href="https://ajnetworks.atlassian.net/browse/PNB-1670" target="_blank" rel="noopener">PNB-1670</a>
+        </div>
+      </div>
+
+      <div class="menu-row">
+        <div>
+          <div class="menu-name">[Phase 1] 태그 관리 &gt; 상품속성 관리</div>
+          <div class="menu-slug">경로 미정</div>
+        </div>
+        <div class="menu-links">
+          <a class="btn btn-mock" href="/crm-admin/internet-tags/attributes/" target="_blank">화면 목업</a>
+          <span class="btn btn-disabled" aria-disabled="true" title="준비 중">기능정의서</span>
         </div>
       </div>
 
