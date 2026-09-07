@@ -1,11 +1,4 @@
-<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>상품 연결 관리 목업</title>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap">
 <style>
 :root{
@@ -516,8 +509,7 @@ footer{padding:40px 32px 60px;font-size:12px;color:var(--g400);text-align:center
 .exnote{grid-column:1/-1;font-size:12px;color:var(--g500);letter-spacing:-.2px;padding:2px 4px}
 @media (max-width:1100px){.mgrid{grid-template-columns:1fr}}
 </style>
-</head>
-<body>
+
 <div class="wrap">
 
 <div class="gnb">
@@ -740,7 +732,7 @@ function render(){
     const rep = isDup
       ? '<span class="rep'+(isRep?' on':'')+'" data-rep="'+o.i+'" title="대표로 지정"></span>'
       : '<span class="repauto" title="이 조합을 쓰는 상품이 하나뿐이라 자동으로 대표입니다">자동</span>';
-    const cellA = (n,tn) => '<td class="mg" rowspan="'+rs+'" data-combo="'+r[12]+'" title="이 업체의 태그명: '+tn+'  ·  클릭하면 이 조합만 봅니다">'+tag(n)+'</td>';
+    const cellA = (n,tn) => '<td class="mg" rowspan="'+rs+'" title="이 업체의 태그명: '+tn+'">'+tag(n)+'</td>';
     const combo = first ? cellA(r[4],r[7])+cellA(r[5],r[8])+cellA(r[6],r[9]) : '';
     const badRep = isRep && !r[13];
     return '<tr class="'+(first?'gtop':'ing')+(FOCUS===o.i?' focus':'')+(!r[13]?' off':'')+(badRep?' badrep':'')+'">'
@@ -754,8 +746,6 @@ function render(){
   }).join('') : '<tr><td colspan="7" style="height:140px;text-align:center;color:var(--g400)">조건에 맞는 연결이 없습니다</td></tr>';
 
   if($('badLink')) $('badLink').onclick=()=>{ BADREP=true; COMBO=null; FOCUS=null; render(); };
-  $('body').querySelectorAll('[data-combo]').forEach(el=>el.onclick=()=>{
-    COMBO=el.dataset.combo; FOCUS=null; render(); });
   $('body').querySelectorAll('[data-rep]').forEach(el=>el.onclick=()=>{
     const i=+el.dataset.rep; REP[R[i][12]]=i; render();});
   $('body').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>openDel(+b.dataset.del));
@@ -943,8 +933,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
       <tr><th>같은 속성 조합</th><td>자리 3칸을 <code>rowspan</code>으로 <b>병합</b> · 첫 행에 <code>상품 N개</code> 배지 · 조합이 바뀌는 행에 진한 가로선(gray-200)</td></tr>
       <tr><th>속성 「없음」</th><td>회색</td></tr>
       <tr><th>세트상품 빈 값</th><td>회색 <b>「미적용」</b> — 442건 중 49건(11%)이 정상적으로 비어 있습니다(WiFi 없이 파는 상품)</td></tr>
-      <tr><th>자리 칸 마우스 호버</th><td>그 업체의 <b>태그명</b> — <code>100Mbps(광랜 1년)</code></td></tr>
-      <tr><th>자리 칸 클릭</th><td>그 조합만 필터 · 툴바에 지울 수 있는 칩</td></tr>
+      <tr><th>자리 칸 마우스 호버</th><td>그 업체의 <b>태그명</b> — <code>100Mbps(광랜 1년)</code>. 클릭 동작은 없습니다</td></tr>
       <tr><th>미사용 상품</th><td>행 흐리게 + 이름 옆 <span class="tag hold">미사용</span></td></tr>
       <tr><th>대표인데 미사용</th><td class="bad">행 배경 빨강 + 대표 칸에 <b>!</b> · 카운트 줄에 <b>대표 미사용 N건</b>(클릭 시 필터)</td></tr>
     </tbody>
@@ -996,11 +985,11 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
     <tbody>
       <tr><th>툴바 [상품 연결 관리]</th><td>구분 · 업체만 세팅 · 전체 목록</td></tr>
       <tr><th>우클릭 「상품 연결 관리에서 보기」<br><span class="tok">이미 연결이 있는 상품일 때</span></th><td>구분 · 업체 + <b>그 연결의 조합 필터</b> + 해당 행 강조 · 검색어와 다른 필터는 초기화 · <b>현재창 이동</b></td></tr>
-      <tr><th>목록에서 자리 칸 클릭</th><td>그 조합만 필터</td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p><b>조합 칩은 이 경로에서만 생깁니다</b> — 목록의 자리 칸을 눌러서 필터하는 동작은 뺐습니다. 조합의 72%가 상품 1건이라 눌러도 결과가 그 한 줄이고, 복수 조합도 <code>rowspan</code> 병합으로 이미 한 덩어리로 보입니다. 칩이 생기는 경로를 하나로 두어야 운영자가 지금 무엇이 걸려 있는지 압니다.</p>
     <p><b>현재창인 이유</b> — 조회만 하고 끝나지 않습니다. 대개 삭제로 이어지는데, 새창이면 뒤에 남은 인터넷 상품 관리가 이미 지운 연결의 선을 계속 그립니다.</p>
     <p class="q">URL 안 — <code>/crm/internet/product-connections?service=INTERNET&amp;vendor=KT&amp;combo=&lt;조합키&gt;&amp;focus=&lt;연결ID&gt;</code>. 링크 공유가 되어야 하므로 쿼리에 담는 쪽을 권합니다. 경로 체계는 PNB 도메인 분리 계획과 같이 봐야 합니다.</p>
   </div>
@@ -1010,6 +999,3 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
 
 <footer>엑셀 실데이터 442건 · 베타 어드민 AS-IS 대조 · 정본은 [CRM Admin] 상품 연결 관리 - 기능 정의서</footer>
 </div>
-
-</body>
-</html>

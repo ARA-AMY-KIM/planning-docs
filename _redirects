@@ -1,0 +1,6 @@
+# 2026-09-06 구조 개편: 인터넷 상품 문서를 프로젝트 단위 경로로 이동
+# 이미 공유된 예전 링크가 깨지지 않도록 리다이렉트
+/crm-admin/internet-product/wbs/*   /internet-product/wbs/:splat            301
+/crm-admin/internet-tags/*          /internet-product/tags/:splat           301
+/crm-admin/attributes/*             /internet-product/attributes/:splat     301
+/crm-admin/product-links/*          /internet-product/product-links/:splat  301

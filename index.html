@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRM Admin 신규 구축 · 기획 문서</title>
+<title>CRM 기획 문서</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
@@ -77,6 +77,18 @@
   .hrow{display:flex; align-items:flex-end; justify-content:space-between; gap:20px;}
   .hrow .btn{flex-shrink:0;}
 
+  /* ===== Hub cards (root) ===== */
+  .hub{display:grid; gap:12px;}
+  .hub a{
+    display:block; background:#fff; border:1px solid var(--g100); border-radius:var(--radius);
+    padding:20px 22px; text-decoration:none; box-shadow:var(--shadow); transition:border-color .15s;
+  }
+  .hub a:hover{border-color:var(--primary);}
+  .hub .hrow2{display:flex; align-items:baseline; justify-content:space-between; gap:14px;}
+  .hub .name{font-size:19px; font-weight:700; color:var(--g900);}
+  .hub .open{font-size:14px; color:var(--g400); white-space:nowrap; flex-shrink:0;}
+  .hub .desc{font-size:14px; color:var(--g600); margin-top:6px;}
+
   /* ===== Footer ===== */
   footer{margin-top:40px; padding-top:18px; border-top:1px solid var(--g100); font-size:13px; color:var(--g400); text-align:center;}
 
@@ -98,123 +110,60 @@
 <div class="wrap">
 
   <header>
-    <a class="backlink" href="/">&larr; 전체 문서</a>
-    <div class="hrow">
-      <div>
-        <div class="eyebrow">PROJECT</div>
-        <h1>CRM Admin 신규 구축</h1>
-        <!-- 담당자 이름은 여기서 수정 -->
-        <p class="owner"><strong>기획 담당</strong> : 김아라</p>
-      </div>
-      <a class="btn btn-wbs" href="https://aj-crm-dashboard.netlify.app/" target="_blank" rel="noopener">작업 현황</a>
-    </div>
+    <div class="eyebrow">PLANNING DOCS</div>
+    <h1>CRM 기획 문서</h1>
+    <!-- 담당자 이름은 여기서 수정 -->
+    <p class="owner"><strong>기획 담당</strong> : 김아라</p>
   </header>
 
   <!-- ============================================================
-       핵심 정책 문서 (마스터 · 정책서)
+       프로젝트
+       * 프로젝트 추가: 아래 hub 카드 블록 하나를 복사해서
+         [프로젝트명 / 설명 / 링크]만 바꾸면 됩니다.
   ============================================================ -->
   <section>
-    <div class="sec-title">핵심 정책 문서</div>
-    <div class="policy">
-      <a href="https://ajnetworks.atlassian.net/wiki/x/HoBDVw" target="_blank" rel="noopener">
-        <div class="label">MASTER</div>
-        <div class="prow">
-          <div class="name">역할·메뉴 마스터 문서</div>
+    <div class="sec-title">프로젝트</div>
+    <div class="hub">
+
+      <a href="/crm-admin/">
+        <div class="hrow2">
+          <div class="name">CRM Admin 신규 구축</div>
           <div class="open">문서 열기 &rarr;</div>
         </div>
+        <div class="desc">역할·계정 정책, 어드민 메뉴별 화면 목업 &amp; 기능정의서</div>
       </a>
-      <a href="https://ajnetworks.atlassian.net/wiki/x/FQBUUQ" target="_blank" rel="noopener">
-        <div class="label">POLICY</div>
-        <div class="prow">
-          <div class="name">역할·계정 정책서</div>
+
+      <a href="/internet-product/">
+        <div class="hrow2">
+          <div class="name">인터넷 상품 구조 개선</div>
           <div class="open">문서 열기 &rarr;</div>
         </div>
+        <div class="desc">Phase 1 태그 구조 개선 &middot; 전체 일정(WBS)과 화면 시안</div>
       </a>
+
+      <!-- ▲ 새 프로젝트는 이 줄 위에 카드 블록을 복사해 추가하세요 -->
+
     </div>
   </section>
 
   <!-- ============================================================
-       화면별 목업 & 기능정의서
-       * 새 메뉴 추가: 아래 <div class="menu-row"> ... </div> 블록 하나를
-         통째로 복사해서 [메뉴명 / slug / 목업경로 / 기능정의서 링크]만 바꾸면 됩니다.
+       도구
   ============================================================ -->
   <section>
-    <div class="sec-title">화면별 목업 &amp; 기능정의서</div>
-    <div class="menu-list">
-
-      <div class="menu-row">
-        <div>
-          <div class="menu-name">홈</div>
-          <div class="menu-slug">/crm-admin/home/</div>
+    <div class="sec-title">도구</div>
+    <div class="hub">
+      <a href="/tools/profile-matrix/">
+        <div class="hrow2">
+          <div class="name">발신프로필 매트릭스</div>
+          <div class="open">열기 &rarr;</div>
         </div>
-        <div class="menu-links">
-          <a class="btn btn-mock" href="/crm-admin/home/" target="_blank">화면 목업</a>
-          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/GwBkVQ" target="_blank" rel="noopener">기능정의서</a>
-        </div>
-      </div>
-
-      <div class="menu-row">
-        <div>
-          <div class="menu-name">어드민 메뉴 관리</div>
-          <div class="menu-slug">/crm-admin/menus/</div>
-        </div>
-        <div class="menu-links">
-          <a class="btn btn-mock" href="/crm-admin/menus/" target="_blank">화면 목업</a>
-          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/HgAjU" target="_blank" rel="noopener">기능정의서</a>
-        </div>
-      </div>
-
-      <div class="menu-row">
-        <div>
-          <div class="menu-name">어드민 역할 관리</div>
-          <div class="menu-slug">/crm-admin/roles/</div>
-        </div>
-        <div class="menu-links">
-          <a class="btn btn-mock" href="/crm-admin/roles/" target="_blank">화면 목업</a>
-          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/VIAgU" target="_blank" rel="noopener">기능정의서</a>
-        </div>
-      </div>
-
-      <div class="menu-row">
-        <div>
-          <div class="menu-name">역할별 권한 관리</div>
-          <div class="menu-slug">/crm-admin/role-permissions/</div>
-        </div>
-        <div class="menu-links">
-          <a class="btn btn-mock" href="/crm-admin/role-permissions/" target="_blank">화면 목업</a>
-          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/B4AJU" target="_blank" rel="noopener">기능정의서</a>
-        </div>
-      </div>
-
-      <div class="menu-row">
-        <div>
-          <div class="menu-name">계정별 역할 설정</div>
-          <div class="menu-slug">/crm-admin/account-roles/</div>
-        </div>
-        <div class="menu-links">
-          <a class="btn btn-mock" href="/crm-admin/account-roles/" target="_blank">화면 목업</a>
-          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/FAB5U" target="_blank" rel="noopener">기능정의서</a>
-        </div>
-      </div>
-
-      <div class="menu-row">
-        <div>
-          <div class="menu-name">권한 없음</div>
-          <div class="menu-slug">/crm-admin/access-denied/</div>
-        </div>
-        <div class="menu-links">
-          <a class="btn btn-mock" href="/crm-admin/access-denied/" target="_blank">화면 목업</a>
-          <a class="btn btn-doc" href="https://ajnetworks.atlassian.net/wiki/x/EYAcV" target="_blank" rel="noopener">기능정의서</a>
-        </div>
-      </div>
-
-      <!-- ▲ 새 메뉴는 이 줄 위에 menu-row 블록을 복사해 추가하세요 -->
-
+        <div class="desc">발신프로필 조합 확인 도구</div>
+      </a>
     </div>
   </section>
 
   <footer>
-    CRM Admin 신규 구축 &middot; 기획 김아라 &middot; <a href="/" style="color:var(--g400)">전체 문서</a>
+    CRM 기획 문서 &middot; 기획 김아라
   </footer>
 
 </div>
