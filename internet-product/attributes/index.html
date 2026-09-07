@@ -73,11 +73,10 @@ body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Ne
 .sel{height:36px;padding:8px 34px 8px 12px;border:1px solid var(--g200);border-radius:8px;
  font-size:14px;letter-spacing:-.3px;color:var(--g900);background:#fff;position:relative;
  display:inline-flex;align-items:center;min-width:120px}
-.sel::after{content:"";position:absolute;right:12px;width:7px;height:7px;border-right:1.5px solid var(--g500);
- border-bottom:1.5px solid var(--g500);transform:rotate(45deg) translateY(-2px)}
-.srch{height:36px;width:300px;padding:8px 12px 8px 34px;border:1px solid var(--g200);border-radius:8px;
+.sel::after{content:"";position:absolute;right:12px;width:16px;height:16px;background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E") center/16px 16px no-repeat}
+.srch{height:36px;width:300px;padding:8px 34px 8px 12px;border:1px solid var(--g200);border-radius:8px;
  font-size:14px;letter-spacing:-.3px;color:var(--g300);background:#fff;position:relative;display:inline-flex;align-items:center}
-.srch::before{content:"";position:absolute;left:12px;width:11px;height:11px;border:1.5px solid var(--g400);border-radius:50%}
+.srch::before{content:"";position:absolute;right:12px;width:16px;height:16px;background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' fill='%238D8F94'/%3E%3C/svg%3E") center/16px 16px no-repeat}
 .srch.filled{color:var(--g900)}
 .btn-solid{background:var(--primary);border:none;border-radius:8px;padding:8px 16px;
  font-size:14px;line-height:20px;letter-spacing:-.3px;font-weight:600;color:#fff;
@@ -92,7 +91,7 @@ body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Ne
 .btn-danger.solid{background:var(--error);border-color:var(--error);color:#fff}
 .btn-danger.dis{background:var(--g25);border-color:var(--g100);color:var(--g300);cursor:not-allowed}
 
-.cnt{font-size:14px;letter-spacing:-.3px;color:var(--g700);margin-bottom:8px}
+.cnt{font-size:14px;line-height:20px;letter-spacing:-.3px;color:var(--g500);margin-bottom:8px}
 .cnt b{font-weight:700;color:var(--g900)}
 table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
 .lt th{height:32px;padding:8px 12px;background:#fff;border-top:1px solid var(--g100);border-bottom:1px solid var(--g100);
@@ -158,8 +157,7 @@ table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
 .inp.ro{background:var(--g25);color:var(--g700)}
 .inp.err{border-color:var(--error)}
 .inp.sel{padding-right:32px;position:relative}
-.inp.sel::after{content:"";position:absolute;right:12px;width:7px;height:7px;border-right:1.5px solid var(--g500);
- border-bottom:1.5px solid var(--g500);transform:rotate(45deg) translateY(-2px)}
+.inp.sel::after{content:"";position:absolute;right:12px;width:16px;height:16px;background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E") center/16px 16px no-repeat}
 .ta{width:100%;height:64px;padding:8px 12px;border:1px solid var(--g200);border-radius:8px;
  font-size:14px;letter-spacing:-.3px;color:var(--g900);background:#fff;line-height:1.5}
 .ta.ph{color:var(--g300)}
@@ -300,10 +298,9 @@ table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
 .dvitem .meta{font-size:11.5px;color:var(--g500);white-space:nowrap}
 .dvitem .r2{display:flex;align-items:center;gap:6px;margin-top:8px}
 .dvitem .r2 .k{font-size:11.5px;color:var(--g500);flex:0 0 auto}
-.ctsel{height:30px;flex:1;min-width:0;padding:4px 26px 4px 9px;border:1px solid var(--g200);border-radius:6px;
+.ctsel{height:30px;flex:1;min-width:0;padding:4px 28px 4px 9px;border:1px solid var(--g200);border-radius:6px;
  font-size:12.5px;color:var(--g900);background:#fff;font-family:inherit;appearance:none;outline:none;
- background-image:linear-gradient(45deg,transparent 50%,var(--g500) 50%),linear-gradient(135deg,var(--g500) 50%,transparent 50%);
- background-position:calc(100% - 14px) 13px,calc(100% - 9px) 13px;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+ background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E");background-position:right 7px center;background-size:16px 16px;background-repeat:no-repeat}
 .reqchip{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 6px;border-radius:3px;
  background:var(--orange50);color:var(--warning)}
 .ctnote{padding:10px 14px;background:var(--g25);border-top:1px solid var(--g100);
@@ -399,6 +396,15 @@ footer{padding:40px 32px 60px;font-size:12px;color:var(--g400);text-align:center
 .bdg.req{background:var(--blue50);color:var(--primary)}
 .exnote{grid-column:1/-1;font-size:12px;color:var(--g500);letter-spacing:-.2px;padding:2px 4px}
 @media (max-width:1100px){.mgrid{grid-template-columns:1fr}}
+/* 네이티브 폼 요소 아이콘 — select/input에는 ::after·::before가 렌더되지 않으므로 배경 이미지로 */
+select.sel,select.inp{appearance:none;-webkit-appearance:none;font-family:inherit;cursor:pointer;
+ background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
+select.inp{padding-right:34px}
+input.srch{font-family:inherit;outline:none;color:var(--g900);padding:8px 34px 8px 12px;
+ background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' fill='%238D8F94'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
+input.srch::placeholder{color:var(--g300)}
 </style>
 
 <div class="wrap">
