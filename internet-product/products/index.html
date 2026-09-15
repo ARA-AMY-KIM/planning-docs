@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>인터넷 상품 관리 목업</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap">
+<style>
+:root{
+ --primary:#145CE6;--primary-strong:#073894;
+ --success:#10A10E;--warning:#D75011;--error:#C31518;--negative:#C70C34;--hold:#5714E6;
+ --g25:#F5F6F7;--g50:#EFEFF1;--g100:#DEE0E3;--g200:#C3C5C9;--g300:#A9ABB0;
+ --g400:#8D8F94;--g500:#73767A;--g600:#5A5C61;--g700:#424447;--g800:#2A2C2E;--g900:#131314;
+ --blue50:#ECF2FF;--blue100:#D9E6FF;--green50:#E0FCE0;--red50:#FEE6E6;--red100:#FCCCCD;
+ --orange50:#FDEBE3;--purple50:#F2ECFF;--link:#2F9E68;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{color-scheme:light}
+input,select,textarea{background:#fff;color:var(--g900);font-family:inherit}
+[hidden]{display:none!important}
+body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+ font-size:16px;color:var(--g900);background:#fff;-webkit-font-smoothing:antialiased}
+.wrap{min-width:1440px}
+.sheet{max-width:1456px;margin:0 auto;padding:0 32px}
+.gnb{height:60px;border-bottom:1px solid var(--g100);display:flex;align-items:center;gap:36px;padding:0 32px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;letter-spacing:-.4px}
+.logo i{background:var(--primary);color:#fff;font-size:9px;font-weight:800;padding:3px 5px;border-radius:3px;font-style:normal}
+.gnb nav{display:flex;gap:26px;font-size:14px;font-weight:600;letter-spacing:-.3px;color:var(--g700)}
+.gnb nav .on{color:var(--primary)}
+.gnb .sp{flex:1}
+.gnb .ic{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--g300)}
+.page{padding:32px 32px 8px}
+.bc{font-size:14px;line-height:20px;color:var(--g400);letter-spacing:-.2px;margin-bottom:4px}
+.ptitle{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.ptitle h1{font-size:32px;font-weight:700;line-height:42px;letter-spacing:-.5px;color:#000}
+.star{color:var(--g300);font-size:20px}
+.pdesc{font-size:14px;line-height:20px;color:var(--g500);letter-spacing:-.3px;margin-bottom:28px}
+.notice{display:flex;gap:8px;align-items:flex-start;padding:12px 16px;border-radius:8px;
+ font-size:13px;line-height:1.6;letter-spacing:-.2px;margin-bottom:20px}
+.notice .i{flex:0 0 16px;height:16px;border-radius:50%;font-size:10px;font-weight:800;color:#fff;
+ display:flex;align-items:center;justify-content:center;margin-top:2px}
+.notice.info{background:var(--blue50);color:var(--g700)}
+.notice.info .i{background:var(--primary)}
+.vtabs{display:flex;border-bottom:1px solid var(--g100);margin-bottom:14px}
+.vtabs .ti{padding:12px 20px;font-size:14px;font-weight:600;color:var(--g500);border-bottom:2px solid transparent;
+ margin-bottom:-1px;cursor:pointer;letter-spacing:-.3px}
+.vtabs .ti.on{color:var(--g900);border-bottom-color:var(--primary)}
+.chips{display:inline-flex;gap:6px;margin-bottom:14px}
+.chips button{height:32px;padding:0 12px;border:1px solid var(--g200);background:#fff;border-radius:16px;
+ font-size:13px;font-family:inherit;color:var(--g600);cursor:pointer;letter-spacing:-.2px}
+.chips button.on{border-color:var(--primary);color:var(--primary);font-weight:700;background:var(--blue50)}
+.legend{display:flex;align-items:center;gap:14px;margin-bottom:16px;font-size:12px;color:var(--g600)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:22px;height:12px;border-radius:3px;display:inline-block}
+.cnt{font-size:14px;line-height:20px;letter-spacing:-.3px;color:var(--g500);margin-bottom:12px}
+.cnt b{font-weight:700;color:var(--g900)}
+.cnt .warn{color:var(--negative);font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:2px;margin-left:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.gcard{border:1px solid var(--g100);border-radius:10px;background:#fff;overflow:hidden}
+.gcard>.gh{height:40px;background:var(--g50);border-bottom:1px solid var(--g100);
+ display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--g700)}
+.cols{display:grid;grid-template-columns:1fr 56px 1fr;padding:16px;position:relative}
+.cols.single{grid-template-columns:1fr}
+.col>.ch{font-size:12px;font-weight:700;color:var(--g600);text-align:center;padding-bottom:10px}
+.pit{position:relative;display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;margin-bottom:8px;
+ border:1px solid var(--g100);border-radius:6px;background:#fff;font-size:13px;letter-spacing:-.3px;cursor:pointer;
+ user-select:none}
+.pit:hover{border-color:var(--g300)}
+.pit .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pit.sel{border-color:var(--primary);border-width:2px;background:var(--blue50);font-weight:600}
+.pit.lit{border-color:var(--link);background:#F1FBF5}
+.pit.off{background:var(--g25);color:var(--g300)}
+.pit .tg{font-size:11px;color:var(--g500);flex:none}
+.pit .nt{font-size:11px;font-weight:700;color:var(--negative);background:var(--red50);border-radius:4px;padding:3px 6px;flex:none}
+.link-lane{position:relative}
+svg.lane{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.menu{position:fixed;z-index:60;width:230px;background:#fff;border:1px solid var(--g100);border-radius:8px;
+ padding:6px 0;box-shadow:0 8px 28px rgba(19,19,20,.16)}
+.menu .mi{padding:7px 14px;font-size:13px;color:var(--g700);letter-spacing:-.3px;display:flex;
+ align-items:center;justify-content:space-between;cursor:default}
+.menu .mi:hover{background:var(--g25)}
+.menu .mi.act{color:var(--primary);font-weight:700;cursor:pointer}
+.menu .mi.act:hover{background:var(--blue50)}
+.menu .newb{font-size:10px;font-weight:700;background:var(--primary);color:#fff;border-radius:3px;padding:1px 5px}
+.menu .sep{height:1px;background:var(--g100);margin:6px 0}
+.ov{position:fixed;inset:0;background:rgba(19,19,20,.35);z-index:80;display:flex;align-items:center;justify-content:center}
+.modal{background:#fff;border:1px solid var(--g100);border-radius:12px;box-shadow:0 8px 28px rgba(19,19,20,.10);
+ overflow:hidden;width:511px}
+.modal .mh{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px}
+.modal .mh h3{font-size:17px;font-weight:700;letter-spacing:-.4px}
+.modal .x{color:var(--g400);font-size:17px;cursor:pointer}
+.modal .mb{padding:0 20px 18px}
+.modal .mf{display:flex;gap:8px;padding:14px 20px;border-top:1px solid var(--g100)}
+.modal .mf .sp{flex:1}
+.ctx{display:flex;gap:40px;background:var(--g25);border-radius:8px;padding:12px 18px;margin-bottom:16px}
+.ctx div{display:flex;align-items:baseline;gap:10px}
+.ctx .k{font-size:12px;color:var(--g500)}
+.ctx .v{font-size:15px;font-weight:700;color:var(--g900);letter-spacing:-.3px}
+.fld{margin-bottom:14px}
+.fld>label{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;margin-bottom:6px}
+.fld>label .req{color:var(--error)}
+.fld>label .sp{flex:1}
+.fld>label .ro{font-size:11px;font-weight:400;color:var(--g400)}
+.inp{width:100%;height:36px;padding:8px 12px;border:1px solid var(--g200);border-radius:8px;
+ font-size:14px;letter-spacing:-.3px;color:var(--g900);background:#fff}
+.inp.ro{background:var(--g25);color:var(--g700);display:flex;align-items:center}
+select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:34px;
+ background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prev{background:var(--blue50);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px}
+.prev .k{font-size:11px;font-weight:700;color:var(--primary);flex:none}
+.prev .v{font-size:15px;font-weight:700;color:var(--primary-strong);letter-spacing:-.3px}
+.hint{font-size:12px;color:var(--g500);margin-top:6px;line-height:1.5}
+.btn-solid{background:var(--primary);border:none;border-radius:8px;padding:8px 16px;font-size:14px;
+ font-weight:600;color:#fff;cursor:pointer;height:36px;font-family:inherit}
+.btn-out{background:#fff;border:1px solid var(--g200);border-radius:8px;padding:6px 12px;font-size:14px;
+ font-weight:600;color:var(--g900);cursor:pointer;height:36px;font-family:inherit}
+.toast{position:fixed;left:50%;bottom:36px;transform:translateX(-50%);z-index:99;color:#fff;font-size:14px;
+ padding:12px 18px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+footer{padding:40px 32px 60px;font-size:12px;color:var(--g400);text-align:center;border-top:1px solid var(--g100);margin-top:48px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="gnb">
+  <div class="logo"><i>OXC</i>CRM Admin</div>
+  <nav><span>업체 관리</span><span class="on">상품 관리</span><span>운영 관리</span><span>개발 설정</span><span>비즈터널 운영</span><span>어드민 운영</span></nav>
+  <div class="sp"></div><div class="ic"></div><div class="ic"></div>
+</div>
+
+<div class="sheet page">
+  <div class="bc">상품 관리</div>
+  <div class="ptitle"><h1>인터넷 상품 관리</h1><span class="star">☆</span></div>
+  <div class="pdesc">인터넷 상품의 요금제와 판매 정보를 관리합니다.</div>
+
+  <div class="notice info"><span class="i">i</span>
+    <span id="noteTx"></span></div>
+
+  <div class="vtabs" id="vtabs"></div>
+
+  <div class="chips" id="chips">
+    <button class="on">메인상품</button><button>부가서비스</button><button>기타상품</button>
+    <button>결합할인</button><button>결합카드</button><button>기타</button>
+  </div>
+
+  <div class="legend">
+    <span><i style="background:#fff;border:1px solid var(--g100)"></i>판매중</span>
+    <span><i style="background:var(--g25);border:1px solid var(--g100)"></i>미사용</span>
+    <span><i style="background:var(--blue50);border:1px solid var(--primary)"></i>선택</span>
+    <span><i style="background:#F1FBF5;border:1px solid var(--link)"></i>연결된 짝</span>
+    <span style="color:var(--negative);font-weight:600">· 태그 없음 = 태그 미연결</span>
+  </div>
+
+  <div class="cnt" id="cnt"></div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>인터넷 상품 관리 — 태그 연결 변경분 시안 · 카드를 클릭하면 조합이, 우클릭하면 메뉴가 열립니다.</footer>
+</div>
+
+<div class="ov" id="ovTag" hidden>
+  <div class="modal">
+    <div class="mh"><h3>태그 연결</h3><span class="x" id="tgX">✕</span></div>
+    <div class="mb">
+      <div class="ctx">
+        <div><span class="k">업체</span><span class="v" id="tgVen"></span></div>
+        <div><span class="k">구분</span><span class="v" id="tgSvc"></span></div>
+        <div><span class="k">축</span><span class="v" id="tgAxis"></span></div>
+      </div>
+      <div class="row2">
+        <div class="fld"><label>상품</label><div class="inp ro" id="tgProd"></div></div>
+        <div class="fld"><label>태그 <span class="req">*</span></label>
+          <select class="inp" id="tgSel"></select></div>
+      </div>
+      <div class="fld" style="margin-bottom:0">
+        <label>고객 노출 <span class="sp"></span><span class="ro">자동 계산</span></label>
+        <div class="prev"><span class="k">상담 상세</span><span class="v" id="tgPrev"></span></div>
+        <div class="hint">상품명과 태그명을 조합해 보여줍니다. 저장하면 상담 상세에 이 값으로 표시됩니다.</div>
+      </div>
+    </div>
+    <div class="mf"><div class="sp"></div><button class="btn-out" id="tgCancel">취소</button><button class="btn-solid" id="tgSave">저장</button></div>
+  </div>
+</div>
+
+<script>
+const D = {"KT":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["슬림","100Mbps(슬림)"],["슬림 와이파이","100Mbps(슬림)"],["안심 슬림 와이파이","100Mbps(슬림)"],["슬림 와이드","100Mbps(슬림)"],["안심 슬림 와이드","100Mbps(슬림)"],["슬림플러스","200Mbps(슬림플러스)"],["베이직","500Mbps(베이직)"],["베이직 와이파이","500Mbps(베이직)"],["안심 베이직 와이파이","500Mbps(베이직)"],["베이직 와이드","500Mbps(베이직)"],["안심 베이직 와이드","500Mbps(베이직)"],["에센스","1Gbps(에센스)"],["에센스 와이파이","1Gbps(에센스)"],["안심 에센스 와이파이","1Gbps(에센스)"],["에센스 와이드","1Gbps(에센스)"],["안심 에센스 와이드","1Gbps(에센스)"],["프리미엄","2.5Gbps(프리미엄)"],["프리미엄 와이파이","2.5Gbps(프리미엄)"],["프리미엄 와이드","2.5Gbps(프리미엄)"],["프리미엄플러스","5Gbps(프리미엄플러스)"],["슈퍼프리미엄","10Gbps(슈퍼프리미엄)"]],"cols":[["기가 와이파이 홈ax",""],["KT와이파이7D",""],["기가 와이파이 (홈ax+버디)",""],["기가 와이파이(7D+버디)",""],["기가 와이파이 웨이브2(2대)",""]],"pair":{"슬림 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"안심 슬림 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"슬림 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"안심 슬림 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"베이직 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"안심 베이직 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"베이직 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"안심 베이직 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"에센스":["KT와이파이7D","기가 와이파이 홈ax"],"에센스 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"안심 에센스 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"에센스 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"안심 에센스 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"프리미엄":["KT와이파이7D","기가 와이파이 홈ax"],"프리미엄 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"프리미엄 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"프리미엄플러스":["KT와이파이7D","기가 와이파이 웨이브2(2대)"],"슈퍼프리미엄":["KT와이파이7D","기가 와이파이 웨이브2(2대)"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["Skylife 슬림","218채널"],["Skylife 베이직","221채널"],["Skylife 라이트","222채널"],["Skylife 에센스","229채널"],["Skylife 엔터","229채널"],["Skylife 키즈","229채널"],["교육형","89채널"],["선택형","113~121채널"],["슬림","220채널"],["베이직","238채널"],["라이트","240채널"],["에센스","263채널"],["에센스 플러스","266채널"],["VOD 플러스","266채널"],["VOD 초이스","266채널"],["키즈랜드팩 초이스","266채널"],["뮤즈 초이스","266채널"],["슈퍼팩 초이스","266채널"],["사장님 초이스","266채널"],["무비","266채널"],["세이브25","266채널"],["무비플러스","269채널"],["프라임 홈스쿨","266채널"],["모든G","250채널"],["디즈니+모든G","250채널"],["NEW모든G","250채널"],["넷플릭스 초이스HD","266채널"],["넷플릭스 초이스UHD","266채널"],["티빙 초이스 스탠다드","266채널"],["티빙 초이스 프리미엄","266채널"],["디즈니+ 초이스","266채널"],["디즈니+ 초이스 프리미엄","267채널"]],"cols":[["일반셋톱","일반셋탑"],["기가지니3A","스마트셋탑"],["올레TV탭","태블릿"]],"pair":{"Skylife 슬림":["일반셋톱"],"Skylife 베이직":["일반셋톱"],"Skylife 라이트":["일반셋톱"],"Skylife 에센스":["일반셋톱"],"Skylife 엔터":["일반셋톱"],"Skylife 키즈":["일반셋톱"],"교육형":["기가지니3A"],"선택형":["기가지니3A"],"슬림":["기가지니3A"],"베이직":["기가지니3A"],"라이트":["기가지니3A"],"에센스":["기가지니3A"],"에센스 플러스":["기가지니3A"],"VOD 플러스":["기가지니3A"],"VOD 초이스":["기가지니3A"],"키즈랜드팩 초이스":["기가지니3A"],"뮤즈 초이스":["기가지니3A"],"슈퍼팩 초이스":["기가지니3A"],"사장님 초이스":["기가지니3A"],"무비":["기가지니3A"],"세이브25":["기가지니3A"],"무비플러스":["기가지니3A"],"프라임 홈스쿨":["올레TV탭"],"모든G":["기가지니3A"],"디즈니+모든G":["기가지니3A"],"NEW모든G":["기가지니3A"],"넷플릭스 초이스HD":["기가지니3A"],"넷플릭스 초이스UHD":["기가지니3A"],"티빙 초이스 스탠다드":["기가지니3A"],"티빙 초이스 프리미엄":["기가지니3A"],"디즈니+ 초이스":["기가지니3A"],"디즈니+ 초이스 프리미엄":["기가지니3A"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["기본요금제","인터넷전화(일반)"],["표준+","인터넷전화(일반)"],["표준영상","인터넷전화(일반)"],["우리끼리3000","인터넷전화(정액)"],["유선3000","인터넷전화(정액)"],["유무선3000","인터넷전화(정액)"],["사장님 배달POS 인터넷전화","인터넷전화(정액)"]],"cols":[["AT05-704V","전화기"]],"pair":{"기본요금제":["AT05-704V"],"표준+":["AT05-704V"],"표준영상":["AT05-704V"],"우리끼리3000":["AT05-704V"],"유선3000":["AT05-704V"],"유무선3000":["AT05-704V"],"사장님 배달POS 인터넷전화":["AT05-704V"]}},{"svc":"일반전화","label":"일반전화세트","rowName":"전화상품","colName":"전화기기","rows":[["기본요금제","일반전화(일반)"],["유선3000","일반전화(정액)"],["유무선3000","일반전화(정액)"],["사장님 배달POS 전화","일반전화(정액)"]],"cols":[],"pair":{}}],"LG":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["와이파이기본_광랜안심","100Mbps(광랜 인터넷)"],["프리미엄 안심 100메가","100Mbps(광랜 인터넷)"],["프리미엄 안심 보상 100메가","100Mbps(광랜 인터넷)"],["스마트_광랜안심","100Mbps(광랜 인터넷)"],["와이파이기본_200M","200Mbps(200메가 인터넷)"],["프리미엄 안심 200M","200Mbps(200메가 인터넷)"],["프리미엄 안심 보상 200M","200Mbps(200메가 인터넷)"],["와이파이기본_기가슬림안심","500Mbps(기가슬림 인터넷)"],["프리미엄 안심 500메가","500Mbps(기가슬림 인터넷)"],["프리미엄 안심 보상 500메가","500Mbps(기가슬림 인터넷)"],["스마트_기가슬림안심","500Mbps(기가슬림 인터넷)"],["스마트기가_최대500메가","500Mbps(기가슬림 인터넷)"],["와이파이기본_기가안심","1Gbps(기가 인터넷)"],["프리미엄 안심 1기가","1Gbps(기가 인터넷)"],["프리미엄 안심 보상 1기가","1Gbps(기가 인터넷)"],["스마트_기가안심","1Gbps(기가 인터넷)"],["스마트기가_최대1기가","1Gbps(기가 인터넷)"],["와이파이기본_2.5기가","2.5Gbps(2.5기가 인터넷)"],["와이파이기본_2.5기가안심","2.5Gbps(2.5기가 인터넷)"],["스마트기가_최대2.5기가","2.5Gbps(2.5기가 인터넷)"],["와이파이기본_5기가","5Gbps(5기가 인터넷)"],["와이파이기본_10기가","10Gbps(10기가 인터넷)"]],"cols":[["기가WiFi",""],["기가WiFi+스마트홈스피커",""],["기가WiFi6+안심",""],["기가WiFi6",""],["기가WiFi6+스마트홈스피커",""],["기가WiFi6+스마트홈+보상",""],["기가WiFi6+크롬캐스트",""],["기가WiFi6+MESH",""],["기가WiFi6+MESH+보상",""],["기가WiFi 프리미엄",""]],"pair":{"와이파이기본_광랜안심":["기가WiFi"],"프리미엄 안심 100메가":["기가WiFi+스마트홈스피커"],"프리미엄 안심 보상 100메가":["기가WiFi6+안심"],"스마트_광랜안심":["기가WiFi+스마트홈스피커"],"와이파이기본_200M":["기가WiFi6"],"프리미엄 안심 200M":["기가WiFi6+스마트홈스피커"],"프리미엄 안심 보상 200M":["기가WiFi6+안심"],"와이파이기본_기가슬림안심":["기가WiFi6"],"프리미엄 안심 500메가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"프리미엄 안심 보상 500메가":["기가WiFi6+MESH+보상","기가WiFi6+스마트홈+보상"],"스마트_기가슬림안심":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"스마트기가_최대500메가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"와이파이기본_기가안심":["기가WiFi6"],"프리미엄 안심 1기가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"프리미엄 안심 보상 1기가":["기가WiFi6+MESH+보상","기가WiFi6+스마트홈+보상"],"스마트_기가안심":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"스마트기가_최대1기가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"와이파이기본_2.5기가":["기가WiFi 프리미엄"],"와이파이기본_2.5기가안심":["기가WiFi 프리미엄"],"스마트기가_최대2.5기가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커"],"와이파이기본_5기가":["기가WiFi 프리미엄"],"와이파이기본_10기가":["기가WiFi 프리미엄"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["프리미엄 내맘대로","258채널"],["프리미엄 환승구독","260채널"],["프리미엄 플러스","260채널"],["일반형","190채널"],["베이직","212채널"],["실속형","219채널"],["기본형","225채널"],["고급형","231채널"],["프리미엄","253채널"],["프리미엄VOD","258채널"],["프리미엄 넷플릭스HD","258채널"],["프리미엄 넷플릭스UHD","258채널"],["프리미엄 티빙","260채널"],["프리미엄 티빙 플러스","260채널"],["(구)프리미엄 디즈니+","258채널"],["프리미엄 디즈니+스탠다드","257채널"],["프리미엄 디즈니+","257채널"],["프리미엄 유플레이","260채널"],["기본형방송패스","222채널"],["프리미엄방송패스","257채널"]],"cols":[["UHD4셋톱","일반셋탑"]],"pair":{"프리미엄 내맘대로":["UHD4셋톱"],"프리미엄 환승구독":["UHD4셋톱"],"프리미엄 플러스":["UHD4셋톱"],"일반형":["UHD4셋톱"],"베이직":["UHD4셋톱"],"실속형":["UHD4셋톱"],"기본형":["UHD4셋톱"],"고급형":["UHD4셋톱"],"프리미엄":["UHD4셋톱"],"프리미엄VOD":["UHD4셋톱"],"프리미엄 넷플릭스HD":["UHD4셋톱"],"프리미엄 넷플릭스UHD":["UHD4셋톱"],"프리미엄 티빙":["UHD4셋톱"],"프리미엄 티빙 플러스":["UHD4셋톱"],"(구)프리미엄 디즈니+":["UHD4셋톱"],"프리미엄 디즈니+스탠다드":["UHD4셋톱"],"프리미엄 디즈니+":["UHD4셋톱"],"프리미엄 유플레이":["UHD4셋톱"],"기본형방송패스":["UHD4셋톱"],"프리미엄방송패스":["UHD4셋톱"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["표준형","인터넷전화(일반/소호)"],["표준형+","인터넷전화(일반)"],["이동할인형","인터넷전화(일반)"],["이동할인형+","인터넷전화(일반)"],["망내무한 9000","인터넷전화(정액)"],["망내무한 9000+(일반형)","인터넷전화(정액)"],["망내무한 9000+(정액형)","인터넷전화(정액)"],["유무선무한 9000","인터넷전화(일반)"],["일반형/팩스","인터넷전화(소호)"],["고급형(센트릭스)","인터넷전화(소호)"],["자유통화3","인터넷전화(소호)"],["자유통화4","인터넷전화(소호)"],["자유통화6","인터넷전화(소호)"],["자유통화8","인터넷전화(소호)"],["자유통화10","인터넷전화(소호)"],["자유통화15","인터넷전화(소호)"],["자유통화20","인터넷전화(소호)"],["자유통화30","인터넷전화(소호)"],["자유통화50","인터넷전화(소호)"],["콜+6","인터넷전화(정액)"],["콜+10","인터넷전화(정액)"],["TV 플러스","인터넷전화(태블릿)"],["뮤직 플러스","인터넷전화(태블릿)"],["TV&뮤직 플러스","인터넷전화(태블릿)"],["키즈 플러스","인터넷전화(태블릿)"],["TV&콜 플러스","인터넷전화(태블릿)"],["EBS 플러스","인터넷전화(태블릿)"],["누리 홈스쿨","인터넷전화(태블릿)"],["AI전화","인터넷전화(기업)"]],"cols":[["CPG 4020","모뎀"],["IP450S","전화기"],["G패드3 8.0","태블릿"],["IP520S","전화기"]],"pair":{"표준형":["CPG 4020"],"표준형+":["CPG 4020"],"이동할인형":["CPG 4020"],"이동할인형+":["CPG 4020"],"망내무한 9000":["CPG 4020"],"망내무한 9000+(일반형)":["CPG 4020"],"망내무한 9000+(정액형)":["CPG 4020"],"유무선무한 9000":["CPG 4020"],"일반형/팩스":["CPG 4020"],"고급형(센트릭스)":["IP450S"],"자유통화3":["IP450S"],"자유통화4":["IP450S"],"자유통화6":["IP450S"],"자유통화8":["IP450S"],"자유통화10":["IP450S"],"자유통화15":["IP450S"],"자유통화20":["IP450S"],"자유통화30":["IP450S"],"자유통화50":["IP450S"],"콜+6":["CPG 4020"],"콜+10":["CPG 4020"],"TV 플러스":["G패드3 8.0"],"뮤직 플러스":["G패드3 8.0"],"TV&뮤직 플러스":["G패드3 8.0"],"키즈 플러스":["G패드3 8.0"],"TV&콜 플러스":["G패드3 8.0"],"EBS 플러스":["G패드3 8.0"],"누리 홈스쿨":["G패드3 8.0"],"AI전화":["IP520S"]}}],"SKT":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["광랜인터넷","100Mbps(광랜 인터넷)"],["광랜인터넷 와이파이","100Mbps(광랜 인터넷)"],["모두안심 광랜","100Mbps(광랜 인터넷)"],["파워백신 광랜","100Mbps(광랜 인터넷)"],["원격케어 광랜","100Mbps(광랜 인터넷)"],["기가라이트인터넷","500Mbps(기가라이트 인터넷)"],["기가라이트인터넷 와이파이","500Mbps(기가라이트 인터넷)"],["모두안심 기가라이트","500Mbps(기가라이트 인터넷)"],["파워백신 기가라이트","500Mbps(기가라이트 인터넷)"],["원격케어 기가라이트","500Mbps(기가라이트 인터넷)"],["기가인터넷","1Gbps(기가 인터넷)"],["기가인터넷 와이파이","1Gbps(기가 인터넷)"],["모두안심 기가","1Gbps(기가 인터넷)"],["파워백신 기가","1Gbps(기가 인터넷)"],["원격케어 기가","1Gbps(기가 인터넷)"],["기가인터넷멀티","2.5Gbps(기가프리미엄X2.5)"],["기가인터넷멀티 와이파이 1.7G","2.5Gbps(기가프리미엄X2.5)"],["기가프리미엄X2.5","2.5Gbps(기가프리미엄X2.5)"],["기가프리미엄X5","5Gbps(기가프리미엄X5)"],["기가프리미엄X10","10Gbps(기가프리미엄X10)"]],"cols":[["기가WiFi",""],["기가WiFi7",""],["기가WiFi 프리미엄",""]],"pair":{"광랜인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 광랜":["기가WiFi","기가WiFi7"],"파워백신 광랜":["기가WiFi","기가WiFi7"],"원격케어 광랜":["기가WiFi","기가WiFi7"],"기가라이트인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 기가라이트":["기가WiFi","기가WiFi7"],"파워백신 기가라이트":["기가WiFi","기가WiFi7"],"원격케어 기가라이트":["기가WiFi","기가WiFi7"],"기가인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 기가":["기가WiFi","기가WiFi7"],"파워백신 기가":["기가WiFi","기가WiFi7"],"원격케어 기가":["기가WiFi","기가WiFi7"],"기가인터넷멀티":["기가WiFi 프리미엄"],"기가인터넷멀티 와이파이 1.7G":["기가WiFi 프리미엄"],"기가프리미엄X2.5":["기가WiFi 프리미엄"],"기가프리미엄X5":["기가WiFi 프리미엄"],"기가프리미엄X10":["기가WiFi 프리미엄"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["Btv 미니","59채널"],["Btv 이코노미","182채널"],["Btv 스탠다드","235채널"],["Btv 스탠다드 넷플릭스","235채널"],["Btv 올 넷플릭스","255채널"],["Btv 스탠다드 플러스","235채널"],["Btv 올","255채널"],["Btv 스탠다드 넷플릭스 프리미엄","235채널"],["Btv 올 넷플릭스 프리미엄","255채널"],["Btv 올 플러스","255채널"],["Btv 올+캐치온","254채널"],["Btv+MAX","255채널"],["Btv 올+지상파","252채널"],["Btv 올+캐치온+지상파","254채널"]],"cols":[["스마트3","일반셋탑"]],"pair":{"Btv 미니":["스마트3"],"Btv 이코노미":["스마트3"],"Btv 스탠다드":["스마트3"],"Btv 스탠다드 넷플릭스":["스마트3"],"Btv 올 넷플릭스":["스마트3"],"Btv 스탠다드 플러스":["스마트3"],"Btv 올":["스마트3"],"Btv 스탠다드 넷플릭스 프리미엄":["스마트3"],"Btv 올 넷플릭스 프리미엄":["스마트3"],"Btv 올 플러스":["스마트3"],"Btv 올+캐치온":["스마트3"],"Btv+MAX":["스마트3"],"Btv 올+지상파":["스마트3"],"Btv 올+캐치온+지상파":["스마트3"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["인터넷전화","인터넷전화(일반)"],["인터넷전화(모)","인터넷전화(일반)"],["집전화프리5000","인터넷전화(정액)"],["케이블인터넷전화","케이블전화"],["무료100","인터넷전화(정액)"],["무료200","인터넷전화(정액)"],["무료250","인터넷전화(정액)"],["무료300","인터넷전화(정액)"],["무료700","인터넷전화(정액)"],["무료2500","인터넷전화(정액)"]],"cols":[["MWP-2500H","전화기"]],"pair":{"인터넷전화":["MWP-2500H"],"인터넷전화(모)":["MWP-2500H"],"집전화프리5000":["MWP-2500H"],"케이블인터넷전화":["MWP-2500H"],"무료100":["MWP-2500H"],"무료200":["MWP-2500H"],"무료250":["MWP-2500H"],"무료300":["MWP-2500H"],"무료700":["MWP-2500H"],"무료2500":["MWP-2500H"]}},{"svc":"일반전화","label":"일반전화세트","rowName":"전화상품","colName":"전화기기","rows":[["일반전화","일반전화(일반)"],["집전화프리5000","일반전화(정액)"],["무료100","일반전화(정액)"],["무료200","일반전화(정액)"],["무료250","일반전화(정액)"],["무료300","일반전화(정액)"],["무료700","일반전화(정액)"],["무료2500","일반전화(정액)"]],"cols":[],"pair":{}}],"SKB":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["광랜인터넷","100Mbps(광랜 인터넷)"],["광랜인터넷 와이파이","100Mbps(광랜 인터넷)"],["모두안심 광랜","100Mbps(광랜 인터넷)"],["파워백신 광랜","100Mbps(광랜 인터넷)"],["원격케어 광랜","100Mbps(광랜 인터넷)"],["광랜인터넷 윙즈","100Mbps(광랜 인터넷)"],["모두안심 광랜 윙즈","100Mbps(광랜 인터넷)"],["파워백신 광랜 윙즈","100Mbps(광랜 인터넷)"],["원격케어 광랜 윙즈","100Mbps(광랜 인터넷)"],["기가라이트인터넷","500Mbps(기가라이트 인터넷)"],["기가라이트인터넷 와이파이","500Mbps(기가라이트 인터넷)"],["모두안심 기가라이트","500Mbps(기가라이트 인터넷)"],["파워백신 기가라이트","500Mbps(기가라이트 인터넷)"],["원격케어 기가라이트","500Mbps(기가라이트 인터넷)"],["기가라이트인터넷 윙즈","500Mbps(기가라이트 인터넷)"],["모두안심 기가라이트 윙즈","500Mbps(기가라이트 인터넷)"],["파워백신 기가라이트 윙즈","500Mbps(기가라이트 인터넷)"],["원격케어 기가라이트 윙즈","500Mbps(기가라이트 인터넷)"],["기가인터넷","1Gbps(기가 인터넷)"],["기가인터넷 와이파이","1Gbps(기가 인터넷)"],["모두안심 기가","1Gbps(기가 인터넷)"],["파워백신 기가","1Gbps(기가 인터넷)"],["원격케어 기가","1Gbps(기가 인터넷)"],["기가인터넷 윙즈","1Gbps(기가 인터넷)"],["모두안심 기가 윙즈","1Gbps(기가 인터넷)"],["파워백신 기가 윙즈","1Gbps(기가 인터넷)"],["원격케어 기가 윙즈","1Gbps(기가 인터넷)"],["기가인터넷멀티 와이파이 1.7G","2.5Gbps(기가프리미엄X2.5)"],["기가프리미엄X2.5","2.5Gbps(기가프리미엄X2.5)"],["기가프리미엄X5","5Gbps(기가프리미엄X5)"],["기가프리미엄X10","10Gbps(기가프리미엄X10)"]],"cols":[["기가WiFi",""],["기가WiFi7",""],["기가WiFi+윙즈",""],["기가WiFi7+윙즈",""],["기가WiFi 프리미엄",""]],"pair":{"광랜인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 광랜":["기가WiFi","기가WiFi7"],"파워백신 광랜":["기가WiFi","기가WiFi7"],"원격케어 광랜":["기가WiFi","기가WiFi7"],"광랜인터넷 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"모두안심 광랜 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"파워백신 광랜 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"원격케어 광랜 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"기가라이트인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 기가라이트":["기가WiFi","기가WiFi7"],"파워백신 기가라이트":["기가WiFi","기가WiFi7"],"원격케어 기가라이트":["기가WiFi","기가WiFi7"],"기가라이트인터넷 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"모두안심 기가라이트 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"파워백신 기가라이트 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"원격케어 기가라이트 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"기가인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 기가":["기가WiFi","기가WiFi7"],"파워백신 기가":["기가WiFi","기가WiFi7"],"원격케어 기가":["기가WiFi","기가WiFi7"],"기가인터넷 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"모두안심 기가 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"파워백신 기가 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"원격케어 기가 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"기가인터넷멀티 와이파이 1.7G":["기가WiFi 프리미엄"],"기가프리미엄X2.5":["기가WiFi 프리미엄"],"기가프리미엄X5":["기가WiFi 프리미엄"],"기가프리미엄X10":["기가WiFi 프리미엄"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["Btv cable20","41채널"],["Btv cable30","70채널"],["Btv cable60","84채널"],["Btv cable90","103채널"],["Btv cable100","108채널"],["Btv cable190","203채널"],["Btv cable200","224채널"],["Btv cable200 플러스 캐시","224채널"],["Btv pop100","109채널"],["Btv pop180","186채널"],["Btv pop180+","186채널"],["Btv pop230","231채널"],["Btv pop230+","231채널"],["Btv 미니","60채널"],["Btv 이코노미","182채널"],["Btv 스탠다드","235채널"],["Btv 스탠다드 넷플릭스","235채널"],["Btv 올 넷플릭스","255채널"],["Btv 스탠다드 플러스","235채널"],["Btv 올","255채널"],["Btv 스탠다드 넷플릭스 프리미엄","235채널"],["Btv 올 넷플릭스 프리미엄","255채널"],["Btv 올 플러스","255채널"],["Btv 올+캐치온","254채널"],["Btv+MAX","255채널"],["Btv 올+지상파","252채널"],["Btv 올+캐치온+지상파","254채널"]],"cols":[["UHD","일반셋탑"],["AI스피커형","스마트셋탑"],["스마트3","일반셋탑"]],"pair":{"Btv cable20":["UHD"],"Btv cable30":["UHD"],"Btv cable60":["UHD"],"Btv cable90":["UHD"],"Btv cable100":["UHD"],"Btv cable190":["UHD"],"Btv cable200":["UHD"],"Btv cable200 플러스 캐시":["UHD"],"Btv pop100":["AI스피커형"],"Btv pop180":["스마트3"],"Btv pop180+":["스마트3"],"Btv pop230":["스마트3"],"Btv pop230+":["스마트3"],"Btv 미니":["스마트3"],"Btv 이코노미":["스마트3"],"Btv 스탠다드":["스마트3"],"Btv 스탠다드 넷플릭스":["스마트3"],"Btv 올 넷플릭스":["스마트3"],"Btv 스탠다드 플러스":["스마트3"],"Btv 올":["스마트3"],"Btv 스탠다드 넷플릭스 프리미엄":["스마트3"],"Btv 올 넷플릭스 프리미엄":["스마트3"],"Btv 올 플러스":["스마트3"],"Btv 올+캐치온":["스마트3"],"Btv+MAX":["스마트3"],"Btv 올+지상파":["스마트3"],"Btv 올+캐치온+지상파":["스마트3"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["인터넷전화","인터넷전화(일반)"],["인터넷전화(모)","인터넷전화(일반)"],["집전화프리5000","인터넷전화(정액)"],["케이블인터넷전화","케이블전화"],["무료100","인터넷전화(정액)"],["무료200","인터넷전화(정액)"],["무료250","인터넷전화(정액)"],["무료300","인터넷전화(정액)"],["무료700","인터넷전화(정액)"],["무료2500","인터넷전화(정액)"]],"cols":[["MWP-2500H","전화기"]],"pair":{"인터넷전화":["MWP-2500H"],"인터넷전화(모)":["MWP-2500H"],"집전화프리5000":["MWP-2500H"],"케이블인터넷전화":["MWP-2500H"],"무료100":["MWP-2500H"],"무료200":["MWP-2500H"],"무료250":["MWP-2500H"],"무료300":["MWP-2500H"],"무료700":["MWP-2500H"],"무료2500":["MWP-2500H"]}},{"svc":"일반전화","label":"일반전화세트","rowName":"전화상품","colName":"전화기기","rows":[["일반전화","일반전화(일반)"],["집전화프리5000","일반전화(정액)"],["무료100","일반전화(정액)"],["무료200","일반전화(정액)"],["무료250","일반전화(정액)"],["무료300","일반전화(정액)"],["무료700","일반전화(정액)"],["무료2500","일반전화(정액)"]],"cols":[],"pair":{}}],"SkyLife":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["100메가","100Mbps(100M 인터넷)"],["100메가 안심","100Mbps(100M 인터넷)"],["200메가","200Mbps(기가 200M 인터넷)"],["200메가 안심","200Mbps(기가 200M 인터넷)"],["500메가","500Mbps(기가 500M 인터넷)"],["500메가 안심","500Mbps(기가 500M 인터넷)"],["1기가","1Gbps(기가 1G 인터넷)"],["1기가 안심","1Gbps(기가 1G 인터넷)"]],"cols":[["기가WiFi",""]],"pair":{"100메가":["기가WiFi"],"100메가 안심":["기가WiFi"],"200메가":["기가WiFi"],"200메가 안심":["기가WiFi"],"500메가":["기가WiFi"],"500메가 안심":["기가WiFi"],"1기가":["기가WiFi"],"1기가 안심":["기가WiFi"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["베이직","206채널"],["ipit TV Basic","196채널"],["올","242채널"],["ipit TV Plus","209채널"],["포인트","242채널"],["스포츠 프리미어","242채널"],["초이스","242채널"],["디즈니플러스","239채널"],["유튜브 프리미엄","239채널"],["올&OTT","242채널"]],"cols":[["안드로이드UHD","일반셋탑"],["기가지니A","일반셋탑"]],"pair":{"베이직":["안드로이드UHD"],"ipit TV Basic":["기가지니A"],"올":["안드로이드UHD"],"ipit TV Plus":["기가지니A"],"포인트":["안드로이드UHD"],"스포츠 프리미어":["안드로이드UHD"],"초이스":["안드로이드UHD"],"디즈니플러스":["안드로이드UHD"],"올&OTT":["안드로이드UHD"]}}],"LG HelloVision":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["광랜라이트","100Mbps(광랜라이트 인터넷)"],["광랜","160Mbps(광랜 인터넷)"],["기가라이트","500Mbps(기가라이트 인터넷)"],["기가라이트 Mesh","500Mbps(기가라이트 인터넷)"],["플래티넘기가","1Gbps(플래티넘기가 인터넷)"],["플래티넘기가 Mesh","1Gbps(플래티넘기가 인터넷)"]],"cols":[["일반와이파이",""],["프리미엄기가WiFi",""],["기가Mesh패키지",""]],"pair":{"광랜라이트":["일반와이파이"],"광랜":["프리미엄기가WiFi"],"기가라이트":["프리미엄기가WiFi"],"기가라이트 Mesh":["기가Mesh패키지"],"플래티넘기가":["프리미엄기가WiFi"],"플래티넘기가 Mesh":["기가Mesh패키지"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["UHD뉴베이직_반값","245채널"],["UHD이코노미&헬로Wifi","109채널"],["UHD뉴베이직&헬로Wifi","245채널"],["헬로tv플러스","102채널"],["HD이코노미","106채널"],["HD베이직","211채널"],["HD스탠다드","218채널"],["HD뉴베이직","242채널"],["HD뉴프리미엄","242채널"],["UHD이코노미","109채널"],["UHD베이직","214채널"],["UHD스탠다드","221채널"],["UHD뉴베이직","245채널"],["UHD뉴프리미엄","245채널"],["UHD뉴베이직디즈니","245채널"],["UHD뉴베이직 디즈니스탠다드","248채널"],["UHD뉴프리미엄디즈니","245채널"],["UHD뉴베이직 디즈니프리미엄","248채널"],["Pro라이트","218채널"],["Pro맥스","246채널"]],"cols":[["UHD셋톱","일반셋탑"],["HD셋톱","일반셋탑"],["IP STB셋탑","일반셋탑"]],"pair":{"UHD뉴베이직_반값":["UHD셋톱"],"UHD이코노미&헬로Wifi":["UHD셋톱"],"UHD뉴베이직&헬로Wifi":["UHD셋톱"],"HD이코노미":["HD셋톱"],"HD베이직":["HD셋톱"],"HD스탠다드":["HD셋톱"],"HD뉴베이직":["HD셋톱"],"HD뉴프리미엄":["HD셋톱"],"UHD이코노미":["UHD셋톱"],"UHD베이직":["UHD셋톱"],"UHD스탠다드":["UHD셋톱"],"UHD뉴베이직":["UHD셋톱"],"UHD뉴프리미엄":["UHD셋톱"],"UHD뉴베이직디즈니":["UHD셋톱"],"UHD뉴베이직 디즈니스탠다드":["UHD셋톱"],"UHD뉴프리미엄디즈니":["UHD셋톱"],"UHD뉴베이직 디즈니프리미엄":["UHD셋톱"],"Pro라이트":["IP STB셋탑"],"Pro맥스":["IP STB셋탑"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["표준요금제","인터넷전화(일반)"],["이동전화 할인요금제","인터넷전화(일반)"],["모바일 30+","인터넷전화(정액)"],["모바일 60+","인터넷전화(정액)"],["유선무제한","인터넷전화(정액)"],["유선무제한+200","인터넷전화(정액)"],["5천원 정액요금제","인터넷전화(정액)"],["1만원 정액요금제","인터넷전화(정액)"]],"cols":[["WPI-9900","전화기"]],"pair":{"표준요금제":["WPI-9900"],"이동전화 할인요금제":["WPI-9900"],"모바일 30+":["WPI-9900"],"모바일 60+":["WPI-9900"],"유선무제한":["WPI-9900"],"유선무제한+200":["WPI-9900"],"5천원 정액요금제":["WPI-9900"],"1만원 정액요금제":["WPI-9900"]}}],"딜라이브":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["ISP 스마트광랜","100Mbps(광랜 인터넷)"],["안심 스마트광랜","100Mbps(광랜 인터넷)"],["LG망 S광랜","100Mbps(광랜 인터넷 LG망)"],["안심 LG망 S광랜","100Mbps(광랜 인터넷 LG망)"],["ISP 스마트광랜 와이드","100Mbps(광랜 인터넷)"],["LG망 S광랜 와이드","100Mbps(광랜 인터넷 LG망)"],["ISP 스마트광랜플러스","160Mbps(광랜 플러스)"],["안심 스마트광랜플러스","160Mbps(광랜 플러스)"],["ISP 스마트광랜플러스 와이드","160Mbps(광랜 플러스)"],["ISP 스마트광랜세이브플러스","320Mbps(광랜 세이브 플러스)"],["안심 스마트광랜세이브플러스","320Mbps(광랜 세이브 플러스)"],["ISP 스마트광랜세이브플러스 와이드","320Mbps(광랜 세이브 플러스)"],["LG망 S기가500M","500Mbps(500메가 인터넷 LG망)"],["안심 LG망 S기가500M","500Mbps(500메가 인터넷 LG망)"],["LG망 S기가500M 와이드","500Mbps(500메가 인터넷 LG망)"],["ISP 스마트기가","1Gbps(기가 인터넷)"],["안심 스마트기가","1Gbps(기가 인터넷)"],["LG망 S기가","1Gbps(기가 인터넷 LG망)"],["안심 LG망 S기가","1Gbps(기가 인터넷 LG망)"],["ISP 스마트 기가 와이드","1Gbps(기가 인터넷)"],["LG망 S기가 와이드","1Gbps(기가 인터넷 LG망)"]],"cols":[["WiFi",""],["WiFi+Mesh",""],["기가WiFi",""],["기가WiFi+Mesh",""]],"pair":{"ISP 스마트광랜":["WiFi"],"안심 스마트광랜":["WiFi"],"LG망 S광랜":["WiFi"],"안심 LG망 S광랜":["WiFi"],"ISP 스마트광랜 와이드":["WiFi+Mesh"],"LG망 S광랜 와이드":["WiFi+Mesh"],"ISP 스마트광랜플러스":["WiFi"],"안심 스마트광랜플러스":["WiFi"],"ISP 스마트광랜플러스 와이드":["WiFi+Mesh"],"ISP 스마트광랜세이브플러스":["기가WiFi"],"안심 스마트광랜세이브플러스":["기가WiFi"],"ISP 스마트광랜세이브플러스 와이드":["기가WiFi+Mesh"],"LG망 S기가500M":["기가WiFi"],"안심 LG망 S기가500M":["기가WiFi"],"LG망 S기가500M 와이드":["기가WiFi+Mesh"],"ISP 스마트기가":["기가WiFi"],"안심 스마트기가":["기가WiFi"],"LG망 S기가":["기가WiFi"],"안심 LG망 S기가":["기가WiFi"],"ISP 스마트 기가 와이드":["기가WiFi+Mesh"],"LG망 S기가 와이드":["기가WiFi+Mesh"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["복지형","25채널"],["알뜰 의무형","30채널"],["알뜰 보급형","90채널"],["알뜰 보급형플러스","100채널"],["알뜰 실속형","120채널"],["이코노미","170채널"],["패밀리","200채널"],["프리미엄","230채널"],["프리미엄플러스","240채널"]],"cols":[["HD","일반셋탑"]],"pair":{"이코노미":["HD"],"패밀리":["HD"],"프리미엄":["HD"],"프리미엄플러스":["HD"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["50 요금제","인터넷전화(일반)"],["표준요금제","인터넷전화(일반)"],["정액요금제","일반전화(정액)"]],"cols":[["CO-302","모뎀"]],"pair":{"50 요금제":["CO-302"],"표준요금제":["CO-302"],"정액요금제":["CO-302"]}}],"HCN":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["100M(1년)","100Mbps(광랜 1년)"],["100M(2년)","100Mbps(광랜 2년)"],["100M(3년)","100Mbps(광랜 3년)"],["100M(4년)","100Mbps(광랜 4년)"],["기가(1년)","1Gbps(기가 인터넷 1년)"],["기가(2년)","1Gbps(기가 인터넷 2년)"],["기가(3년)","1Gbps(기가 인터넷 3년)"],["기가(4년)","1Gbps(기가 인터넷 4년)"]],"cols":[["WiFi",""]],"pair":{"100M(1년)":["WiFi"],"100M(2년)":["WiFi"],"100M(3년)":["WiFi"],"100M(4년)":["WiFi"],"기가(1년)":["WiFi"],"기가(2년)":["WiFi"],"기가(3년)":["WiFi"],"기가(4년)":["WiFi"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["무약정TV","100채널"],["STB+WiFi(3년)","240채널"],["STB골드(1년)","240채널"],["STB골드(2년)","240채널"],["STB골드(3년)","240채널"],["무비원TV(3년)","240채널"]],"cols":[["안드로이드셋탑","일반셋탑"]],"pair":{"STB+WiFi(3년)":["안드로이드셋탑"],"STB골드(1년)":["안드로이드셋탑"],"STB골드(2년)":["안드로이드셋탑"],"STB골드(3년)":["안드로이드셋탑"],"무비원TV(3년)":["안드로이드셋탑"]}}]};
+/* 태그 미연결 예시 — 신규 등록 직후 상태를 보여주기 위한 지정값 */
+const NOTAG = {"KT|TV세트|row":["NEW모든G","넷플릭스 초이스HD"],"KT|TV세트|col":["올레TV탭"],
+ "KT|인터넷전화세트|row":["표준영상"],"LG|TV세트|row":["프리미엄 티빙"],"SKB|TV세트|col":["AI스피커형"]};
+const VENS = Object.keys(D);
+let V = VENS[0], SEL = null, MENU = null, CUR = null, ONLY = false;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const isNet = g => g.svc === '인터넷';
+const noTag = (g, side, name) => (NOTAG[V+'|'+g.label+'|'+side]||[]).indexOf(name) >= 0;
+
+function tagOf(g, side, name){
+  if (noTag(g, side, name)) return '';
+  const arr = side === 'row' ? g.rows : g.cols;
+  const hit = arr.find(x => x[0] === name);
+  return hit ? hit[1] : '';
+}
+
+$('noteTx').innerHTML = '인터넷 외(TV · 전화) 상품은 <b>카드를 우클릭해 「태그 연결」</b>로 태그를 붙입니다. 인터넷 상품은 조합 단위라 <b>「상품 연결 등록」</b>이 뜨고 상품 연결 관리로 넘어갑니다.';
+
+function renderTabs(){
+  $('vtabs').innerHTML = VENS.map(v => '<div class="ti'+(v===V?' on':'')+'" data-v="'+esc(v)+'">'+esc(v)+'</div>').join('');
+  $('vtabs').querySelectorAll('[data-v]').forEach(el => el.onclick = () => { V = el.dataset.v; SEL = null; render(); });
+}
+
+function card(g, side, name){
+  const t = tagOf(g, side, name);
+  const nt = noTag(g, side, name);
+  const showTag = !isNet(g) || side === 'row';
+  return '<div class="pit" data-g="'+esc(g.label)+'" data-s="'+side+'" data-n="'+esc(name)+'">'
+    + '<span class="nm">'+esc(name)+'</span>'
+    + (nt ? '<span class="nt">태그 없음</span>' : (showTag && t ? '<span class="tg">'+esc(t)+'</span>' : ''))
+    + '</div>';
+}
+
+function render(){
+  renderTabs();
+  const gs = D[V] || [];
+  let miss = 0;
+  gs.forEach(g => {
+    g.rows.forEach(r => { if (noTag(g,'row',r[0])) miss++; });
+    g.cols.forEach(c => { if (noTag(g,'col',c[0])) miss++; });
+  });
+  const tot = gs.reduce((a,g) => a + g.rows.length + g.cols.length, 0);
+  $('cnt').innerHTML = '상품 <b>'+tot+'</b>개'
+    + (miss ? '<span class="warn" id="onlyBtn">'+(ONLY?'전체 보기':'태그 미연결 '+miss+'건')+'</span>' : '');
+
+  $('grid').innerHTML = gs.map(g => {
+    const rows = g.rows.filter(r => !ONLY || noTag(g,'row',r[0]));
+    const cols = g.cols.filter(c => !ONLY || noTag(g,'col',c[0]));
+    const single = g.cols.length === 0;
+    return '<div class="gcard"><div class="gh">'+esc(g.label)+'</div>'
+      + '<div class="cols'+(single?' single':'')+'" data-g="'+esc(g.label)+'">'
+      + '<div class="col"><div class="ch">'+esc(g.rowName)+'</div>'+rows.map(r => card(g,'row',r[0])).join('')+'</div>'
+      + (single ? '' : '<div class="link-lane"><svg class="lane"></svg></div>'
+          + '<div class="col"><div class="ch">'+esc(g.colName)+'</div>'+cols.map(c => card(g,'col',c[0])).join('')+'</div>')
+      + '</div></div>';
+  }).join('');
+
+  const ob = $('onlyBtn'); if (ob) ob.onclick = () => { ONLY = !ONLY; render(); };
+  bind();
+}
+
+function bind(){
+  document.querySelectorAll('.pit').forEach(el => {
+    el.onclick = e => { e.stopPropagation(); pick(el); };
+    el.oncontextmenu = e => { e.preventDefault(); e.stopPropagation(); pick(el); openMenu(el, e.clientX, e.clientY); };
+  });
+}
+
+function grp(label){ return (D[V]||[]).find(g => g.label === label); }
+
+function pick(el){
+  document.querySelectorAll('.pit').forEach(x => x.classList.remove('sel','lit'));
+  el.classList.add('sel');
+  SEL = { g: el.dataset.g, s: el.dataset.s, n: el.dataset.n };
+  const g = grp(SEL.g); if (!g) return;
+  let mates = [];
+  if (SEL.s === 'row') mates = (g.pair[SEL.n] || []);
+  else mates = Object.keys(g.pair).filter(p => (g.pair[p]||[]).indexOf(SEL.n) >= 0);
+  const box = el.closest('.cols');
+  mates.forEach(m => {
+    const t = box.querySelector('.pit[data-s="'+(SEL.s==='row'?'col':'row')+'"][data-n="'+CSS.escape(m)+'"]');
+    if (t) t.classList.add('lit');
+  });
+  drawLanes(box, el, mates);
+}
+
+function drawLanes(box, el, mates){
+  const svg = box.querySelector('svg.lane'); if (!svg) return;
+  const lane = svg.parentElement, lb = lane.getBoundingClientRect();
+  svg.innerHTML = '';
+  const a = el.getBoundingClientRect();
+  const fromRow = SEL.s === 'row';
+  mates.forEach(m => {
+    const t = box.querySelector('.pit[data-s="'+(fromRow?'col':'row')+'"][data-n="'+CSS.escape(m)+'"]');
+    if (!t) return;
+    const b = t.getBoundingClientRect();
+    const y1 = a.top + a.height/2 - lb.top, y2 = b.top + b.height/2 - lb.top;
+    const p = document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d','M0 '+y1.toFixed(1)+' C 28 '+y1.toFixed(1)+', 28 '+y2.toFixed(1)+', 56 '+y2.toFixed(1));
+    p.setAttribute('fill','none'); p.setAttribute('stroke','#2F9E68'); p.setAttribute('stroke-width','1.5');
+    svg.appendChild(p);
+  });
+}
+
+const BASE = ['상품 요금 설정','상품 할인 설정','상품 이벤트 설정','금지 코드 설정'];
+const TAIL = ['설명 바꾸기','위로','아래로','우선순위 변경 (기본)','사용중지'];
+
+function openMenu(el, x, y){
+  closeMenu();
+  const g = grp(el.dataset.g); if (!g) return;
+  const net = isNet(g);
+  const act = net ? '상품 연결 등록' : '태그 연결';
+  const m = document.createElement('div');
+  m.className = 'menu';
+  m.innerHTML = BASE.map(l => '<div class="mi">'+l+'</div>').join('')
+    + '<div class="mi act" id="miAct">'+act+'<span class="newb">추가</span></div>'
+    + '<div class="sep"></div>' + TAIL.map(l => '<div class="mi">'+l+'</div>').join('');
+  document.body.appendChild(m);
+  const w = 230, h = m.offsetHeight;
+  m.style.left = Math.min(x, innerWidth - w - 12) + 'px';
+  m.style.top = Math.min(y, innerHeight - h - 12) + 'px';
+  MENU = m;
+  CUR = { g: g, side: el.dataset.s, name: el.dataset.n };
+  document.getElementById('miAct').onclick = () => { closeMenu(); net ? toast('상품 연결 관리로 이동합니다.', '#73767A') : openTag(); };
+}
+function closeMenu(){ if (MENU) { MENU.remove(); MENU = null; } }
+document.addEventListener('click', closeMenu);
+document.addEventListener('contextmenu', e => { if (!e.target.closest('.pit')) closeMenu(); });
+
+function openTag(){
+  const g = CUR.g, side = CUR.side, name = CUR.name;
+  $('tgVen').textContent = V;
+  $('tgSvc').textContent = g.svc;
+  $('tgAxis').textContent = side === 'row' ? g.rowName : g.colName;
+  $('tgProd').textContent = name;
+  const arr = side === 'row' ? g.rows : g.cols;
+  const opts = [...new Set(arr.map(x => x[1]).filter(Boolean))].sort();
+  const cur = tagOf(g, side, name);
+  $('tgSel').innerHTML = (cur ? '' : '<option value="">선택하세요</option>')
+    + opts.map(o => '<option'+(o===cur?' selected':'')+'>'+esc(o)+'</option>').join('');
+  const upd = () => {
+    const v = $('tgSel').value;
+    $('tgPrev').textContent = v ? name + '(' + v + ')' : name;
+  };
+  $('tgSel').onchange = upd; upd();
+  $('ovTag').hidden = false;
+}
+$('tgX').onclick = $('tgCancel').onclick = () => $('ovTag').hidden = true;
+$('tgSave').onclick = () => {
+  const v = $('tgSel').value;
+  if (!v) { toast('태그를 선택해주세요.', '#C31518'); return; }
+  const g = CUR.g, key = V+'|'+g.label+'|'+CUR.side;
+  if (NOTAG[key]) NOTAG[key] = NOTAG[key].filter(n => n !== CUR.name);
+  const arr = CUR.side === 'row' ? g.rows : g.cols;
+  const hit = arr.find(x => x[0] === CUR.name); if (hit) hit[1] = v;
+  $('ovTag').hidden = true;
+  toast('태그를 연결했습니다 — ' + CUR.name + '(' + v + ')', '#0A8208');
+  render();
+};
+function toast(msg, color){
+  const n = document.createElement('div'); n.className = 'toast'; n.textContent = msg;
+  n.style.background = color; document.body.appendChild(n);
+  setTimeout(() => n.remove(), 3200);
+}
+render();
+</script>
+
+</body>
+</html>

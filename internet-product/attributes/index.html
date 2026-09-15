@@ -544,7 +544,7 @@ input.srch::placeholder{color:var(--g300)}
       <tr><th>targetKey</th><td>대상의 <b>원래</b> 이름</td><td>중복 판정 키. 이름을 두 번 고쳐도 원래 이름이 키라 <b>한 줄로 합쳐집니다</b></td></tr>
       <tr><th>action</th><td>아래 6종</td><td>targetKey + action 조합이 고유. 같은 조합이 또 오면 <b>덮어씁니다</b></td></tr>
       <tr><th>before → after</th><td>원래값 → 최종값</td><td>중간값은 버리고 <b>원래값과 최종값만</b>. <code>160Mbps → 160M → 160메가</code>는 <code>160Mbps → 160메가</code> 한 줄</td></tr>
-      <tr><th>impact</th><td><code>연결 상품 N건</code></td><td><b>속성 이름 변경에만</b> 붙습니다. 나머지 동작은 고객 노출 영향이 없습니다</td></tr>
+      <tr><th>impact</th><td><code>연결 상품 N건</code></td><td><b>인터넷의 속성 이름 변경에만</b> 붙습니다. 인터넷 외는 태그명을 조립하지 않아 고객 노출 영향이 없습니다</td></tr>
     </tbody>
   </table>
   </div>
@@ -553,7 +553,7 @@ input.srch::placeholder{color:var(--g300)}
     <thead><tr><th style="width:8%">#</th><th style="width:22%">action</th><th style="width:38%">렌더 예</th><th>비고</th></tr></thead>
     <tbody>
       <tr><td>1</td><th>속성 타입 · 이름 변경</th><td class="msg">인터넷 › 구성제품 &nbsp; 속성 타입 이름 <b>구성제품 → 구성 제품</b></td><td>impact 없음</td></tr>
-      <tr><td>2</td><th>속성 · 이름 변경</th><td class="msg">인터넷 › 속도 &nbsp; 속성 이름 <b>1Gbps → 1기가</b> · 연결 상품 66건</td><td><b>유일하게 impact가 붙는 동작</b></td></tr>
+      <tr><td>2</td><th>속성 · 이름 변경</th><td class="msg">인터넷 › 속도 &nbsp; 속성 이름 <b>1Gbps → 1기가</b> · 연결 상품 66건<br>TV › 셋탑 &nbsp; 속성 이름 <b>일반셋탑 → 일반 셋탑</b></td><td><b>인터넷만 impact가 붙습니다.</b> 인터넷은 확인 모달, 인터넷 외는 모달 없이 목록에만</td></tr>
       <tr><td>3</td><th>속성 · 추가</th><td class="msg">인터넷 › 속도 &nbsp; 속성 추가 <b>— → 2Gbps</b></td><td>추가 직후 이름을 또 고치면 3번이 아니라 4번의 값만 갱신</td></tr>
       <tr><td>4</td><th>속성 · 삭제</th><td class="msg">인터넷 › 속도 &nbsp; 속성 삭제 <b>2Gbps → —</b></td><td>[되돌리기]를 누르면 <b>줄이 사라집니다</b> — "삭제 취소" 줄을 새로 쌓지 않습니다</td></tr>
       <tr><td>5</td><th>속성 · 순서</th><td class="msg">인터넷 › 속도 &nbsp; 속성 순서 1Gbps <b>6번째 → 2번째</b></td><td>움직인 <b>항목마다 한 줄</b>. 같은 항목을 열 번 끌어도 한 줄이고, 제자리로 돌아오면 줄이 사라집니다</td></tr>
@@ -574,7 +574,8 @@ input.srch::placeholder{color:var(--g300)}
     <thead><tr><th style="width:18%">동작</th><th style="width:26%">허용 조건</th><th>비고</th></tr></thead>
     <tbody>
       <tr><th>사용 업체 표시</th><td>개수 + 앞 3개 · 나머지는 <b>외 N</b></td><td>셀에 마우스를 올리면 전체 업체명이 툴팁으로 펼쳐집니다. 표시 순서는 데이터 순서(KT · LG · SKT · SKB · SkyLife · LG HelloVision · 딜라이브 · HCN) 고정 — 정렬을 매번 바꾸면 행끼리 비교가 안 됩니다.</td></tr>
-      <tr><th>속성 삭제</th><td><b>사용 업체 0</b>일 때만</td><td>실데이터 기준 <b>지금 삭제 가능한 속성은 0개</b>입니다. 유일하게 사용 업체 0인 <code>인터넷전화 · 전화기기 · 없음</code>은 자동 등록이라 삭제 불가입니다. → 사실상 <b>이번에 새로 추가한 값을 되돌릴 때만</b> 쓰입니다.</td></tr>
+      <tr><th>속성 삭제</th><td><b>사용 업체 0</b>일 때만</td><td>실데이터 기준 삭제 가능한 속성은 <b>1개</b> — <code>TV · 셋탑 · OTT기기</code>(업체 0 · 연결 0 · 태그 0)뿐입니다. <code>인터넷전화 · 전화기기 · 없음</code>도 업체 0이지만 자동 등록이라 삭제 불가입니다. → 사실상 <b>이번에 새로 추가한 값을 되돌릴 때</b>와 <b>죽은 값 1건 정리</b>에만 쓰입니다.</td></tr>
+      <tr><th>「연결 상품」 컬럼</th><td>구분에 따라 <b>세는 대상이 다릅니다</b></td><td>인터넷 = 그 속성이 들어간 <b>조합</b> 수 · 인터넷 외 = 그 속성을 가진 <b>상품</b> 수. 사이드패널도 인터넷은 <code>상품 × 세트상품</code> + 자리 3개, 인터넷 외는 <b>상품 하나씩</b> 나열하고 패널 제목이 「이 속성을 쓰는 상품」으로 바뀝니다.</td></tr>
       <tr><th>"없음" 속성</th><td>삭제 · 순서 변경 <b>불가</b></td><td>속성 타입을 만들 때 자동 생성됩니다. 필수 속성 타입(자리1)에는 "없음"이 없습니다.</td></tr>
       <tr><th>속성 추가</th><td>같은 속성 타입 안에서 이름 중복 불가</td><td>추가 즉시 목록 맨 아래에 붙고 「추가됨」 배지가 달립니다. 필수 속성 타입에는 "없음"을 추가할 수 없습니다.</td></tr>
       <tr><th>속성 순서</th><td>같은 속성 타입 안에서만</td><td><b>저장을 눌러야 반영됩니다</b> — 태그 관리의 표시 순서(즉시 저장)와 다릅니다. <b>하향 자리</b>(인터넷 속도 · 구성제품 · TV 라인 · 셋탑)의 순서는 상담 상세의 <b>대체 기준</b>이라 다른 변경과 함께 검증해야 합니다.</td></tr>
@@ -610,7 +611,7 @@ input.srch::placeholder{color:var(--g300)}
     <thead><tr><th style="width:24%">위치 · 트리거</th><th>문구</th><th style="width:22%">동작</th></tr></thead>
     <tbody>
       <tr><th>속성 타입 선택 시 · 하단</th><td class="msg">하향 자리 — "순서가 상담 결과를 바꿉니다. 상담 상세에서 업체를 전환할 때, 같은 값이 없으면 이 순서에서 한 단계 낮은 값을 찾습니다. 위로는 올라가지 않습니다." / 일치 자리 — "이 속성 타입은 순서가 서열이 아닙니다. 같은 값이 없으면 「없음」으로 떨어집니다."</td><td>선택된 속성 타입에 맞춰 교체</td></tr>
-      <tr><th>이름 변경 모달 · 진입</th><td class="msg">"사용 업체 {N}개 · 연결 상품 {M}건의 고객 노출 문구가 함께 바뀝니다."</td><td>Warning 박스 · 값은 실시간 계산</td></tr>
+      <tr><th>이름 변경 모달 · 진입 <span class="tag">인터넷만</span></th><td class="msg">"사용 업체 {N}개 · 연결 상품 {M}건의 고객 노출 문구가 함께 바뀝니다."</td><td>Warning 박스 · 값은 실시간 계산. 인터넷 외는 모달 없음</td></tr>
       <tr><th>저장 확인 모달 · 진입</th><td class="msg">"저장하면 상품속성 캐시가 비워집니다. CRM 상담 상세에서 업체를 전환할 때 자동 선택되는 상품이 즉시 달라집니다."</td><td>Error 박스</td></tr>
       <tr><th>삭제 버튼 · 사용 업체 1 이상</th><td class="msg">"사용 업체가 있어 삭제할 수 없습니다."</td><td>버튼 disabled + title</td></tr>
       <tr><th>속성 추가 · 이름 중복</th><td class="msg">"같은 속성 타입에 이미 있는 이름입니다."</td><td>인라인 에러 · 추가 안 됨</td></tr>
@@ -663,7 +664,7 @@ input.srch::placeholder{color:var(--g300)}
 <div class="mgrid">
 
   <div>
-    <div class="spec-head"><span class="chip-n">1</span><span class="spec-t">속성 이름 변경 확인</span><span class="spec-s">진입: 목록에서 이름을 고치고 포커스 아웃</span></div>
+    <div class="spec-head"><span class="chip-n">1</span><span class="spec-t">속성 이름 변경 확인</span><span class="spec-s">진입: <b>인터넷</b>에서 이름을 고치고 포커스 아웃</span></div>
     <div class="modal" style="width:600px">
       <div class="mh"><h3>속성 이름 변경</h3></div>
       <div class="mb">
@@ -674,8 +675,8 @@ input.srch::placeholder{color:var(--g300)}
         <div class="notice warn" style="margin-bottom:12px"><span class="i">!</span>
           <span><b>사용 업체 8개 · 연결 상품 66건</b>의 <b>고객 노출 문구가 함께 바뀝니다.</b> 태그명이 <code>속성(표기명)</code>으로 조립되기 때문입니다.</span></div>
         <div class="fld"><label>표시 예시</label>
-          <div class="preview" style="background:var(--g25)"><span class="k" style="color:var(--g500)">변경 전</span><span class="v" style="font-size:14px">1Gbps(슬림)</span></div>
-          <div class="preview" style="margin-top:6px"><span class="k">변경 후</span><span class="v" style="font-size:14px">1기가(슬림)</span></div></div>
+          <div class="preview" style="background:var(--g25)"><span class="k" style="color:var(--g500)">변경 전</span><span class="v" style="font-size:14px">1Gbps(에센스)</span></div>
+          <div class="preview" style="margin-top:6px"><span class="k">변경 후</span><span class="v" style="font-size:14px">1기가(에센스)</span></div></div>
         <div class="hint g3">[확인]을 눌러도 아직 저장되지 않습니다. 상단 변경 대기 목록에만 올라가고, 실제 반영은 [저장]입니다.</div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">변경 취소</button><button class="btn-solid">확인</button></div>
@@ -683,7 +684,7 @@ input.srch::placeholder{color:var(--g300)}
     <div class="desc"><div class="desc-l">DESCRIPTION</div>
       <p><b>닫기(✕)를 두지 않았습니다.</b> [변경 취소] / [확인] / ✕ 세 개가 있으면 ✕가 어느 쪽인지 모호합니다. 확인 모달은 출구가 둘 다 라벨을 달고 있어야 합니다. <b>ESC = 변경 취소</b>입니다.</p>
       <p>영향 건수는 고정값이 아니라 <b>그 속성을 쓰는 업체 수 · 연결 상품 수를 그때 계산</b>합니다. <code>1Gbps</code> 8/66, <code>320Mbps</code> 1/3처럼 값마다 다릅니다.</p>
-      <p>「표시 예시」의 표기명은 그 속성을 쓰는 <b>태그 중 하나를 뽑아 실제 값</b>으로 보여줍니다. 가상의 <code>(표기명)</code> 자리표시자보다 이해가 빠릅니다.</p>
+      <p>「표시 예시」의 표기명은 그 속성을 쓰는 <b>태그 중 하나를 뽑아 실제 값</b>으로 보여줍니다. 가상의 <code>(표기명)</code> 자리표시자보다 이해가 빠릅니다.</p><p class="q">인터넷 외에서는 이 모달이 뜨지 않습니다 — 태그명을 조립하지 않아 <b>속성 이름을 바꿔도 고객 노출이 바뀌지 않기 때문</b>입니다. 변경 대기 목록에만 올라갑니다. 다만 순서를 바꾸는 것은 인터넷 외에서도 상담 결과에 영향을 줍니다(하향 대체).</p>
     </div>
   </div>
 
@@ -696,7 +697,7 @@ input.srch::placeholder{color:var(--g300)}
         <div class="chg" style="margin-bottom:14px;max-height:220px;overflow:auto">
           <span><span class="sc">인터넷 › 속도</span><span class="lb">속성 추가</span><b class="as">—</b><span class="ar">→</span><b class="to">2Gbps</b></span>
           <span><span class="sc">인터넷 › 추가구성옵션</span><span class="lb">속성 타입 이름</span><b class="as">추가구성옵션</b><span class="ar">→</span><b class="to">추가 옵션</b></span>
-          <span><span class="sc">TV › 셋탑</span><span class="lb">속성 이름</span><b class="as">UHD</b><span class="ar">→</span><b class="to">UHD 셋탑</b><span class="im">연결 상품 12건</span></span>
+          <span><span class="sc">TV › 셋탑</span><span class="lb">속성 이름</span><b class="as">일반셋탑</b><span class="ar">→</span><b class="to">일반 셋탑</b></span>
         </div>
         <div class="notice warn" style="margin-bottom:0"><span class="i">!</span>
           <span><b>저장하면 상품속성 캐시가 비워집니다.</b> CRM 상담 상세에서 업체를 전환할 때 자동 선택되는 상품이 즉시 달라집니다. 되돌리려면 값을 다시 고쳐 저장해야 합니다.</span></div>
@@ -883,7 +884,8 @@ function renderAttrs(){
       var a=divs()[DI].attrs.find(x=>x.n===old);
       if(!a.__orig) a.__orig=old;
       window.__pendingRename={old:old,nv:nv,a:a,origin:a.__orig,vend:a.v.length,cnt:a.r.length};
-      openRename();
+      /* 고객 노출 문구가 함께 바뀌는 것은 인터넷뿐 — 인터넷 외는 태그명을 조립하지 않는다 */
+      if(isNet()) openRename(); else applyRename();
       inp.value=old;
     };
   });
@@ -916,11 +918,25 @@ function bindDrag(){
 function openPanel(name){
   var d=divs()[DI], a=d.attrs.find(x=>x.n===name); if(!a)return;
   $('dwName').textContent=name; $('dwSvc').textContent=SV; $('dwDiv').textContent=d.name;
+  var lbl=isNet()?'연결 상품':'이 속성을 쓰는 상품';
+  document.querySelectorAll('#dw .dlist-h .t, #dw .dh h4').forEach(function(e){e.textContent=lbl;});
   $('dwVend').textContent=a.v.length+'개'; $('dwCnt2').textContent=a.r.length+'건'; $('dwCnt').textContent=a.r.length+'건';
+  var net=isNet();
+  $('dwCnt2').textContent=a.r.length+(net?'건':'개');
+  $('dwCnt').textContent=a.r.length+(net?'건':'개');
   var by={}; a.r.forEach(function(i){var x=L[i]; (by[x[0]]=by[x[0]]||[]).push(x);});
   var html='';
   a.v.forEach(function(v){
     var rows=by[v]||[];
+    if(!net){
+      /* 인터넷 외는 조합을 쓰지 않는다 — 이 속성을 가진 상품을 하나씩 나열 */
+      var seen={}, uniq=[];
+      rows.forEach(function(x){ var n=(d.slot===2 && x[2])?x[2]:x[1]; if(!seen[n]){seen[n]=1;uniq.push(n);} });
+      html+='<div class="vgrp"><span class="v">'+v+'</span><span class="c">'+uniq.length+'개</span></div>';
+      html+=uniq.map(function(n){
+        return '<div class="dl"><div class="p"><span class="cur">'+n+'</span></div></div>';}).join('');
+      return;
+    }
     html+='<div class="vgrp"><span class="v">'+v+'</span><span class="c">'+rows.length+'건</span></div>';
     html+=rows.map(function(x){
       var trio=[x[3],x[4],x[5]].map(function(t,j){
@@ -951,20 +967,30 @@ $('lvGo').onclick=function(){ $('ovLeave').hidden=true; CHG=[]; DEL={}; paintSav
 $('saveBtn').onclick=function(){ openSave(); };
 function render(){ renderDivs(); renderAttrs(); paintSave(); }
 
+function isNet(){ return SV==='인터넷'; }
+function sampleSub(a){
+  /* 이 속성을 쓰는 태그 중 하나의 표기명을 뽑아 실제 값으로 보여준다 */
+  var ex={'100Mbps':'슬림','200Mbps':'슬림플러스','500Mbps':'베이직','1Gbps':'에센스',
+          '2.5Gbps':'프리미엄','5Gbps':'프리미엄플러스','10Gbps':'슈퍼프리미엄',
+          '프리미엄WiFi':'WiFi 7D','WiFi+증폭기':'Buddy','프리미엄WiFi+증폭기':'WiFi 7D+Buddy',
+          '안심':'유해사이트 방패'};
+  return ex[a] || '표기명';
+}
+function applyRename(){
+  var r=window.__pendingRename; r.a.n=r.nv;
+  mark('attr:name:'+r.origin,'속성 이름',r.origin,r.nv, isNet()?('연결 상품 '+r.cnt+'건'):'');
+  render();
+}
 function openRename(){
-  var r=window.__pendingRename;
+  var r=window.__pendingRename, sub=sampleSub(r.old);
   $('renOld').textContent=r.old; $('renNew').textContent=r.nv;
   $('renImpact').textContent='사용 업체 '+r.vend+'개 · 연결 상품 '+r.cnt+'건';
-  $('renEx1').textContent=r.old+'(표기명)'; $('renEx2').textContent=r.nv+'(표기명)';
+  $('renEx1').textContent=r.old+'('+sub+')'; $('renEx2').textContent=r.nv+'('+sub+')';
   $('ovRen').hidden=false;
 }
 function closeRename(){ $('ovRen').hidden=true; $('ovSave').hidden=true; }
 $('renCancel').onclick=closeRename;
-$('renOk').onclick=function(){
-  var r=window.__pendingRename; r.a.n=r.nv;
-  mark('attr:name:'+r.origin,'속성 이름',r.origin,r.nv,'연결 상품 '+r.cnt+'건');
-  closeRename(); render();
-};
+$('renOk').onclick=function(){ applyRename(); closeRename(); };
 function openSave(){
   $('svCnt').textContent='변경 '+CHG.length+'건을 저장합니다.';
   $('svList').innerHTML=CHG.map(m=>'<span>'+m.t+'</span>').join('');

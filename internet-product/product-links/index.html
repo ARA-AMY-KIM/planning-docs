@@ -10,6 +10,9 @@
  --orange50:#FDEBE3;--orange100:#FAD8C8;--purple50:#F2ECFF;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+:root{color-scheme:light}
+input,select,textarea{background:#fff;color:var(--g900);font-family:inherit}
+[hidden]{display:none!important}
 body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
  font-size:16px;color:var(--g900);background:#fff;-webkit-font-smoothing:antialiased}
 .wrap{min-width:1440px}
@@ -326,7 +329,7 @@ table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
 .nmi[readonly]{border-color:transparent!important;background:transparent!important;cursor:default}
 .addrow{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--g100);background:var(--g25)}
 .addrow input{flex:1;height:36px;padding:8px 12px;border:1px solid var(--g200);border-radius:8px;
- font-size:14px;font-family:inherit;outline:none}
+ font-size:14px;font-family:inherit;outline:none;background:#fff;color:var(--g900)}
 .addrow input::placeholder{color:var(--g300)}
 /* 상단 저장 영역 */
 .bar .vdiv{width:1px;height:20px;background:var(--g100);margin:0 4px}
@@ -373,9 +376,10 @@ input.err,.nmi.err,.dvnm.err{border-color:var(--error)!important;background:var(
 .chips button.on{background:var(--primary);color:#fff;font-weight:600}
 .srchbox{position:relative}
 .srchbox input{height:36px;width:280px;padding:8px 34px 8px 12px;border:1px solid var(--g200);border-radius:8px;
- font-size:14px;font-family:inherit;outline:none;letter-spacing:-.3px}
+ font-size:14px;font-family:inherit;outline:none;letter-spacing:-.3px;background:#fff;color:var(--g900);
+ background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' fill='%238D8F94'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
 .srchbox input::placeholder{color:var(--g300)}
-.srchbox::before{content:"";position:absolute;right:12px;top:10px;width:16px;height:16px;background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' fill='%238D8F94'/%3E%3C/svg%3E") center/16px 16px no-repeat}
 .ctl{width:100%;border-collapse:collapse;table-layout:fixed}
 .ctl th{height:34px;padding:8px 12px;font-size:12px;font-weight:400;color:var(--g500);text-align:left;
  border-top:1px solid var(--g100);border-bottom:1px solid var(--g100);letter-spacing:-.2px;white-space:nowrap;background:#fff}
@@ -513,6 +517,13 @@ input.srch{font-family:inherit;outline:none;color:var(--g900);padding:8px 34px 8
  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' fill='%238D8F94'/%3E%3C/svg%3E");
  background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
 input.srch::placeholder{color:var(--g300)}
+/* 구분 고정 표기 (연결은 인터넷 전용) */
+.lockfld{display:inline-flex;align-items:center;gap:8px;height:36px;padding:8px 12px;border:1px solid var(--g100);
+ border-radius:8px;background:var(--g25);font-size:14px;letter-spacing:-.3px}
+.lockfld .lk{font-size:12px;color:var(--g500)}
+.lockfld b{font-weight:700;color:var(--g900)}
+.lockfld .lktag{font-size:11px;font-weight:600;color:var(--g500);background:#fff;border:1px solid var(--g100);
+ border-radius:3px;padding:1px 6px}
 </style>
 
 <div class="wrap">
@@ -529,8 +540,7 @@ input.srch::placeholder{color:var(--g300)}
   <div class="pdesc">상품과 태그의 연결을 조회하고 대표를 지정합니다. 새 연결 등록은 인터넷 상품 관리에서 상품을 고른 뒤 우클릭으로 합니다.</div>
 
   <div class="bar">
-    <select class="sel" id="svcSel" style="min-width:150px">
-      <option>인터넷</option><option>TV</option><option>인터넷전화</option><option>일반전화</option></select>
+    <div class="lockfld"><span class="lk">구분</span><b>인터넷</b><span class="lktag">연결은 인터넷 전용</span></div>
     <div class="chips" id="chips">
       <button data-f="all" class="on">전체</button>
       <button data-f="dup">복수 상품 조합</button>
@@ -553,8 +563,8 @@ input.srch::placeholder{color:var(--g300)}
       <col><col><col><col style="width:92px"><col style="width:56px">
     </colgroup>
     <thead><tr>
-      <th id="hp">인터넷상품</th><th id="hs">기본WIFI</th>
-      <th id="h1">속도</th><th id="h2">구성제품</th><th id="h3">추가구성옵션</th>
+      <th>인터넷상품</th><th>기본WIFI</th>
+      <th>속도</th><th>구성제품</th><th>추가구성옵션</th>
       <th class="c">대표</th><th class="c">삭제</th>
     </tr></thead>
     <tbody id="body"></tbody>
@@ -685,7 +695,8 @@ const DIV={"인터넷": {"1": "속도", "2": "구성제품", "3": "추가구성�
 const $=id=>document.getElementById(id);
 const COLS={'인터넷':['인터넷상품','기본WIFI'],'TV':['TV채널','셋탑박스'],'인터넷전화':['전화상품','전화기기'],'일반전화':['전화상품','전화기기']};
 const VENDORS=["KT","LG","SKT","SKB","SkyLife","LG HelloVision","딜라이브","HCN"];
-let SV='인터넷', VD='KT', F='all', Q='', COMBO=null, FOCUS=null, BADREP=false;
+const SV='인터넷';
+let VD='KT', F='all', Q='', COMBO=null, FOCUS=null, BADREP=false;
 const REP={}; R.forEach((r,i)=>{ if(r[11]) REP[r[12]]=i; });
 
 function rows(){
@@ -708,8 +719,6 @@ function renderTabs(){
   $('vtabs').querySelectorAll('.ti').forEach(t=>t.onclick=()=>{VD=t.dataset.v;renderTabs();render();});
 }
 function render(){
-  const d=DIV[SV]||{}; $('h1').textContent=d['1']||'자리1'; $('h2').textContent=d['2']||'자리2'; $('h3').textContent=d['3']||'자리3';
-  const cl=COLS[SV]||['상품','세트상품']; $('hp').textContent=cl[0]; $('hs').textContent=cl[1];
   const all=R.filter(r=>r[0]===SV&&r[1]===VD);
   const grp=new Set(all.map(r=>r[12])), dup=new Set(all.filter(r=>r[10]>1).map(r=>r[12]));
   if(COMBO){
@@ -778,7 +787,6 @@ $('dlOk').onclick=()=>{
   document.body.appendChild(n); setTimeout(()=>n.remove(),2400);
 };
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovDel').hidden=true; });
-$('svcSel').onchange=()=>{SV=$('svcSel').value;renderTabs();render();};
 $('q').oninput=()=>{Q=$('q').value;render();};
 $('comboX').onclick=()=>{ COMBO=null; FOCUS=null; render(); };
 $('badX').onclick=()=>{ BADREP=false; render(); };
@@ -859,8 +867,8 @@ $('rMain').onclick=()=>{ regMain=!regMain; $('rMain').classList.toggle('on',regM
 $('openReg').onclick=()=>{
   if(pairHasLink()){
     const idx=R.findIndex(r=>r[1]===REG.vd&&r[2]===REG.prod&&(r[3]||'')===REG.set);
-    SV=R[idx][0]; VD=R[idx][1]; COMBO=R[idx][12]; FOCUS=idx; F='all'; Q='';
-    $('svcSel').value=SV; $('q').value='';
+    VD=R[idx][1]; COMBO=R[idx][12]; FOCUS=idx; F='all'; Q='';
+    $('q').value='';
     $('chips').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.f==='all'));
     renderTabs(); render();
     document.querySelector('.ctl').scrollIntoView({behavior:'smooth',block:'center'});
@@ -889,22 +897,25 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
 <div class="doc-band"><div class="sheet">
   <div class="doc-eyebrow">시안 설명</div>
   <div class="doc-h">화면 규칙 · 확인 필요</div>
-  <div class="doc-sub">위 화면은 실제로 동작합니다. 엑셀 실데이터 442건 · <code>is_use</code>는 v22 값 그대로.</div>
+  <div class="doc-sub">위 화면은 실제로 동작합니다. 엑셀 실데이터 인터넷 217건 · <code>is_use</code>는 개발 목업 값 그대로.</div>
 </div></div>
 
 <div class="sheet" style="padding-top:32px">
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">범위</span><span class="spec-t">조회 · 대표 지정 · 삭제</span></div>
+  <div class="spec-head"><span class="chip-v">범위</span><span class="spec-t">인터넷 전용 · 조회 · 대표 지정 · 삭제</span></div>
+  <div class="desc" style="margin:0 0 12px"><div class="desc-l">DESCRIPTION</div>
+    <p><b>연결은 인터넷 전용입니다.</b> 개발 목업 <code>w_15.html</code>(2026-09-09) 기준 — <b>TV · 인터넷전화 · 일반전화는 태그가 상품에 직접 붙어</b> 연결(태그 조합)을 쓰지 않습니다. 조합 칸의 사용여부만 Phase 2 ⑤에서 다룹니다.<br>
+    그래서 이 화면은 <b>구분 드롭다운을 없애고 「인터넷」 고정 표기</b>로 바꿨습니다. 대상은 연결 442건 중 <b>인터넷 217건</b>입니다.</p></div>
   <div class="table-wrap">
   <table class="mx">
     <thead><tr><th style="width:22%">동작</th><th style="width:16%">여기서</th><th>비고</th></tr></thead>
     <tbody>
-      <tr><th>조회 · 검색</th><td>합니다</td><td>구분 드롭다운 + 업체 탭 + 상품명 검색</td></tr>
+      <tr><th>조회 · 검색</th><td>합니다</td><td>업체 탭 + 상품명 검색 (구분은 인터넷 고정)</td></tr>
       <tr><th>대표 지정</th><td>합니다</td><td>목록 라디오 한 번 · 삭제 왼쪽 컬럼</td></tr>
       <tr><th>삭제</th><td>합니다</td><td>행 끝 ✕ → 확인 모달 · <b>이 화면의 유일한 모달</b></td></tr>
       <tr><th>새 연결 등록</th><td class="bad">안 합니다</td><td>인터넷 상품 관리에서 상품을 고른 뒤 우클릭 — 다음 장</td></tr>
-      <tr><th>조합 수정</th><td class="bad">불가</td><td>v22 규칙 9 — 삭제 후 재등록</td></tr>
+      <tr><th>조합 수정</th><td class="bad">불가</td><td>규칙 9 — 삭제 후 재등록</td></tr>
       <tr><th>사용여부 변경</th><td class="bad">안 합니다</td><td>인터넷 상품 관리의 상품 패널에서만. 여기선 결과만 표시</td></tr>
     </tbody>
   </table>
@@ -912,21 +923,21 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
 </div>
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">컬럼</span><span class="spec-t">구분에 따라 헤더가 바뀝니다</span></div>
+  <div class="spec-head"><span class="chip-v">컬럼</span><span class="spec-t">인터넷 고정</span></div>
   <div class="table-wrap">
   <table class="mx">
     <thead><tr><th style="width:16%">구분</th><th style="width:17%">좌</th><th style="width:17%">우</th><th>자리 1 · 2 · 3</th></tr></thead>
     <tbody>
       <tr><th>인터넷</th><td>인터넷상품</td><td>기본WIFI</td><td>속도 · 구성제품 · 추가구성옵션</td></tr>
-      <tr><th>TV</th><td>TV채널</td><td>셋탑박스</td><td>라인 · 셋탑 · 부가결합</td></tr>
-      <tr><th>인터넷전화 · 일반전화</th><td>전화상품</td><td>전화기기</td><td>요금방식 · 전화기기 · 상품형태</td></tr>
+      <tr><th>TV · 인터넷전화 · 일반전화</th><td colspan="3" class="bad">이 화면 대상이 아닙니다 — 태그가 상품에 직접 붙습니다</td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p>인터넷 상품 관리의 컬럼명을 그대로 씁니다 — 어드민 원문은 <code>전화상품(인)</code> · <code>전화기기(인)</code>인데, 구분이 드롭다운에 이미 있어 <code>(인)</code> <code>(일)</code>은 뺐습니다.</p>
-    <p class="q">확인 필요 — 결합할인 연결은 이 표에 없습니다. AS-IS 분류에 <code>결합할인 하위코드</code>가 있는데 구분 4종에는 없습니다. <b>별도 탭으로 뺄지</b> 결정이 필요합니다.</p>
+    <p>인터넷 상품 관리의 컬럼명을 그대로 씁니다. 구분이 하나로 고정되면서 <b>구분별 컬럼명 전환 로직이 사라졌습니다.</b></p>
+    <p class="q">해소됨 — 「결합할인 연결을 별도 탭으로 뺄지」는 <b>결합할인이 Phase 2 ⑥으로 이동</b>하면서 이 화면의 논점이 아니게 됐습니다.</p>
   </div>
+</div>
 </div>
 
 <div class="spec">
@@ -937,7 +948,8 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
     <tbody>
       <tr><th>같은 속성 조합</th><td>자리 3칸을 <code>rowspan</code>으로 <b>병합</b> · 첫 행에 <code>상품 N개</code> 배지 · 조합이 바뀌는 행에 진한 가로선(gray-200)</td></tr>
       <tr><th>속성 「없음」</th><td>회색</td></tr>
-      <tr><th>세트상품 빈 값</th><td>회색 <b>「미적용」</b> — 442건 중 49건(11%)이 정상적으로 비어 있습니다(WiFi 없이 파는 상품)</td></tr>
+      <tr><th>세트상품 단품 행</th><td>AS-IS 목록에는 <b>세트상품 자체에 태그를 붙인 행</b>이 섞여 있습니다(<code>KT와이파이7D | – | 프리미엄WiFi</code> · KT 9건). <b>이관하지 않고 폐기</b>합니다 — 현재 노출되는 곳이 없습니다 (확인 필요 사항 C-7)</td></tr>
+      <tr><th>세트상품 빈 값</th><td>회색 <b>「미적용」</b> — 인터넷 217건 중 20건(9%)이 정상적으로 비어 있습니다(WiFi 없이 파는 상품)</td></tr>
       <tr><th>자리 칸 마우스 호버</th><td>그 업체의 <b>태그명</b> — <code>100Mbps(광랜 1년)</code>. 클릭 동작은 없습니다</td></tr>
       <tr><th>미사용 상품</th><td>행 흐리게 + 이름 옆 <span class="tag hold">미사용</span></td></tr>
       <tr><th>대표인데 미사용</th><td class="bad">행 배경 빨강 + 대표 칸에 <b>!</b> · 카운트 줄에 <b>대표 미사용 N건</b>(클릭 시 필터)</td></tr>
@@ -952,14 +964,14 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
   <table class="mx">
     <thead><tr><th style="width:26%">상태</th><th style="width:18%">건수</th><th>UI</th></tr></thead>
     <tbody>
-      <tr><th>조합에 상품 1개</th><td><b>171</b> / 236 (72%)</td><td>라디오 대신 회색 <code>자동</code></td></tr>
-      <tr><th>조합에 상품 2개 이상</th><td class="hl"><b>65</b> (28%) · 최대 13</td><td>라디오 활성화 · 「복수 상품 조합」 필터가 진입점</td></tr>
+      <tr><th>조합에 상품 1개</th><td><b>142</b> / 165 (86%)</td><td>라디오 대신 회색 <code>자동</code></td></tr>
+      <tr><th>조합에 상품 2개 이상</th><td class="hl"><b>23</b> (14%) · 최대 8</td><td>라디오 활성화 · 「복수 상품 조합」 필터가 진입점</td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
     <p>그룹 기준은 <b>(업체 · 속성 3개)</b> — v22 원문 <code>const grp=[v,p1.a,p2.a,p3.a]</code>과 같습니다. 태그명이 아니라 <b>속성</b>이 키입니다.</p>
-    <p class="q">확인 필요 — <b>이관 시 대표 자동 지정 기준.</b> 개발자는 <code>level</code>로 찍으려 했는데 그 값은 이번에 삭제합니다. 상품 우선순위 · 등록순 · 가나다 중에서 정해야 합니다.</p>
+    <p class="q">확인 필요 — <b>이관 시 대표 자동 지정 기준.</b> 개발자는 <code>level</code>로 찍으려 했는데 그 값은 이번에 삭제합니다. 상품 우선순위 · 등록순 · 가나다 중에서 정해야 합니다. <b>23개 조합에만 필요</b>합니다 (확인 필요 사항 C-3).</p>
     <p><b>대표가 미사용인 2건</b>(딜라이브 <code>ISP 스마트광랜</code> · LG <code>프리미엄 안심 200M</code>)은 <b>Phase 1에서 경고만 하고 막지 않습니다.</b> 이관 시 수동으로 대표만 옮기면 되고, 규칙 보강과 자동 이관은 Phase 2입니다.</p>
   </div>
 </div>
@@ -970,7 +982,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
   <table class="mx">
     <thead><tr><th style="width:24%">항목</th><th>값</th></tr></thead>
     <tbody>
-      <tr><th>페이징</th><td><b>없음 — 전체 렌더.</b> (구분 · 업체)로 잘리면 최대 <b>55건</b>(인터넷 SKB), 26개 조합 중 40건 초과는 1개</td></tr>
+      <tr><th>페이징</th><td><b>없음 — 전체 렌더.</b> 업체당 최대 <b>55건</b>(SKB) · 인터넷 연결 217건</td></tr>
       <tr><th>요청</th><td><code>limit=200</code> 고정 + 응답에 <code>total</code></td></tr>
       <tr><th><code>total &gt; 200</code></th><td>경고 — 「이 조건의 연결이 200건을 넘습니다. 검색으로 좁혀주세요」</td></tr>
     </tbody>
@@ -994,7 +1006,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>조합 칩은 이 경로에서만 생깁니다</b> — 목록의 자리 칸을 눌러서 필터하는 동작은 뺐습니다. 조합의 72%가 상품 1건이라 눌러도 결과가 그 한 줄이고, 복수 조합도 <code>rowspan</code> 병합으로 이미 한 덩어리로 보입니다. 칩이 생기는 경로를 하나로 두어야 운영자가 지금 무엇이 걸려 있는지 압니다.</p>
+    <p><b>조합 칩은 이 경로에서만 생깁니다</b> — 목록의 자리 칸을 눌러서 필터하는 동작은 뺐습니다. 조합의 86%가 상품 1건이라 눌러도 결과가 그 한 줄이고, 복수 조합도 <code>rowspan</code> 병합으로 이미 한 덩어리로 보입니다. 칩이 생기는 경로를 하나로 두어야 운영자가 지금 무엇이 걸려 있는지 압니다.</p>
     <p><b>현재창인 이유</b> — 조회만 하고 끝나지 않습니다. 대개 삭제로 이어지는데, 새창이면 뒤에 남은 인터넷 상품 관리가 이미 지운 연결의 선을 계속 그립니다.</p>
     <p class="q">URL 안 — <code>/crm/internet/product-connections?service=INTERNET&amp;vendor=KT&amp;combo=&lt;조합키&gt;&amp;focus=&lt;연결ID&gt;</code>. 링크 공유가 되어야 하므로 쿼리에 담는 쪽을 권합니다. 경로 체계는 PNB 도메인 분리 계획과 같이 봐야 합니다.</p>
   </div>
@@ -1002,5 +1014,5 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovReg').hidden=
 
 </div>
 
-<footer>엑셀 실데이터 442건 · 베타 어드민 AS-IS 대조 · 정본은 [CRM Admin] 상품 연결 관리 - 기능 정의서</footer>
+<footer>엑셀 실데이터 인터넷 217건 · 베타 어드민 AS-IS 대조 · 정본은 [CRM Admin] 상품 연결 관리 - 기능 정의서</footer>
 </div>
