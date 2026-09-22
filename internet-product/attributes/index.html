@@ -439,6 +439,10 @@ input.srch::placeholder{color:var(--g300)}
 body.mk-on .mk{outline:1.5px dashed var(--warning);outline-offset:3px;border-radius:4px}
 body.mk-on .mk.th{outline-offset:-2px}
 body.mk-on .tcard{overflow:visible}
+/* 최종 업데이트일 */
+.bcrow{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.updated{font-size:12.5px;color:var(--g500);letter-spacing:-.2px;white-space:nowrap;flex:none}
+.updated b{color:var(--g700);font-weight:600}
 body.mk-on .cntrow{margin-bottom:24px}
 body.mk-on .atbl thead th{position:relative}
 .mkb{position:absolute;top:-25px;left:-3px;z-index:30;border:none;cursor:pointer;font-family:inherit;
@@ -502,7 +506,10 @@ body.mk-on .mkrow:hover{color:var(--g700)}
 </div>
 
 <div class="sheet page">
-  <div class="bc"><span class="mk" data-mk="1">상품 관리</span></div>
+  <div class="bcrow">
+    <div class="bc"><span class="mk" data-mk="1">상품 관리</span></div>
+    <span class="updated">최종 업데이트 <b id="updDate">2026-09-22</b></span>
+  </div>
   <div class="ptitle"><h1>상품속성 관리</h1><span class="star off">☆</span></div>
   <div class="pdesc">업체 공통으로 쓰는 상품속성을 구분 · 속성 타입 · 속성 3계층으로 관리합니다.</div>
 
@@ -590,13 +597,10 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       <div id="renNetBox">
         <div class="notice warn" style="margin-bottom:12px"><span class="i">!</span>
           <span><b id="renImpact"></b>의 <b>고객 노출 문구가 함께 바뀝니다.</b> 태그명이 <code>속성(표기명)</code>으로 조립되기 때문입니다.</span></div>
-        <div class="fld" style="margin-bottom:0"><label>표시 예시</label>
-          <div class="preview" style="background:var(--g25)"><span class="k" style="color:var(--g500)">변경 전</span><span class="v" id="renEx1" style="font-size:14px"></span></div>
-          <div class="preview" style="margin-top:6px"><span class="k">변경 후</span><span class="v" id="renEx2" style="font-size:14px"></span></div></div>
       </div>
-      <div class="hint g3" style="margin-top:10px">[변경]을 누르면 바로 저장되고 상품속성 캐시가 비워집니다.</div>
+      <div class="hint g3" style="margin-top:10px">[확인]을 누르면 바로 저장되고 상품속성 캐시가 비워집니다.</div>
     </div>
-    <div class="mf"><div class="sp"></div><button class="btn-out" id="renCancel">취소</button><button class="btn-solid" id="renOk">변경</button></div>
+    <div class="mf"><div class="sp"></div><button class="btn-out" id="renCancel">취소</button><button class="btn-solid" id="renOk">확인</button></div>
   </div>
 </div>
 
@@ -616,130 +620,14 @@ body.mk-on .mkrow:hover{color:var(--g700)}
 </div>
 
 <div class="doc-band"><div class="sheet">
-  <div class="doc-eyebrow">참고 시안</div>
-  <div class="doc-h">동작 규칙 · 데이터 · 메시지 · 진입 경로</div>
-  <div class="doc-sub">모달은 다음 장에 따로 모았습니다. AS-IS 시안과의 차이는 <b>화면 위 주황 번호를 누르면</b> 바로 뜨우게 해두었습니다. 위 화면은 실제로 동작합니다 — 구분 전환 · 속성 타입 전환 · 순서 드래그 · 이름 변경 · 추가 · 삭제 · 연결 상품 패널까지. 정본은 [CRM Admin] 상품속성 관리 - 기능 정의서.</div>
-</div></div>
-
-<div class="sheet" style="padding-top:32px">
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">규칙</span><span class="spec-t">저장 시점 — 네 동작 모두 즉시 저장</span><span class="spec-s">일괄 저장 · 변경 대기 목록 · [저장] 버튼을 <b>폐기</b>했습니다</span></div>
-  <div class="table-wrap">
-  <table class="mx">
-    <thead><tr><th style="width:14%">동작</th><th style="width:20%">진입</th><th style="width:22%">확인 단계</th><th style="width:16%">저장 시점</th><th>피드백</th></tr></thead>
-    <tbody>
-      <tr><th>순서 변경</th><td>행 왼쪽 <b>드래그 핸들</b></td><td class="hl"><b>없음</b> — 드롭이 곧 확정</td><td>드롭 직후</td><td>토스트(green) · 행 위치가 그대로 유지됩니다</td></tr>
-      <tr><th>이름 변경</th><td>속성명 클릭</td><td><b>속성 이름 변경 모달</b> — 인터넷은 영향 경고 + 표시 예시 동반</td><td>모달 [변경]</td><td>토스트(green) · 목록 갱신</td></tr>
-      <tr><th>삭제</th><td>행 오른쪽 [삭제]</td><td><b>삭제 확인 모달</b> — 되돌릴 수 없음을 Error 박스로 고지</td><td>모달 [삭제]</td><td>토스트(green) · 행 제거</td></tr>
-      <tr><th>추가</th><td>우상단 <b>[＋ 속성 추가]</b></td><td>입력 모달 — 확인 단계는 이름 중복 검사뿐</td><td>모달 [확인]</td><td>토스트(green) · 맨 아래 행 추가</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>태그 관리(①)와 저장 방식을 맞췄습니다.</b> 두 화면을 오가며 쓰는 운영자가 한쪽은 즉시 저장, 한쪽은 [저장] 버튼을 눌러야 하는 상태를 없앱니다. 저장 버튼을 안 눌러 작업을 날리는 사고도 사라집니다.</p>
-    <p><b>확인 단계를 두는 기준은 「되돌릴 수 있는가」입니다.</b> 순서는 다시 끌면 되돌아오므로 모달이 없습니다. 이름 변경은 고객 노출 문구를 건드리고, 삭제는 복구가 안 되고, 추가는 삭제 조건(사용 업체 0)에 걸리면 못 지웁니다 — 그래서 셋 다 모달을 거칩니다.</p>
-    <p class="q">확인 필요 — <b>저장 1회 = 캐시 무효화 1회</b>입니다. 순서를 6번 끌면 캐시가 6번 비워지고, 그 사이 중간 상태가 실시간으로 상담 상세에 나갑니다. 9개를 재배열하는 도중 상담원이 조회하면 반쯤 정렬된 순서로 하향 대체가 돕니다. ① 순서 변경만 디바운스(마지막 드롭 후 N초)로 묶을지 ② 캐시 무효화를 이름·삭제·추가에만 걸고 순서는 다음 조회 주기에 반영할지 ③ 그대로 둘지 — 개발자와 정해야 합니다.</p>
-  </div>
-</div>
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">규칙</span><span class="spec-t">삭제 · 추가 · 순서 · 속성 타입</span></div>
-  <div class="table-wrap">
-  <table class="mx">
-    <thead><tr><th style="width:18%">동작</th><th style="width:26%">허용 조건</th><th>비고</th></tr></thead>
-    <tbody>
-      <tr><th>속성 타입</th><td class="hl"><b>선택만 가능</b> · 추가 · 삭제 · <b>이름 변경 불가</b></td><td>상단 셀렉트박스로 고릅니다. 구분별 2~3칸 고정이고 <b>화면에서 바꿀 수 있는 것이 없습니다</b> — 이전 안에 있던 인라인 이름 편집을 <b>제거</b>했습니다. 이름을 고쳐야 하면 DB 작업으로 처리합니다. <b>한 번에 한 속성 타입만</b> 보입니다.</td></tr>
-      <tr><th>사용 업체 표시</th><td>개수 + 앞 4개 · 나머지는 <b>외 N</b></td><td>셀에 마우스를 올리면 전체 업체명이 툴팁으로 펼쳐집니다. 표시 순서는 데이터 순서(KT · LG · SKT · SKB · SkyLife · LG HelloVision · 딜라이브 · HCN) 고정 — 정렬을 매번 바꾸면 행끼리 비교가 안 됩니다.</td></tr>
-      <tr><th>속성 삭제</th><td><b>사용 업체 0</b>일 때만</td><td>실데이터 기준 삭제 가능한 속성은 <b>1개</b> — <code>TV · 셋탑 · OTT기기</code>(업체 0 · 연결 0 · 태그 0)뿐입니다. <code>인터넷전화 · 전화기기 · 없음</code>도 업체 0이지만 자동 등록이라 삭제 불가입니다. → 사실상 <b>방금 추가한 값을 되돌릴 때</b>와 <b>죽은 값 1건 정리</b>에만 쓰입니다.</td></tr>
-      <tr><th>「연결 상품」 컬럼</th><td>구분에 따라 <b>세는 대상이 다릅니다</b></td><td>인터넷 = 그 속성이 들어간 <b>조합</b> 수 · 인터넷 외 = 그 속성을 가진 <b>상품</b> 수. 사이드패널도 인터넷은 <code>상품 × 세트상품</code> + 자리 3개, 인터넷 외는 <b>상품 하나씩</b> 나열하고 패널 제목이 「이 속성을 쓰는 상품」으로 바뀝니다.</td></tr>
-      <tr><th>"없음" 속성</th><td>삭제 · 순서 변경 <b>불가</b></td><td>속성 타입을 만들 때 자동 생성됩니다. 드래그 핸들과 삭제 버튼이 모두 비활성입니다. 필수 속성 타입(자리1)에는 "없음"이 없습니다.</td></tr>
-      <tr><th>속성 추가</th><td>같은 속성 타입 안에서 이름 중복 불가</td><td>모달에서 입력 → [확인] → <b>즉시 저장</b>. 목록 맨 아래에 붙습니다. 필수 속성 타입에는 "없음"을 추가할 수 없습니다. 중복·빈 값은 모달 안 인라인 에러로 막고 모달은 닫히지 않습니다. 매 동작마다 버튼 라벨이 다릅니다 — 추가 [확인] · 이름 [변경] · 삭제 [삭제].</td></tr>
-      <tr><th>속성 순서</th><td>같은 속성 타입 안에서만</td><td class="hl"><b>드롭 즉시 저장됩니다</b> — 태그 관리의 표시 순서와 같습니다. <b>하향 자리</b>(인터넷 속도 · 구성제품 · TV 라인 · 셋탑)의 순서는 상담 상세의 <b>대체 기준</b>이라 이 화면에서 가장 위험한 동작입니다.</td></tr>
-    </tbody>
-  </table>
-  </div>
-</div>
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">데이터</span><span class="spec-t">화면에 올라가는 실측값</span></div>
-  <div class="table-wrap">
-  <table class="mx">
-    <thead><tr><th style="width:14%">구분</th><th style="width:10%">속성</th><th>속성 타입 · 속성 수 · 대체 규칙</th></tr></thead>
-    <tbody>
-      <tr><th>인터넷</th><td>18</td><td>속도 9 <b>(하향 · 필수)</b> · 구성제품 5 <b>(하향)</b> · 추가구성옵션 4 (일치)</td></tr>
-      <tr><th>TV</th><td>7</td><td>라인 2 <b>(하향 · 필수)</b> · 셋탑 5 <b>(하향)</b> · 자리3 폐지</td></tr>
-      <tr><th>인터넷전화</th><td>6</td><td>요금방식 2 (일치 · 필수) · 전화기기 4 (일치) · 자리3 폐지</td></tr>
-      <tr><th>일반전화</th><td>3</td><td>요금방식 2 (일치 · 필수) · <b>전화기기 1</b> (일치) · 자리3 폐지</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>한 속성 타입의 최대가 9개(인터넷 속도)라 스크롤도 페이징도 필요 없습니다.</b> 속성 타입을 셀렉트로 나눈 뒤에는 한 화면에 최대 9행입니다. 태그 관리(230건)와 성격이 다릅니다. 전체 속성은 <b>34개</b>입니다.</p>
-    <p class="q">확인 필요 — ① <code>일반전화 · 전화기기</code>는 속성이 「없음」 하나뿐이라 <b>행이 1개이고 그 1개가 조작 불가</b>입니다. 셀렉트로 고를 수는 있지만 할 일이 없는 화면이 나옵니다 — 빈 상태 문구를 둘지 결정이 필요합니다. ② <b>죽은 값 2건</b> — <code>TV · 셋탑 · OTT기기</code>(업체 0 · 연결 0) · <code>인터넷전화 · 전화기기 · 없음</code>(업체 0 · 연결 0). 후자는 <b>선택 자리인데 「없음」 태그가 한 업체도 없는 것</b>이라 이관 시 6개 업체에 생성해야 합니다(확인 필요 사항 C-1). ③ 1업체만 쓰는 값 — <code>인터넷 320Mbps</code>(딜라이브 3건) · <code>TV 셋탑 태블릿</code>(KT 1건) · <code>인터넷전화 전화기기 태블릿</code>(LG 7건).</p>
-  </div>
-</div>
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">메시지</span><span class="spec-t">안내 · 인라인 · 토스트</span></div>
-  <div class="table-wrap">
-  <table class="mx">
-    <thead><tr><th style="width:24%">위치 · 트리거</th><th>문구</th><th style="width:22%">동작</th></tr></thead>
-    <tbody>
-      <tr><th>상단 안내 · 항상</th><td class="msg">"속도, 구성제품, 라인, 셋탑은 상품 속성의 같은 값이 없을 때 목록의 위쪽 값으로 대체됩니다 · 순서를 바꾸면 상담 결과가 바뀝니다"</td><td class="hl">Info 박스 · <b>구분·속성 타입과 무관하게 고정</b></td></tr>
-      <tr><th>이름 변경 모달 · 진입 <b>인터넷만</b></th><td class="msg">"사용 업체 {N}개 · 연결 상품 {M}건의 고객 노출 문구가 함께 바뀝니다."</td><td>Warning 박스 + 표시 예시 · 값은 실시간 계산. 인터넷 외는 이 블록이 통째로 빠지고 모달은 그대로 뜹니다</td></tr>
-      <tr><th>삭제 모달 · 진입</th><td class="msg">"삭제하면 바로 반영되며 되돌릴 수 없습니다."</td><td>Error 박스 · 주 버튼 danger</td></tr>
-      <tr><th>삭제 버튼 · 사용 업체 1 이상</th><td class="msg">"사용 업체가 있어 삭제할 수 없습니다."</td><td>버튼 disabled + title</td></tr>
-      <tr><th>추가 모달 · 이름 중복</th><td class="msg">"같은 속성 타입에 이미 있는 이름입니다."</td><td>모달 안 인라인 에러 · 입력값 유지 · 모달 유지</td></tr>
-      <tr><th>추가 모달 · "없음" 입력</th><td class="msg">"필수 속성 타입에는 「없음」을 추가할 수 없습니다."</td><td>모달 안 인라인 에러</td></tr>
-      <tr><th>순서 저장</th><td class="msg">"속성 순서를 저장했습니다. 상품속성 캐시를 비웠습니다."</td><td>토스트(green)</td></tr>
-      <tr><th>이름 변경 저장</th><td class="msg">"「1Gbps」를 「1기가」로 변경했습니다. 상품속성 캐시를 비웠습니다."</td><td>토스트(green)</td></tr>
-      <tr><th>추가 저장</th><td class="msg">"「2Gbps」 속성을 추가했습니다."</td><td>토스트(green)</td></tr>
-      <tr><th>삭제 저장</th><td class="msg">"「OTT기기」 속성을 삭제했습니다."</td><td>토스트(green)</td></tr>
-      <tr><th>저장 실패</th><td class="msg">"저장에 실패했습니다. 목록을 새로고침합니다."</td><td class="hl">토스트(red) + <b>서버값으로 되돌림</b> — 즉시 저장이라 화면에 붙들고 있을 변경분이 없습니다</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>상단 안내는 공통 문구 하나로 고정합니다.</b> 선택한 속성 타입에 따라 문구를 갈아끼우지 않습니다 — 순서가 중요한 속성 타입이 어떤 것들인지 <b>이름을 직접 부르는 편</b>이 운영자에게 더 명확하고, 문구가 바뀌면 읽지 않고 넘깁니다.</p>
-    <p class="q">확인 필요 — 이 문구는 <b>일치 자리</b>(추가구성옵션 · 요금방식 · 전화기기)를 보고 있을 때도 그대로 떠 있습니다. 해당 없는 안내가 계속 보이는 셈이라, 「내 화면과 무관한 문구」로 학습돼 무시될 위험이 있습니다. 일치 자리일 때만 Info 박스를 흐리게 처리하는 정도의 보완을 검토할 수 있습니다.</p>
-  </div>
-</div>
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">결정</span><span class="spec-t">URL 안</span><span class="spec-s">신규 페이지이므로 경로가 필요합니다 · 실제 어드민 경로 확인 반영</span></div>
-  <div class="table-wrap">
-  <table class="mx">
-    <thead><tr><th style="width:8%">안</th><th style="width:30%">경로</th><th>근거 · 문제</th></tr></thead>
-    <tbody>
-      <tr><th>㉮ 권장</th><td><code>/crm/internet/attributes</code></td><td>태그 관리의 실제 경로가 <code>/crm/internet/tags</code>이므로 <b>형제로 붙습니다</b>. <b>구분·속성 타입은 쿼리로</b> — <code>?service=INTERNET&amp;type=SPEED</code>. 속성 타입이 셀렉트박스가 되면서 <b>쿼리로 상태를 잡는 것이 더 중요해졌습니다</b> — 특정 속성 타입을 링크로 공유할 수 있어야 합니다.</td></tr>
-      <tr><th>㉯</th><td><code>/crm/internet/tags/attributes</code></td><td>진입 경로(태그 관리)를 그대로 URL에 박는 안. <b>권하지 않습니다</b> — 이 화면은 태그의 하위 개념이 아니라 태그가 참조하는 상위 사전입니다. 이번에 breadcrumb을 1단계로 줄인 것과도 어긋납니다.</td></tr>
-      <tr><th>㉰</th><td><code>/crm/products/attributes</code></td><td>인터넷 상품 관리(<code>/crm/products/internet</code>) 쪽 규칙을 따르는 안. 이 화면이 구분 4종 공통이라는 점에는 더 맞지만, 태그 관리와 경로가 갈라집니다.</td></tr>
-    </tbody>
-  </table>
-  </div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>㉮ <code>/crm/internet/attributes?service=INTERNET&amp;type=SPEED</code>을 권합니다.</b> 쿼리 없이 들어오면 <code>인터넷 · 첫 번째 속성 타입</code>이 기본입니다. 파라미터 이름은 <code>type</code>(속성 타입)입니다 — <code>attribute</code>는 이제 <b>속성</b>(1Gbps)을 가리키므로 쓰면 안 됩니다.</p>
-    <p class="q">확인 필요 — <code>internet</code> 접두어가 남는 것이 걸립니다. 태그 관리도 구분 4종을 다 다루는데 경로는 <code>/crm/internet/tags</code>입니다(AS-IS 잔재). 새 화면에 그대로 답습할지 이번에 정리할지는 FE와 합의가 필요하고, ④ 상품 연결 관리도 같은 문제를 안고 있어 <b>세 화면을 한 번에</b> 정해야 합니다. <b>PNB 도메인 분리</b>로 <code>/crm/</code> 접두어 자체가 바뀔 수 있는 것도 같이 봐야 합니다. 쿼리값은 한글이 아니라 <b>코드값</b>으로 둡니다.</p>
-  </div>
-</div>
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">결정</span><span class="spec-t">진입 경로 — GNB 이동만</span><span class="spec-s">[태그 관리로] 버튼과 다단 breadcrumb을 <b>제거</b>했습니다</span></div>
-  <div class="desc"><div class="desc-l">변경 내용</div>
-    <p><b>breadcrumb을 「상품 관리」 1단계로 줄였습니다.</b> 이전 안의 <code>상품 관리 › 태그 관리 › 상품속성 관리</code>는 이 화면이 태그 관리의 하위라는 뜻이 되는데, 실제로는 <b>태그가 참조하는 상위 사전</b>입니다. 구분 4종 공통이기도 해서 태그 관리 아래에 두면 계층이 거짓말이 됩니다.</p>
-    <p><b>툴바의 [태그 관리로] 버튼도 없앴습니다.</b> 화면 간 이동은 GNB 하나로 통일합니다 — 화면마다 다른 복귀 버튼이 붙으면 어드민 전체의 이동 규칙이 깨집니다.</p>
-    <p><b>즉시 저장이라 이탈 확인 모달이 필요 없어졌습니다.</b> 나갈 때 잃을 미저장 변경이 없습니다. <code>beforeunload</code>도 걸지 않습니다.</p>
-    <p class="q">확인 필요 — 이 화면의 저장이 <b>상품속성 캐시를 비웁니다.</b> 태그 관리 탭을 따로 열어둔 채 여기서 속성을 고치면, 그 탭은 옛 속성 목록을 들고 있게 됩니다. GNB로만 오가면 매번 다시 조회되므로 대부분 해소되지만, <b>두 탭을 동시에 띄운 경우</b>는 남습니다 — 태그 관리 쪽에서 속성 목록을 조회 시점 캐시로 쓰는지 확인이 필요합니다.</p>
-  </div>
-</div>
-
-</div>
-
-<div class="doc-band"><div class="sheet">
-  <div class="doc-eyebrow">모달</div>
-  <div class="doc-h">속성 추가 · 이름 변경 · 삭제 확인</div>
-  <div class="doc-sub">모달은 3개입니다. <b>추가·이름 변경은 입력 모달</b>, <b>삭제는 확인 모달</b>입니다. 이전 안의 저장 확인 · 이탈 확인 모달은 즉시 저장으로 바뀌면서 <b>폐기</b>됐습니다. 위 화면에서 직접 띄워볼 수 있습니다.</div>
+  <div class="doc-eyebrow">정본 문서</div>
+  <div class="doc-h">기능 정의서는 컨플루언스에 있습니다</div>
+  <div class="doc-sub">이 페이지는 <b>화면</b>과 <b>모달 시안</b>만 담습니다. 데이터 정의 · 동작 규칙 · 메시지 · 예외 처리 · 결정 사항은 전부 기능정의서에 있고, <b>내용이 다르면 기능정의서를 따릅니다.</b></div>
+  <a class="btn-solid" style="text-decoration:none" href="https://ajnetworks.atlassian.net/wiki/spaces/BO/pages/1672642666" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+    [CRM Admin] 상품속성 관리 - 기능 정의서
+  </a>
+  <div style="height:28px"></div>
 </div></div>
 
 <div class="sheet" style="padding-top:32px">
@@ -762,15 +650,10 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">확인</button></div>
     </div>
-    <div class="desc"><div class="desc-l">DESCRIPTION</div>
-      <p><b>하단 인라인 추가행을 모달로 옮겼습니다.</b> 표 아래에 입력칸이 붙어 있으면 표의 마지막 행처럼 보여 오조작이 납니다. 추가는 즉시 저장이므로 <b>의도한 클릭</b>을 한 번 받아야 합니다.</p>
-      <p><b>구분·속성 타입을 모달 안에 다시 보여줍니다.</b> 추가된 값이 어디에 붙는지가 이 모달의 유일한 맥락입니다 — 잘못된 속성 타입에 추가하면 사용 업체 0인 값이 하나 더 생깁니다.</p>
-      <p class="q">확인 필요 — <b>순서를 추가 시점에 정할 수 있게 할지</b>입니다. 지금은 맨 아래 고정이라, 하향 자리에서 중간 순위로 넣어야 하는 값(예: 속도 <code>2Gbps</code>는 1Gbps와 2.5Gbps 사이)은 추가 후 드래그를 한 번 더 해야 합니다. 그 드래그가 또 캐시를 비웁니다.</p>
-    </div>
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">속성 이름 변경</span><span class="spec-s">진입: 목록의 속성명 클릭</span></div>
+    <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">속성 이름 변경</span><span class="spec-s">진입: 목록의 속성명 클릭 · 영향 경고는 <b>인터넷만</b></span></div>
     <div class="modal" style="width:600px">
       <div class="mh"><h3>속성 이름 변경</h3></div>
       <div class="mb">
@@ -778,17 +661,9 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div class="fld"><label>변경할 이름 <span class="req">*</span></label><div class="inp">1기가</div></div>
         <div class="notice warn" style="margin-bottom:12px"><span class="i">!</span>
           <span><b>사용 업체 8개 · 연결 상품 66건</b>의 <b>고객 노출 문구가 함께 바뀝니다.</b> 태그명이 <code>속성(표기명)</code>으로 조립되기 때문입니다.</span></div>
-        <div class="fld" style="margin-bottom:0"><label>표시 예시</label>
-          <div class="preview" style="background:var(--g25)"><span class="k" style="color:var(--g500)">변경 전</span><span class="v" style="font-size:14px">1Gbps(에센스)</span></div>
-          <div class="preview" style="margin-top:6px"><span class="k">변경 후</span><span class="v" style="font-size:14px">1기가(에센스)</span></div></div>
-        <div class="hint g3" style="margin-top:10px">[변경]을 누르면 바로 저장되고 상품속성 캐시가 비워집니다.</div>
+        <div class="hint g3" style="margin-top:10px">[확인]을 누르면 바로 저장되고 상품속성 캐시가 비워집니다.</div>
       </div>
-      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">변경</button></div>
-    </div>
-    <div class="desc"><div class="desc-l">DESCRIPTION</div>
-      <p><b>인라인 편집을 모달로 바꿨습니다.</b> 이전 안은 표에서 바로 고치고 포커스 아웃 때 모달이 떴는데, 입력과 확인이 두 곳으로 갈라져 있었습니다. 지금은 <b>입력도 확인도 모달 한 곳</b>입니다.</p>
-      <p><b>Warning 박스와 표시 예시는 인터넷일 때만 붙습니다.</b> 인터넷 외는 태그명을 조립하지 않아 속성 이름이 바뀌어도 고객 노출이 바뀌지 않습니다. 다만 <b>모달 자체는 뜹니다</b> — 즉시 저장이라 되돌릴 방법이 다시 고치는 것뿐이기 때문입니다.</p>
-      <p>영향 건수는 고정값이 아니라 <b>그 속성을 쓰는 업체 수 · 연결 상품 수를 그때 계산</b>합니다. <code>1Gbps</code> 8/66, <code>320Mbps</code> 1/3처럼 값마다 다릅니다. 「표시 예시」의 표기명은 그 속성을 쓰는 <b>태그 중 하나를 뽑아 실제 값</b>으로 보여줍니다.</p>
+      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">확인</button></div>
     </div>
   </div>
 
@@ -806,15 +681,10 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-danger solid">삭제</button></div>
     </div>
-    <div class="desc"><div class="desc-l">DESCRIPTION</div>
-      <p><b>이전 안의 [되돌리기]가 사라졌습니다.</b> 일괄 저장일 때는 삭제가 「삭제 예정」 표시였지만, 지금은 누르는 순간 반영됩니다. 그래서 확인 모달이 <b>유일한 방어선</b>입니다.</p>
-      <p><b>주 버튼을 danger solid로 잡았습니다.</b> 이 모달은 파괴적 동작이 주 버튼인 유일한 모달입니다.</p>
-      <p>사용 업체가 1 이상이면 [삭제] 버튼 자체가 disabled이므로 이 모달까지 오지 않습니다. 실데이터 기준 도달 가능한 속성은 <b>1개</b>와 <b>방금 추가한 값</b>뿐입니다.</p>
-    </div>
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-v">인라인</span><span class="spec-t">모달 안에서 막는 에러 2종</span><span class="spec-s">모달을 닫지 않고 그 자리에서 알립니다</span></div>
+    <div class="spec-head"><span class="chip-v">인라인</span><span class="spec-t">모달 안 에러 2종</span><span class="spec-s">모달을 닫지 않고 입력칸 아래에 붙습니다</span></div>
     <div class="frame" style="padding:16px;background:var(--g25);max-width:600px">
       <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:14px">
         <div style="font-size:12px;color:var(--g500);margin-bottom:6px">속성 추가 · 속성명 중복</div>
@@ -827,34 +697,11 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div class="inerr" style="margin:8px 0 0">필수 속성 타입에는 「없음」을 추가할 수 없습니다.</div>
       </div>
     </div>
-    <div class="desc"><div class="desc-l">DESCRIPTION</div>
-      <p><b>둘 다 모달을 닫지 않습니다.</b> 입력값을 남겨두고 에러만 붙입니다 — 고쳐서 다시 [추가]를 누르면 되므로 처음부터 다시 열게 할 이유가 없습니다.</p>
-      <p><b>이전 안의 「속성 타입 이름 중복」 에러는 폐기됐습니다.</b> 속성 타입 이름 변경 기능 자체가 없어졌습니다.</p>
-    </div>
   </div>
 
 </div>
-
-<div class="spec" style="margin-top:8px">
-  <div class="spec-head"><span class="chip-v">일관</span><span class="spec-t">모달 공통 규칙</span></div>
-  <div class="table-wrap">
-  <table class="mx">
-    <thead><tr><th style="width:16%">항목</th><th style="width:16%">① 추가</th><th style="width:16%">② 이름 변경</th><th style="width:16%">③ 삭제</th><th>규칙</th></tr></thead>
-    <tbody>
-      <tr><th>성격</th><td>입력</td><td>입력</td><td>확인</td><td>①②는 값을 받고 ③은 「예/아니오」만 받습니다.</td></tr>
-      <tr><th>닫기 ✕</th><td>없음</td><td>없음</td><td>없음</td><td><b>세 모달 모두 없앴습니다.</b> 출구는 전부 라벨을 달고 있어야 합니다 — ✕는 「취소」인지 「닫기만」인지 사용자가 매번 추측합니다.</td></tr>
-      <tr><th>ESC</th><td colspan="3">취소 — 저장하지 않고 닫힘</td><td>항상 <b>안전한 쪽</b>으로 닫힙니다. 즉시 저장 화면이라 「안전」 = 「아무것도 안 함」입니다.</td></tr>
-      <tr><th>주 버튼</th><td>확인</td><td>변경</td><td class="hl">삭제 <b>(danger)</b></td><td>③만 파괴적 동작이 주 버튼입니다 — danger solid로 구분합니다.</td></tr>
-      <tr><th>바깥 클릭</th><td colspan="3">닫히지 않음</td><td>입력 중 실수로 닫히면 다시 쳐야 합니다.</td></tr>
-      <tr><th>폭</th><td colspan="3"><b>600px 고정</b></td><td>어드민의 모달 표준 폭에 맞춥니다. 내용량에 따라 개별 조정하지 않습니다.</td></tr>
-      <tr><th>저장 후</th><td colspan="3">모달 닫힘 + 토스트 + 목록 갱신</td><td>세 동작 모두 같습니다. 모달을 열어둔 채 연속 작업하지 않습니다 — 매 동작이 서버 저장이라 상태가 꼬입니다.</td></tr>
-    </tbody>
-  </table>
-  </div>
 </div>
-
-</div>
-<footer>KT 외 8개 업체 실데이터 · 구분 4 / 속성 타입 12 / 속성 43 · 정본은 [CRM Admin] 상품속성 관리 - 기능 정의서</footer>
+<footer>KT 외 8개 업체 실데이터 · 구분 4 / 속성 타입 12 / 속성 43<br>정본 · <a href="https://ajnetworks.atlassian.net/wiki/spaces/BO/pages/1672642666" target="_blank" rel="noopener" style="color:var(--primary)">[CRM Admin] 상품속성 관리 - 기능 정의서</a></footer>
 
 </div>
 <script>
@@ -965,15 +812,6 @@ function openPanel(i){
 }
 $('dwx').onclick=()=>{$('dw').hidden=true;};
 
-/* ── 표기명 샘플 ── */
-function sampleSub(a){
-  var ex={'100Mbps':'슬림','200Mbps':'슬림플러스','500Mbps':'베이직','1Gbps':'에센스',
-          '2.5Gbps':'프리미엄','5Gbps':'프리미엄플러스','10Gbps':'슈퍼프리미엄',
-          '프리미엄WiFi':'WiFi 7D','WiFi+증폭기':'Buddy','프리미엄WiFi+증폭기':'WiFi 7D+Buddy',
-          '안심':'유해사이트 방패'};
-  return ex[a] || '표기명';
-}
-
 /* ── ① 속성 추가 ── */
 $('addOpen').onclick=function(){
   $('adSvc').textContent=SV; $('adDiv').textContent=cur().name;
@@ -997,7 +835,7 @@ $('adName').oninput=function(){ $('adErr').hidden=true; $('adName').classList.re
 /* ── ② 이름 변경 ── */
 let renI=null;
 function openRename(i){
-  renI=i; var a=cur().attrs[i], sub=sampleSub(a.n);
+  renI=i; var a=cur().attrs[i];
   $('renOld').textContent=a.n;
   $('renInput').value=a.n;
   $('renErr').hidden=true; $('renInput').classList.remove('err');
@@ -1005,8 +843,6 @@ function openRename(i){
   $('renNetBox').hidden=!net;
   if(net){
     $('renImpact').textContent='사용 업체 '+a.v.length+'개 · 연결 상품 '+a.r.length+'건';
-    $('renEx1').textContent=a.n+'('+sub+')';
-    $('renEx2').textContent=a.n+'('+sub+')';
   }
   $('ovRen').hidden=false; setTimeout(()=>$('renInput').select(),30);
 }
@@ -1014,10 +850,6 @@ function closeRename(){ $('ovRen').hidden=true; renI=null; }
 $('renCancel').onclick=closeRename;
 $('renInput').oninput=function(){
   $('renErr').hidden=true; $('renInput').classList.remove('err');
-  if(isNet()&&renI!=null){
-    var a=cur().attrs[renI], sub=sampleSub(a.n), nv=$('renInput').value.trim()||a.n;
-    $('renEx2').textContent=nv+'('+sub+')';
-  }
 };
 $('renOk').onclick=function(){
   var d=cur(), a=d.attrs[renI], nv=$('renInput').value.trim();
@@ -1088,7 +920,7 @@ var MK={
     b:'<b>드롭 즉시 저장.</b> 확인 모달 없음 — 다시 끌면 되돌아오는 동작이기 때문입니다. 단, 저장 1회 = 캐시 무효화 1회라 기능정의서에서 다시 다룹니다.'},
  8:{t:'이름 변경',
     a:'표 안에서 <b>인라인 편집</b> → 포컬스 아웃할 때 확인 모달(인터넷만) → 변경 대기 목록에 쌓임',
-    b:'<b>속성명 클릭 → 입력 모달 → [변경] 즉시 저장.</b> 입력과 확인이 한 곳으로 모였습니다. <b>인터넷 외에도 모달이 뜨고</b>, 영향 경고 + 표시 예시 블록만 빠집니다.'},
+    b:'<b>속성명 클릭 → 입력 모달 → [변경] 즉시 저장.</b> 입력과 확인이 한 곳으로 모였습니다. <b>인터넷 외에도 모달이 뜨고</b>, 영향 경고 블록만 빠집니다.'},
  9:{t:'삭제',
     a:'[삭제] 클릭 → 행이 빨간 「삭제 예정」 상태로 바뀜고 <b>[되돌리기]</b> 버튼이 생김',
     b:'<b>삭제 확인 모달 → 즉시 삭제.</b> [되돌리기] 없음 — 모달이 유일한 방어선입니다. 사용 업체가 1 이상이면 버튼이 disabled라 모달까지 오지 않습니다.'},
@@ -1146,4 +978,13 @@ mkPaint();
 
 function render(){ renderDivSel(); renderAttrs(); }
 render();
+
+/* 최종 업데이트일: 파일(배포) 수정 시각에서 자동 표기 */
+(function(){
+  var el=document.getElementById('updDate'); if(!el) return;
+  var d=new Date(document.lastModified);
+  if(isNaN(d)) return;
+  var z=function(n){return (n<10?'0':'')+n;};
+  el.textContent=d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate());
+})();
 </script>
