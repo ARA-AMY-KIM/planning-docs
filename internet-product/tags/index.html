@@ -1,957 +1,890 @@
-<title>태그 관리 목업</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap">
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>태그 관리 — 화면 와이어프레임 v1</title>
 <style>
-:root{
- --primary:#145CE6;--primary-strong:#073894;
- --success:#10A10E;--warning:#D75011;--error:#C31518;--hold:#5714E6;
- --g25:#F5F6F7;--g50:#EFEFF1;--g100:#DEE0E3;--g200:#C3C5C9;--g300:#A9ABB0;
- --g400:#8D8F94;--g500:#73767A;--g600:#5A5C61;--g700:#424447;--g800:#2A2C2E;--g900:#131314;
- --blue50:#ECF2FF;--blue100:#D9E6FF;--green50:#E0FCE0;--red50:#FEE6E6;--red100:#FCCCCD;
- --orange50:#FDEBE3;--orange100:#FAD8C8;--purple50:#F2ECFF;
-}
 *{box-sizing:border-box;margin:0;padding:0}
-:root{color-scheme:light}
-input,select,textarea{background:#fff;color:var(--g900);font-family:inherit}
-[hidden]{display:none!important}
-body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
- font-size:16px;color:var(--g900);background:#fff;-webkit-font-smoothing:antialiased}
-.wrap{min-width:1440px}
-.sheet{max-width:1456px;margin:0 auto;padding:0 32px}
+body{font-family:Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+ font-size:14px;line-height:1.6;color:#222;background:#f0f0f0;-webkit-font-smoothing:antialiased}
+.page{max-width:1240px;margin:0 auto;padding:40px 24px 120px}
 
-/* ── 문서 껍데기 ── */
-.doc-band{background:var(--g25);border-top:1px dashed var(--g200);border-bottom:1px dashed var(--g200);
- padding:40px 0 8px;margin-top:56px}
-.doc-eyebrow{font-size:12px;color:var(--g500);letter-spacing:-.2px;margin-bottom:6px}
-.doc-h{font-size:22px;font-weight:700;letter-spacing:-.4px;margin-bottom:6px}
-.doc-sub{font-size:14px;color:var(--g500);letter-spacing:-.3px;margin-bottom:28px}
-.spec{margin-bottom:36px}
-.spec-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.chip-v{background:var(--g900);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.02em}
-.chip-n{background:var(--primary);color:#fff;font-size:11px;font-weight:700;width:20px;height:20px;
- border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
-.spec-t{font-size:15px;font-weight:700;letter-spacing:-.3px}
-.spec-s{font-size:12.5px;color:var(--g500);letter-spacing:-.2px}
-.frame{background:#fff;border:1px solid var(--g100);border-radius:12px;padding:24px;overflow:hidden}
-.desc{border-left:3px solid var(--g300);background:var(--g25);padding:12px 16px;margin-top:12px}
-.desc-l{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--g500);margin-bottom:4px}
-.desc p{font-size:13px;line-height:1.65;color:var(--g700);letter-spacing:-.2px}
-.desc p+p{margin-top:5px}
-.desc b{color:var(--g900)}
-.q{color:var(--warning);font-weight:700}
+/* ── 문서 헤더 ── */
+.dochead{border:1px solid #222;background:#fff;padding:24px 28px;margin-bottom:40px}
+.dochead .eyebrow{font-size:11px;letter-spacing:.14em;color:#666;margin-bottom:8px}
+.dochead h1{font-size:24px;font-weight:700;letter-spacing:-.5px;margin-bottom:8px}
+.dochead .meta{font-size:12.5px;color:#555;line-height:1.8}
+.dochead .meta b{color:#222}
 
-/* ── 어드민 UI ── */
-.gnb{height:60px;border-bottom:1px solid var(--g100);display:flex;align-items:center;gap:36px;padding:0 32px}
-.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;letter-spacing:-.4px}
-.logo i{background:var(--primary);color:#fff;font-size:9px;font-weight:800;padding:3px 5px;border-radius:3px;font-style:normal}
-.gnb nav{display:flex;gap:26px;font-size:14px;font-weight:600;letter-spacing:-.3px;color:var(--g700)}
-.gnb nav .on{color:var(--primary)}
+/* ── 섹션 ── */
+.sec{margin-bottom:48px}
+.sec-h{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;border-bottom:2px solid #222;padding-bottom:8px}
+.sec-h .no{font-size:11px;font-weight:700;background:#222;color:#fff;padding:3px 8px;letter-spacing:.06em}
+.sec-h h2{font-size:17px;font-weight:700;letter-spacing:-.4px}
+.sec-h .sub{font-size:12.5px;color:#666;margin-left:auto}
+.sec-note{font-size:12.5px;color:#555;margin:10px 0 18px;line-height:1.75}
+.sec-note b{color:#222}
+
+/* ── 와이어프레임 캔버스 ── */
+.wf{position:relative;background:#fff;border:1px solid #999;padding:0;overflow:visible;margin-bottom:8px}
+.wf-cap{font-size:11.5px;color:#666;margin-bottom:8px;letter-spacing:-.1px}
+.wf-cap b{color:#222;font-weight:700}
+
+/* GNB */
+.gnb{border-bottom:1px solid #999;height:44px;display:flex;align-items:center;gap:0;padding:0 16px;background:#fafafa}
+.gnb .lg{font-size:12px;font-weight:700;border:1px solid #666;padding:3px 7px;margin-right:20px}
+.gnb .mn{font-size:12.5px;color:#666;padding:0 12px}
+.gnb .mn.on{color:#222;font-weight:700;text-decoration:underline;text-underline-offset:5px}
 .gnb .sp{flex:1}
-.gnb .ic{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--g300)}
-.page{padding:32px 32px 8px}
-.bc{font-size:14px;line-height:20px;color:var(--g400);letter-spacing:-.2px;margin-bottom:4px}
-.ptitle{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.ptitle h1{font-size:32px;font-weight:700;line-height:42px;letter-spacing:-.5px;color:#000}
-.star{color:var(--primary);font-size:20px}
-.star.off{color:var(--g300)}
-.pdesc{font-size:14px;line-height:20px;color:var(--g500);letter-spacing:-.3px;margin-bottom:28px}
+.gnb .cir{width:18px;height:18px;border:1px solid #999;border-radius:50%;margin-left:8px}
 
-.notice{display:flex;gap:8px;align-items:flex-start;padding:12px 16px;border-radius:8px;
- font-size:13px;line-height:1.6;letter-spacing:-.2px;margin-bottom:20px}
-.notice .i{flex:0 0 16px;height:16px;border-radius:50%;font-size:10px;font-weight:800;color:#fff;
- display:flex;align-items:center;justify-content:center;margin-top:2px}
-.notice.info{background:var(--blue50);color:var(--g700)}
-.notice.info .i{background:var(--primary)}
-.notice.warn{background:var(--orange50);color:var(--g700)}
-.notice.warn .i{background:var(--warning)}
-.notice.err{background:var(--red50);color:var(--g700)}
-.notice.err .i{background:var(--error)}
+.body{padding:20px 20px 24px}
+.bc{font-size:11.5px;color:#777;margin-bottom:4px}
+.h1{font-size:21px;font-weight:700;letter-spacing:-.5px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.h1 .star{font-size:14px;color:#999}
+.pdesc{font-size:12.5px;color:#666;margin-bottom:16px}
 
-.tabs{display:flex;border-bottom:1px solid var(--g100);margin-bottom:20px}
-.tab-item{padding:12px 20px;font-size:14px;line-height:20px;letter-spacing:-.3px;font-weight:600;
- color:var(--g500);border-bottom:2px solid transparent;margin-bottom:-1px}
-.tab-item.active{color:var(--g900);border-bottom-color:var(--primary)}
+/* 안내 박스 */
+.guide{border:1px dashed #666;background:#fafafa;padding:10px 14px;font-size:12.5px;color:#555;margin-bottom:16px}
+.guide .lb{display:inline-block;font-size:10.5px;font-weight:700;border:1px solid #999;padding:1px 5px;margin-right:8px;color:#444}
 
-.bar{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+/* 툴바 */
+.bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .bar .sp{flex:1}
-.sel{height:36px;padding:8px 34px 8px 12px;border:1px solid var(--g200);border-radius:8px;
- font-size:14px;letter-spacing:-.3px;color:var(--g900);background:#fff;position:relative;
- display:inline-flex;align-items:center;min-width:120px}
-.sel::after{content:"";position:absolute;right:12px;width:16px;height:16px;background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E") center/16px 16px no-repeat}
-.srch{height:36px;width:300px;padding:8px 34px 8px 12px;border:1px solid var(--g200);border-radius:8px;
- font-size:14px;letter-spacing:-.3px;color:var(--g300);background:#fff;position:relative;display:inline-flex;align-items:center}
-.srch::before{content:"";position:absolute;right:12px;width:16px;height:16px;background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' fill='%238D8F94'/%3E%3C/svg%3E") center/16px 16px no-repeat}
-.srch.filled{color:var(--g900)}
-.btn-solid{background:var(--primary);border:none;border-radius:8px;padding:8px 16px;
- font-size:14px;line-height:20px;letter-spacing:-.3px;font-weight:600;color:#fff;
- display:inline-flex;gap:4px;align-items:center;cursor:pointer;height:36px}
-.btn-out{background:#fff;border:1px solid var(--g200);border-radius:8px;padding:6px 12px;
- font-size:14px;line-height:20px;letter-spacing:-.3px;font-weight:600;color:var(--g900);
- display:inline-flex;align-items:center;gap:4px;cursor:pointer;height:36px}
-.btn-out.sm{height:32px;padding:4px 10px;font-size:13px}
-.btn-out:disabled,.btn-out.dis{background:var(--g25);color:var(--g300);border-color:var(--g100);cursor:not-allowed}
-.btn-danger{background:#fff;border:1px solid var(--red100);color:var(--error);border-radius:8px;
- padding:6px 12px;font-size:14px;font-weight:600;height:36px;display:inline-flex;align-items:center;cursor:pointer}
-.btn-danger.solid{background:var(--error);border-color:var(--error);color:#fff}
-.btn-danger.dis{background:var(--g25);border-color:var(--g100);color:var(--g300);cursor:not-allowed}
+.ctrl{height:32px;border:1px solid #999;background:#fff;display:inline-flex;align-items:center;
+ padding:0 10px;font-size:12.5px;color:#333;gap:18px;min-width:120px;justify-content:space-between}
+.ctrl .cv{white-space:nowrap}
+.ctrl .ar{color:#888;font-size:10px}
+.ctrl.new{border-width:2px;border-color:#222}
+.btn{height:32px;border:1px solid #333;background:#fff;display:inline-flex;align-items:center;
+ padding:0 14px;font-size:12.5px;font-weight:600;color:#222}
+.btn.pri{background:#333;color:#fff;border-color:#333}
+.btn.sm{height:28px;padding:0 10px;font-size:12px}
+.btn.dis{border-color:#ccc;color:#bbb;background:#fafafa}
 
-.cnt{font-size:14px;line-height:20px;letter-spacing:-.3px;color:var(--g500);margin-bottom:8px}
-.cnt b{font-weight:700;color:var(--g900)}
-table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
-.lt th{height:32px;padding:8px 12px;background:#fff;border-top:1px solid var(--g100);border-bottom:1px solid var(--g100);
- font-size:12px;line-height:16px;letter-spacing:-.2px;font-weight:400;color:var(--g500);text-align:left;white-space:nowrap}
-.lt th.r{text-align:right}.lt th.c{text-align:center}
-.lt td{height:52px;padding:12px;background:#fff;border-bottom:1px solid var(--g100);
- font-size:14px;line-height:20px;letter-spacing:-.3px;color:var(--g900);vertical-align:middle;
- overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lt td.r{text-align:right;font-variant-numeric:tabular-nums}
-.lt td.c{text-align:center;overflow:visible;text-overflow:clip}
-.lt td.mut{color:var(--g300)}
-.lt tr.grp td{height:36px;background:var(--g25);font-size:12px;font-weight:700;color:var(--g600);
- letter-spacing:-.2px;border-bottom:1px solid var(--g100)}
-.lt tr.grp td span{font-weight:400;color:var(--g400);margin-left:8px}
-.lt tr.off td{background:var(--g25);color:var(--g300)}
-/* 드래그 핸들 — 어드민 메뉴 관리(beta) 구현 기준 */
-.hdw{display:flex;align-items:center;justify-content:center;height:28px;cursor:pointer}
-.hdw i{display:flex;align-items:center;justify-content:center;width:28px;height:28px;
- padding:4px;border-radius:2px;color:var(--g400)}
-.hdw i svg{width:20px;height:20px;display:block;fill:currentColor}
-.hdw:hover i{background:var(--g100)}
-.hdw.off{cursor:not-allowed;opacity:.3}
-.hdw.off:hover i{background:transparent}
-/* 수정 아이콘 버튼 */
-.ibtn{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:4px;
- border:none;border-radius:6px;cursor:pointer;color:var(--primary);background:var(--blue50);transition:background .15s}
-.ibtn svg{width:20px;height:20px;display:block;fill:currentColor}
-.ibtn:hover{background:#A3C0F7}
-.tagname{font-weight:600}
-.bdg{display:inline-flex;align-items:center;padding:4px 8px;border-radius:4px;
- font-size:13px;line-height:18px;letter-spacing:-.3px;white-space:nowrap}
-.bdg.use{background:var(--green50);color:#0A8208}
-.bdg.no{background:var(--g50);color:var(--g500)}
-.bdg.rec{background:var(--blue50);color:var(--primary)}
-.bdg.base{background:var(--g50);color:var(--g600)}
-.bdg.low{background:var(--orange50);color:var(--warning)}
-.bdg.ban{background:var(--red50);color:var(--error)}
-.bdg.auto{background:var(--purple50);color:var(--hold);font-size:11px;padding:2px 6px}
-.empty{height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
- border-bottom:1px solid var(--g100)}
-.empty .t{font-size:14px;color:var(--g500);letter-spacing:-.3px}
-.empty .s{font-size:13px;color:var(--g300)}
-.skel{height:14px;border-radius:4px;background:linear-gradient(90deg,var(--g50),var(--g25),var(--g50))}
+/* 업체 탭 */
+.vtabs{display:flex;border-bottom:1px solid #999;margin-bottom:12px;flex-wrap:wrap}
+.vtabs span{font-size:12.5px;padding:8px 14px;color:#777;border-bottom:2px solid transparent;margin-bottom:-1px}
+.vtabs span.on{color:#222;font-weight:700;border-bottom-color:#222}
+.cnt{font-size:12px;color:#666;margin-bottom:6px}
+.cnt b{color:#222}
+
+/* 표 */
+table.t{width:100%;border-collapse:collapse;table-layout:fixed}
+.t th{font-size:11px;font-weight:600;color:#555;text-align:left;padding:7px 8px;
+ border-top:1px solid #333;border-bottom:1px solid #333;background:#fafafa;white-space:nowrap}
+.t th.c{text-align:center}.t th.r{text-align:right}
+.t td{font-size:12.5px;padding:9px 8px;border-bottom:1px solid #ddd;color:#222;
+ overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+.t td.c{text-align:center}
+.t td.ov{overflow:visible}.t td.r{text-align:right;font-variant-numeric:tabular-nums}
+.t td.mut{color:#bbb}
+.t tr.sel td{background:#f0f0f0}
+
+/* 셀 내부 요소 */
+.hd{display:inline-flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;
+ width:16px;height:18px;border:1px solid #666;border-radius:2px}
+.hd b{display:block;width:8px;height:1px;background:#666}
+.hd.off{border-color:#ddd;border-style:dashed}
+.hd.off b{background:#ddd}
+.bdg{display:inline-block;font-size:11px;border:1px solid #666;padding:1px 7px;border-radius:2px;color:#333}
+.bdg.g{border-color:#ccc;color:#999}
+.lnk{text-decoration:underline;text-underline-offset:2px;color:#222;font-weight:600}
+.lnk.z{color:#bbb;text-decoration:none;font-weight:400}
+.ic{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+ border:1px solid #666;border-radius:2px;font-size:11px;color:#444}
+.ic.off{border-color:#ddd;color:#ddd}
+
+/* 빈/로딩/에러 상태 */
+.state{height:120px;border-bottom:1px solid #ddd;display:flex;flex-direction:column;
+ align-items:center;justify-content:center;gap:6px;color:#888;font-size:12.5px}
+.state .s{font-size:11.5px;color:#aaa}
+.skel{height:10px;background:#eee;border-radius:2px}
+
+/* 콜아웃 */
+.co{position:absolute;width:20px;height:20px;border-radius:50%;background:#222;color:#fff;
+ font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;
+ z-index:10;box-shadow:0 0 0 2px #fff}
+.co.o{background:#fff;color:#222;border:1.5px solid #222;box-shadow:0 0 0 2px #fff}
+
+/* 동작표 */
+table.act{width:100%;border-collapse:collapse;margin-top:14px;background:#fff}
+.act th{font-size:11px;font-weight:700;color:#444;text-align:left;padding:8px 10px;
+ border-top:1px solid #333;border-bottom:1px solid #333;background:#f4f4f4;white-space:nowrap}
+.act td{font-size:12.5px;padding:9px 10px;border-bottom:1px solid #ddd;vertical-align:top;line-height:1.55}
+.act td.n{text-align:center;font-weight:700;width:42px}
+.act td:nth-child(2){width:180px;font-weight:600}
+.aA,.aR{display:flex;gap:10px;align-items:flex-start}
+.aA{margin-bottom:7px;padding-bottom:7px;border-bottom:1px dotted #ddd}
+.ak{flex:0 0 30px;font-size:10.5px;font-weight:700;color:#888;letter-spacing:.04em;padding-top:2px}
+.av{flex:1;min-width:0}
+.act .q{color:#b45309;font-weight:700}
+.act tr.hold td{background:#fbfbf5}
+
+/* 일반 표 */
+table.g{width:100%;border-collapse:collapse;background:#fff;margin-top:12px}
+.g th{font-size:11px;font-weight:700;color:#444;text-align:left;padding:8px 10px;
+ border-top:1px solid #333;border-bottom:1px solid #333;background:#f4f4f4}
+.g td{font-size:12.5px;padding:9px 10px;border-bottom:1px solid #ddd;vertical-align:top;line-height:1.55}
+.g td.n{width:52px;text-align:center;font-weight:700}
+.g .del{color:#999;text-decoration:line-through}
 
 /* 모달 */
-.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.modal{background:#fff;border:1px solid var(--g100);border-radius:12px;
- box-shadow:0 8px 28px rgba(19,19,20,.10);overflow:hidden}
-.modal .mh{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px}
-.modal .mh h3{font-size:17px;font-weight:700;letter-spacing:-.4px}
-.modal .x{color:var(--g400);font-size:17px;line-height:1}
-.modal .mb{padding:0 20px 18px;overflow:visible}
-.modal .mf{display:flex;gap:8px;padding:14px 20px;border-top:1px solid var(--g100);background:#fff}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:46px}
+.modal{position:relative;border:1px solid #999;background:#fff}
+.modal .mh{border-bottom:1px solid #ccc;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.modal .mh h3{font-size:14px;font-weight:700;letter-spacing:-.3px}
+.modal .mh .x{color:#888;font-size:13px}
+.modal .mb{padding:14px 16px}
+.modal .mf{border-top:1px solid #ccc;padding:10px 16px;display:flex;gap:8px;align-items:center}
 .modal .mf .sp{flex:1}
-.fld{margin-bottom:14px}
-.fld>label{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;letter-spacing:-.2px;margin-bottom:6px}
-.fld>label .req{color:var(--error)}
-.fld>label .sp{flex:1}
-.fld>label .ro{font-size:11px;font-weight:400;color:var(--g400)}
-.inp{width:100%;height:36px;padding:8px 12px;border:1px solid var(--g200);border-radius:8px;
- font-size:14px;letter-spacing:-.3px;color:var(--g900);background:#fff;display:flex;align-items:center}
-.inp.ph{color:var(--g300)}
-.inp.ro{background:var(--g25);color:var(--g700)}
-.inp.err{border-color:var(--error)}
-.inp.sel{padding-right:32px;position:relative}
-.inp{font-family:inherit}
-.inp.sel::after{content:"";position:absolute;right:12px;width:16px;height:16px;background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E") center/16px 16px no-repeat}
-.ta{width:100%;height:64px;padding:8px 12px;border:1px solid var(--g200);border-radius:8px;
- font-size:14px;letter-spacing:-.3px;color:var(--g900);background:#fff;line-height:1.5}
-.ta.ph{color:var(--g300)}
-.hint{font-size:12px;color:var(--g500);letter-spacing:-.2px;margin-top:5px;line-height:1.5}
-.hint.g3{color:var(--g300)}
-.hint.w{color:var(--warning)}
-.hint.e{color:var(--error)}
-.preview{background:var(--blue50);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px}
-.preview .k{font-size:11px;font-weight:700;color:var(--primary);letter-spacing:.02em}
-.preview .v{font-size:15px;font-weight:700;color:var(--g900);letter-spacing:-.3px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.radio{display:flex;gap:16px;height:36px;align-items:center;font-size:14px;letter-spacing:-.3px}
-.radio i{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--g200);display:inline-block;
- margin-right:6px;vertical-align:-2px;position:relative;font-style:normal}
-.radio .on i{border-color:var(--primary);border-width:4.5px}
-.usebox{border:1px solid var(--g100);border-radius:8px;overflow:hidden}
-.usebox .uh{background:var(--g25);padding:8px 12px;font-size:12px;font-weight:700;color:var(--g600);
- display:flex;justify-content:space-between}
-.usebox ul{list-style:none;max-height:112px;overflow:hidden}
-.usebox li{padding:8px 12px;border-top:1px solid var(--g50);font-size:13px;color:var(--g700);letter-spacing:-.2px}
-.usebox li b{color:var(--g900);font-weight:600}
+.fld{margin-bottom:12px}
+.fld>label{display:flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;color:#444;margin-bottom:4px}
+.fld>label .req{color:#c00}
+.fld>label .ro{font-weight:400;color:#888;font-size:10.5px;margin-left:auto}
+.in{height:30px;border:1px solid #999;background:#fff;display:flex;align-items:center;
+ padding:0 10px;font-size:12.5px;color:#222}
+.in.ph{color:#aaa}
+.in.ro{background:#f4f4f4;color:#555;border-style:dashed}
+.in.sel{justify-content:space-between}
+.in.sel::after{content:"▾";color:#888;font-size:10px}
+.ta{min-height:48px;border:1px solid #999;padding:7px 10px;font-size:12.5px;color:#aaa}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{font-size:11px;color:#777;margin-top:4px;line-height:1.5}
+.hint.w{color:#b45309}
+.rad{display:flex;gap:14px;align-items:center;height:30px;font-size:12.5px}
+.rad span{display:inline-flex;align-items:center;gap:5px;color:#444}
+.rad i{width:12px;height:12px;border:1px solid #777;border-radius:50%;display:inline-block}
+.rad .on{color:#222;font-weight:700}
+.rad .on i{border:4px solid #222}
+.prev{border:1px dashed #666;background:#fafafa;padding:8px 12px;display:flex;align-items:center;gap:10px}
+.prev .k{font-size:10.5px;font-weight:700;color:#666;letter-spacing:.04em}
+.prev .v{font-size:14px;font-weight:700;color:#222}
+.usebox{border:1px solid #ccc}
+.usebox .uh{background:#f4f4f4;padding:6px 10px;font-size:11px;font-weight:700;color:#555;
+ display:flex;justify-content:space-between;border-bottom:1px solid #ddd}
+.usebox ul{list-style:none}
+.usebox li{padding:6px 10px;border-bottom:1px solid #eee;font-size:11.5px;color:#555}
+.usebox li:last-child{border-bottom:none}
+.modal .warnbox{border:1px dashed #b45309;background:#fdfaf4;padding:9px 12px;font-size:11.5px;
+ color:#7a4b12;margin-bottom:12px;line-height:1.55}
 
-/* 체크박스 */
-.cbs{display:flex;gap:20px;height:36px;align-items:center}
-.cb{display:inline-flex;align-items:center;gap:7px;font-size:14px;letter-spacing:-.3px;cursor:pointer}
-.cb i{width:18px;height:18px;border:1.5px solid var(--g200);border-radius:4px;display:inline-flex;
- align-items:center;justify-content:center;font-style:normal;background:#fff;flex:0 0 18px}
-.cb.on i{background:var(--primary);border-color:var(--primary)}
-.cb.on i::after{content:"";width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;
- transform:rotate(-45deg) translate(1px,-1px)}
+/* 사이드패널 */
+.panelwrap{position:relative;border:1px solid #999;background:#fff;display:flex;min-height:380px}
+.panelwrap .dim{flex:1;background:repeating-linear-gradient(45deg,#fafafa,#fafafa 6px,#f2f2f2 6px,#f2f2f2 12px);
+ display:flex;align-items:center;justify-content:center;font-size:12px;color:#aaa}
+.panel{width:400px;border-left:1px solid #666;display:flex;flex-direction:column;background:#fff}
+.panel .ph{padding:12px 16px;border-bottom:1px solid #ccc;display:flex;justify-content:space-between;align-items:center}
+.panel .ph h4{font-size:13px;font-weight:700}
+.panel .ph .x{color:#888;font-size:13px}
+.panel .ps{padding:14px 16px;border-bottom:1px solid #ddd}
+.tcard{border:1px solid #ccc;background:#fafafa;padding:12px}
+.tcard .nm{font-size:14px;font-weight:700;padding-bottom:9px;margin-bottom:10px;border-bottom:1px solid #ddd;
+ display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tcard .gr{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px}
+.tcard .gr>div{display:flex;flex-direction:column;gap:1px}
+.tcard .k{font-size:10.5px;color:#777}
+.tcard .v{font-size:12px;font-weight:600;color:#222}
+.plh{display:flex;justify-content:space-between;padding:11px 16px 8px;font-size:12.5px;font-weight:700}
+.plh .c{font-size:11px;font-weight:400;color:#777}
+.plist{flex:1;border-top:1px solid #ddd;overflow:hidden}
+.plist .r{padding:8px 16px;border-bottom:1px solid #eee}
+.plist .r .p{font-size:12px;color:#222}
+.plist .r .p .x{color:#bbb;margin:0 5px}
+.plist .r .m{font-size:11px;color:#888;margin-top:1px}
+.plist .r .m b{color:#222}
+.panel .pf{padding:10px 16px;border-top:1px solid #ccc}
 
-/* 모달 본문 컨텍스트 바 */
-.ctx{display:flex;gap:56px;background:var(--g25);border-radius:8px;padding:12px 18px;margin-bottom:16px}
-.ctx div{display:flex;align-items:baseline;gap:12px}
-.ctx .k{font-size:12px;color:var(--g500);letter-spacing:-.2px}
-.ctx .v{font-size:15px;font-weight:700;color:var(--g900);letter-spacing:-.3px}
+/* 미결 */
+.open{border:1px solid #b45309;background:#fdfaf4;padding:18px 22px;margin-top:10px}
+.open h3{font-size:14px;font-weight:700;color:#7a4b12;margin-bottom:10px}
+.open ol{margin-left:18px}
+.open li{font-size:12.5px;color:#5c3a10;line-height:1.75;margin-bottom:8px}
+.open li b{color:#3d2607}
 
-/* 연결 상품 링크 */
-.lnk{color:var(--primary);font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
-.lnk.zero{color:var(--g300);text-decoration:none;font-weight:400;cursor:default}
+.legend{display:flex;gap:22px;flex-wrap:wrap;border:1px solid #ccc;background:#fff;padding:12px 16px;
+ font-size:11.5px;color:#555;margin-bottom:26px}
+.legend div{display:flex;align-items:center;gap:7px}
+.legend .sw{width:24px;height:16px;border:1px solid #999;display:inline-block}
+.legend .sw.d{border-style:dashed}
+.legend .sw.b{border-width:2px;border-color:#222}
+.legend .sw.o{border:none;width:18px;height:18px;border-radius:50%;background:#222}
 
-/* 사이드패널 — 어드민 biz-tunnel/message-history 구현 기준 */
-.stage{position:relative;overflow:hidden;border:1px solid var(--g100);border-radius:10px;background:#fff}
-.drawer{position:absolute;top:0;right:0;bottom:0;width:560px;background:#fff;
- box-shadow:-8px 0 24px rgba(19,19,20,.14),0 0 0 1px rgba(19,19,20,.04);display:flex;flex-direction:column;z-index:5}
-.drawer .dh{flex:0 0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;
- border-bottom:1px solid var(--g100)}
-.drawer .dh .lft{display:flex;align-items:center;gap:8px}
-.drawer .dh h4{font-size:14px;font-weight:600;letter-spacing:-.3px;color:#213547}
-.drawer .dh .id{font-size:12px;color:var(--g500)}
-.drawer .dh .x{color:var(--g400);font-size:16px;cursor:pointer}
-.drawer .db{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
-.dsec{padding:16px 24px;border-bottom:1px solid var(--g100)}
-.dsec>h5{font-size:14px;font-weight:600;letter-spacing:-.3px;color:#213547;margin-bottom:12px;
- display:flex;align-items:center;justify-content:space-between}
-.dsec>h5 em{font-style:normal;font-size:12px;font-weight:400;color:var(--g500)}
-/* 태그 정보 카드 */
-.tagcard{background:var(--g25);border:1px solid var(--g100);border-radius:8px;padding:14px 16px}
-.tc-name{font-size:17px;font-weight:700;letter-spacing:-.4px;color:var(--g900);
- padding-bottom:11px;margin-bottom:12px;border-bottom:1px solid var(--g100);display:flex;
- align-items:center;justify-content:space-between;gap:10px}
-.tc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
-.tc-grid>div{display:flex;flex-direction:column;gap:2px;min-width:0}
-.tc-grid .k{font-size:11.5px;color:var(--g500);letter-spacing:-.2px}
-.tc-grid .v{font-size:13.5px;font-weight:600;color:var(--g900);letter-spacing:-.3px;
- overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* 연결 목록 */
-.dlist-h{display:flex;align-items:center;justify-content:space-between;padding:14px 24px 10px}
-.dlist-h .t{font-size:14px;font-weight:600;letter-spacing:-.3px;color:#213547}
-.dlist-h .c{font-size:12px;color:var(--g500)}
-.dlist{flex:1;overflow-y:auto;border-top:1px solid var(--g100)}
-.dl{padding:9px 24px;border-bottom:1px solid var(--g50)}
-.dl .p{font-size:13px;font-weight:400;color:var(--g600);letter-spacing:-.3px;
- overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dl .p .cur{font-weight:700;color:var(--g900)}
-.dl .p .xs{color:var(--g300);font-weight:400;margin:0 6px}
-.dl .p .st{color:var(--g600);font-weight:400}
-.dl .p .st.cur{color:var(--g900);font-weight:700}
-.dl .m{font-size:12px;color:var(--g500);margin-top:2px;letter-spacing:-.2px;line-height:1.45;
- overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dl .m .cur{color:var(--g900);font-weight:700}
-.dl .m .non{color:var(--g300)}
-.scrollhint{position:absolute;right:6px;top:0;bottom:0;width:4px;pointer-events:none}
-.scrollhint i{position:absolute;left:0;width:4px;border-radius:2px;background:var(--g200);
- top:18%;height:44%;display:block}
-.drawer .df{flex:0 0 auto;padding:12px 24px;border-top:1px solid var(--g100)}
-.drawer.live{position:fixed;top:0;right:0;bottom:0;height:100vh;z-index:900}
-.drawer[hidden]{display:none!important}
-.lt tr.rowsel td{background:var(--blue50)}
-.dw-open,.dw-open body{overflow:hidden}
-/* 화면 축소 표현용 */
-.mini{padding:14px 18px}
-.mini .mgnb{height:44px;border-bottom:1px solid var(--g100);display:flex;align-items:center;gap:24px;
- margin:-14px -18px 14px;padding:0 18px}
-.mini .mgnb .lg{font-weight:700;font-size:14px}
-.mini .mgnb span{font-size:12.5px;color:var(--g700);font-weight:600}
 
-/* 라벨 옆 안내 아이콘 + 툴팁 */
-.tip{position:relative;display:inline-flex;align-items:center;justify-content:center;
- width:15px;height:15px;border-radius:50%;border:1.2px solid var(--g300);color:var(--g500);
- font-size:10px;font-weight:700;font-style:normal;cursor:help;line-height:1}
-.tip .bub{position:absolute;bottom:calc(100% + 8px);left:-8px;background:var(--g800);color:#fff;
- font-size:12px;font-weight:400;line-height:1.55;letter-spacing:-.2px;padding:9px 12px;border-radius:6px;
- width:268px;text-align:left;opacity:0;visibility:hidden;transition:.12s;z-index:20;pointer-events:none;
- box-shadow:0 4px 14px rgba(19,19,20,.18)}
-.tip .bub::after{content:"";position:absolute;top:100%;left:12px;border:5px solid transparent;border-top-color:var(--g800)}
-.tip:hover .bub,.tip.show .bub{opacity:1;visibility:visible}
-.tip.r .bub{left:auto;right:-8px}
-.tip.r .bub::after{left:auto;right:12px}
 
-/* 매트릭스 · 메시지 */
-table.mx{border-collapse:collapse;width:100%;font-size:13px;letter-spacing:-.2px}
-.mx th,.mx td{border:1px solid var(--g100);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.55}
-.mx thead th{background:var(--g25);font-weight:700;font-size:12px;color:var(--g600)}
-.mx tbody th{background:#fff;font-weight:600;color:var(--g900);width:15%}
-.mx td.bad{background:var(--red50)}
-.mx td.hl{background:var(--purple50)}
-.msec{margin-bottom:26px}
-.msec-h{display:flex;align-items:center;gap:8px;margin-bottom:4px}
-.msec-h .c{background:var(--g900);color:#fff;width:18px;height:18px;border-radius:4px;font-size:11px;
- font-weight:700;display:inline-flex;align-items:center;justify-content:center}
-.msec-h .t{font-size:14px;font-weight:700;letter-spacing:-.3px}
-.msec-s{font-size:12.5px;color:var(--g500);margin-bottom:10px;letter-spacing:-.2px}
-.tok{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--g600)}
-.msg{color:var(--g900)}
-footer{padding:40px 32px 60px;font-size:12px;color:var(--g400);text-align:center;border-top:1px solid var(--g100);margin-top:48px}
-@media (max-width:1100px){.mgrid{grid-template-columns:1fr}}
-/* 네이티브 폼 요소 아이콘 — select/input에는 ::after·::before가 렌더되지 않으므로 배경 이미지로 */
-select.sel,select.inp{appearance:none;-webkit-appearance:none;font-family:inherit;cursor:pointer;
- background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E");
- background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
-select.inp{padding-right:34px}
-input.srch{font-family:inherit;outline:none;color:var(--g900);padding:8px 34px 8px 12px;
- background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' fill='%238D8F94'/%3E%3C/svg%3E");
- background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
-input.srch::placeholder{color:var(--g300)}
-/* 모달 폭 — ②④와 동일하게 600px 고정 */
-.mgrid .modal{width:600px}
-/* 고객 노출 — 인터넷 외 구분은 태그명이 따로 있어 호버 시 툴팁 */
-.lt td.tagname.hasmore{cursor:help}
+/* AS-IS 모달 요소 */
+.ctx{display:flex;gap:44px;background:#f4f4f4;border:1px solid #ddd;padding:9px 14px;margin-bottom:14px}
+.ctx div{display:flex;align-items:baseline;gap:10px}
+.ctx .k{font-size:10.5px;color:#777}
+.ctx .v{font-size:13px;font-weight:700;color:#222}
+.in.dis{background:#f4f4f4;color:#bbb;border-color:#ddd;border-style:dashed}
+.cc{font-size:11px;color:#999;margin-top:4px;line-height:1.5}
+.cc b{color:#222}
+.cbs{display:flex;gap:16px;height:30px;align-items:center}
+.cb{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:#444}
+.cb i{width:14px;height:14px;border:1px solid #777;display:inline-block;position:relative;flex:0 0 14px}
+.cb.on i{background:#222;border-color:#222}
+.cb.on i::after{content:"";position:absolute;left:4px;top:1px;width:4px;height:8px;
+ border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg)}
+.tipq{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;
+ border:1px solid #999;border-radius:50%;font-size:9px;color:#777;font-weight:400}
+.btn-del{height:30px;border:1px solid #ccc;background:#fafafa;color:#bbb;display:inline-flex;
+ align-items:center;padding:0 12px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.btn-del.on{border-color:#c00;color:#c00;background:#fff}
+.errbox{border:1px dashed #c00;background:#fff8f8;padding:9px 12px;font-size:11.5px;color:#a00;line-height:1.55}
+.lockw{font-size:11px;color:#b45309;margin:-6px 0 13px;line-height:1.5}
+.autonote{font-size:11px;color:#999;margin:-6px 0 13px;line-height:1.5}
+
+/* ── 콜아웃 팝오버 ── */
+.co{cursor:pointer;transition:box-shadow .12s}
+.co:hover{box-shadow:0 0 0 2px #fff,0 0 0 4px #bbb}
+.co.act{box-shadow:0 0 0 2px #fff,0 0 0 4px #222}
+.copop{position:absolute;z-index:200;width:400px;background:#fff;border:1px solid #222;
+ box-shadow:0 6px 24px rgba(0,0,0,.18);font-size:12.5px;line-height:1.6}
+.copop .ch{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #ddd;background:#f4f4f4}
+.copop .ch .n{width:20px;height:20px;border-radius:50%;background:#222;color:#fff;font-size:11px;
+ font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 20px}
+.copop .ch .loc{font-weight:700;font-size:13px;color:#222;flex:1}
+.copop .ch .x{color:#888;font-size:13px;cursor:pointer;padding:0 2px}
+.copop .cpb{display:block;padding:12px 14px}
+.copop .row{display:block;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dotted #ddd}
+.copop .row:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.copop .k{display:block;font-size:10.5px;font-weight:700;color:#888;letter-spacing:.06em;margin-bottom:4px}
+.copop .v{display:block;color:#222}
+.copop.hold{border-color:#b45309}
+.copop.hold .ch{background:#fdf6ec}
+.copop .q{color:#b45309;font-weight:700}
+
+/* ── 동작표 토글 ── */
+.togg{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;
+ border:1px solid #666;background:#fff;padding:4px 10px;cursor:pointer;color:#333;font-weight:600}
+body.hideact table.act{display:none}
+@media print{.copop{display:none!important}body.hideact table.act{display:table}.togg{display:none}}
+
+@media print{body{background:#fff}.page{padding:0}}
 </style>
+</head>
+<body>
+<div class="page">
 
-<div class="wrap">
-
-<div class="gnb">
-  <div class="logo"><i>OXC</i>CRM Admin</div>
-  <nav><span>업체 관리</span><span class="on">상품 관리</span><span>운영 관리</span><span>개발 설정</span><span>비즈터널 운영</span><span>어드민 운영</span></nav>
-  <div class="sp"></div><div class="ic"></div><div class="ic"></div>
+<div class="dochead">
+  <div class="eyebrow">CRM ADMIN · 인터넷 상품 개선 2차</div>
+  <h1>태그 관리 — 화면 와이어프레임 v1</h1>
+  <div class="meta">
+    <b>범위</b> ① 태그 관리 목록 + 모달 5종 + 연결 상품 사이드패널<br>
+    <b>기준</b> AS-IS 목업(planning-docs/internet-product/tags) + 2026-09-22 전달 수정사항 6건<br>
+    <b>성격</b> 와이어프레임 — 레이아웃·요소·동작만 정의합니다. 색·타이포·간격은 디자인 단계에서 결정합니다.<br>
+    <b>표기</b> 검은 원 번호 = 동작이 있는 지점, 아래 동작표와 대응 · 굵은 2px 테두리 = 신규 추가 요소
+  </div>
 </div>
 
-<div class="sheet page">
-  <div class="bc">상품 관리</div>
-  <div class="ptitle"><h1>태그 관리</h1><span class="star">★</span></div>
-  <div class="pdesc">업체별 상품 태그를 등록·관리합니다.</div>
+<div class="legend">
+  <div><span class="sw"></span> 일반 요소</div>
+  <div><span class="sw b"></span> 이번에 신규 추가</div>
+  <div><span class="sw d"></span> 비활성 · 읽기 전용 · 문구 미정</div>
+  <div><span class="sw o"></span> 콜아웃 번호 — <b style="color:#222">클릭하면 설명이 뜹니다</b></div>
+  <button class="togg" id="togg">동작표 접기</button>
+</div>
 
-  <div class="notice info" id="ntStd"><span class="i">i</span><span id="ntStdTx"></span></div>
 
-  <div class="notice warn" id="ntSrch" hidden><span class="i">!</span>
-    <span><b>검색 중에는 순서를 바꿀 수 없습니다.</b> 일부 태그만 보이는 상태에서 끌어 놓으면 화면에 없는 태그의 순번이 함께 밀립니다. 검색어를 지우면 핸들이 다시 열립니다.</span></div>
+<!-- ══════════ 0. 변경 요약 ══════════ -->
+<div class="sec">
+  <div class="sec-h"><span class="no">0</span><h2>AS-IS 대비 변경 요약</h2><span class="sub">명세 — 확정 반영분</span></div>
 
-  <div class="bar">
-    <select class="sel" id="svcSel" style="min-width:130px">
-      <option>인터넷</option><option>TV</option><option>인터넷전화</option><option>일반전화</option></select>
-    <input class="srch" id="q" placeholder="속성 · 표기명 검색" style="display:inline-flex">
-    <div class="sp"></div>
-    <button class="btn-out" id="toAttr">상품속성 관리</button>
-    <button class="btn-solid">+ 태그 등록</button>
-  </div>
-
-  <div class="tabs" id="tabs" style="margin-bottom:14px"></div>
-
-  <div class="cnt" id="cnt"></div>
-
-  <table class="lt" id="mainTable">
-    <colgroup><col style="width:56px"><col style="width:180px"><col style="width:280px">
-      <col><col style="width:112px"><col style="width:76px"><col style="width:88px"><col style="width:88px"><col style="width:56px"></colgroup>
-    <thead><tr><th></th><th>속성</th><th id="thExp">태그명</th><th>설명</th>
-      <th>노출 등급</th><th class="c">연결 상품</th><th class="r">월요금</th><th class="r">결합요금</th><th class="c">수정</th></tr></thead>
-    <tbody id="tbd"></tbody>
+  <table class="g">
+    <thead><tr><th class="n">요청</th><th style="width:220px">변경</th><th>반영 내용</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td>상단 검색창 삭제</td>
+        <td><span class="del">검색 입력 필드</span> · <span class="del">검색 중 순서변경 잠금 경고 박스</span> · <span class="del">검색 중 핸들 잠금 상태</span> 모두 제거.<br>
+        「검색 결과가 없습니다」 빈 상태는 <b>「등록된 태그가 없습니다」</b>로 문구만 바꿔 유지 — 신규 업체 등 태그 0건 케이스가 남습니다.</td></tr>
+      <tr><td class="n">2</td><td>속성 타입 드롭다운 추가</td>
+        <td>구분 드롭다운 오른쪽에 배치. 선택지는 구분에 따라 바뀝니다(인터넷 = 전체·속도·구성제품·추가구성옵션 / TV = 전체·라인·셋탑).<br>
+        필터를 걸어도 <b>순서 변경 활성 기준은 변하지 않습니다</b> — 같은 속성에 태그가 2건 이상일 때만 활성(AS-IS 동일).</td></tr>
+      <tr><td class="n">3</td><td>[상품속성 관리] 버튼 삭제</td>
+        <td>툴바에서 제거. 이 화면에서 ② 상품속성 관리로 가는 경로가 없어집니다 — <span class="q">GNB 메뉴 직접 진입만 남는지 확인 필요</span>.</td></tr>
+      <tr><td class="n">4</td><td>안내 문구 공통화</td>
+        <td>구분별로 다르던 문구 2종을 <b>전 구분 공통 1종</b>으로 통합. 문구는 미정 — 자리만 잡아 두었습니다.</td></tr>
+      <tr><td class="n">5</td><td>테이블 컬럼 분기</td>
+        <td>그룹 헤더 행 삭제, <b>1열 = 속성 타입 / 2열 = 속성</b>으로 분리.<br>
+        인터넷 10열(결합요금 포함) · 인터넷 외 9열(결합요금 없음).</td></tr>
+      <tr><td class="n">6</td><td>모달 정리</td>
+        <td>노출 등급 <b>추천 · 기본 · 비추천 3종</b>으로 축소. 인터넷 외 등록·수정 모달에서 <b>결합요금 필드 미노출</b>. 주 버튼 라벨 <b>[확인]</b>로 통일.<br>그 외 모달 요소(컨텍스트 바 · 표기명 20자 카운터 · 「고객 노출」 미리보기 · 추가 노출 체크박스 · 삭제 버튼 사유 라벨)는 <b>AS-IS 그대로 유지</b>.</td></tr>
+    </tbody>
   </table>
-  <div class="empty" id="empty" hidden><div class="t">검색 결과가 없습니다.</div><div class="s">검색어 또는 구분·업체 조건을 다시 확인해주세요.</div></div>
 </div>
 
-<aside class="drawer live" id="dw" hidden>
-  <div class="dh"><div class="lft"><h4>연결 상품</h4></div><span class="x" id="dwx">✕</span></div>
-  <div class="db">
-    <div class="dsec">
-      <div class="tagcard">
-        <div class="tc-name"><span id="dwName"></span><span class="bdg base" id="dwGrade">기본</span></div>
-        <div class="tc-grid">
-          <div><span class="k">구분</span><span class="v" id="dwSvc"></span></div>
-          <div><span class="k">업체</span><span class="v" id="dwVen"></span></div>
-          <div><span class="k">속성 타입</span><span class="v" id="dwDiv"></span></div>
-          <div><span class="k">속성</span><span class="v" id="dwAttr"></span></div>
-        </div>
-      </div>
+
+<!-- ══════════ 1. 인터넷 목록 ══════════ -->
+<div class="sec">
+  <div class="sec-h"><span class="no">1</span><h2>태그 관리 — 구분: 인터넷</h2><span class="sub">화면 A · 10열</span></div>
+  <div class="sec-note">예시 데이터 = KT. 인터넷은 속성마다 태그가 1건씩이라 <b>순서 변경 핸들이 전부 비활성</b>입니다. 활성 케이스는 화면 B에서 확인하세요.</div>
+
+  <div class="wf-cap"><b>화면 A</b> — 목록 기본 상태</div>
+  <div class="wf">
+    <div class="gnb">
+      <span class="lg">CRM</span>
+      <span class="mn">업체 관리</span><span class="mn on">상품 관리</span><span class="mn">운영 관리</span>
+      <span class="mn">개발 설정</span><span class="mn">비즈터널 운영</span><span class="mn">어드민 운영</span>
+      <span class="sp"></span><span class="cir"></span><span class="cir"></span>
     </div>
-    <div class="dlist-h"><span class="t">연결 상품</span><span class="c" id="dwCnt"></span></div>
-    <div class="dlist" id="dwList"></div>
-  </div>
-  <div class="df"><button class="btn-out" style="width:100%;justify-content:center">상품 연결 관리에서 보기</button></div>
-</aside>
 
-<script>
-const SD={"인터넷":["속도","구성제품","추가구성옵션"],"TV":["라인","셋탑"],"인터넷전화":["요금방식","전화기기"],"일반전화":["요금방식","전화기기"]};
-const TAGS={"TV":{"딜라이브":[[1,"기본","100채널","기본(100채널)","","기본","","",6],[1,"기본","120채널","기본(120채널)","","기본","","",6],[1,"기본","170채널","기본(170채널)","","기본","","",6],[1,"기본","25채널","기본(25채널)","","기본","","",6],[1,"기본","30채널","기본(30채널)","","기본","","",6],[1,"기본","90채널","기본(90채널)","","기본","","",6],[1,"프리미엄","200채널","프리미엄(200채널)","","기본","","",3],[1,"프리미엄","230채널","프리미엄(230채널)","","기본","","",3],[1,"프리미엄","240채널","프리미엄(240채널)","","기본","","",3],[2,"없음","","없음","","기본","","",5],[2,"일반셋탑","","일반셋탑","","기본","","",4]],"HCN":[[1,"기본","100채널","기본(100채널)","","기본","","",5],[1,"기본","240채널","기본(240채널)","","기본","","",5],[1,"프리미엄","240채널","프리미엄(240채널)","","기본","","",1],[2,"없음","","없음","","기본","","",1],[2,"일반셋탑","","일반셋탑","","기본","","",5]],"LG HelloVision":[[1,"기본","102채널","기본(102채널)","","기본","","",14],[1,"기본","106채널","기본(106채널)","","기본","","",14],[1,"기본","109채널","기본(109채널)","","기본","","",14],[1,"기본","211채널","기본(211채널)","","기본","","",14],[1,"기본","214채널","기본(214채널)","","기본","","",14],[1,"기본","218채널","기본(218채널)","","기본","","",14],[1,"기본","242채널","기본(242채널)","","기본","","",14],[1,"기본","245채널","기본(245채널)","","기본","","",14],[1,"기본","248채널","기본(248채널)","","기본","","",14],[1,"프리미엄","218채널","프리미엄(218채널)","","기본","","",6],[1,"프리미엄","221채널","프리미엄(221채널)","","기본","","",6],[1,"프리미엄","242채널","프리미엄(242채널)","","기본","","",6],[1,"프리미엄","245채널","프리미엄(245채널)","","기본","","",6],[1,"프리미엄","246채널","프리미엄(246채널)","","기본","","",6],[2,"없음","","없음","","기본","","",1],[2,"일반셋탑","","일반셋탑","","기본","","",19]],"KT":[[1,"기본","113~121채널","기본(113~121채널)","","기본","","",9],[1,"기본","218채널","기본(218채널)","","기본","","",9],[1,"기본","220채널","기본(220채널)","","기본","","",9],[1,"기본","221채널","기본(221채널)","","기본","","",9],[1,"기본","222채널","기본(222채널)","","기본","","",9],[1,"기본","229채널","기본(229채널)","","기본","","",9],[1,"기본","238채널","기본(238채널)","","기본","","",9],[1,"기본","240채널","기본(240채널)","","기본","","",9],[1,"기본","89채널","기본(89채널)","","기본","","",9],[1,"프리미엄","229채널","프리미엄(229채널)","","기본","","",23],[1,"프리미엄","250채널","프리미엄(250채널)","","기본","","",23],[1,"프리미엄","263채널","프리미엄(263채널)","","기본","","",23],[1,"프리미엄","266채널","프리미엄(266채널)","","기본","","",23],[1,"프리미엄","267채널","프리미엄(267채널)","","기본","","",23],[1,"프리미엄","269채널","프리미엄(269채널)","","기본","","",23],[2,"일반셋탑","","일반셋탑","","기본","","",6],[2,"스마트셋탑","","스마트셋탑","","기본","","",25],[2,"태블릿","","태블릿","","기본","","",1]],"LG":[[1,"기본","190채널","기본(190채널)","","기본","","",5],[1,"기본","212채널","기본(212채널)","","기본","","",5],[1,"기본","219채널","기본(219채널)","","기본","","",5],[1,"기본","222채널","기본(222채널)","","기본","","",5],[1,"기본","225채널","기본(225채널)","","기본","","",5],[1,"프리미엄","231채널","프리미엄(231채널)","","기본","","",15],[1,"프리미엄","253채널","프리미엄(253채널)","","기본","","",15],[1,"프리미엄","257채널","프리미엄(257채널)","","기본","","",15],[1,"프리미엄","258채널","프리미엄(258채널)","","기본","","",15],[1,"프리미엄","260채널","프리미엄(260채널)","","기본","","",15],[2,"일반셋탑","","일반셋탑","","기본","","",20]],"SKB":[[1,"기본","103채널","기본(103채널)","","기본","","",15],[1,"기본","108채널","기본(108채널)","","기본","","",15],[1,"기본","109채널","기본(109채널)","","기본","","",15],[1,"기본","182채널","기본(182채널)","","기본","","",15],[1,"기본","186채널","기본(186채널)","","기본","","",15],[1,"기본","203채널","기본(203채널)","","기본","","",15],[1,"기본","224채널","기본(224채널)","","기본","","",15],[1,"기본","231채널","기본(231채널)","","기본","","",15],[1,"기본","41채널","기본(41채널)","","기본","","",15],[1,"기본","60채널","기본(60채널)","","기본","","",15],[1,"기본","70채널","기본(70채널)","","기본","","",15],[1,"기본","84채널","기본(84채널)","","기본","","",15],[1,"프리미엄","235채널","프리미엄(235채널)","","기본","","",12],[1,"프리미엄","252채널","프리미엄(252채널)","","기본","","",12],[1,"프리미엄","254채널","프리미엄(254채널)","","기본","","",12],[1,"프리미엄","255채널","프리미엄(255채널)","","기본","","",12],[2,"일반셋탑","","일반셋탑","","기본","","",26],[2,"스마트셋탑","","스마트셋탑","","기본","","",1]],"SKT":[[1,"기본","182채널","기본(182채널)","","기본","","",2],[1,"기본","59채널","기본(59채널)","","기본","","",2],[1,"프리미엄","235채널","프리미엄(235채널)","","기본","","",12],[1,"프리미엄","252채널","프리미엄(252채널)","","기본","","",12],[1,"프리미엄","254채널","프리미엄(254채널)","","기본","","",12],[1,"프리미엄","255채널","프리미엄(255채널)","","기본","","",12],[2,"일반셋탑","","일반셋탑","","기본","","",14]],"SkyLife":[[1,"기본","196채널","기본(196채널)","","기본","","",2],[1,"기본","206채널","기본(206채널)","","기본","","",2],[1,"프리미엄","209채널","프리미엄(209채널)","","기본","","",8],[1,"프리미엄","239채널","프리미엄(239채널)","","기본","","",8],[1,"프리미엄","242채널","프리미엄(242채널)","","기본","","",8],[2,"없음","","없음","","기본","","",1],[2,"일반셋탑","","일반셋탑","","기본","","",9]]},"인터넷":{"딜라이브":[[1,"100Mbps","광랜 인터넷","100Mbps(광랜 인터넷)","","기본","","",6],[1,"100Mbps","광랜 인터넷 LG망","100Mbps(광랜 인터넷 LG망)","","기본","","",6],[1,"160Mbps","광랜 플러스","160Mbps(광랜 플러스)","","기본","","",3],[1,"320Mbps","광랜 세이브 플러스","320Mbps(광랜 세이브 플러스)","","기본","","",3],[1,"500Mbps","500메가 인터넷 LG망","500Mbps(500메가 인터넷 LG망)","","기본","","",3],[1,"1Gbps","기가 인터넷","1Gbps(기가 인터넷)","","기본","","",6],[1,"1Gbps","기가 인터넷 LG망","1Gbps(기가 인터넷 LG망)","","기본","","",6],[2,"WiFi포함","","WiFi포함","","기본","","",14],[2,"WiFi+증폭기","Mesh","WiFi+증폭기(Mesh)","","기본","","",7],[3,"없음","","없음","","기본","","",14],[3,"안심","안심 주치의","안심(안심 주치의)","","기본","","",7]],"HCN":[[1,"100Mbps","광랜 1년","100Mbps(광랜 1년)","","기본","","",8],[1,"100Mbps","광랜 2년","100Mbps(광랜 2년)","","기본","","",8],[1,"100Mbps","광랜 3년","100Mbps(광랜 3년)","","기본","","",8],[1,"100Mbps","광랜 4년","100Mbps(광랜 4년)","","기본","","",8],[1,"1Gbps","기가 인터넷 1년","1Gbps(기가 인터넷 1년)","","기본","","",8],[1,"1Gbps","기가 인터넷 2년","1Gbps(기가 인터넷 2년)","","기본","","",8],[1,"1Gbps","기가 인터넷 3년","1Gbps(기가 인터넷 3년)","","기본","","",8],[1,"1Gbps","기가 인터넷 4년","1Gbps(기가 인터넷 4년)","","기본","","",8],[2,"없음","","없음","","기본","","",8],[2,"WiFi포함","","WiFi포함","","기본","","",8],[3,"없음","","없음","","기본","","",16]],"LG HelloVision":[[1,"100Mbps","광랜라이트 인터넷","100Mbps(광랜라이트 인터넷)","","기본","","",2],[1,"160Mbps","광랜 인터넷","160Mbps(광랜 인터넷)","","기본","","",1],[1,"500Mbps","기가라이트 인터넷","500Mbps(기가라이트 인터넷)","","기본","","",2],[1,"1Gbps","플래티넘기가 인터넷","1Gbps(플래티넘기가 인터넷)","","기본","","",2],[2,"없음","","없음","","기본","","",1],[2,"WiFi포함","","WiFi포함","","기본","","",1],[2,"프리미엄WiFi","WiFi6","프리미엄WiFi(WiFi6)","","기본","","",3],[2,"프리미엄WiFi+증폭기","WiFi6+Mesh","프리미엄WiFi+증폭기(WiFi6+Mesh)","","기본","","",2],[3,"없음","","없음","","기본","","",7]],"KT":[[1,"100Mbps","슬림","100Mbps(슬림)","1-2인 가구","기본","22,000","22,000",9],[1,"200Mbps","슬림플러스","200Mbps(슬림플러스)","2-3인 가구","기본","30,250","24,200",1],[1,"500Mbps","베이직","500Mbps(베이직)","3-4인 가구","기본","33,000","27,500",9],[1,"1Gbps","에센스","1Gbps(에센스)","게임·고화질 스트리밍","추천","38,500","33,000",10],[1,"2.5Gbps","프리미엄","2.5Gbps(프리미엄)","","기본","44,000","38,500",6],[1,"5Gbps","프리미엄플러스","5Gbps(프리미엄플러스)","","비인기 상품","60,500","55,000",2],[1,"10Gbps","슈퍼프리미엄","10Gbps(슈퍼프리미엄)","","비인기 상품","88,000","77,000",2],[2,"없음","","없음","","기본","0","0",3],[2,"WiFi포함","","WiFi포함","","기본","1,100","1,100",11],[2,"프리미엄WiFi","WiFi 7D","프리미엄WiFi(WiFi 7D)","","추천","3,300","3,300",11],[2,"WiFi+증폭기","Buddy","WiFi+증폭기(Buddy)","","기본","4,400","4,400",7],[2,"프리미엄WiFi+증폭기","WiFi 7D+Buddy","프리미엄WiFi+증폭기(WiFi 7D+Buddy)","","기본","6,600","6,600",7],[3,"없음","","없음","","기본","0","0",27],[3,"안심","유해사이트 방패","안심(유해사이트 방패)","유해사이트 차단·자녀 보호","기본","2,200","2,200",12]],"LG":[[1,"100Mbps","광랜 인터넷","100Mbps(광랜 인터넷)","","기본","","",4],[1,"200Mbps","200메가 인터넷","200Mbps(200메가 인터넷)","","기본","","",3],[1,"500Mbps","기가슬림 인터넷","500Mbps(기가슬림 인터넷)","","기본","","",12],[1,"1Gbps","기가 인터넷","1Gbps(기가 인터넷)","","기본","","",12],[1,"2.5Gbps","2.5기가 인터넷","2.5Gbps(2.5기가 인터넷)","","기본","","",4],[1,"5Gbps","5기가 인터넷","5Gbps(5기가 인터넷)","","기본","","",1],[1,"10Gbps","10기가 인터넷","10Gbps(10기가 인터넷)","","기본","","",1],[2,"WiFi포함","의무임대","WiFi포함(의무임대)","","기본","","",28],[2,"WiFi포함","Smart스피커","WiFi포함(Smart스피커)","","기본","","",28],[2,"WiFi포함","안심","WiFi포함(안심)","","기본","","",28],[2,"WiFi포함","의무임대 · 안심X","WiFi포함(의무임대 · 안심X)","","기본","","",28],[2,"WiFi포함","Smart스피커+보상케어","WiFi포함(Smart스피커+보상케어)","","기본","","",28],[2,"WiFi포함","크롬캐스트","WiFi포함(크롬캐스트)","","기본","","",28],[2,"WiFi+증폭기","Mesh","WiFi+증폭기(Mesh)","","기본","","",9],[2,"WiFi+증폭기","Mesh+보상케어","WiFi+증폭기(Mesh+보상케어)","","기본","","",9],[3,"없음","","없음","","기본","","",37]],"SKB":[[1,"100Mbps","광랜 인터넷","100Mbps(광랜 인터넷)","","기본","","",17],[1,"500Mbps","기가라이트 인터넷","500Mbps(기가라이트 인터넷)","","기본","","",17],[1,"1Gbps","기가 인터넷","1Gbps(기가 인터넷)","","기본","","",17],[1,"2.5Gbps","기가프리미엄X2.5","2.5Gbps(기가프리미엄X2.5)","","기본","","",2],[1,"5Gbps","기가프리미엄X5","5Gbps(기가프리미엄X5)","","기본","","",1],[1,"10Gbps","기가프리미엄X10","10Gbps(기가프리미엄X10)","","기본","","",1],[2,"없음","","없음","","기본","","",3],[2,"WiFi포함","","WiFi포함","","기본","","",16],[2,"프리미엄WiFi","기가WiFi7","프리미엄WiFi(기가WiFi7)","","기본","","",12],[2,"WiFi+증폭기","Wings","WiFi+증폭기(Wings)","","기본","","",12],[2,"프리미엄WiFi+증폭기","기가WiFi7+Wings","프리미엄WiFi+증폭기(기가WiFi7+Wings)","","기본","","",12],[3,"없음","","없음","","기본","","",19],[3,"안심","모두안심 · 유해사이트 방패","안심(모두안심 · 유해사이트 방패)","","기본","","",12],[3,"파워백신","백신적용 인터넷","파워백신(백신적용 인터넷)","","기본","","",12],[3,"원격케어","PC&스마트폰 원격점검","원격케어(PC&스마트폰 원격점검)","","기본","","",12]],"SKT":[[1,"100Mbps","광랜 인터넷","100Mbps(광랜 인터넷)","","기본","","",9],[1,"500Mbps","기가라이트 인터넷","500Mbps(기가라이트 인터넷)","","기본","","",9],[1,"1Gbps","기가 인터넷","1Gbps(기가 인터넷)","","기본","","",9],[1,"2.5Gbps","기가프리미엄X2.5","2.5Gbps(기가프리미엄X2.5)","","기본","","",3],[1,"5Gbps","기가프리미엄X5","5Gbps(기가프리미엄X5)","","기본","","",1],[1,"10Gbps","기가프리미엄X10","10Gbps(기가프리미엄X10)","","기본","","",1],[2,"없음","","없음","","기본","","",3],[2,"WiFi포함","","WiFi포함","","기본","","",17],[2,"프리미엄WiFi","기가WiFi7","프리미엄WiFi(기가WiFi7)","","기본","","",12],[3,"없음","","없음","","기본","","",14],[3,"안심","모두안심 · 유해사이트 방패","안심(모두안심 · 유해사이트 방패)","","기본","","",6],[3,"파워백신","백신적용 인터넷","파워백신(백신적용 인터넷)","","기본","","",6],[3,"원격케어","PC&스마트폰 원격점검","원격케어(PC&스마트폰 원격점검)","","기본","","",6]],"SkyLife":[[1,"100Mbps","100M 인터넷","100Mbps(100M 인터넷)","","기본","","",4],[1,"200Mbps","기가 200M 인터넷","200Mbps(기가 200M 인터넷)","","기본","","",2],[1,"500Mbps","기가 500M 인터넷","500Mbps(기가 500M 인터넷)","","기본","","",2],[1,"1Gbps","기가 1G 인터넷","1Gbps(기가 1G 인터넷)","","기본","","",2],[2,"없음","","없음","","기본","","",2],[2,"WiFi포함","","WiFi포함","","기본","","",8],[3,"없음","","없음","","기본","","",5],[3,"안심","유해사이트 방패","안심(유해사이트 방패)","","기본","","",5]]},"인터넷전화":{"딜라이브":[[1,"표준","인터넷전화(일반)","표준(인터넷전화(일반))","","기본","","",2],[1,"정액","일반전화(정액)","정액(일반전화(정액))","","기본","","",1],[2,"모뎀","","모뎀","","기본","","",3]],"LG HelloVision":[[1,"표준","인터넷전화(일반)","표준(인터넷전화(일반))","","기본","","",2],[1,"정액","인터넷전화(정액)","정액(인터넷전화(정액))","","기본","","",6],[2,"전화기","","전화기","","기본","","",8]],"KT":[[1,"표준","인터넷전화(일반)","표준(인터넷전화(일반))","","기본","","",3],[1,"정액","인터넷전화(정액)","정액(인터넷전화(정액))","","기본","","",4],[2,"전화기","","전화기","","기본","","",7]],"LG":[[1,"표준","인터넷전화(기업)","표준(인터넷전화(기업))","","기본","","",24],[1,"표준","인터넷전화(소호)","표준(인터넷전화(소호))","","기본","","",24],[1,"표준","인터넷전화(일반)","표준(인터넷전화(일반))","","기본","","",24],[1,"표준","인터넷전화(일반/소호)","표준(인터넷전화(일반/소호))","","기본","","",24],[1,"표준","인터넷전화(태블릿)","표준(인터넷전화(태블릿))","","기본","","",24],[1,"정액","인터넷전화(정액)","정액(인터넷전화(정액))","","기본","","",5],[2,"전화기","","전화기","","기본","","",11],[2,"모뎀","","모뎀","","기본","","",11],[2,"태블릿","","태블릿","","기본","","",7]],"SKB":[[1,"표준","인터넷전화(일반)","표준(인터넷전화(일반))","","기본","","",3],[1,"표준","케이블전화","표준(케이블전화)","","기본","","",3],[1,"정액","인터넷전화(정액)","정액(인터넷전화(정액))","","기본","","",7],[2,"전화기","","전화기","","기본","","",10]],"SKT":[[1,"표준","인터넷전화(일반)","표준(인터넷전화(일반))","","기본","","",3],[1,"표준","케이블전화","표준(케이블전화)","","기본","","",3],[1,"정액","인터넷전화(정액)","정액(인터넷전화(정액))","","기본","","",7],[2,"전화기","","전화기","","기본","","",10]]},"일반전화":{"KT":[[1,"표준","일반전화(일반)","표준(일반전화(일반))","","기본","","",1],[1,"정액","일반전화(정액)","정액(일반전화(정액))","","기본","","",3],[2,"없음","","없음","","기본","","",4]],"SKB":[[1,"표준","일반전화(일반)","표준(일반전화(일반))","","기본","","",1],[1,"정액","일반전화(정액)","정액(일반전화(정액))","","기본","","",7],[2,"없음","","없음","","기본","","",8]],"SKT":[[1,"표준","일반전화(일반)","표준(일반전화(일반))","","기본","","",1],[1,"정액","일반전화(정액)","정액(일반전화(정액))","","기본","","",7],[2,"없음","","없음","","기본","","",8]]}};
-const SLOTN={"인터넷":{"1":"속도","2":"구성제품","3":"추가구성옵션"},"TV":{"1":"라인","2":"셋탑"},"인터넷전화":{"1":"요금방식","2":"전화기기"},"일반전화":{"1":"요금방식","2":"전화기기"}};
-const VENS={"인터넷":["KT","LG","SKT","SKB","SkyLife","LG HelloVision","딜라이브","HCN"],"TV":["KT","LG","SKT","SKB","SkyLife","LG HelloVision","딜라이브","HCN"],"인터넷전화":["KT","LG","SKT","SKB","LG HelloVision","딜라이브"],"일반전화":["KT","SKT","SKB"]};
-const GUARD=[["TV","라인"],["TV","셋탑"],["인터넷","구성제품"],["인터넷","속도"]];
-const CN=[["인터넷","HCN","100M(1년)","",["100Mbps","없음","없음"],true],["인터넷","LG HelloVision","광랜라이트","",["100Mbps","없음","없음"],true],["인터넷","KT","슬림","",["100Mbps","없음","없음"],true],["인터넷","SKB","광랜인터넷","",["100Mbps","없음","없음"],true],["인터넷","SKT","광랜인터넷","",["100Mbps","없음","없음"],true],["인터넷","SkyLife","100메가","",["100Mbps","없음","없음"],true],["인터넷","HCN","100M(2년)","",["100Mbps","없음","없음"],false],["인터넷","SkyLife","100메가 안심","",["100Mbps","없음","안심"],true],["인터넷","HCN","100M(3년)","",["100Mbps","없음","없음"],false],["인터넷","HCN","100M(4년)","",["100Mbps","없음","없음"],false],["인터넷","딜라이브","ISP 스마트광랜","WiFi",["100Mbps","WiFi포함","없음"],true],["인터넷","HCN","100M(1년)","WiFi",["100Mbps","WiFi포함","없음"],true],["인터넷","LG HelloVision","광랜라이트","일반와이파이",["100Mbps","WiFi포함","없음"],true],["인터넷","KT","슬림 와이파이","기가 와이파이 홈ax",["100Mbps","WiFi포함","없음"],true],["인터넷","LG","와이파이기본_광랜안심","기가WiFi",["100Mbps","WiFi포함","없음"],true],["인터넷","SKB","광랜인터넷 와이파이","기가WiFi",["100Mbps","WiFi포함","없음"],true],["인터넷","SKT","광랜인터넷 와이파이","기가WiFi",["100Mbps","WiFi포함","없음"],true],["인터넷","SkyLife","100메가","기가WiFi",["100Mbps","WiFi포함","없음"],true],["인터넷","딜라이브","안심 스마트광랜","WiFi",["100Mbps","WiFi포함","안심"],true],["인터넷","HCN","100M(2년)","WiFi",["100Mbps","WiFi포함","없음"],false],["인터넷","KT","안심 슬림 와이파이","기가 와이파이 홈ax",["100Mbps","WiFi포함","안심"],true],["인터넷","LG","프리미엄 안심 100메가","기가WiFi+스마트홈스피커",["100Mbps","WiFi포함","없음"],false],["인터넷","SKB","모두안심 광랜","기가WiFi",["100Mbps","WiFi포함","안심"],true],["인터넷","SKT","모두안심 광랜","기가WiFi",["100Mbps","WiFi포함","안심"],true],["인터넷","SkyLife","100메가 안심","기가WiFi",["100Mbps","WiFi포함","안심"],true],["인터넷","HCN","100M(3년)","WiFi",["100Mbps","WiFi포함","없음"],false],["인터넷","LG","프리미엄 안심 보상 100메가","기가WiFi6+안심",["100Mbps","WiFi포함","없음"],false],["인터넷","SKB","파워백신 광랜","기가WiFi",["100Mbps","WiFi포함","파워백신"],true],["인터넷","SKT","파워백신 광랜","기가WiFi",["100Mbps","WiFi포함","파워백신"],true],["인터넷","HCN","100M(4년)","WiFi",["100Mbps","WiFi포함","없음"],false],["인터넷","SKB","원격케어 광랜","기가WiFi",["100Mbps","WiFi포함","원격케어"],true],["인터넷","SKT","원격케어 광랜","기가WiFi",["100Mbps","WiFi포함","원격케어"],true],["인터넷","딜라이브","LG망 S광랜","WiFi",["100Mbps","WiFi포함","없음"],false],["인터넷","KT","슬림 와이파이","KT와이파이7D",["100Mbps","프리미엄WiFi","없음"],true],["인터넷","LG","스마트_광랜안심","기가WiFi+스마트홈스피커",["100Mbps","WiFi포함","없음"],false],["인터넷","SKB","광랜인터넷 와이파이","기가WiFi7",["100Mbps","프리미엄WiFi","없음"],true],["인터넷","SKT","광랜인터넷 와이파이","기가WiFi7",["100Mbps","프리미엄WiFi","없음"],true],["인터넷","딜라이브","안심 LG망 S광랜","WiFi",["100Mbps","WiFi포함","안심"],false],["인터넷","KT","안심 슬림 와이파이","KT와이파이7D",["100Mbps","프리미엄WiFi","안심"],true],["인터넷","SKB","모두안심 광랜","기가WiFi7",["100Mbps","프리미엄WiFi","안심"],true],["인터넷","SKT","모두안심 광랜","기가WiFi7",["100Mbps","프리미엄WiFi","안심"],true],["인터넷","SKB","파워백신 광랜","기가WiFi7",["100Mbps","프리미엄WiFi","파워백신"],true],["인터넷","SKT","파워백신 광랜","기가WiFi7",["100Mbps","프리미엄WiFi","파워백신"],true],["인터넷","SKB","원격케어 광랜","기가WiFi7",["100Mbps","프리미엄WiFi","원격케어"],true],["인터넷","SKT","원격케어 광랜","기가WiFi7",["100Mbps","프리미엄WiFi","원격케어"],true],["인터넷","딜라이브","ISP 스마트광랜 와이드","WiFi+Mesh",["100Mbps","WiFi+증폭기","없음"],true],["인터넷","KT","슬림 와이드","기가 와이파이 (홈ax+버디)",["100Mbps","WiFi+증폭기","없음"],true],["인터넷","SKB","광랜인터넷 윙즈","기가WiFi+윙즈",["100Mbps","WiFi+증폭기","없음"],true],["인터넷","KT","안심 슬림 와이드","기가 와이파이 (홈ax+버디)",["100Mbps","WiFi+증폭기","안심"],true],["인터넷","SKB","모두안심 광랜 윙즈","기가WiFi+윙즈",["100Mbps","WiFi+증폭기","안심"],true],["인터넷","SKB","파워백신 광랜 윙즈","기가WiFi+윙즈",["100Mbps","WiFi+증폭기","파워백신"],true],["인터넷","SKB","원격케어 광랜 윙즈","기가WiFi+윙즈",["100Mbps","WiFi+증폭기","원격케어"],true],["인터넷","딜라이브","LG망 S광랜 와이드","WiFi+Mesh",["100Mbps","WiFi+증폭기","없음"],false],["인터넷","KT","슬림 와이드","기가 와이파이(7D+버디)",["100Mbps","프리미엄WiFi+증폭기","없음"],true],["인터넷","SKB","광랜인터넷 윙즈","기가WiFi7+윙즈",["100Mbps","프리미엄WiFi+증폭기","없음"],true],["인터넷","KT","안심 슬림 와이드","기가 와이파이(7D+버디)",["100Mbps","프리미엄WiFi+증폭기","안심"],true],["인터넷","SKB","모두안심 광랜 윙즈","기가WiFi7+윙즈",["100Mbps","프리미엄WiFi+증폭기","안심"],true],["인터넷","SKB","파워백신 광랜 윙즈","기가WiFi7+윙즈",["100Mbps","프리미엄WiFi+증폭기","파워백신"],true],["인터넷","SKB","원격케어 광랜 윙즈","기가WiFi7+윙즈",["100Mbps","프리미엄WiFi+증폭기","원격케어"],true],["인터넷","딜라이브","ISP 스마트광랜플러스","WiFi",["160Mbps","WiFi포함","없음"],true],["인터넷","딜라이브","안심 스마트광랜플러스","WiFi",["160Mbps","WiFi포함","안심"],true],["인터넷","딜라이브","ISP 스마트광랜플러스 와이드","WiFi+Mesh",["160Mbps","WiFi+증폭기","없음"],true],["인터넷","LG HelloVision","광랜","프리미엄기가WiFi",["160Mbps","프리미엄WiFi","없음"],true],["인터넷","KT","슬림플러스","",["200Mbps","없음","없음"],true],["인터넷","LG","와이파이기본_200M","기가WiFi6",["200Mbps","WiFi포함","없음"],true],["인터넷","SkyLife","200메가","기가WiFi",["200Mbps","WiFi포함","없음"],true],["인터넷","LG","프리미엄 안심 200M","기가WiFi6+스마트홈스피커",["200Mbps","WiFi포함","없음"],false],["인터넷","SkyLife","200메가 안심","기가WiFi",["200Mbps","WiFi포함","안심"],true],["인터넷","LG","프리미엄 안심 보상 200M","기가WiFi6+안심",["200Mbps","WiFi포함","없음"],false],["인터넷","딜라이브","ISP 스마트광랜세이브플러스","기가WiFi",["320Mbps","WiFi포함","없음"],true],["인터넷","딜라이브","안심 스마트광랜세이브플러스","기가WiFi",["320Mbps","WiFi포함","안심"],true],["인터넷","딜라이브","ISP 스마트광랜세이브플러스 와이드","기가WiFi+Mesh",["320Mbps","WiFi+증폭기","없음"],true],["인터넷","KT","베이직","",["500Mbps","없음","없음"],true],["인터넷","SKB","기가라이트인터넷","",["500Mbps","없음","없음"],true],["인터넷","SKT","기가라이트인터넷","",["500Mbps","없음","없음"],true],["인터넷","LG HelloVision","기가라이트","프리미엄기가WiFi",["500Mbps","프리미엄WiFi","없음"],true],["인터넷","KT","베이직 와이파이","기가 와이파이 홈ax",["500Mbps","WiFi포함","없음"],true],["인터넷","LG","와이파이기본_기가슬림안심","기가WiFi6",["500Mbps","WiFi포함","없음"],true],["인터넷","SKB","기가라이트인터넷 와이파이","기가WiFi",["500Mbps","WiFi포함","없음"],true],["인터넷","SKT","기가라이트인터넷 와이파이","기가WiFi",["500Mbps","WiFi포함","없음"],true],["인터넷","SkyLife","500메가","기가WiFi",["500Mbps","WiFi포함","없음"],true],["인터넷","KT","안심 베이직 와이파이","기가 와이파이 홈ax",["500Mbps","WiFi포함","안심"],true],["인터넷","LG","프리미엄 안심 500메가","기가WiFi6+스마트홈스피커",["500Mbps","WiFi포함","없음"],false],["인터넷","SKB","모두안심 기가라이트","기가WiFi",["500Mbps","WiFi포함","안심"],true],["인터넷","SKT","모두안심 기가라이트","기가WiFi",["500Mbps","WiFi포함","안심"],true],["인터넷","SkyLife","500메가 안심","기가WiFi",["500Mbps","WiFi포함","안심"],true],["인터넷","LG","프리미엄 안심 보상 500메가","기가WiFi6+스마트홈+보상",["500Mbps","WiFi포함","없음"],false],["인터넷","SKB","파워백신 기가라이트","기가WiFi",["500Mbps","WiFi포함","파워백신"],true],["인터넷","SKT","파워백신 기가라이트","기가WiFi",["500Mbps","WiFi포함","파워백신"],true],["인터넷","LG","프리미엄 안심 500메가","기가WiFi6+크롬캐스트",["500Mbps","WiFi포함","없음"],false],["인터넷","SKB","원격케어 기가라이트","기가WiFi",["500Mbps","WiFi포함","원격케어"],true],["인터넷","SKT","원격케어 기가라이트","기가WiFi",["500Mbps","WiFi포함","원격케어"],true],["인터넷","딜라이브","LG망 S기가500M","기가WiFi",["500Mbps","WiFi포함","없음"],true],["인터넷","KT","베이직 와이파이","KT와이파이7D",["500Mbps","프리미엄WiFi","없음"],true],["인터넷","LG","스마트_기가슬림안심","기가WiFi6+스마트홈스피커",["500Mbps","WiFi포함","없음"],false],["인터넷","SKB","기가라이트인터넷 와이파이","기가WiFi7",["500Mbps","프리미엄WiFi","없음"],true],["인터넷","SKT","기가라이트인터넷 와이파이","기가WiFi7",["500Mbps","프리미엄WiFi","없음"],true],["인터넷","딜라이브","안심 LG망 S기가500M","기가WiFi",["500Mbps","WiFi포함","안심"],true],["인터넷","KT","안심 베이직 와이파이","KT와이파이7D",["500Mbps","프리미엄WiFi","안심"],true],["인터넷","LG","스마트기가_최대500메가","기가WiFi6+스마트홈스피커",["500Mbps","WiFi포함","없음"],false],["인터넷","SKB","모두안심 기가라이트","기가WiFi7",["500Mbps","프리미엄WiFi","안심"],true],["인터넷","SKT","모두안심 기가라이트","기가WiFi7",["500Mbps","프리미엄WiFi","안심"],true],["인터넷","SKB","파워백신 기가라이트","기가WiFi7",["500Mbps","프리미엄WiFi","파워백신"],true],["인터넷","SKT","파워백신 기가라이트","기가WiFi7",["500Mbps","프리미엄WiFi","파워백신"],true],["인터넷","LG","스마트_기가슬림안심","기가WiFi6+크롬캐스트",["500Mbps","WiFi포함","없음"],false],["인터넷","SKB","원격케어 기가라이트","기가WiFi7",["500Mbps","프리미엄WiFi","원격케어"],true],["인터넷","SKT","원격케어 기가라이트","기가WiFi7",["500Mbps","프리미엄WiFi","원격케어"],true],["인터넷","LG","스마트기가_최대500메가","기가WiFi6+크롬캐스트",["500Mbps","WiFi포함","없음"],false],["인터넷","LG HelloVision","기가라이트 Mesh","기가Mesh패키지",["500Mbps","프리미엄WiFi+증폭기","없음"],true],["인터넷","KT","베이직 와이드","기가 와이파이 (홈ax+버디)",["500Mbps","WiFi+증폭기","없음"],true],["인터넷","LG","프리미엄 안심 500메가","기가WiFi6+MESH",["500Mbps","WiFi+증폭기","없음"],true],["인터넷","SKB","기가라이트인터넷 윙즈","기가WiFi+윙즈",["500Mbps","WiFi+증폭기","없음"],true],["인터넷","KT","안심 베이직 와이드","기가 와이파이 (홈ax+버디)",["500Mbps","WiFi+증폭기","안심"],true],["인터넷","LG","프리미엄 안심 보상 500메가","기가WiFi6+MESH+보상",["500Mbps","WiFi+증폭기","없음"],false],["인터넷","SKB","모두안심 기가라이트 윙즈","기가WiFi+윙즈",["500Mbps","WiFi+증폭기","안심"],true],["인터넷","SKB","파워백신 기가라이트 윙즈","기가WiFi+윙즈",["500Mbps","WiFi+증폭기","파워백신"],true],["인터넷","SKB","원격케어 기가라이트 윙즈","기가WiFi+윙즈",["500Mbps","WiFi+증폭기","원격케어"],true],["인터넷","딜라이브","LG망 S기가500M 와이드","기가WiFi+Mesh",["500Mbps","WiFi+증폭기","없음"],true],["인터넷","KT","베이직 와이드","기가 와이파이(7D+버디)",["500Mbps","프리미엄WiFi+증폭기","없음"],true],["인터넷","LG","스마트_기가슬림안심","기가WiFi6+MESH",["500Mbps","WiFi+증폭기","없음"],false],["인터넷","SKB","기가라이트인터넷 윙즈","기가WiFi7+윙즈",["500Mbps","프리미엄WiFi+증폭기","없음"],true],["인터넷","KT","안심 베이직 와이드","기가 와이파이(7D+버디)",["500Mbps","프리미엄WiFi+증폭기","안심"],true],["인터넷","LG","스마트기가_최대500메가","기가WiFi6+MESH",["500Mbps","WiFi+증폭기","없음"],false],["인터넷","SKB","모두안심 기가라이트 윙즈","기가WiFi7+윙즈",["500Mbps","프리미엄WiFi+증폭기","안심"],true],["인터넷","SKB","파워백신 기가라이트 윙즈","기가WiFi7+윙즈",["500Mbps","프리미엄WiFi+증폭기","파워백신"],true],["인터넷","SKB","원격케어 기가라이트 윙즈","기가WiFi7+윙즈",["500Mbps","프리미엄WiFi+증폭기","원격케어"],true],["인터넷","HCN","기가(1년)","",["1Gbps","없음","없음"],true],["인터넷","KT","에센스","기가 와이파이 홈ax",["1Gbps","WiFi포함","없음"],true],["인터넷","SKB","기가인터넷","",["1Gbps","없음","없음"],true],["인터넷","SKT","기가인터넷","",["1Gbps","없음","없음"],true],["인터넷","HCN","기가(2년)","",["1Gbps","없음","없음"],false],["인터넷","HCN","기가(3년)","",["1Gbps","없음","없음"],false],["인터넷","HCN","기가(4년)","",["1Gbps","없음","없음"],false],["인터넷","KT","에센스","KT와이파이7D",["1Gbps","프리미엄WiFi","없음"],true],["인터넷","딜라이브","ISP 스마트기가","기가WiFi",["1Gbps","WiFi포함","없음"],true],["인터넷","HCN","기가(1년)","WiFi",["1Gbps","WiFi포함","없음"],true],["인터넷","LG HelloVision","플래티넘기가","프리미엄기가WiFi",["1Gbps","프리미엄WiFi","없음"],true],["인터넷","KT","에센스 와이파이","기가 와이파이 홈ax",["1Gbps","WiFi포함","없음"],false],["인터넷","LG","와이파이기본_기가안심","기가WiFi6",["1Gbps","WiFi포함","없음"],true],["인터넷","SKB","기가인터넷 와이파이","기가WiFi",["1Gbps","WiFi포함","없음"],true],["인터넷","SKT","기가인터넷 와이파이","기가WiFi",["1Gbps","WiFi포함","없음"],true],["인터넷","SkyLife","1기가","기가WiFi",["1Gbps","WiFi포함","없음"],true],["인터넷","딜라이브","안심 스마트기가","기가WiFi",["1Gbps","WiFi포함","안심"],true],["인터넷","HCN","기가(2년)","WiFi",["1Gbps","WiFi포함","없음"],false],["인터넷","KT","안심 에센스 와이파이","기가 와이파이 홈ax",["1Gbps","WiFi포함","안심"],true],["인터넷","LG","프리미엄 안심 1기가","기가WiFi6+스마트홈스피커",["1Gbps","WiFi포함","없음"],false],["인터넷","SKB","모두안심 기가","기가WiFi",["1Gbps","WiFi포함","안심"],true],["인터넷","SKT","모두안심 기가","기가WiFi",["1Gbps","WiFi포함","안심"],true],["인터넷","SkyLife","1기가 안심","기가WiFi",["1Gbps","WiFi포함","안심"],true],["인터넷","HCN","기가(3년)","WiFi",["1Gbps","WiFi포함","없음"],false],["인터넷","LG","프리미엄 안심 보상 1기가","기가WiFi6+스마트홈+보상",["1Gbps","WiFi포함","없음"],false],["인터넷","SKB","파워백신 기가","기가WiFi",["1Gbps","WiFi포함","파워백신"],true],["인터넷","SKT","파워백신 기가","기가WiFi",["1Gbps","WiFi포함","파워백신"],true],["인터넷","HCN","기가(4년)","WiFi",["1Gbps","WiFi포함","없음"],false],["인터넷","LG","프리미엄 안심 1기가","기가WiFi6+크롬캐스트",["1Gbps","WiFi포함","없음"],false],["인터넷","SKB","원격케어 기가","기가WiFi",["1Gbps","WiFi포함","원격케어"],true],["인터넷","SKT","원격케어 기가","기가WiFi",["1Gbps","WiFi포함","원격케어"],true],["인터넷","딜라이브","LG망 S기가","기가WiFi",["1Gbps","WiFi포함","없음"],false],["인터넷","KT","에센스 와이파이","KT와이파이7D",["1Gbps","프리미엄WiFi","없음"],false],["인터넷","LG","스마트_기가안심","기가WiFi6+스마트홈스피커",["1Gbps","WiFi포함","없음"],false],["인터넷","SKB","기가인터넷 와이파이","기가WiFi7",["1Gbps","프리미엄WiFi","없음"],true],["인터넷","SKT","기가인터넷 와이파이","기가WiFi7",["1Gbps","프리미엄WiFi","없음"],true],["인터넷","딜라이브","안심 LG망 S기가","기가WiFi",["1Gbps","WiFi포함","안심"],false],["인터넷","KT","안심 에센스 와이파이","KT와이파이7D",["1Gbps","프리미엄WiFi","안심"],true],["인터넷","LG","스마트기가_최대1기가","기가WiFi6+스마트홈스피커",["1Gbps","WiFi포함","없음"],false],["인터넷","SKB","모두안심 기가","기가WiFi7",["1Gbps","프리미엄WiFi","안심"],true],["인터넷","SKT","모두안심 기가","기가WiFi7",["1Gbps","프리미엄WiFi","안심"],true],["인터넷","SKB","파워백신 기가","기가WiFi7",["1Gbps","프리미엄WiFi","파워백신"],true],["인터넷","SKT","파워백신 기가","기가WiFi7",["1Gbps","프리미엄WiFi","파워백신"],true],["인터넷","LG","스마트_기가안심","기가WiFi6+크롬캐스트",["1Gbps","WiFi포함","없음"],false],["인터넷","SKB","원격케어 기가","기가WiFi7",["1Gbps","프리미엄WiFi","원격케어"],true],["인터넷","SKT","원격케어 기가","기가WiFi7",["1Gbps","프리미엄WiFi","원격케어"],true],["인터넷","LG","스마트기가_최대1기가","기가WiFi6+크롬캐스트",["1Gbps","WiFi포함","없음"],false],["인터넷","딜라이브","ISP 스마트 기가 와이드","기가WiFi+Mesh",["1Gbps","WiFi+증폭기","없음"],true],["인터넷","LG HelloVision","플래티넘기가 Mesh","기가Mesh패키지",["1Gbps","프리미엄WiFi+증폭기","없음"],true],["인터넷","KT","에센스 와이드","기가 와이파이 (홈ax+버디)",["1Gbps","WiFi+증폭기","없음"],true],["인터넷","LG","프리미엄 안심 1기가","기가WiFi6+MESH",["1Gbps","WiFi+증폭기","없음"],true],["인터넷","SKB","기가인터넷 윙즈","기가WiFi+윙즈",["1Gbps","WiFi+증폭기","없음"],true],["인터넷","KT","안심 에센스 와이드","기가 와이파이 (홈ax+버디)",["1Gbps","WiFi+증폭기","안심"],true],["인터넷","LG","프리미엄 안심 보상 1기가","기가WiFi6+MESH+보상",["1Gbps","WiFi+증폭기","없음"],false],["인터넷","SKB","모두안심 기가 윙즈","기가WiFi+윙즈",["1Gbps","WiFi+증폭기","안심"],true],["인터넷","SKB","파워백신 기가 윙즈","기가WiFi+윙즈",["1Gbps","WiFi+증폭기","파워백신"],true],["인터넷","SKB","원격케어 기가 윙즈","기가WiFi+윙즈",["1Gbps","WiFi+증폭기","원격케어"],true],["인터넷","딜라이브","LG망 S기가 와이드","기가WiFi+Mesh",["1Gbps","WiFi+증폭기","없음"],false],["인터넷","KT","에센스 와이드","기가 와이파이(7D+버디)",["1Gbps","프리미엄WiFi+증폭기","없음"],true],["인터넷","LG","스마트_기가안심","기가WiFi6+MESH",["1Gbps","WiFi+증폭기","없음"],false],["인터넷","SKB","기가인터넷 윙즈","기가WiFi7+윙즈",["1Gbps","프리미엄WiFi+증폭기","없음"],true],["인터넷","KT","안심 에센스 와이드","기가 와이파이(7D+버디)",["1Gbps","프리미엄WiFi+증폭기","안심"],true],["인터넷","LG","스마트기가_최대1기가","기가WiFi6+MESH",["1Gbps","WiFi+증폭기","없음"],false],["인터넷","SKB","모두안심 기가 윙즈","기가WiFi7+윙즈",["1Gbps","프리미엄WiFi+증폭기","안심"],true],["인터넷","SKB","파워백신 기가 윙즈","기가WiFi7+윙즈",["1Gbps","프리미엄WiFi+증폭기","파워백신"],true],["인터넷","SKB","원격케어 기가 윙즈","기가WiFi7+윙즈",["1Gbps","프리미엄WiFi+증폭기","원격케어"],true],["인터넷","KT","프리미엄","기가 와이파이 홈ax",["2.5Gbps","WiFi포함","없음"],true],["인터넷","KT","프리미엄","KT와이파이7D",["2.5Gbps","프리미엄WiFi","없음"],true],["인터넷","KT","프리미엄 와이파이","기가 와이파이 홈ax",["2.5Gbps","WiFi포함","없음"],false],["인터넷","LG","와이파이기본_2.5기가","기가WiFi 프리미엄",["2.5Gbps","WiFi포함","없음"],true],["인터넷","SKB","기가인터넷멀티 와이파이 1.7G","기가WiFi 프리미엄",["2.5Gbps","WiFi포함","없음"],true],["인터넷","SKT","기가인터넷멀티","기가WiFi 프리미엄",["2.5Gbps","WiFi포함","없음"],true],["인터넷","LG","와이파이기본_2.5기가안심","기가WiFi 프리미엄",["2.5Gbps","WiFi포함","없음"],false],["인터넷","SKB","기가프리미엄X2.5","기가WiFi 프리미엄",["2.5Gbps","WiFi포함","없음"],false],["인터넷","SKT","기가인터넷멀티 와이파이 1.7G","기가WiFi 프리미엄",["2.5Gbps","WiFi포함","없음"],false],["인터넷","SKT","기가프리미엄X2.5","기가WiFi 프리미엄",["2.5Gbps","WiFi포함","없음"],false],["인터넷","KT","프리미엄 와이파이","KT와이파이7D",["2.5Gbps","프리미엄WiFi","없음"],false],["인터넷","LG","스마트기가_최대2.5기가","기가WiFi6+스마트홈스피커",["2.5Gbps","WiFi포함","없음"],false],["인터넷","KT","프리미엄 와이드","기가 와이파이 (홈ax+버디)",["2.5Gbps","WiFi+증폭기","없음"],true],["인터넷","KT","프리미엄 와이드","기가 와이파이(7D+버디)",["2.5Gbps","프리미엄WiFi+증폭기","없음"],true],["인터넷","LG","스마트기가_최대2.5기가","기가WiFi6+MESH",["2.5Gbps","WiFi+증폭기","없음"],true],["인터넷","KT","프리미엄플러스","기가 와이파이 웨이브2(2대)",["5Gbps","WiFi포함","없음"],true],["인터넷","LG","와이파이기본_5기가","기가WiFi 프리미엄",["5Gbps","WiFi포함","없음"],true],["인터넷","SKB","기가프리미엄X5","기가WiFi 프리미엄",["5Gbps","WiFi포함","없음"],true],["인터넷","SKT","기가프리미엄X5","기가WiFi 프리미엄",["5Gbps","WiFi포함","없음"],true],["인터넷","KT","프리미엄플러스","KT와이파이7D",["5Gbps","프리미엄WiFi","없음"],true],["인터넷","KT","슈퍼프리미엄","기가 와이파이 웨이브2(2대)",["10Gbps","WiFi포함","없음"],true],["인터넷","LG","와이파이기본_10기가","기가WiFi 프리미엄",["10Gbps","WiFi포함","없음"],true],["인터넷","SKB","기가프리미엄X10","기가WiFi 프리미엄",["10Gbps","WiFi포함","없음"],true],["인터넷","SKT","기가프리미엄X10","기가WiFi 프리미엄",["10Gbps","WiFi포함","없음"],true],["인터넷","KT","슈퍼프리미엄","KT와이파이7D",["10Gbps","프리미엄WiFi","없음"],true],["TV","딜라이브","복지형","",["기본","없음"],true],["TV","딜라이브","알뜰 의무형","",["기본","없음"],false],["TV","딜라이브","알뜰 보급형","",["기본","없음"],false],["TV","딜라이브","알뜰 보급형플러스","",["기본","없음"],false],["TV","딜라이브","알뜰 실속형","",["기본","없음"],false],["TV","딜라이브","이코노미","HD",["기본","일반셋탑"],true],["TV","딜라이브","패밀리","HD",["프리미엄","일반셋탑"],true],["TV","딜라이브","프리미엄","HD",["프리미엄","일반셋탑"],false],["인터넷전화","딜라이브","50 요금제","CO-302",["표준","모뎀"],true],["TV","딜라이브","프리미엄플러스","HD",["프리미엄","일반셋탑"],false],["인터넷전화","딜라이브","표준요금제","CO-302",["표준","모뎀"],false],["인터넷전화","딜라이브","정액요금제","CO-302",["정액","모뎀"],true],["TV","HCN","무약정TV","",["기본","없음"],true],["TV","HCN","STB+WiFi(3년)","안드로이드셋탑",["기본","일반셋탑"],true],["TV","HCN","STB골드(1년)","안드로이드셋탑",["기본","일반셋탑"],true],["TV","HCN","STB골드(2년)","안드로이드셋탑",["기본","일반셋탑"],false],["TV","HCN","STB골드(3년)","안드로이드셋탑",["기본","일반셋탑"],false],["TV","HCN","무비원TV(3년)","안드로이드셋탑",["프리미엄","일반셋탑"],true],["TV","LG HelloVision","UHD뉴베이직_반값","UHD셋톱",["기본","일반셋탑"],true],["TV","LG HelloVision","UHD이코노미&헬로Wifi","UHD셋톱",["기본","일반셋탑"],true],["TV","LG HelloVision","UHD뉴베이직&헬로Wifi","UHD셋톱",["기본","일반셋탑"],false],["TV","LG HelloVision","헬로tv플러스","",["기본","없음"],true],["TV","LG HelloVision","HD이코노미","HD셋톱",["기본","일반셋탑"],false],["TV","LG HelloVision","HD베이직","HD셋톱",["기본","일반셋탑"],false],["TV","LG HelloVision","HD스탠다드","HD셋톱",["프리미엄","일반셋탑"],true],["TV","LG HelloVision","HD뉴베이직","HD셋톱",["기본","일반셋탑"],false],["TV","LG HelloVision","HD뉴프리미엄","HD셋톱",["프리미엄","일반셋탑"],false],["TV","LG HelloVision","UHD이코노미","UHD셋톱",["기본","일반셋탑"],false],["인터넷전화","LG HelloVision","표준요금제","WPI-9900",["표준","전화기"],true],["TV","LG HelloVision","UHD베이직","UHD셋톱",["기본","일반셋탑"],false],["인터넷전화","LG HelloVision","이동전화 할인요금제","WPI-9900",["표준","전화기"],false],["TV","LG HelloVision","UHD스탠다드","UHD셋톱",["프리미엄","일반셋탑"],false],["인터넷전화","LG HelloVision","모바일 30+","WPI-9900",["정액","전화기"],true],["TV","LG HelloVision","UHD뉴베이직","UHD셋톱",["기본","일반셋탑"],false],["인터넷전화","LG HelloVision","모바일 60+","WPI-9900",["정액","전화기"],false],["TV","LG HelloVision","UHD뉴프리미엄","UHD셋톱",["프리미엄","일반셋탑"],false],["인터넷전화","LG HelloVision","유선무제한","WPI-9900",["정액","전화기"],false],["인터넷전화","LG HelloVision","유선무제한+200","WPI-9900",["정액","전화기"],false],["인터넷전화","LG HelloVision","5천원 정액요금제","WPI-9900",["정액","전화기"],false],["인터넷전화","LG HelloVision","1만원 정액요금제","WPI-9900",["정액","전화기"],false],["TV","LG HelloVision","UHD뉴베이직디즈니","UHD셋톱",["기본","일반셋탑"],true],["TV","LG HelloVision","UHD뉴베이직 디즈니스탠다드","UHD셋톱",["기본","일반셋탑"],false],["TV","LG HelloVision","UHD뉴프리미엄디즈니","UHD셋톱",["프리미엄","일반셋탑"],true],["TV","LG HelloVision","UHD뉴베이직 디즈니프리미엄","UHD셋톱",["기본","일반셋탑"],false],["TV","LG HelloVision","Pro라이트","IP STB셋탑",["기본","일반셋탑"],false],["TV","LG HelloVision","Pro맥스","IP STB셋탑",["프리미엄","일반셋탑"],false],["TV","KT","Skylife 슬림","일반셋톱",["기본","일반셋탑"],true],["TV","KT","Skylife 베이직","일반셋톱",["기본","일반셋탑"],false],["TV","KT","Skylife 라이트","일반셋톱",["기본","일반셋탑"],false],["TV","KT","Skylife 에센스","일반셋톱",["프리미엄","일반셋탑"],true],["TV","KT","Skylife 엔터","일반셋톱",["프리미엄","일반셋탑"],false],["TV","KT","Skylife 키즈","일반셋톱",["기본","일반셋탑"],false],["TV","KT","교육형","기가지니3A",["기본","스마트셋탑"],true],["인터넷전화","KT","기본요금제","AT05-704V",["표준","전화기"],true],["일반전화","KT","기본요금제","",["표준","없음"],true],["TV","KT","선택형","기가지니3A",["기본","스마트셋탑"],false],["인터넷전화","KT","표준+","AT05-704V",["표준","전화기"],false],["TV","KT","슬림","기가지니3A",["기본","스마트셋탑"],false],["인터넷전화","KT","표준영상","AT05-704V",["표준","전화기"],false],["TV","KT","베이직","기가지니3A",["기본","스마트셋탑"],false],["인터넷전화","KT","우리끼리3000","AT05-704V",["정액","전화기"],true],["일반전화","KT","유선3000","",["정액","없음"],true],["TV","KT","라이트","기가지니3A",["기본","스마트셋탑"],false],["인터넷전화","KT","유선3000","AT05-704V",["정액","전화기"],false],["TV","KT","에센스","기가지니3A",["프리미엄","스마트셋탑"],true],["인터넷전화","KT","유무선3000","AT05-704V",["정액","전화기"],false],["일반전화","KT","유무선3000","",["정액","없음"],false],["TV","KT","에센스 플러스","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","VOD 플러스","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","VOD 초이스","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","키즈랜드팩 초이스","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","뮤즈 초이스","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","슈퍼팩 초이스","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","사장님 초이스","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","무비","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","세이브25","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","무비플러스","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","프라임 홈스쿨","올레TV탭",["프리미엄","태블릿"],true],["TV","KT","모든G","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","디즈니+모든G","기가지니3A",["프리미엄","스마트셋탑"],true],["TV","KT","NEW모든G","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","넷플릭스 초이스HD","기가지니3A",["프리미엄","스마트셋탑"],false],["인터넷전화","KT","사장님 배달POS 인터넷전화","AT05-704V",["정액","전화기"],true],["일반전화","KT","사장님 배달POS 전화","",["정액","없음"],true],["TV","KT","넷플릭스 초이스UHD","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","티빙 초이스 스탠다드","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","티빙 초이스 프리미엄","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","디즈니+ 초이스","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","KT","디즈니+ 초이스 프리미엄","기가지니3A",["프리미엄","스마트셋탑"],false],["TV","LG","프리미엄 내맘대로","UHD4셋톱",["프리미엄","일반셋탑"],true],["TV","LG","프리미엄 환승구독","UHD4셋톱",["프리미엄","일반셋탑"],false],["TV","LG","프리미엄 플러스","UHD4셋톱",["프리미엄","일반셋탑"],false],["TV","LG","일반형","UHD4셋톱",["기본","일반셋탑"],true],["TV","LG","베이직","UHD4셋톱",["기본","일반셋탑"],false],["인터넷전화","LG","표준형","CPG 4020",["표준","모뎀"],true],["TV","LG","실속형","UHD4셋톱",["기본","일반셋탑"],false],["TV","LG","기본형","UHD4셋톱",["기본","일반셋탑"],false],["TV","LG","고급형","UHD4셋톱",["프리미엄","일반셋탑"],false],["인터넷전화","LG","표준형+","CPG 4020",["표준","모뎀"],false],["TV","LG","프리미엄","UHD4셋톱",["프리미엄","일반셋탑"],false],["인터넷전화","LG","이동할인형","CPG 4020",["표준","모뎀"],false],["TV","LG","프리미엄VOD","UHD4셋톱",["프리미엄","일반셋탑"],false],["인터넷전화","LG","이동할인형+","CPG 4020",["표준","모뎀"],false],["인터넷전화","LG","망내무한 9000","CPG 4020",["정액","모뎀"],true],["인터넷전화","LG","망내무한 9000+(일반형)","CPG 4020",["정액","모뎀"],false],["인터넷전화","LG","망내무한 9000+(정액형)","CPG 4020",["정액","모뎀"],false],["인터넷전화","LG","유무선무한 9000","CPG 4020",["표준","모뎀"],false],["인터넷전화","LG","일반형/팩스","CPG 4020",["표준","모뎀"],false],["인터넷전화","LG","고급형(센트릭스)","IP450S",["표준","전화기"],true],["인터넷전화","LG","자유통화3","IP450S",["표준","전화기"],false],["인터넷전화","LG","자유통화4","IP450S",["표준","전화기"],false],["인터넷전화","LG","자유통화6","IP450S",["표준","전화기"],false],["인터넷전화","LG","자유통화8","IP450S",["표준","전화기"],false],["인터넷전화","LG","자유통화10","IP450S",["표준","전화기"],false],["인터넷전화","LG","자유통화15","IP450S",["표준","전화기"],false],["인터넷전화","LG","자유통화20","IP450S",["표준","전화기"],false],["인터넷전화","LG","자유통화30","IP450S",["표준","전화기"],false],["인터넷전화","LG","자유통화50","IP450S",["표준","전화기"],false],["인터넷전화","LG","콜+6","CPG 4020",["정액","모뎀"],false],["인터넷전화","LG","콜+10","CPG 4020",["정액","모뎀"],false],["인터넷전화","LG","TV 플러스","G패드3 8.0",["표준","태블릿"],true],["인터넷전화","LG","뮤직 플러스","G패드3 8.0",["표준","태블릿"],false],["인터넷전화","LG","TV&뮤직 플러스","G패드3 8.0",["표준","태블릿"],false],["인터넷전화","LG","키즈 플러스","G패드3 8.0",["표준","태블릿"],false],["인터넷전화","LG","TV&콜 플러스","G패드3 8.0",["표준","태블릿"],false],["인터넷전화","LG","EBS 플러스","G패드3 8.0",["표준","태블릿"],false],["TV","LG","프리미엄 넷플릭스HD","UHD4셋톱",["프리미엄","일반셋탑"],true],["인터넷전화","LG","누리 홈스쿨","G패드3 8.0",["표준","태블릿"],false],["TV","LG","프리미엄 넷플릭스UHD","UHD4셋톱",["프리미엄","일반셋탑"],false],["TV","LG","프리미엄 티빙","UHD4셋톱",["프리미엄","일반셋탑"],false],["TV","LG","프리미엄 티빙 플러스","UHD4셋톱",["프리미엄","일반셋탑"],false],["TV","LG","(구)프리미엄 디즈니+","UHD4셋톱",["프리미엄","일반셋탑"],false],["TV","LG","프리미엄 디즈니+스탠다드","UHD4셋톱",["프리미엄","일반셋탑"],false],["TV","LG","프리미엄 디즈니+","UHD4셋톱",["프리미엄","일반셋탑"],false],["TV","LG","프리미엄 유플레이","UHD4셋톱",["프리미엄","일반셋탑"],false],["TV","LG","기본형방송패스","UHD4셋톱",["기본","일반셋탑"],true],["TV","LG","프리미엄방송패스","UHD4셋톱",["프리미엄","일반셋탑"],true],["인터넷전화","LG","AI전화","IP520S",["표준","전화기"],true],["TV","SKB","Btv cable20","UHD",["기본","일반셋탑"],true],["TV","SKB","Btv cable30","UHD",["기본","일반셋탑"],false],["TV","SKB","Btv cable60","UHD",["기본","일반셋탑"],false],["TV","SKB","Btv cable90","UHD",["기본","일반셋탑"],false],["TV","SKB","Btv cable100","UHD",["기본","일반셋탑"],false],["TV","SKB","Btv cable190","UHD",["기본","일반셋탑"],false],["TV","SKB","Btv cable200","UHD",["기본","일반셋탑"],false],["TV","SKB","Btv cable200 플러스 캐시","UHD",["기본","일반셋탑"],false],["TV","SKB","Btv pop100","AI스피커형",["기본","스마트셋탑"],true],["TV","SKB","Btv pop180","스마트3",["기본","일반셋탑"],false],["TV","SKB","Btv pop180+","스마트3",["기본","일반셋탑"],false],["TV","SKB","Btv pop230","스마트3",["기본","일반셋탑"],false],["TV","SKB","Btv pop230+","스마트3",["기본","일반셋탑"],false],["TV","SKB","Btv 미니","스마트3",["기본","일반셋탑"],false],["TV","SKB","Btv 이코노미","스마트3",["기본","일반셋탑"],false],["인터넷전화","SKB","인터넷전화","MWP-2500H",["표준","전화기"],true],["일반전화","SKB","일반전화","",["표준","없음"],true],["TV","SKB","Btv 스탠다드","스마트3",["프리미엄","일반셋탑"],true],["인터넷전화","SKB","인터넷전화(모)","MWP-2500H",["표준","전화기"],false],["TV","SKB","Btv 스탠다드 넷플릭스","스마트3",["프리미엄","일반셋탑"],true],["TV","SKB","Btv 올 넷플릭스","스마트3",["프리미엄","일반셋탑"],false],["TV","SKB","Btv 스탠다드 플러스","스마트3",["프리미엄","일반셋탑"],false],["TV","SKB","Btv 올","스마트3",["프리미엄","일반셋탑"],false],["TV","SKB","Btv 스탠다드 넷플릭스 프리미엄","스마트3",["프리미엄","일반셋탑"],false],["TV","SKB","Btv 올 넷플릭스 프리미엄","스마트3",["프리미엄","일반셋탑"],false],["TV","SKB","Btv 올 플러스","스마트3",["프리미엄","일반셋탑"],false],["TV","SKB","Btv 올+캐치온","스마트3",["프리미엄","일반셋탑"],true],["TV","SKB","Btv+MAX","스마트3",["프리미엄","일반셋탑"],false],["TV","SKB","Btv 올+지상파","스마트3",["프리미엄","일반셋탑"],false],["TV","SKB","Btv 올+캐치온+지상파","스마트3",["프리미엄","일반셋탑"],false],["인터넷전화","SKB","집전화프리5000","MWP-2500H",["정액","전화기"],true],["일반전화","SKB","집전화프리5000","",["정액","없음"],true],["인터넷전화","SKB","케이블인터넷전화","MWP-2500H",["표준","전화기"],false],["인터넷전화","SKB","무료100","MWP-2500H",["정액","전화기"],false],["일반전화","SKB","무료100","",["정액","없음"],false],["인터넷전화","SKB","무료200","MWP-2500H",["정액","전화기"],false],["일반전화","SKB","무료200","",["정액","없음"],false],["인터넷전화","SKB","무료250","MWP-2500H",["정액","전화기"],false],["일반전화","SKB","무료250","",["정액","없음"],false],["인터넷전화","SKB","무료300","MWP-2500H",["정액","전화기"],false],["일반전화","SKB","무료300","",["정액","없음"],false],["인터넷전화","SKB","무료700","MWP-2500H",["정액","전화기"],false],["일반전화","SKB","무료700","",["정액","없음"],false],["인터넷전화","SKB","무료2500","MWP-2500H",["정액","전화기"],false],["일반전화","SKB","무료2500","",["정액","없음"],false],["TV","SKT","Btv 미니","스마트3",["기본","일반셋탑"],true],["TV","SKT","Btv 이코노미","스마트3",["기본","일반셋탑"],false],["인터넷전화","SKT","인터넷전화","MWP-2500H",["표준","전화기"],true],["일반전화","SKT","일반전화","",["표준","없음"],true],["TV","SKT","Btv 스탠다드","스마트3",["프리미엄","일반셋탑"],true],["인터넷전화","SKT","인터넷전화(모)","MWP-2500H",["표준","전화기"],false],["TV","SKT","Btv 스탠다드 넷플릭스","스마트3",["프리미엄","일반셋탑"],true],["TV","SKT","Btv 올 넷플릭스","스마트3",["프리미엄","일반셋탑"],false],["TV","SKT","Btv 스탠다드 플러스","스마트3",["프리미엄","일반셋탑"],false],["TV","SKT","Btv 올","스마트3",["프리미엄","일반셋탑"],false],["TV","SKT","Btv 스탠다드 넷플릭스 프리미엄","스마트3",["프리미엄","일반셋탑"],false],["TV","SKT","Btv 올 넷플릭스 프리미엄","스마트3",["프리미엄","일반셋탑"],false],["TV","SKT","Btv 올 플러스","스마트3",["프리미엄","일반셋탑"],false],["TV","SKT","Btv 올+캐치온","스마트3",["프리미엄","일반셋탑"],true],["TV","SKT","Btv+MAX","스마트3",["프리미엄","일반셋탑"],false],["TV","SKT","Btv 올+지상파","스마트3",["프리미엄","일반셋탑"],false],["TV","SKT","Btv 올+캐치온+지상파","스마트3",["프리미엄","일반셋탑"],false],["인터넷전화","SKT","집전화프리5000","MWP-2500H",["정액","전화기"],true],["일반전화","SKT","집전화프리5000","",["정액","없음"],true],["인터넷전화","SKT","케이블인터넷전화","MWP-2500H",["표준","전화기"],false],["인터넷전화","SKT","무료100","MWP-2500H",["정액","전화기"],false],["일반전화","SKT","무료100","",["정액","없음"],false],["인터넷전화","SKT","무료200","MWP-2500H",["정액","전화기"],false],["일반전화","SKT","무료200","",["정액","없음"],false],["인터넷전화","SKT","무료250","MWP-2500H",["정액","전화기"],false],["일반전화","SKT","무료250","",["정액","없음"],false],["인터넷전화","SKT","무료300","MWP-2500H",["정액","전화기"],false],["일반전화","SKT","무료300","",["정액","없음"],false],["인터넷전화","SKT","무료700","MWP-2500H",["정액","전화기"],false],["일반전화","SKT","무료700","",["정액","없음"],false],["인터넷전화","SKT","무료2500","MWP-2500H",["정액","전화기"],false],["일반전화","SKT","무료2500","",["정액","없음"],false],["TV","SkyLife","베이직","안드로이드UHD",["기본","일반셋탑"],true],["TV","SkyLife","ipit TV Basic","기가지니A",["기본","일반셋탑"],false],["TV","SkyLife","올","안드로이드UHD",["프리미엄","일반셋탑"],true],["TV","SkyLife","ipit TV Plus","기가지니A",["프리미엄","일반셋탑"],false],["TV","SkyLife","포인트","안드로이드UHD",["프리미엄","일반셋탑"],false],["TV","SkyLife","스포츠 프리미어","안드로이드UHD",["프리미엄","일반셋탑"],false],["TV","SkyLife","초이스","안드로이드UHD",["프리미엄","일반셋탑"],false],["TV","SkyLife","디즈니플러스","안드로이드UHD",["프리미엄","일반셋탑"],true],["TV","SkyLife","유튜브 프리미엄","",["프리미엄","없음"],true],["TV","SkyLife","올&OTT","안드로이드UHD",["프리미엄","일반셋탑"],false]];
-const CONN=(function(){var m={};CN.forEach(function(c){c[4].forEach(function(av,i){var k=[c[0],c[1],i+1,av].join("|");(m[k]=m[k]||[]).push([c[2],c[3],c[4]]);});});return m;})();
-const HD='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg>';
-const PEN='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>';
-const GB={'추천':'rec','기본':'base','비인기 상품':'low','비추천':'low','판매금지':'ban'};
-const $=id=>document.getElementById(id);
-let SV='인터넷', VD='KT', Q='';
-const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-const isNet=()=>SV==='인터넷';
-/* 고객 노출 — 인터넷은 태그명 전체, 그 외는 표기명(없으면 속성) */
-const expo=r=>isNet()?r[3]:(r[2]||r[1]);
-const isGuard=(svc,div)=>GUARD.some(g=>g[0]===svc&&g[1]===div);
+    <div class="body">
+      <div class="bc">상품 관리</div>
+      <div class="h1">태그 관리 <span class="star">☆</span></div>
+      <div class="pdesc">업체별 상품 태그를 등록·관리합니다.</div>
 
-function renderTabs(){
-  $('tabs').innerHTML=(VENS[SV]||[]).map(v=>'<div class="tab-item'+(v===VD?' active':'')+'" data-v="'+esc(v)+'">'+esc(v)+'</div>').join('');
-  $('tabs').querySelectorAll('[data-v]').forEach(el=>el.onclick=()=>{VD=el.dataset.v;render();});
-}
-function render(){
-  const vs=VENS[SV]||[]; if(vs.indexOf(VD)<0) VD=vs[0];
-  $('ntStd').hidden=!!Q; $('ntSrch').hidden=!Q;
-  $('ntStdTx').innerHTML = isNet()
-    ? '<b>인터넷 태그명은</b> 속성(표기명)으로 자동 조립되며, 그대로 고객에게 노출됩니다 — 100Mbps(슬림). 표시 순서는 같은 속성 안에서만 바꿀 수 있고, 놓는 즉시 저장됩니다.'
-    : '<b>인터넷 외 태그명은</b> 업체별로 직접 입력하며, 고객에게는 상품명과 조합되어 노출됩니다 — 우리끼리3000(인터넷전화(정액)) · 기가지니3A(스마트셋탑). 표시 순서는 같은 속성 안에서만 바꿀 수 있고, 놓는 즉시 저장됩니다.';
-  $('thExp').textContent='태그명';
-  $('q').placeholder = isNet() ? '속성 · 표기명 검색' : '속성 · 태그명 검색';
-  renderTabs();
-  const all=(TAGS[SV]||{})[VD]||[];
-  const q=Q.trim().toLowerCase();
-  const rows=all.filter(r=>!q||r[1].toLowerCase().includes(q)||(r[2]||'').toLowerCase().includes(q));
-  const cntByAttr={}; all.forEach(r=>{const k=r[0]+'|'+r[1]; cntByAttr[k]=(cntByAttr[k]||0)+1;});
-  let html='', last=null;
-  rows.forEach(r=>{
-    const sn=(SLOTN[SV]||{})[String(r[0])]||('자리'+r[0]);
-    if(sn!==last){
-      html+='<tr class="grp"><td colspan="9">'+esc(sn)+'</td></tr>'; last=sn;
-    }
-    const movable = !q && cntByAttr[r[0]+'|'+r[1]]>1 && r[1]!=='없음';
-    const g=r[5]||'기본';
-    html+='<tr>'
-      +'<td class="c"><div class="hdw'+(movable?'':' off')+'"><i>'+HD+'</i></div></td>'
-      +'<td title="'+esc(r[1])+'">'+esc(r[1])+'</td>'
-      +'<td class="tagname'+(isNet()?'':' hasmore')+'" title="'+(isNet()?'':'고객 노출: 상품명('+esc(r[2]||r[1])+')')+'">'+esc(expo(r))+'</td>'
-      +'<td'+(r[4]?'':' class="mut"')+'>'+(r[4]?esc(r[4]):'–')+'</td>'
-      +'<td><span class="bdg '+(GB[g]||'base')+'">'+esc(g)+'</span></td>'
-      +'<td class="c">'+(r[8]?'<span class="lnk" data-slot="'+r[0]+'" data-tag="'+esc(r[3])+'" data-attr="'+esc(r[1])+'" data-g="'+esc(g)+'">'+r[8]+'</span>':'<span class="lnk zero">0</span>')+'</td>'
-      +'<td class="r">'+(r[6]||'<span class="mut">–</span>')+'</td>'
-      +'<td class="r">'+(r[7]||'<span class="mut">–</span>')+'</td>'
-      +'<td class="c"><button class="ibtn" title="수정">'+PEN+'</button></td></tr>';
-  });
-  $('tbd').innerHTML=html;
-  $('empty').hidden=rows.length>0;
-  $('cnt').innerHTML='총 <b>'+rows.length+'</b>건';
-  bindRows();
-}
-function bindRows(){
-  $('tbd').querySelectorAll('.lnk[data-tag]').forEach(el=>{
-    const tr=el.closest('tr'); tr.style.cursor='pointer';
-    tr.onclick=e=>{ if(e.target.closest('.ibtn')||e.target.closest('.hdw'))return; openDw(el); };
-  });
-  $('tbd').querySelectorAll('.hdw.off').forEach(el=>el.onclick=()=>toast(
-    Q?'검색 중에는 순서를 바꿀 수 없습니다.':'이 속성에는 태그가 1건뿐이라 순서를 바꿀 수 없습니다.','#D75011'));
-}
-function toast(m,c){
-  const n=document.createElement('div'); n.textContent=m;
-  n.style.cssText='position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:'+(c||'#10A10E')+';color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;z-index:999;box-shadow:0 6px 20px rgba(0,0,0,.18)';
-  document.body.appendChild(n); setTimeout(()=>n.remove(),2600);
-}
-function openDw(el){
-  const tag=el.dataset.tag, slot=el.dataset.slot;
-  const items=CONN[[SV,VD,slot,el.dataset.attr].join('|')]||[];
-  $('dwName').textContent=tag;
-  const g=el.dataset.g||'기본';
-  $('dwGrade').textContent=g; $('dwGrade').className='bdg '+(GB[g]||'base');
-  $('dwSvc').textContent=SV; $('dwVen').textContent=VD;
-  $('dwDiv').textContent=(SLOTN[SV]||{})[slot]||''; $('dwAttr').textContent=el.dataset.attr;
-  $('dwCnt').textContent=items.length+'건';
-  $('dwList').innerHTML = items.length ? items.map(x=>{
-    /* 자리2는 세트상품(열), 자리1·3은 상품(행)에서 온다 — 온 쪽만 강조 */
-    /* 자리2는 세트상품(열)에서 온다 — 세트상품이 있을 때만 그쪽을 강조 */
-    const fromSet = slot==='2' && !!x[1];
-    const head='<div class="p"><span class="'+(fromSet?'':'cur')+'">'+esc(x[0])+'</span>'
-      +(x[1]?'<span class="xs">×</span><span class="st'+(fromSet?' cur':'')+'">'+esc(x[1])+'</span>':'')+'</div>';
-    const trio=x[2].map((v,i)=>{
-      const c=(String(i+1)===slot)?'cur':(v==='없음'?'non':'');
-      return '<span'+(c?' class="'+c+'"':'')+'>'+esc(v)+'</span>';
-    }).join(' · ');
-    return '<div class="dl">'+head+'<div class="m">'+trio+'</div></div>';
-  }).join('') : '<div class="dl" style="color:var(--g300)">연결된 상품이 없습니다</div>';
-  document.querySelectorAll('#tbd tr.rowsel').forEach(r=>r.classList.remove('rowsel'));
-  el.closest('tr').classList.add('rowsel');
-  $('dw').hidden=false;
-}
-function closeDw(){ $('dw').hidden=true; document.querySelectorAll('#tbd tr.rowsel').forEach(r=>r.classList.remove('rowsel')); }
-$('dwx').onclick=closeDw;
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!$('dw').hidden)closeDw(); });
-$('svcSel').onchange=()=>{ SV=$('svcSel').value; VD=(VENS[SV]||[])[0]; closeDw(); render(); };
-$('q').oninput=()=>{ Q=$('q').value; render(); };
-render();
-</script>
+      <div class="guide" style="position:relative">
+        <span class="co" style="left:-10px;top:-10px">4</span>
+        <span class="lb">안내</span>전 구분 공통 안내 문구 영역 — <b>문구 미정</b>. 1~2줄 기준으로 자리를 잡아 두었습니다.
+      </div>
 
-<div class="doc-band"><div class="sheet">
-  <div class="doc-eyebrow">참고 시안</div>
-  <div class="doc-h">변형 상태 6종 + 모달 5종</div>
-  <div class="doc-sub">PM·개발자 검토용 시안. <b>맨 위 화면은 실제로 동작합니다</b> — 구분 드롭다운 4종 · 업체 탭 · 검색 · 행 클릭 시 사이드패널(ESC로 닫힘). 모달 ①도 직접 입력해볼 수 있습니다. 정본은 [CRM Admin] 태그 관리 - 기능 정의서.</div>
-  <div class="doc-sub" style="margin-top:-20px;color:var(--warning)"><b>데이터 범위</b> — 속성 · 태그명 · 연결 상품 건수는 <b>실데이터 230건 전부</b>입니다. <b>설명 · 노출 등급 · 월요금 · 결합요금은 KT 인터넷 14건만 실값</b>이고 나머지는 기본값(기본 · –)으로 채웠습니다. 기준은 개발 목업 <code>w_15.html</code>(2026-09-09)이고 <b>자리3 폐지</b>가 반영돼 TV · 전화는 속성 타입이 2칸입니다. <b>결합할인은 Phase 2(⑥)로 이동해 이 화면에서 빠졌습니다.</b></div>
-</div></div>
+      <div class="bar">
+        <span style="position:relative"><span class="co" style="left:-10px;top:-10px">1</span>
+          <span class="ctrl"><span class="cv">인터넷</span><span class="ar">▾</span></span></span>
+        <span style="position:relative"><span class="co" style="left:-10px;top:-10px">2</span>
+          <span class="ctrl new"><span class="cv">속성 타입 : 전체</span><span class="ar">▾</span></span></span>
+        <span class="sp"></span>
+        <span style="position:relative"><span class="co" style="left:-10px;top:-10px">3</span>
+          <span class="btn pri">+ 태그 등록</span></span>
+      </div>
 
-<div class="sheet" style="padding-top:32px">
+      <div class="vtabs" style="position:relative">
+        <span class="co" style="left:-12px;top:-12px">5</span>
+        <span class="on">KT</span><span>LG</span><span>SKT</span><span>SKB</span>
+        <span>SkyLife</span><span>LG HelloVision</span><span>딜라이브</span><span>HCN</span>
+      </div>
 
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">변형 A</span><span class="spec-t">드래그 핸들 — 활성 / 비활성</span><span class="spec-s">구분 = TV</span></div>
-  <div class="frame">
-    <div class="bar"><div class="sel">TV</div><div class="srch">속성 · 표기명 검색</div><div class="sp"></div>
-      <button class="btn-out">상품속성 관리</button><button class="btn-solid">+ 태그 등록</button></div>
-    <table class="lt">
-      <colgroup><col style="width:56px"><col style="width:180px"><col style="width:280px"><col><col style="width:112px"><col style="width:76px"><col style="width:88px"><col style="width:88px"><col style="width:56px"></colgroup>
-      <thead><tr><th></th><th>속성</th><th>태그명</th><th>설명</th><th>노출 등급</th><th class="c">연결 상품</th><th class="r">월요금</th><th class="r">결합요금</th><th class="c">수정</th></tr></thead>
-      <tbody>
-        <tr class="grp"><td colspan="9">라인</td></tr>
-        <tr><td class="c"><div class="hdw"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>기본</td><td class="tagname hasmore" title="고객 노출: 상품명(218채널)">218채널</td><td class="mut">–</td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">1</span></td><td class="r">13,200</td><td class="r">11,000</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr>
-        <tr><td class="c"><div class="hdw"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>기본</td><td class="tagname hasmore" title="고객 노출: 상품명(220채널)">220채널</td><td class="mut">–</td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">1</span></td><td class="r">14,300</td><td class="r">12,100</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr>
-        <tr><td class="c"><div class="hdw"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>기본</td><td class="tagname hasmore" title="고객 노출: 상품명(221채널)">221채널</td><td class="mut">–</td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">1</span></td><td class="r">14,300</td><td class="r">12,100</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr>
-        <tr><td class="c"><div class="hdw"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>기본</td><td class="tagname hasmore" title="고객 노출: 상품명(240채널)">240채널</td><td class="mut">–</td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">1</span></td><td class="r">16,500</td><td class="r">14,300</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr>
-        <tr class="grp"><td colspan="9">셋탑</td></tr>
-        <tr><td class="c"><div class="hdw off"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>일반셋탑</td><td class="tagname" title="고객 노출: 상품명(일반셋탑)">일반셋탑</td><td class="mut">–</td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">6</span></td><td class="r">2,200</td><td class="r">2,200</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr>
-        <tr><td class="c"><div class="hdw off"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>스마트셋탑</td><td class="tagname" title="고객 노출: 상품명(스마트셋탑)">스마트셋탑</td><td class="mut">–</td><td><span class="bdg rec">추천</span></td><td class="c"><span class="lnk">25</span></td><td class="r">5,500</td><td class="r">4,400</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>핸들은 모든 행에 표시하고, 움직일 수 없는 행만 비활성 처리합니다.</b> 같은 속성에 태그가 1건뿐이면(일반셋탑 · 스마트셋탑) 옮길 자리가 없으므로 비활성입니다. 「기본」은 4건이라 활성입니다.</p>
-    <p><b>핸들 스펙은 어드민 메뉴 관리(beta)의 구현을 그대로 따릅니다.</b> 아이콘 <code>drag_indicator</code> 20px · gray-400 · padding 4 · radius 2, 래퍼 높이 28px. <span class="q">시안에서는 인라인 SVG로 그렸고 실제 구현은 Material Symbols Rounded를 씁니다.</span><br>    활성 = <code>cursor:pointer</code> + 아이콘 hover 시 배경 gray-100 · 비활성 = <code>cursor:not-allowed</code> + <b>opacity 0.3</b>. 아이콘 자체를 바꾸지 않고 투명도로만 구분합니다.</p>
-    <p>비활성 핸들 클릭 시 토스트 — <b>"이 속성에는 태그가 1건뿐이라 순서를 바꿀 수 없습니다."</b></p>
-    <p>드래그는 <b>같은 속성 안에서만</b> 가능합니다. 다른 속성 위에 놓으면 차단하고 사유를 토스트로 알립니다. 놓는 즉시 저장하고 그 속성의 순번을 <b>1..n으로 재채번</b>합니다.</p>
-    <p class="q">노출 등급의 <b>「판매금지」는 폐지 협의 중</b>입니다. 확정되면 추천 · 기본 · 비인기 상품 · 비추천 4종이 됩니다.</p>
-</div>
-</div>
+      <div class="cnt">총 <b>14</b>건</div>
 
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">변형 B</span><span class="spec-t">검색 중 — 순서 변경 잠금</span></div>
-  <div class="frame">
-    <div class="bar"><div class="sel">TV</div><div class="srch filled">채널</div><div class="sp"></div>
-      <button class="btn-out">상품속성 관리</button><button class="btn-solid">+ 태그 등록</button></div>
-    <div class="notice warn"><span class="i">!</span><span><b>검색 중에는 순서를 바꿀 수 없습니다.</b> 일부 태그만 보이는 상태에서 끌어 놓으면 화면에 없는 태그의 순번이 함께 밀립니다. 검색어를 지우면 핸들이 다시 열립니다.</span></div>
-    <table class="lt">
-      <colgroup><col style="width:56px"><col style="width:180px"><col style="width:280px"><col><col style="width:112px"><col style="width:76px"><col style="width:88px"><col style="width:88px"><col style="width:56px"></colgroup>
-      <thead><tr><th></th><th>속성</th><th>태그명</th><th>설명</th><th>노출 등급</th><th class="c">연결 상품</th><th class="r">월요금</th><th class="r">결합요금</th><th class="c">수정</th></tr></thead>
-      <tbody>
-        <tr class="grp"><td colspan="9">라인</td></tr>
-        <tr><td class="c"><div class="hdw off"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>기본</td><td class="tagname hasmore" title="고객 노출: 상품명(218채널)">218채널</td><td class="mut">–</td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">1</span></td><td class="r">13,200</td><td class="r">11,000</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr>
-        <tr><td class="c"><div class="hdw off"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>기본</td><td class="tagname hasmore" title="고객 노출: 상품명(240채널)">240채널</td><td class="mut">–</td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">1</span></td><td class="r">16,500</td><td class="r">14,300</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr>
-        <tr><td class="c"><div class="hdw off"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>프리미엄</td><td class="tagname hasmore" title="고객 노출: 상품명(250채널)">250채널</td><td class="mut">–</td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">3</span></td><td class="r">19,800</td><td class="r">17,600</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p>검색 중에는 <b>모든 핸들이 비활성</b>입니다. 구분 · 업체 필터는 속성 그룹을 쪼개지 않으므로 잠그지 않습니다.</p>
-  </div>
-</div>
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">변형 C</span><span class="spec-t">검색 결과 없음</span></div>
-  <div class="frame">
-    <div class="bar"><div class="sel">인터넷</div><div class="srch filled">기가와이파이</div><div class="sp"></div>
-      <button class="btn-out">상품속성 관리</button><button class="btn-solid">+ 태그 등록</button></div>
-    <table class="lt">
-      <colgroup><col style="width:56px"><col style="width:180px"><col style="width:280px"><col><col style="width:112px"><col style="width:76px"><col style="width:88px"><col style="width:88px"><col style="width:56px"></colgroup>
-      <thead><tr><th></th><th>속성</th><th>태그명</th><th>설명</th><th>노출 등급</th><th class="c">연결 상품</th><th class="r">월요금</th><th class="r">결합요금</th><th class="c">수정</th></tr></thead>
-    </table>
-    <div class="empty"><div class="t">검색 결과가 없습니다.</div><div class="s">검색어 또는 구분·업체 조건을 다시 확인해주세요.</div></div>
-  </div>
-</div>
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">변형 D</span><span class="spec-t">로딩</span></div>
-  <div class="frame">
-    <div class="bar"><div class="sel">인터넷</div><div class="srch">속성 · 표기명 검색</div><div class="sp"></div>
-      <button class="btn-out">상품속성 관리</button><button class="btn-solid">+ 태그 등록</button></div>
-    <table class="lt">
-      <colgroup><col style="width:56px"><col style="width:180px"><col style="width:280px"><col><col style="width:112px"><col style="width:76px"><col style="width:88px"><col style="width:88px"><col style="width:56px"></colgroup>
-      <thead><tr><th></th><th>속성</th><th>태그명</th><th>설명</th><th>노출 등급</th><th class="c">연결 상품</th><th class="r">월요금</th><th class="r">결합요금</th><th class="c">수정</th></tr></thead>
-      <tbody>
-        <tr><td></td><td><div class="skel" style="width:70%"></div></td><td><div class="skel" style="width:80%"></div></td><td><div class="skel" style="width:50%"></div></td><td><div class="skel" style="width:55%"></div></td><td><div class="skel" style="width:40%;margin:0 auto"></div></td><td><div class="skel"></div></td><td><div class="skel"></div></td><td></td></tr>
-        <tr><td></td><td><div class="skel" style="width:55%"></div></td><td><div class="skel" style="width:70%"></div></td><td><div class="skel" style="width:65%"></div></td><td><div class="skel" style="width:45%"></div></td><td><div class="skel" style="width:40%;margin:0 auto"></div></td><td><div class="skel"></div></td><td><div class="skel"></div></td><td></td></tr>
-        <tr><td></td><td><div class="skel" style="width:65%"></div></td><td><div class="skel" style="width:75%"></div></td><td><div class="skel" style="width:40%"></div></td><td><div class="skel" style="width:55%"></div></td><td><div class="skel" style="width:40%;margin:0 auto"></div></td><td><div class="skel"></div></td><td><div class="skel"></div></td><td></td></tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p>스켈레톤 3행 고정. 필터·버튼은 그대로 두되 비활성 처리합니다.</p>
-  </div>
-</div>
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">변형 E</span><span class="spec-t">조회 실패</span></div>
-  <div class="frame">
-    <div class="bar"><div class="sel">인터넷</div><div class="srch">속성 · 표기명 검색</div><div class="sp"></div>
-      <button class="btn-out">상품속성 관리</button><button class="btn-solid">+ 태그 등록</button></div>
-    <div class="notice err"><span class="i">!</span><span>목록을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.</span></div>
-    <div class="empty"><div class="t">데이터를 불러올 수 없습니다.</div><div class="s"><button class="btn-out sm" style="margin-top:8px">다시 시도</button></div></div>
-  </div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>[다시 시도] 동작</b> — 지금 화면에 걸려 있는 조건(구분 · 업체 · 검색어)을 그대로 유지한 채 목록 조회 API를 <b>재호출</b>합니다. 필터를 초기화하지 않습니다. 재호출 동안은 변형 D(로딩)로 바뀌고, 성공하면 목록이, 다시 실패하면 같은 화면이 유지됩니다.</p>
-    <p>조회 실패는 <b>토스트가 아니라 화면 내 안내</b>로 처리합니다. 토스트는 사라지면 재시도 경로가 없어집니다.</p>
-  </div>
-</div>
-
-
-<div class="spec">
-  <div class="spec-head"><span class="chip-v">변형 F</span><span class="spec-t">연결 상품 사이드패널</span><span class="spec-s">화면 전체 높이 · 맨 위 화면에서 실제로 열어볼 수 있습니다</span></div>
-  <div class="stage" style="height:470px">
-    <div class="mini">
-      <div class="mgnb"><span class="lg">CRM Admin</span><span>업체 관리</span><span style="color:var(--primary)">상품 관리</span><span>운영 관리</span><span>개발 설정</span></div>
-      <div class="bar"><div class="sel">인터넷</div><div class="srch">속성 · 표기명 검색</div><div class="sp"></div>
-        <button class="btn-out">상품속성 관리</button><button class="btn-solid">+ 태그 등록</button></div>
-      <table class="lt">
-        <colgroup><col style="width:56px"><col style="width:150px"><col style="width:230px"><col><col style="width:112px"><col style="width:76px"><col style="width:88px"><col style="width:88px"><col style="width:56px"></colgroup>
-        <thead><tr><th></th><th>속성</th><th>태그명</th><th>설명</th><th>노출 등급</th><th class="c">연결 상품</th><th class="r">월요금</th><th class="r">결합요금</th><th class="c">수정</th></tr></thead>
-        <tbody><tr class="grp"><td colspan="9">속도</td></tr><tr class="rowsel"><td class="c"><div class="hdw off"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>100Mbps</td><td class="tagname">100Mbps(슬림)</td><td>1-2인 가구</td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">9</span></td><td class="r">22,000</td><td class="r">22,000</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr><tr><td class="c"><div class="hdw off"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>1Gbps</td><td class="tagname">1Gbps(에센스)</td><td>게임·고화질 스트리밍</td><td><span class="bdg rec">추천</span></td><td class="c"><span class="lnk">10</span></td><td class="r">38,500</td><td class="r">33,000</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr><tr><td class="c"><div class="hdw off"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>2.5Gbps</td><td class="tagname">2.5Gbps(프리미엄)</td><td><span class="mut">–</span></td><td><span class="bdg base">기본</span></td><td class="c"><span class="lnk">6</span></td><td class="r">44,000</td><td class="r">38,500</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr><tr><td class="c"><div class="hdw off"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div></td><td>5Gbps</td><td class="tagname">5Gbps(프리미엄플러스)</td><td><span class="mut">–</span></td><td><span class="bdg low">비인기 상품</span></td><td class="c"><span class="lnk">2</span></td><td class="r">60,500</td><td class="r">55,000</td><td class="c"><button class="ibtn" title="수정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg></button></td></tr></tbody>
+      <table class="t">
+        <colgroup><col style="width:38px"><col style="width:92px"><col style="width:104px"><col style="width:168px">
+          <col><col style="width:74px"><col style="width:66px"><col style="width:72px"><col style="width:74px"><col style="width:46px"></colgroup>
+        <thead><tr>
+          <th></th><th>속성 타입</th><th>속성</th><th>태그명</th><th>설명</th>
+          <th>노출 등급</th><th class="c">연결 상품</th><th class="r">월요금</th><th class="r">결합요금</th><th class="c">수정</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td class="c ov" style="position:relative"><span class="co o" style="left:-10px;top:8px">6</span><span class="hd off"><b></b><b></b><b></b></span></td>
+            <td>속도</td><td>100Mbps</td>
+            <td class="ov" style="position:relative"><span class="co" style="left:-6px;top:-13px">7</span>100Mbps(슬림)</td>
+            <td>1-2인 가구</td>
+            <td><span class="bdg">기본</span></td>
+            <td class="c ov" style="position:relative"><span class="co" style="right:-8px;top:-2px">8</span><span class="lnk">9</span></td>
+            <td class="r">22,000</td><td class="r">22,000</td>
+            <td class="c ov" style="position:relative"><span class="co" style="right:-8px;top:-2px">9</span><span class="ic">✎</span></td>
+          </tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>속도</td><td>200Mbps</td>
+            <td>200Mbps(슬림플러스)</td><td>2-3인 가구</td><td><span class="bdg">기본</span></td>
+            <td class="c"><span class="lnk">1</span></td><td class="r">30,250</td><td class="r">24,200</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>속도</td><td>500Mbps</td>
+            <td>500Mbps(베이직)</td><td>3-4인 가구</td><td><span class="bdg">기본</span></td>
+            <td class="c"><span class="lnk">9</span></td><td class="r">33,000</td><td class="r">27,500</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>속도</td><td>1Gbps</td>
+            <td>1Gbps(에센스)</td><td>게임·고화질 스트리밍</td>
+            <td class="ov" style="position:relative"><span class="co o" style="left:-8px;top:-2px">10</span><span class="bdg">추천</span></td>
+            <td class="c"><span class="lnk">10</span></td><td class="r">38,500</td><td class="r">33,000</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>속도</td><td>2.5Gbps</td>
+            <td>2.5Gbps(프리미엄)</td><td class="mut">–</td><td><span class="bdg">기본</span></td>
+            <td class="c"><span class="lnk">6</span></td><td class="r">44,000</td><td class="r">38,500</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>구성제품</td><td>없음</td>
+            <td>없음</td><td class="mut">–</td><td><span class="bdg">기본</span></td>
+            <td class="c"><span class="lnk">3</span></td><td class="r">0</td><td class="r">0</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>구성제품</td><td>WiFi포함</td>
+            <td>WiFi포함</td><td class="mut">–</td><td><span class="bdg">기본</span></td>
+            <td class="c"><span class="lnk">11</span></td><td class="r">1,100</td><td class="r">1,100</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>구성제품</td><td>프리미엄WiFi</td>
+            <td>프리미엄WiFi(WiFi 7D)</td><td class="mut">–</td><td><span class="bdg">추천</span></td>
+            <td class="c"><span class="lnk">11</span></td><td class="r">3,300</td><td class="r">3,300</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>추가구성옵션</td><td>없음</td>
+            <td>없음</td><td class="mut">–</td><td><span class="bdg">기본</span></td>
+            <td class="c"><span class="lnk">27</span></td><td class="r">0</td><td class="r">0</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>추가구성옵션</td><td>안심</td>
+            <td>안심(유해사이트 방패)</td><td>유해사이트 차단·자녀 보호</td><td><span class="bdg">기본</span></td>
+            <td class="c"><span class="lnk">12</span></td><td class="r">2,200</td><td class="r">2,200</td><td class="c"><span class="ic">✎</span></td></tr>
+        </tbody>
       </table>
     </div>
-    <aside class="drawer">
-      <div class="dh"><div class="lft"><h4>연결 상품</h4></div><span class="x">✕</span></div>
-      <div class="db">
-        <div class="dsec">
-          <div class="tagcard">
-            <div class="tc-name"><span>100Mbps(슬림)</span><span class="bdg base">기본</span></div>
-            <div class="tc-grid">
-              <div><span class="k">구분</span><span class="v">인터넷</span></div>
-              <div><span class="k">업체</span><span class="v">KT</span></div>
-              <div><span class="k">속성 타입</span><span class="v">속도</span></div>
-              <div><span class="k">속성</span><span class="v">100Mbps</span></div>
+  </div>
+
+  <table class="act">
+    <thead><tr><th class="n">№</th><th>위치</th><th>동작 · 결과</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td>구분 드롭다운</td><td><div class="aA"><span class="ak">동작</span><span class="av">선택 (인터넷 / TV / 인터넷전화 / 일반전화)</span></div><div class="aR"><span class="ak">결과</span><span class="av">업체 탭·속성 타입 선택지·테이블 컬럼 구성이 모두 바뀝니다. 속성 타입 필터는 「전체」로 초기화, 업체 탭은 첫 번째로 초기화.</span></div></td></tr>
+      <tr><td class="n">2</td><td>속성 타입 드롭다운 <b>(신규)</b></td><td><div class="aA"><span class="ak">동작</span><span class="av">선택 (전체 / 속도 / 구성제품 / 추가구성옵션)</span></div><div class="aR"><span class="ak">결과</span><span class="av">목록을 해당 속성 타입으로 필터링. 건수 표시 갱신. <b>순서 변경 핸들 활성 기준은 필터와 무관</b>하게 같은 속성 2건 이상 규칙을 그대로 따릅니다.</span></div></td></tr>
+      <tr><td class="n">3</td><td>[+ 태그 등록]</td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭</span></div><div class="aR"><span class="ak">결과</span><span class="av">구분이 인터넷이면 <b>모달 ①</b>, 인터넷 외면 <b>모달 ⑤</b>가 열립니다.</span></div></td></tr>
+      <tr><td class="n">4</td><td>안내 문구 영역</td><td><div class="aA"><span class="ak">동작</span><span class="av">—</span></div><div class="aR"><span class="ak">결과</span><span class="av">동작 없음. 전 구분 공통 고정 문구. <span class="q">문구 미정</span>.</span></div></td></tr>
+      <tr><td class="n">5</td><td>업체 탭</td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭</span></div><div class="aR"><span class="ak">결과</span><span class="av">해당 업체 태그로 목록 교체. 사이드패널이 열려 있으면 닫힙니다.</span></div></td></tr>
+      <tr><td class="n">6</td><td>순서 변경 핸들</td><td><div class="aA"><span class="ak">동작</span><span class="av">드래그 앤 드롭</span></div><div class="aR"><span class="ak">결과</span><span class="av"><b>활성 조건</b> — 같은 속성에 태그가 2건 이상일 때만. 같은 속성 그룹 안에서만 이동 가능하고, 놓는 즉시 저장됩니다.<br>
+        <b>비활성</b> — 해당 속성에 태그가 1건뿐이거나 속성이 「없음」일 때. 클릭 시 사유 토스트 노출.</span></div></td></tr>
+      <tr><td class="n">7</td><td>행 전체 (핸들·수정 아이콘 제외)</td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭</span></div><div class="aR"><span class="ak">결과</span><span class="av">우측 <b>연결 상품 사이드패널</b>이 열립니다. 선택된 행에 선택 표시.</span></div></td></tr>
+      <tr><td class="n">8</td><td>연결 상품 건수</td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭</span></div><div class="aR"><span class="ak">결과</span><span class="av">7번과 동일하게 사이드패널을 엽니다. 0건이면 링크 비활성(회색, 클릭 불가).<br>
+        <span class="q">④ 상품 연결 관리로 직접 이동시킬지 여부 확인 필요</span>.</span></div></td></tr>
+      <tr><td class="n">9</td><td>수정 아이콘</td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭</span></div><div class="aR"><span class="ak">결과</span><span class="av">속성이 「없음」이면 <b>모달 ③</b>, 그 외 인터넷은 <b>모달 ②</b>, 인터넷 외는 <b>모달 ⑤(수정 모드)</b>.</span></div></td></tr>
+      <tr><td class="n">10</td><td>노출 등급 배지</td><td><div class="aA"><span class="ak">동작</span><span class="av">—</span></div><div class="aR"><span class="ak">결과</span><span class="av">표시 전용. 값은 추천 · 기본 · 비추천 3종. 변경은 수정 모달에서만.</span></div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════ 2. 인터넷 외 목록 ══════════ -->
+<div class="sec">
+  <div class="sec-h"><span class="no">2</span><h2>태그 관리 — 구분: 인터넷 외 (TV)</h2><span class="sub">화면 B · 9열</span></div>
+  <div class="sec-note">화면 A와의 차이 2가지 — <b>결합요금 열 없음</b>, <b>태그명은 직접 입력값</b>(인터넷처럼 속성+표기명으로 조립하지 않음). 예시 데이터 = 딜라이브. 속성 「기본」에 태그가 6건이라 <b>순서 변경 핸들이 활성</b>입니다.</div>
+
+  <div class="wf-cap"><b>화면 B</b> — 순서 변경 핸들 활성/비활성이 한 화면에 같이 보이는 상태</div>
+  <div class="wf">
+    <div class="body">
+      <div class="bc">상품 관리</div>
+      <div class="h1">태그 관리 <span class="star">☆</span></div>
+      <div class="pdesc">업체별 상품 태그를 등록·관리합니다.</div>
+
+      <div class="guide"><span class="lb">안내</span>전 구분 공통 안내 문구 영역 — <b>문구 미정</b>. 인터넷과 동일한 문구가 노출됩니다.</div>
+
+      <div class="bar">
+        <span class="ctrl"><span class="cv">TV</span><span class="ar">▾</span></span>
+        <span class="ctrl new"><span class="cv">속성 타입 : 전체</span><span class="ar">▾</span></span>
+        <span class="sp"></span>
+        <span class="btn pri">+ 태그 등록</span>
+      </div>
+
+      <div class="vtabs">
+        <span>KT</span><span>LG</span><span>SKT</span><span>SKB</span>
+        <span>SkyLife</span><span>LG HelloVision</span><span class="on">딜라이브</span><span>HCN</span>
+      </div>
+
+      <div class="cnt">총 <b>11</b>건</div>
+
+      <table class="t">
+        <colgroup><col style="width:38px"><col style="width:92px"><col style="width:104px"><col style="width:168px">
+          <col><col style="width:74px"><col style="width:66px"><col style="width:72px"><col style="width:46px"></colgroup>
+        <thead><tr>
+          <th></th><th>속성 타입</th><th>속성</th><th>태그명</th><th>설명</th>
+          <th>노출 등급</th><th class="c">연결 상품</th><th class="r">월요금</th><th class="c">수정</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td class="c ov" style="position:relative"><span class="co" style="left:-10px;top:8px">11</span><span class="hd"><b></b><b></b><b></b></span></td>
+            <td>라인</td><td>기본</td><td>100채널</td><td class="mut">–</td>
+            <td><span class="bdg">기본</span></td><td class="c"><span class="lnk">6</span></td>
+            <td class="r mut">–</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd"><b></b><b></b><b></b></span></td><td>라인</td><td>기본</td><td>120채널</td>
+            <td class="mut">–</td><td><span class="bdg">기본</span></td><td class="c"><span class="lnk">6</span></td>
+            <td class="r mut">–</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd"><b></b><b></b><b></b></span></td><td>라인</td><td>기본</td><td>170채널</td>
+            <td class="mut">–</td><td><span class="bdg">기본</span></td><td class="c"><span class="lnk">6</span></td>
+            <td class="r mut">–</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd"><b></b><b></b><b></b></span></td><td>라인</td><td>프리미엄</td><td>200채널</td>
+            <td class="mut">–</td><td><span class="bdg">추천</span></td><td class="c"><span class="lnk">3</span></td>
+            <td class="r mut">–</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd"><b></b><b></b><b></b></span></td><td>라인</td><td>프리미엄</td><td>230채널</td>
+            <td class="mut">–</td><td><span class="bdg">기본</span></td><td class="c"><span class="lnk">3</span></td>
+            <td class="r mut">–</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr>
+            <td class="c ov" style="position:relative"><span class="co o" style="left:-10px;top:8px">12</span><span class="hd off"><b></b><b></b><b></b></span></td>
+            <td>셋탑</td><td>없음</td><td>없음</td><td class="mut">–</td>
+            <td><span class="bdg">기본</span></td><td class="c"><span class="lnk">5</span></td>
+            <td class="r mut">–</td><td class="c"><span class="ic">✎</span></td></tr>
+          <tr><td class="c"><span class="hd off"><b></b><b></b><b></b></span></td><td>셋탑</td><td>일반셋탑</td><td>일반셋탑</td>
+            <td class="mut">–</td><td><span class="bdg">기본</span></td><td class="c"><span class="lnk">4</span></td>
+            <td class="r mut">–</td><td class="c"><span class="ic">✎</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <table class="act">
+    <thead><tr><th class="n">№</th><th>위치</th><th>동작 · 결과</th></tr></thead>
+    <tbody>
+      <tr><td class="n">11</td><td>순서 변경 핸들 — <b>활성</b></td><td><div class="aA"><span class="ak">동작</span><span class="av">드래그 앤 드롭</span></div><div class="aR"><span class="ak">결과</span><span class="av">속성 「기본」에 태그가 6건이므로 활성. <b>「기본」 그룹 안에서만</b> 이동하며 「프리미엄」 영역으로는 넘어가지 않습니다. 놓는 즉시 저장.</span></div></td></tr>
+      <tr><td class="n">12</td><td>순서 변경 핸들 — <b>비활성</b></td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭</span></div><div class="aR"><span class="ak">결과</span><span class="av">속성 「없음」은 항상 비활성. 토스트 — 「이 속성에는 태그가 1건뿐이라 순서를 바꿀 수 없습니다」.</span></div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════ 3. 상태 변형 ══════════ -->
+<div class="sec">
+  <div class="sec-h"><span class="no">3</span><h2>목록 상태 변형</h2><span class="sub">3종</span></div>
+  <div class="sec-note">AS-IS의 6종 중 <b>검색 관련 2종(검색 중 잠금 · 검색 결과 없음)은 삭제</b>했습니다. 핸들 활성/비활성은 화면 A·B에 이미 들어가 있어 별도 변형에서 뺐습니다.</div>
+
+  <div class="mgrid" style="grid-template-columns:1fr 1fr 1fr;gap:16px">
+    <div>
+      <div class="wf-cap"><b>변형 1</b> — 등록된 태그 없음</div>
+      <div class="wf"><div class="body" style="padding:14px">
+        <div class="cnt">총 <b>0</b>건</div>
+        <table class="t"><thead><tr><th>속성 타입</th><th>속성</th><th>태그명</th><th class="c">수정</th></tr></thead></table>
+        <div class="state"><div>등록된 태그가 없습니다.</div><div class="s">[+ 태그 등록]으로 추가할 수 있습니다.</div></div>
+      </div></div>
+    </div>
+    <div>
+      <div class="wf-cap"><b>변형 2</b> — 로딩</div>
+      <div class="wf"><div class="body" style="padding:14px">
+        <div class="cnt" style="color:#ccc">총 <b style="color:#ccc">–</b>건</div>
+        <table class="t"><thead><tr><th>속성 타입</th><th>속성</th><th>태그명</th><th class="c">수정</th></tr></thead>
+          <tbody>
+            <tr><td><div class="skel" style="width:60%"></div></td><td><div class="skel" style="width:70%"></div></td><td><div class="skel" style="width:85%"></div></td><td><div class="skel" style="width:40%"></div></td></tr>
+            <tr><td><div class="skel" style="width:52%"></div></td><td><div class="skel" style="width:64%"></div></td><td><div class="skel" style="width:76%"></div></td><td><div class="skel" style="width:40%"></div></td></tr>
+            <tr><td><div class="skel" style="width:66%"></div></td><td><div class="skel" style="width:58%"></div></td><td><div class="skel" style="width:80%"></div></td><td><div class="skel" style="width:40%"></div></td></tr>
+          </tbody></table>
+      </div></div>
+    </div>
+    <div>
+      <div class="wf-cap"><b>변형 3</b> — 조회 실패</div>
+      <div class="wf"><div class="body" style="padding:14px">
+        <div class="cnt">총 <b>–</b>건</div>
+        <table class="t"><thead><tr><th>속성 타입</th><th>속성</th><th>태그명</th><th class="c">수정</th></tr></thead></table>
+        <div class="state">
+          <div>목록을 불러오지 못했습니다.</div>
+          <div class="s">잠시 후 다시 시도해주세요.</div>
+          <span class="btn sm" style="margin-top:4px">다시 시도</span>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════ 4. 사이드패널 ══════════ -->
+<div class="sec">
+  <div class="sec-h"><span class="no">4</span><h2>연결 상품 사이드패널</h2><span class="sub">목록 행 클릭 시</span></div>
+  <div class="sec-note">화면 오른쪽에서 열리며 목록은 그대로 보입니다(딤 처리 없음). 조회 전용 — 이 패널에서 연결을 추가·해제하지 않습니다.</div>
+
+  <div class="wf-cap"><b>패널</b> — 1Gbps(에센스) 선택 상태</div>
+  <div class="panelwrap">
+    <div class="dim">목록 화면 유지 · 선택 행에 선택 표시</div>
+    <div class="panel">
+      <div class="ph" style="position:relative"><h4>연결 상품</h4><span class="x">✕</span>
+        <span class="co" style="right:-10px;top:8px">13</span></div>
+      <div class="ps">
+        <div class="tcard">
+          <div class="nm"><span>1Gbps(에센스)</span><span class="bdg">추천</span></div>
+          <div class="gr">
+            <div><span class="k">구분</span><span class="v">인터넷</span></div>
+            <div><span class="k">업체</span><span class="v">KT</span></div>
+            <div><span class="k">속성 타입</span><span class="v">속도</span></div>
+            <div><span class="k">속성</span><span class="v">1Gbps</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="plh"><span>연결 상품</span><span class="c">10건</span></div>
+      <div class="plist">
+        <div class="r"><div class="p"><b>에센스</b><span class="x">×</span>기가 와이파이 홈ax</div>
+          <div class="m"><b>1Gbps</b> · WiFi포함 · 없음</div></div>
+        <div class="r"><div class="p"><b>에센스</b><span class="x">×</span>KT와이파이7D</div>
+          <div class="m"><b>1Gbps</b> · 프리미엄WiFi · 없음</div></div>
+        <div class="r"><div class="p"><b>안심 에센스 와이파이</b><span class="x">×</span>기가 와이파이 홈ax</div>
+          <div class="m"><b>1Gbps</b> · WiFi포함 · 안심</div></div>
+        <div class="r"><div class="p"><b>에센스 와이드</b><span class="x">×</span>기가 와이파이 (홈ax+버디)</div>
+          <div class="m"><b>1Gbps</b> · WiFi+증폭기 · 없음</div></div>
+        <div class="r" style="color:#bbb"><div class="p" style="color:#bbb">… 6건 더 (스크롤)</div></div>
+      </div>
+      <div class="pf" style="position:relative">
+        <span class="co" style="left:4px;top:-10px">14</span>
+        <span class="btn" style="width:100%;justify-content:center">상품 연결 관리에서 보기</span>
+      </div>
+    </div>
+  </div>
+
+  <table class="act">
+    <thead><tr><th class="n">№</th><th>위치</th><th>동작 · 결과</th></tr></thead>
+    <tbody>
+      <tr><td class="n">13</td><td>패널 닫기 ✕</td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭 · ESC</span></div><div class="aR"><span class="ak">결과</span><span class="av">패널이 닫히고 목록 행 선택 표시가 해제됩니다.</span></div></td></tr>
+      <tr class="hold"><td class="n">14</td><td>[상품 연결 관리에서 보기]</td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭</span></div><div class="aR"><span class="ak">결과</span><span class="av">④ 상품 연결 관리 화면으로 이동, 해당 태그 조건이 걸린 상태로 진입.<br>
+        <span class="q">확인 필요</span> — ④는 2차에서 <b>조회 전용 VIEW</b>로 축소되고 태그 등록 기능은 ⑤ 조합 표가 흡수합니다. 이 버튼의 도착 화면을 ④로 둘지, ⑤ 조합 표로 바꿀지 결정이 필요합니다.</span></div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ══════════ 5. 모달 ══════════ -->
+<div class="sec">
+  <div class="sec-h"><span class="no">5</span><h2>모달 5종</h2><span class="sub">등록 · 수정 · 삭제</span></div>
+  <div class="sec-note"><b>AS-IS 요소를 그대로 유지합니다.</b> 컨텍스트 바(업체·구분), 표기명 20자 카운터, 「고객 노출」 미리보기, 추가 노출 체크박스, 삭제 버튼의 사유 라벨 모두 AS-IS와 동일합니다.<br>
+  이번에 바뀌는 것은 <b>3가지뿐</b> — 노출 등급 3종 축소 · 인터넷 외 결합요금 필드 제거 · 주 버튼 라벨 [확인].</div>
+
+  <div class="mgrid">
+
+    <!-- ① -->
+    <div>
+      <div class="wf-cap"><b>모달 ①</b> — 태그 등록 (인터넷)</div>
+      <div class="modal">
+        <div class="mh"><h3>태그 등록</h3><span class="x">✕</span></div>
+        <div class="mb">
+          <div class="ctx">
+            <div><span class="k">업체</span><span class="v">KT</span></div>
+            <div><span class="k">구분</span><span class="v">인터넷</span></div>
+          </div>
+          <div class="two">
+            <div class="fld"><label>속성 타입 <span class="req">*</span></label><div class="in sel ph">속성 타입 선택</div></div>
+            <div class="fld"><label>속성 <span class="req">*</span></label><div class="in sel dis">속성 선택</div></div>
+          </div>
+          <div class="fld" style="position:relative"><span class="co" style="left:-26px;top:-2px">15</span>
+            <label>표기명</label><div class="in ph">예: 슬림 · 광랜 1년</div>
+            <div class="cc">0 / 20</div></div>
+          <div class="fld"><label>태그명 <span class="ro">자동 생성</span></label>
+            <div class="prev"><span class="k">고객 노출</span><span class="v" style="color:#aaa;font-weight:400">속성을 먼저 선택해주세요</span></div></div>
+          <div class="fld"><label>설명</label><div class="ta">상담 상세의 느낌표 아이콘에 노출되는 문구</div></div>
+          <div class="two">
+            <div class="fld" style="position:relative"><span class="co" style="left:-26px;top:-2px">16</span>
+              <label>노출 등급 <span class="req">*</span></label><div class="in sel">기본</div></div>
+            <div class="fld" style="position:relative"><span class="co" style="right:-24px;top:-2px">17</span>
+              <label>추가 노출 <span class="tipq">?</span></label>
+              <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb"><i></i>플랫폼</span></div></div>
+          </div>
+          <div class="two">
+            <div class="fld"><label>월요금</label><div class="in ph">0</div></div>
+            <div class="fld"><label>결합요금</label><div class="in ph">0</div></div>
+          </div>
+        </div>
+        <div class="mf" style="position:relative"><span class="co" style="right:-24px;top:10px">21</span>
+          <span class="sp"></span><span class="btn">취소</span><span class="btn dis">확인</span></div>
+      </div>
+    </div>
+
+    <!-- ⑤ -->
+    <div>
+      <div class="wf-cap"><b>모달 ⑤</b> — 태그 등록 (인터넷 외)</div>
+      <div class="modal">
+        <div class="mh"><h3>태그 등록</h3><span class="x">✕</span></div>
+        <div class="mb">
+          <div class="ctx">
+            <div><span class="k">업체</span><span class="v">SKB</span></div>
+            <div><span class="k">구분</span><span class="v">TV</span></div>
+          </div>
+          <div class="two">
+            <div class="fld"><label>속성 타입 <span class="req">*</span></label><div class="in sel">라인</div></div>
+            <div class="fld"><label>속성 <span class="req">*</span></label><div class="in sel">기본</div></div>
+          </div>
+          <div class="fld" style="position:relative"><span class="co o" style="left:-26px;top:-2px">18</span>
+            <label>태그명 <span class="ro">직접 입력</span></label><div class="in">190채널</div>
+            <div class="cc">4 / 20 · <b>고객에게는 상품명과 조합되어 노출됩니다</b> — 예) 일반형(190채널)</div></div>
+          <div class="fld"><label>설명</label><div class="ta">상담 상세의 느낌표 아이콘에 노출되는 문구</div></div>
+          <div class="two">
+            <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="in sel">기본</div></div>
+            <div class="fld"><label>추가 노출 <span class="tipq">?</span></label>
+              <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb"><i></i>플랫폼</span></div></div>
+          </div>
+          <div class="two" style="position:relative"><span class="co o" style="left:-26px;top:-2px">19</span>
+            <div class="fld"><label>월요금</label><div class="in ph">0</div></div>
+            <div class="fld"></div>
+          </div>
+        </div>
+        <div class="mf"><span class="sp"></span><span class="btn">취소</span><span class="btn pri">확인</span></div>
+      </div>
+    </div>
+
+    <!-- ② -->
+    <div>
+      <div class="wf-cap"><b>모달 ②</b> — 태그 수정 · 연결 있음 (삭제 불가)</div>
+      <div class="modal">
+        <div class="mh"><h3>태그 수정</h3><span class="x">✕</span></div>
+        <div class="mb">
+          <div class="ctx">
+            <div><span class="k">업체</span><span class="v">KT</span></div>
+            <div><span class="k">구분</span><span class="v">인터넷</span></div>
+          </div>
+          <div class="two">
+            <div class="fld"><label>속성 타입</label><div class="in ro">속도</div></div>
+            <div class="fld"><label>속성</label><div class="in ro">1Gbps</div></div>
+          </div>
+          <div class="lockw">⚠ 속성을 바꾸려면 삭제하고 다시 등록해야 합니다. 연결이 들고 있는 사본이 어긋나고 고객에게 보이는 이름도 함께 바뀝니다.</div>
+          <div class="fld"><label>표기명</label><div class="in">에센스</div><div class="cc">3 / 20</div></div>
+          <div class="fld"><label>태그명 <span class="ro">자동 생성</span></label>
+            <div class="prev"><span class="k">고객 노출</span><span class="v">1Gbps(에센스)</span></div></div>
+          <div class="fld"><label>설명</label><div class="ta" style="color:#222">게임·고화질 스트리밍</div></div>
+          <div class="two">
+            <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="in sel">추천</div></div>
+            <div class="fld"><label>추가 노출 <span class="tipq">?</span></label>
+              <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb on"><i></i>플랫폼</span></div></div>
+          </div>
+          <div class="two">
+            <div class="fld"><label>월요금</label><div class="in">38,500</div></div>
+            <div class="fld"><label>결합요금</label><div class="in">33,000</div></div>
+          </div>
+          <div class="fld"><label>이 태그를 쓰는 상품</label>
+            <div class="usebox">
+              <div class="uh"><span>연결</span><span>10건</span></div>
+              <ul>
+                <li><b>에센스</b> · 기가 와이파이 홈ax</li>
+                <li><b>에센스 와이파이</b> · 기가 와이파이 홈ax</li>
+                <li><b>안심 에센스 와이파이</b> · 기가 와이파이 홈ax</li>
+                <li><b>에센스 와이드</b> · 기가 와이파이 (홈ax+버디)</li>
+              </ul>
             </div>
           </div>
         </div>
-        <div class="dlist-h"><span class="t">연결 상품</span><span class="c">9건</span></div>
-        <div class="dlist">
-          <div class="dl"><div class="p"><span class="cur">슬림</span></div><div class="m"><span class="cur">100Mbps(슬림)</span> · <span class="non">없음</span> · <span class="non">없음</span></div></div>
-          <div class="dl"><div class="p"><span class="cur">슬림 와이파이</span><span class="xs">×</span><span class="st">기가 와이파이 홈ax</span></div><div class="m"><span class="cur">100Mbps(슬림)</span> · <span>WiFi포함</span> · <span class="non">없음</span></div></div>
-          <div class="dl"><div class="p"><span class="cur">안심 슬림 와이파이</span><span class="xs">×</span><span class="st">기가 와이파이 홈ax</span></div><div class="m"><span class="cur">100Mbps(슬림)</span> · <span>WiFi포함</span> · <span>안심(유해사이트 방패)</span></div></div>
-          <div class="dl"><div class="p"><span class="cur">슬림 와이파이</span><span class="xs">×</span><span class="st">KT와이파이7D</span></div><div class="m"><span class="cur">100Mbps(슬림)</span> · <span>프리미엄WiFi(WiFi 7D)</span> · <span class="non">없음</span></div></div>
-          <div class="dl"><div class="p"><span class="cur">안심 슬림 와이파이</span><span class="xs">×</span><span class="st">KT와이파이7D</span></div><div class="m"><span class="cur">100Mbps(슬림)</span> · <span>프리미엄WiFi(WiFi 7D)</span> · <span>안심(유해사이트 방패)</span></div></div>
-          <div class="dl"><div class="p"><span class="cur">슬림 와이드</span><span class="xs">×</span><span class="st">기가 와이파이 (홈ax+버디)</span></div><div class="m"><span class="cur">100Mbps(슬림)</span> · <span>WiFi+증폭기(Buddy)</span> · <span class="non">없음</span></div></div>
-          <div class="dl"><div class="p"><span class="cur">안심 슬림 와이드</span><span class="xs">×</span><span class="st">기가 와이파이 (홈ax+버디)</span></div><div class="m"><span class="cur">100Mbps(슬림)</span> · <span>WiFi+증폭기(Buddy)</span> · <span>안심(유해사이트 방패)</span></div></div>
-          <div class="dl"><div class="p"><span class="cur">슬림 와이드</span><span class="xs">×</span><span class="st">기가 와이파이(7D+버디)</span></div><div class="m"><span class="cur">100Mbps(슬림)</span> · <span>프리미엄WiFi+증폭기(WiFi 7D+Buddy)</span> · <span class="non">없음</span></div></div>
-          <div class="dl"><div class="p"><span class="cur">안심 슬림 와이드</span><span class="xs">×</span><span class="st">기가 와이파이(7D+버디)</span></div><div class="m"><span class="cur">100Mbps(슬림)</span> · <span>프리미엄WiFi+증폭기(WiFi 7D+Buddy)</span> · <span>안심(유해사이트 방패)</span></div></div>
-        </div>
-        <div class="scrollhint"><i></i></div>
+        <div class="mf" style="position:relative"><span class="co o" style="left:-26px;top:10px">20</span>
+          <span class="btn-del">삭제 — 연결 상품 10건에서 사용 중</span><span class="sp"></span>
+          <span class="btn">취소</span><span class="btn pri">확인</span></div>
       </div>
-      <div class="df"><button class="btn-out" style="width:100%;justify-content:center">상품 연결 관리에서 보기</button></div>
-    </aside>
+    </div>
+
+    <!-- ③ -->
+    <div>
+      <div class="wf-cap"><b>모달 ③</b> — 「없음」 태그 수정 (연결 0건도 삭제 불가)</div>
+      <div class="modal">
+        <div class="mh"><h3>태그 수정</h3><span class="x">✕</span></div>
+        <div class="mb">
+          <div class="ctx">
+            <div><span class="k">업체</span><span class="v">KT</span></div>
+            <div><span class="k">구분</span><span class="v">인터넷</span></div>
+          </div>
+          <div class="two">
+            <div class="fld"><label>속성 타입</label><div class="in ro">추가구성옵션</div></div>
+            <div class="fld"><label>속성</label><div class="in ro">없음</div></div>
+          </div>
+          <div class="autonote">"없음"은 속성 타입을 만들 때 자동으로 생기는 태그입니다.</div>
+          <div class="fld"><label>표기명</label><div class="in ph">비어 있음</div></div>
+          <div class="fld"><label>태그명 <span class="ro">자동 생성</span></label>
+            <div class="prev"><span class="k">고객 노출</span><span class="v">없음</span></div></div>
+          <div class="fld"><label>이 태그를 쓰는 상품</label>
+            <div class="usebox">
+              <div class="uh"><span>연결</span><span>0건</span></div>
+              <ul><li style="color:#bbb">쓰는 상품이 없습니다</li></ul>
+            </div>
+          </div>
+        </div>
+        <div class="mf"><span class="btn-del">삭제 — "없음" 태그는 지울 수 없습니다</span><span class="sp"></span>
+          <span class="btn">취소</span><span class="btn pri">확인</span></div>
+      </div>
+    </div>
+
+    <!-- ④ -->
+    <div>
+      <div class="wf-cap"><b>모달 ④</b> — 태그 삭제 확인</div>
+      <div class="modal" style="max-width:440px">
+        <div class="mh"><h3>삭제 확인</h3><span class="x">✕</span></div>
+        <div class="mb">
+          <p style="font-size:13.5px;font-weight:600;margin:4px 0 10px">'2.5Gbps(프리미엄)' 태그를 삭제하시겠습니까?</p>
+          <div class="errbox">삭제 후에는 복구할 수 없습니다. 상품 연결 화면의 태그 선택 목록에서도 즉시 제거됩니다.</div>
+        </div>
+        <div class="mf"><span class="sp"></span><span class="btn">취소</span><span class="btn pri">확인</span></div>
+      </div>
+      <div style="font-size:11.5px;color:#666;margin-top:10px;line-height:1.7">
+        오버레이 클릭 · ESC로 닫히지 않습니다. 우상단 ✕는 <b>수정 모달까지 함께</b> 닫습니다. — AS-IS 동일
+      </div>
+    </div>
+
   </div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>정정 — 앞 버전에서는 테이블 영역 안에만 패널을 그렸는데, 어드민의 실제 사이드패널은 화면 전체 높이입니다.</b> 발송 결과 조회(비즈터널 운영)의 「메시지 상세」 패널을 확인했습니다: <code>position:fixed · right:0 · top:0 · height:100% · width:560px · shadow-xl</code>. <b>GNB까지 덮고 딤(오버레이)은 없습니다.</b> 시안도 그 규격으로 맞췄습니다.</p>
-    <p><b>닫기 — ESC · 우상단 ✕ 둘 다.</b> 실제 패널도 ESC로 닫힙니다. 딤이 없어서 바깥 클릭으로는 닫히지 않고, 다른 행의 연결 상품 수를 누르면 패널 내용만 갈아끼웁니다.</p>
-    <p><b>패널 구조</b> — 헤더 「연결 상품」 + ✕. 본문은 <b>태그 정보 카드</b>와 <b>연결 상품 목록</b> 둘로 나뉩니다.</p>
-    <p><b>태그 정보는 카드로 묶었습니다.</b> gray-25 배경 + 테두리, 상단에 태그명(17px)과 노출 등급 배지를 한 줄로, 그 아래 구분 · 업체 · 속성 타입 · 속성을 <b>2×2 그리드</b>로 배치합니다. 라벨 위 · 값 아래 세로 스택이라 값이 길어져도 줄이 안 깨집니다. 헤더에 있던 태그명 식별자는 카드와 중복이라 뺐습니다.</p>
-    <p><b>연결 상품이 많을 때</b> — 실측하니 태그 하나에 붙는 연결은 <b>최대 37건</b>이고, 274개 태그 중 <b>238개(87%)가 10건 이하</b>입니다. 20건을 넘는 태그는 5개뿐입니다(전부 「없음」 태그와 KT 스마트셋탑).<br>
-    이 규모면 <b>더보기나 페이징 없이 목록 영역만 스크롤</b>하는 것으로 충분합니다. 최대 케이스도 스크롤 3화면이면 끝납니다. 대신 <b>태그 정보 카드 · 건수 헤더 · 하단 버튼은 고정</b>하고 목록만 움직이게 해서, 아무리 내려도 지금 무슨 태그를 보고 있는지와 나가는 길이 화면에 남아 있게 합니다.</p>
-    <p><b>목록 항목은 두 줄입니다.</b> 1줄 = <code>상품명 × 세트상품명</code> — 연결이 「상품 짝」이라는 걸 드러냅니다. 세트상품이 없으면 <b>상품명만</b> 씁니다(「세트상품 없음」이라고 쓰지 않습니다). 2줄 = 속성 타입 조합 3자리이고, <b>지금 보고 있는 태그는 굵게</b>, 값이 「없음」인 자리는 <b>gray-300으로 흐리게</b> 처리합니다.</p>
-    <p class="q">이전 시안은 <code>세트상품 없음 · 100Mbps(슬림) · 없음 · 없음</code>처럼 「없음」이 세 번 나왔는데 뜻이 각각 달랐습니다 — 앞의 하나는 <b>세트상품 필드가 비어 있다</b>, 뒤의 둘은 <b>속성 값이 문자 그대로 "없음"인 태그</b>입니다. 지금 포맷은 앞의 것을 없애고 뒤의 둘만 흐리게 남겨 구분합니다.</p>
-    <p><b>위 시안은 100Mbps(슬림) 9건으로, 케이스가 골고루 들어 있습니다</b> — 단품(세트 없음) · 세트 있음 · 3자리 중 「없음」 2개 · 1개 · 0개.</p>
-    <p><b>여는 조작은 「행 클릭」입니다.</b> 처음엔 연결 상품 수만 클릭하게 했는데, 패널이 우측 560px를 덮으면 <b>연결 상품 컬럼 자체가 가려져서</b> 패널이 열린 상태로 다른 태그를 눌러볼 수가 없었습니다. 기존 「메시지 상세」 패널은 트리거가 맨 왼쪽 컬럼(메시지 ID)이라 이 문제가 없습니다.<br>행 아무 데나 누르면 열리고, <b>수정 버튼과 드래그 핸들만 제외</b>합니다. 연결 상품 수는 링크 스타일을 유지해 클릭 가능하다는 신호로 남깁니다. 연결 0건인 행은 열리지 않습니다.</p>
-    <p>선택한 행은 blue-50으로 표시합니다. 읽기 전용이며 여기서 연결을 바꾸지 않습니다. 하단 [상품 연결 관리에서 보기]는 그 태그로 필터가 걸린 상태로 이동합니다. 연결 0건이면 목록 자리에 "연결된 상품이 없습니다"를 두고, 리스트의 숫자도 회색으로 클릭을 막습니다.</p>
-  </div>
+
+  <table class="act">
+    <thead><tr><th class="n">№</th><th>위치</th><th>동작 · 결과</th></tr></thead>
+    <tbody>
+      <tr><td class="n">15</td><td>표기명</td><td><div class="aA"><span class="ak">동작</span><span class="av">입력 · 최대 20자</span></div><div class="aR"><span class="ak">결과</span><span class="av">입력할 때마다 아래 「고객 노출」 미리보기가 <b>속성(표기명)</b> 형태로 갱신됩니다. 비우면 태그명 = 속성. 글자수 카운터 <code>n / 20</code> 노출. — AS-IS 동일</span></div></td></tr>
+      <tr><td class="n">16</td><td>노출 등급 (전 모달 공통)</td><td><div class="aA"><span class="ak">동작</span><span class="av">드롭다운 선택</span></div><div class="aR"><span class="ak">결과</span><span class="av"><b>변경 —</b> AS-IS 5종(기본·추천·비인기 상품·비추천·판매금지)에서 <b>추천 · 기본 · 비추천 3종</b>으로 축소. 기본값 = 기본.</span></div></td></tr>
+      <tr><td class="n">17</td><td>추가 노출</td><td><div class="aA"><span class="ak">동작</span><span class="av">체크박스 (복수 선택)</span></div><div class="aR"><span class="ak">결과</span><span class="av">신청서 · 플랫폼. CRM 상담 화면은 항상 노출되므로 선택지에 없습니다. 라벨의 <code>?</code>에 마우스를 올리면 그 설명이 툴팁으로 뜹니다. — AS-IS 동일</span></div></td></tr>
+      <tr><td class="n">18</td><td>모달 ⑤ 태그명</td><td><div class="aA"><span class="ak">동작</span><span class="av">직접 입력 · 최대 20자</span></div><div class="aR"><span class="ak">결과</span><span class="av">표기명 필드 없이 태그명을 직접 입력합니다. 카운터 옆에 고객 노출 규칙을 같이 표기 — 「고객에게는 상품명과 조합되어 노출됩니다 — 예) 일반형(190채널)」. — AS-IS 동일</span></div></td></tr>
+      <tr><td class="n">19</td><td>모달 ⑤ 요금 영역</td><td><div class="aA"><span class="ak">동작</span><span class="av">—</span></div><div class="aR"><span class="ak">결과</span><span class="av"><b>변경 —</b> 결합요금 필드 제거. 인터넷 외는 등록·수정 모두 월요금만 노출합니다. 목록 테이블의 결합요금 열도 함께 사라집니다.</span></div></td></tr>
+      <tr><td class="n">20</td><td>[삭제] 버튼</td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭</span></div><div class="aR"><span class="ak">결과</span><span class="av">버튼 라벨에 사유와 건수를 그대로 씁니다. <b>1차 가드</b> 연결이 남아 있으면 「삭제 — 연결 상품 n건에서 사용 중」. <b>2차 가드</b> 「없음」 태그면 연결 0건이어도 「삭제 — "없음" 태그는 지울 수 없습니다」.<br>
+        두 가드가 겹치면 <b>「없음」 사유를 우선</b> 표시. 일반 태그 + 연결 0건일 때만 「삭제」로 활성화 → <b>모달 ④</b>. — AS-IS 동일</span></div></td></tr>
+      <tr><td class="n">21</td><td>모달 주 버튼</td><td><div class="aA"><span class="ak">동작</span><span class="av">클릭</span></div><div class="aR"><span class="ak">결과</span><span class="av"><b>변경 —</b> 라벨을 <b>[확인]</b>로 통일(AS-IS는 [저장] · [삭제]). 모달 ④의 주 버튼도 [확인]입니다.<br>
+        모달 ①은 <b>속성 타입 · 속성을 고르기 전까지 비활성</b>입니다. — 활성 조건은 AS-IS 동일</span></div></td></tr>
+    </tbody>
+  </table>
 </div>
 
 
+<!-- ══════════ 6. 미결 ══════════ -->
+<div class="sec">
+  <div class="sec-h"><span class="no">6</span><h2>미결 항목</h2><span class="sub">해석 — 기능 정의서 착수 전 확정 필요</span></div>
+
+  <div class="open">
+    <h3>이 화면 안에서 결정해야 할 것</h3>
+    <ol>
+      <li><b>공통 안내 문구</b> — 전 구분 공통 1종으로 정했으나 문구 미정. 인터넷의 자동 조립 규칙과 인터넷 외의 직접 입력 규칙을 한 문장에 담을지, 규칙 설명을 빼고 순서 변경 안내만 남길지 결정이 필요합니다.</li>
+      <li><b>노출 등급 이관 규칙</b> — 현재 데이터의 「비인기 상품」(KT 5Gbps·10Gbps 등)을 3종 중 무엇으로 옮길지 미정. 목업에는 3종만 노출했습니다.</li>
+      <li><b>② 상품속성 관리 진입 경로</b> — 툴바 버튼 삭제 후 GNB 메뉴 직접 진입만 남는지 확인 필요. 태그 등록 시 속성이 없으면 속성부터 만들어야 하는데, 그 동선이 화면에서 끊깁니다.</li>
+      <li><b>사이드패널 [상품 연결 관리에서 보기] 도착지</b> — ④는 2차에서 조회 전용 VIEW로 축소되고 태그 등록 기능은 ⑤ 조합 표가 흡수합니다. 이 버튼이 ④로 갈지 ⑤로 갈지 결정이 필요합니다.</li>
+      <li><b>결합요금의 관리 단위</b> — 개발 6.5.4는 태그 단위, 6.6.3 <code>internet_combination.bundle_charge</code>는 조합 단위로 기술되어 있습니다. 조합 단위로 확정되면 이 화면의 결합요금 열·필드가 모두 빠집니다.</li>
+      <li><b>태그 이미지</b> — AS-IS 태그관리 팝업에 있던 항목이나 TO-BE 설계에 없습니다. 이번 와이어프레임에도 넣지 않았습니다. 폐기인지 누락인지 확인이 필요합니다.</li>
+    </ol>
+  </div>
+
+  <div class="open" style="border-color:#666;background:#fafafa">
+    <h3 style="color:#333">산출물 경계 문제</h3>
+    <ol>
+      <li style="color:#444"><b>①과 ②③의 밀도가 달라집니다.</b> 2차 범위 확정본(2026-09-16)은 ①②③을 1차 산출물 유지로 두었습니다. 이번에 ①을 와이어프레임으로 다시 그리면서 <b>모달 5종(③ 소관)까지 같이 들어왔고</b>, ② 상품속성 관리만 CRM 디자인 재현 목업으로 남습니다. 디자이너가 두 가지 밀도의 문서를 받게 되므로, ②도 같은 밀도로 다시 그릴지 결정이 필요합니다.</li>
+    </ol>
+  </div>
 </div>
 
-
-
-<div class="doc-band"><div class="sheet">
-  <div class="doc-eyebrow">모달</div>
-  <div class="doc-h">태그 등록 / 수정 / 삭제</div>
-  <div class="doc-sub">①은 실제로 입력해볼 수 있습니다. 속성 타입 · 속성을 고르고 표기명을 치면 태그명이 즉시 조립됩니다.</div>
-</div></div>
-
-<div class="sheet" style="padding-top:32px">
-<div class="mgrid">
-
-  <div>
-    <div class="spec-head"><span class="chip-n">1</span><span class="spec-t">태그 등록</span><span class="spec-s">진입: [+ 태그 등록] · 동작 시안</span></div>
-    <div class="modal">
-      <div class="mh"><h3>태그 등록</h3><span class="x">✕</span></div>
-      <div class="mb">
-        <div class="ctx"><div><span class="k">업체</span><span class="v">KT</span></div><div><span class="k">구분</span><span class="v">인터넷</span></div></div>
-        <div class="row2">
-          <div class="fld"><label>속성 타입 <span class="req">*</span></label>
-            <select class="inp" id="f-div"><option value="">속성 타입 선택</option><option>속도</option><option>구성제품</option><option>추가구성옵션</option></select></div>
-          <div class="fld"><label>속성 <span class="req">*</span></label>
-            <select class="inp" id="f-attr" disabled><option value="">속성 선택</option></select></div>
-        </div>
-        <div class="fld"><label>표기명</label>
-          <input class="inp" id="f-sub" maxlength="20" placeholder="예: 슬림 · 광랜 1년">
-          <div class="hint g3"><span id="f-cnt">0</span> / 20</div></div>
-        <div class="fld"><label>태그명 <span class="sp"></span><span class="ro">자동 생성</span></label>
-          <div class="preview"><span class="k">고객 노출</span><span class="v" id="f-tag" style="color:var(--g300)">속성을 먼저 선택해주세요</span></div></div>
-        <div class="fld"><label>설명</label><textarea class="ta" placeholder="상담 상세의 느낌표 아이콘에 노출되는 문구"></textarea></div>
-        <div class="row2">
-          <div class="fld"><label>노출 등급 <span class="req">*</span></label>
-            <select class="inp"><option>기본</option><option>추천</option><option>비인기 상품</option><option>비추천</option><option>판매금지 (폐지 검토)</option></select></div>
-          <div class="fld"><label>추가 노출 <i class="tip show r">?<span class="bub">CRM 상담 화면에는 항상 노출됩니다. 여기서는 그 외에 어디에 더 내보낼지를 고릅니다.</span></i></label>
-            <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb"><i></i>플랫폼</span></div></div>
-        </div>
-        <div class="row2">
-          <div class="fld"><label>월요금</label><input class="inp" placeholder="0" inputmode="numeric"></div>
-          <div class="fld"><label>결합요금</label><input class="inp" placeholder="0" inputmode="numeric"></div>
-        </div>
-      </div>
-      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button>
-        <button class="btn-solid" id="f-save" disabled style="opacity:.4;cursor:not-allowed">저장</button></div>
-    </div>
-    <div class="desc"><div class="desc-l">DESCRIPTION</div>
-      <p><b>업체는 필드에서 뺐습니다.</b> 목록의 업체 탭에서 정해져 들어오므로 모달 헤더에 표기만 합니다. 다른 업체에 등록하려면 탭을 바꾸고 등록합니다 — AS-IS 동작과 같습니다.</p>
-      <p><b>「고객 노출」 강조는 구분에 따라 자리를 옮깁니다.</b> 인터넷은 태그명 전체가 나가므로 태그명 박스에 붙고, TV · 인터넷전화 · 일반전화는 <b>표기명만</b> 나가므로 표기명 칸에 붙습니다 — 모달 ⑤ 참조.</p>
-      <p><b>속성 타입을 고르기 전에는 속성이 비활성</b>입니다. 속성을 고르는 즉시 태그명이 조립되고, 표기명을 치는 동안 실시간으로 따라옵니다. 표기명을 비우면 태그명은 속성 그대로입니다.</p>
-      <p>[저장] 활성 조건: 속성 타입 · 속성 선택.<br><b>「변경 불가」 라벨은 뺐습니다.</b> readonly 필드는 회색 배경과 커서로 이미 구분되므로 라벨을 더 붙이지 않습니다. 태그명도 「자동 생성」만 남겼습니다.</p>
-      <p><b>안내 문구는 라벨 옆 <code>?</code> 아이콘의 툴팁으로 넣었습니다.</b> 필드 아래 상시 문구로 두면 모달이 길어지고, 노출 등급 힌트와 붙어 어느 필드 설명인지 헷갈립니다. ①은 문구 검토용으로 툴팁을 열어둔 상태이고 실제로는 hover 시에만 뜹니다.</p>
-      <p><b>추가 노출은 드롭다운이 아니라 체크박스입니다.</b> 노출처가 CRM · 신청서 · 플랫폼 셋이고 CRM은 항상 켜져 있으므로, 고르는 것은 나머지 둘뿐입니다. 두 곳에 동시 노출이 가능하므로 조합을 값으로 나열하면 <code>신청서 / 플랫폼 / 신청서+플랫폼</code> 3개가 되고, 노출처가 하나 늘면 7개로 불어납니다. 체크박스는 칸 하나만 늘리면 됩니다.</p>
-      <p><b>AS-IS의 「전체 / 신청서 미표기 / 플랫폼 표기」는 폐기합니다.</b> 세 값의 기준점이 각각 전체 · 신청서 · 플랫폼으로 달라 운영자가 매번 기준을 바꿔 읽어야 했습니다. <span class="q">이관 규칙 — 각 값이 신청서 · 플랫폼 체크 조합 중 무엇에 대응하는지 개발 확인 필요. <code>internet_tag</code> 태그상태 값 분포를 뽑으면 죽은 값이 있는지도 함께 확인됩니다.</span></p>
-    </div>
-  </div>
-
-  <div>
-    <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">태그 수정 — 삭제 불가</span><span class="spec-s">예: 1Gbps(에센스) · 연결 10건</span></div>
-    <div class="modal">
-      <div class="mh"><h3>태그 수정</h3><span class="x">✕</span></div>
-      <div class="mb">
-        <div class="ctx"><div><span class="k">업체</span><span class="v">KT</span></div><div><span class="k">구분</span><span class="v">인터넷</span></div></div>
-        <div class="row2">
-          <div class="fld"><label>속성 타입</label><div class="inp ro">속도</div></div>
-          <div class="fld"><label>속성</label><div class="inp ro">1Gbps</div></div>
-        </div>
-        <div class="hint w" style="margin:-8px 0 14px">⚠ 속성을 바꾸려면 삭제하고 다시 등록해야 합니다. 연결이 들고 있는 사본이 어긋나고 고객에게 보이는 이름도 함께 바뀝니다.</div>
-        <div class="fld"><label>표기명</label><div class="inp">에센스</div><div class="hint g3">3 / 20</div></div>
-        <div class="fld"><label>태그명 <span class="sp"></span><span class="ro">자동 생성</span></label>
-          <div class="preview"><span class="k">고객 노출</span><span class="v">1Gbps(에센스)</span></div></div>
-        <div class="fld"><label>설명</label><div class="ta" style="padding:8px 12px;font-size:14px">게임·고화질 스트리밍</div></div>
-        <div class="row2">
-          <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">추천</div></div>
-          <div class="fld"><label>추가 노출 <i class="tip r">?<span class="bub">CRM 상담 화면에는 항상 노출됩니다. 여기서는 그 외에 어디에 더 내보낼지를 고릅니다.</span></i></label>
-            <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb on"><i></i>플랫폼</span></div></div>
-        </div>
-        <div class="row2">
-          <div class="fld"><label>월요금</label><div class="inp">38,500</div></div>
-          <div class="fld"><label>결합요금</label><div class="inp">33,000</div></div>
-        </div>
-        <div class="fld"><label>이 태그를 쓰는 상품</label>
-          <div class="usebox"><div class="uh"><span>연결</span><span>10건</span></div>
-            <ul><li><b>에센스</b> · 기가 와이파이 홈ax</li><li><b>에센스 와이파이</b> · 기가 와이파이 홈ax</li>
-              <li><b>안심 에센스 와이파이</b> · 기가 와이파이 홈ax</li><li><b>에센스 와이드</b> · 기가 와이파이 (홈ax+버디)</li></ul></div></div>
-      </div>
-      <div class="mf"><button class="btn-danger dis">삭제 — 연결 상품 10건에서 사용 중</button><div class="sp"></div>
-        <button class="btn-out">취소</button><button class="btn-solid">저장</button></div>
-    </div>
-    <div class="desc"><div class="desc-l">DESCRIPTION</div>
-      <p><b>잠기는 것은 속성 타입 · 속성 둘뿐입니다.</b> 표기명 · 설명 · 노출 등급 · 추가 노출 · 요금은 언제든 수정할 수 있습니다.</p>
-      <p><b>삭제 1차 가드</b> — 연결이 남아 있으면 버튼이 비활성이고, 버튼 라벨에 사유와 건수를 그대로 씁니다.</p>
-    </div>
-  </div>
-
-  <div>
-    <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">태그 수정 — "없음" 태그</span><span class="spec-s">연결 0건이어도 삭제 불가</span></div>
-    <div class="modal">
-      <div class="mh"><h3>태그 수정</h3><span class="x">✕</span></div>
-      <div class="mb">
-        <div class="ctx"><div><span class="k">업체</span><span class="v">KT</span></div><div><span class="k">구분</span><span class="v">인터넷</span></div></div>
-        <div class="row2">
-          <div class="fld"><label>속성 타입</label><div class="inp ro">추가구성옵션</div></div>
-          <div class="fld"><label>속성</label><div class="inp ro">없음</div></div>
-        </div>
-        <div class="hint g3" style="margin:-8px 0 14px">"없음"은 속성 타입을 만들 때 자동으로 생기는 태그입니다.</div>
-        <div class="fld"><label>표기명</label><div class="inp ph">비어 있음</div></div>
-        <div class="fld"><label>태그명 <span class="sp"></span><span class="ro">자동 생성</span></label>
-          <div class="preview"><span class="k">고객 노출</span><span class="v">없음</span></div></div>
-        <div class="fld"><label>이 태그를 쓰는 상품</label>
-          <div class="usebox"><div class="uh"><span>연결</span><span>0건</span></div>
-            <ul><li style="color:var(--g300)">쓰는 상품이 없습니다</li></ul></div></div>
-      </div>
-      <div class="mf"><button class="btn-danger dis">삭제 — "없음" 태그는 지울 수 없습니다</button><div class="sp"></div>
-        <button class="btn-out">취소</button><button class="btn-solid">저장</button></div>
-    </div>
-    <div class="desc"><div class="desc-l">DESCRIPTION</div>
-      <p><b>삭제 2차 가드</b> — 연결이 0건이어도 "없음" 태그는 지울 수 없습니다. 두 가드가 겹칠 때는 <b>"없음" 사유를 우선</b> 표시합니다.</p>
-      <p>일반 태그이면서 연결 0건이면 버튼이 <b>「삭제」</b>로 활성화되고, 클릭 시 ④ 확인 모달이 뜹니다.</p>
-    </div>
-  </div>
-
-  <div>
-    <div class="spec-head"><span class="chip-n">4</span><span class="spec-t">태그 삭제 확인</span><span class="spec-s">진입: 수정 모달에서 [삭제]</span></div>
-    <div class="modal">
-      <div class="mh"><h3>삭제 확인</h3><span class="x">✕</span></div>
-      <div class="mb">
-        <p style="font-size:15px;font-weight:600;letter-spacing:-.3px;margin:6px 0 10px">'2.5Gbps(프리미엄)' 태그를 삭제하시겠습니까?</p>
-        <div class="notice err" style="margin-bottom:0"><span class="i">!</span>
-          <span>삭제 후에는 복구할 수 없습니다. 상품 연결 화면의 태그 선택 목록에서도 즉시 제거됩니다.</span></div>
-      </div>
-      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-danger solid">삭제</button></div>
-    </div>
-    <div class="desc"><div class="desc-l">DESCRIPTION</div>
-      <p>오버레이 클릭 · ESC로 닫히지 않습니다. 우상단 ✕는 <b>수정 모달까지 함께</b> 닫습니다.</p>
-    </div>
-  </div>
-
-  <div>
-    <div class="spec-head"><span class="chip-n">5</span><span class="spec-t">태그 등록 — 인터넷 외 구분</span><span class="spec-s">예: TV · SKB · 라인</span></div>
-    <div class="modal">
-      <div class="mh"><h3>태그 등록</h3><span class="x">✕</span></div>
-      <div class="mb">
-        <div class="ctx"><div><span class="k">업체</span><span class="v">SKB</span></div><div><span class="k">구분</span><span class="v">TV</span></div></div>
-        <div class="row2">
-          <div class="fld"><label>속성 타입 <span class="req">*</span></label><div class="inp sel">라인</div></div>
-          <div class="fld"><label>속성 <span class="req">*</span></label><div class="inp sel">기본</div></div>
-        </div>
-        <div class="fld"><label>태그명 <span class="sp"></span><span class="ro">직접 입력</span></label>
-          <input class="inp" maxlength="20" value="190채널" readonly>
-          <div class="hint g3">4 / 20 · <b>고객에게는 상품명과 조합되어 노출됩니다</b> — 예) 일반형(190채널)</div></div>
-        <div class="fld"><label>설명</label><textarea class="ta ph">상담 상세의 느낌표 아이콘에 노출되는 문구</textarea></div>
-        <div class="row2">
-          <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">기본</div></div>
-          <div class="fld"><label>추가 노출 <i class="tip r">?<span class="bub">CRM 상담 화면에는 항상 노출됩니다. 여기서는 그 외에 어디에 더 내보낼지를 고릅니다.</span></i></label>
-            <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb"><i></i>플랫폼</span></div></div>
-        </div>
-        <div class="row2">
-          <div class="fld"><label>월요금</label><div class="inp ph">0</div></div>
-          <div class="fld"><label>결합요금</label><div class="inp ph">0</div></div>
-        </div>
-      </div>
-      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">저장</button></div>
-    </div>
-    <div class="desc"><div class="desc-l">DESCRIPTION</div>
-      <p><b>모달 ①과 필드는 같고 「고객 노출」 강조만 옮겨왔습니다.</b> TV · 인터넷전화 · 일반전화는 태그명 전체가 아니라 <b>표기명만</b> 고객에게 나갑니다.</p>
-      <p><b>태그명은 남깁니다.</b> 속성(표기명) 조립 규칙은 구분 4종 공통이고, 태그명은 연결·조회의 식별자로 계속 쓰입니다. 다만 고객 노출이 아니므로 <b>회색 읽기 전용</b>으로 내리고 「내부 식별용」을 붙였습니다.</p>
-      <p class="q">확인 필요 — 개발 목업(w_15)은 「인터넷 외에는 부제를 쓰지 않는다」로 되어 있어 이 화면과 어긋납니다. 기획은 표기명을 4종 모두에 두고, 인터넷 외에서 그 값만 노출하는 안입니다. 확인 필요 사항 A-1.</p>
-    </div>
-  </div>
-
-</div>
 </div>
 
 <script>
 (function(){
- var A={'속도':['100Mbps','160Mbps','200Mbps','320Mbps','500Mbps','1Gbps','2.5Gbps','5Gbps','10Gbps'],
-        '구성제품':['없음','WiFi포함','프리미엄WiFi','WiFi+증폭기','프리미엄WiFi+증폭기'],
-        '추가구성옵션':['없음','안심','파워백신','원격케어']};
- var d=document.getElementById('f-div'),a=document.getElementById('f-attr'),
-     s=document.getElementById('f-sub'),t=document.getElementById('f-tag'),
-     c=document.getElementById('f-cnt'),b=document.getElementById('f-save');
- if(!d)return;
- function paint(){
-   var av=a.value, sv=(s.value||'').trim();
-   if(!av){ t.textContent='속성을 먼저 선택해주세요'; t.style.color='var(--g300)'; }
-   else { t.textContent = sv ? av+'('+sv+')' : av; t.style.color='var(--g900)'; }
-   c.textContent=(s.value||'').length;
-   var ok=!!av;
-   b.disabled=!ok; b.style.opacity=ok?'1':'.4'; b.style.cursor=ok?'pointer':'not-allowed';
- }
- d.onchange=function(){
-   var list=A[d.value]||[];
-   a.innerHTML='<option value="">속성 선택</option>'+list.map(function(x){return '<option>'+x+'</option>';}).join('');
-   a.disabled=!d.value; paint();
- };
- a.onchange=paint; s.oninput=paint;
- b.onclick=function(){
-   if(b.disabled)return;
-   var n=document.createElement('div');
-   n.textContent='태그가 등록되었습니다. — '+t.textContent;
-   n.style.cssText='position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#10A10E;color:#fff;'+
-    'padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;z-index:99;box-shadow:0 6px 20px rgba(0,0,0,.18)';
-   document.body.appendChild(n); setTimeout(function(){n.remove();},2600);
- };
- paint();
+  /* 동작표에서 설명을 그대로 읽어오므로 내용이 어긋나지 않습니다 */
+  var MAP={};
+  document.querySelectorAll('table.act tbody tr').forEach(function(tr){
+    var td=tr.querySelectorAll('td');
+    if(td.length<3) return;
+    var aA=tr.querySelector('.aA .av'), aR=tr.querySelector('.aR .av');
+    if(!aA||!aR) return;
+    MAP[td[0].textContent.trim()]={loc:td[1].innerHTML,act:aA.innerHTML,
+      res:aR.innerHTML,hold:tr.classList.contains('hold')};
+  });
+
+  var pop=document.createElement('div');
+  pop.className='copop'; pop.style.display='none';
+  document.body.appendChild(pop);
+  var cur=null;
+
+  function close(){
+    pop.style.display='none';
+    if(cur){cur.classList.remove('act');cur=null;}
+  }
+  function open(el){
+    var n=el.textContent.trim(), d=MAP[n];
+    if(!d) return;
+    if(cur===el){close();return;}
+    if(cur) cur.classList.remove('act');
+    cur=el; el.classList.add('act');
+
+    pop.className='copop'+(d.hold?' hold':'');
+    pop.innerHTML='<div class="ch"><span class="n">'+n+'</span>'
+      +'<span class="loc">'+d.loc+'</span><span class="x" data-x="1">&#10005;</span></div>'
+      +'<div class="cpb">'
+      +'<div class="row"><span class="k">동작</span><span class="v">'+d.act+'</span></div>'
+      +'<div class="row"><span class="k">결과</span><span class="v">'+d.res+'</span></div>'
+      +'</div>';
+
+    pop.style.display='block';
+    pop.style.left='0px'; pop.style.top='0px';
+    var r=el.getBoundingClientRect();
+    var sx=window.pageXOffset, sy=window.pageYOffset;
+    var w=pop.offsetWidth, h=pop.offsetHeight;
+    var left=r.left+sx+28;
+    if(left+w > document.documentElement.clientWidth+sx-12) left=r.left+sx-w-10;
+    if(left<8+sx) left=8+sx;
+    var top=r.top+sy-8;
+    if(r.top-8+h > window.innerHeight-12) top=Math.max(sy+8, r.bottom+sy-h+8);
+    pop.style.left=left+'px'; pop.style.top=top+'px';
+  }
+
+  document.addEventListener('click',function(e){
+    var co=e.target.closest ? e.target.closest('.co') : null;
+    if(co){ e.stopPropagation(); open(co); return; }
+    if(e.target.closest && e.target.closest('[data-x]')){ close(); return; }
+    if(pop.style.display==='block' && !(e.target.closest && e.target.closest('.copop'))) close();
+  });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+
+  /* 인쇄·캡처용 대체 설명 */
+  document.querySelectorAll('.co').forEach(function(el){
+    var d=MAP[el.textContent.trim()];
+    if(d) el.title=d.loc.replace(/<[^>]*>/g,'');
+  });
+
+  /* 동작표 접기 */
+  var tg=document.getElementById('togg');
+  if(tg) tg.onclick=function(){
+    document.body.classList.toggle('hideact');
+    tg.textContent=document.body.classList.contains('hideact')?'동작표 펼치기':'동작표 접기';
+    close();
+  };
 })();
 </script>
 
-<div class="doc-band"><div class="sheet">
-  <div class="doc-eyebrow">모달 일관 항목 매트릭스</div>
-  <div class="doc-h">모달별 동작 정책 비교</div>
-  <div class="doc-sub">정본은 [CRM Admin] 태그 관리 - 기능 정의서. 시안 검토 편의를 위한 비교용 표.</div>
-</div></div>
-
-<div class="sheet" style="padding-top:28px">
-<table class="mx">
-  <thead><tr><th style="width:18%">항목</th>
-    <th>태그 등록 / 수정<br>(① ② ③ ⑤)</th>
-    <th>태그 삭제 확인<br>(④)</th></tr></thead>
-  <tbody>
-    <tr><th>모달 타이틀</th><td>태그 등록 / 태그 수정</td><td>삭제 확인</td></tr>
-    <tr><th>하단 버튼</th><td>[삭제] [취소] [저장]</td><td>[취소] [삭제]<br>(Danger 컬러)</td></tr>
-    <tr><th>저장 활성 조건</th><td>필수 항목 모두 입력<br>(속성 타입 · 속성 · 노출 등급)</td><td>항상 활성</td></tr>
-    <tr><th>삭제 활성 조건</th><td>연결 0건 <b>그리고</b> "없음" 태그가 아닐 것</td><td>—</td></tr>
-    <tr><th>취소 동작</th><td>변경사항 저장 없이 모달 닫기</td><td class="bad">확인 모달만 닫기.<br>수정 모달은 유지</td></tr>
-    <tr><th>우상단 ✕</th><td>모달 닫기</td><td class="bad">수정 모달 + 확인 모달<br>동시에 닫힘</td></tr>
-    <tr><th>ESC 키</th><td>모달 닫기</td><td class="bad">모달 유지 (닫힘 비허용)</td></tr>
-    <tr><th>오버레이 클릭</th><td>모달 닫기</td><td class="bad">모달 유지 (닫힘 비허용)</td></tr>
-    <tr><th>처리 성공</th><td>토스트(green)<br>"태그가 등록(수정)되었습니다."<br>+ 모달 닫힘 + 리스트 갱신</td><td>토스트(green)<br>"삭제되었습니다."<br>+ 두 모달 닫힘 + 리스트 갱신</td></tr>
-    <tr><th>처리 실패</th><td>중복(업체·속성·표기명): 토스트(red)<br>+ 모달 유지 + 입력값 보존</td><td>토스트(red) + 모달 유지</td></tr>
-  </tbody>
-</table>
-<div class="desc" style="margin-top:12px"><div class="desc-l">DESCRIPTION</div>
-  <p>빨간색 셀: 컨펌 성격 모달의 ESC / 오버레이 클릭 = 닫힘 비허용, 취소 = 확인 모달만 닫힘.</p>
-  <p><b>⑤(인터넷 외 구분)는 ①과 동작 정책이 같아 열을 따로 두지 않았습니다.</b> 다른 것은 태그명을 <b>조립하지 않고 직접 입력</b>한다는 점 하나뿐입니다 — 표기명 칸이 없습니다.</p>
-</div>
-</div>
-
-<div class="doc-band"><div class="sheet">
-  <div class="doc-eyebrow">메시지 정리</div>
-  <div class="doc-h">인라인 메시지 · 토스트 메시지</div>
-  <div class="doc-sub">본 화면에서 사용하는 모든 메시지 케이스를 카테고리별로 정리.</div>
-</div></div>
-
-<div class="sheet" style="padding-top:28px">
-
-<div class="msec">
-  <div class="msec-h"><span class="c">A</span><span class="t">인라인 메시지</span></div>
-  <div class="msec-s">모달 내 입력 필드 또는 영역 근처에 노출되는 안내 · 경고 · 검증 메시지</div>
-
-  <div class="msec-h" style="margin-top:16px"><span class="t" style="font-size:13px">A-1. 필드 hint</span>
-    <span class="msec-s" style="margin:0">회색 보조 텍스트</span></div>
-  <table class="mx"><thead><tr><th style="width:24%">표시 위치</th><th style="width:16%">트리거</th><th>메시지 문구</th><th style="width:16%">디자인 토큰</th></tr></thead><tbody>
-    <tr><th>모달 ① 표기명 하단</th><td>상시</td><td class="msg">"0 / 20" (글자수 카운터)</td><td class="tok">12px / gray-300</td></tr>
-    <tr><th>모달 ① 표기명 하단</th><td>상시</td><td class="msg">"예: 슬림 · 광랜 1년" (placeholder · 인터넷 기준)</td><td class="tok">12px / gray-300</td></tr>
-    <tr><th>모달 ①⑤ 노출 등급 하단</th><td>상시</td><td class="msg">"등급에 따라 상담 상세 드롭다운에서의 순서와 표시 상태(회색 · 취소선)가 달라집니다."</td><td class="tok">12px / gray-300</td></tr>
-    <tr><th>모달 ③ 속성 하단</th><td>"없음" 태그일 때</td><td class="msg">"'없음'은 속성 타입을 만들 때 자동으로 생기는 태그입니다. 삭제할 수 없습니다."</td><td class="tok">12px / gray-300</td></tr>
-    <tr><th>모달 ①② 추가 노출 라벨 옆 <code>?</code> 툴팁</th><td>아이콘 hover</td><td class="msg">"CRM 상담 화면에는 항상 노출됩니다. 여기서는 그 외에 어디에 더 내보낼지를 고릅니다."</td><td class="tok">12px / white on gray-800</td></tr>
-    <tr><th>모달 ⑤ 태그명 하단</th><td>상시</td><td class="msg">"4 / 20 · <b>고객에게는 상품명과 조합되어 노출됩니다</b> — 예) 일반형(190채널)"</td><td class="tok">12px / gray-300</td></tr>
-    <tr><th>모달 ①②③ 태그명 라벨 우측</th><td>상시</td><td class="msg">"자동 생성" · ⑤는 "직접 입력"</td><td class="tok">11px / gray-400</td></tr>
-  </tbody></table>
-
-  <div class="msec-h" style="margin-top:16px"><span class="t" style="font-size:13px">A-2. 경고</span>
-    <span class="msec-s" style="margin:0">아이콘 + warning 색 텍스트</span></div>
-  <table class="mx"><thead><tr><th style="width:24%">표시 위치</th><th style="width:16%">트리거</th><th>메시지 문구</th><th style="width:16%">디자인 토큰</th></tr></thead><tbody>
-    <tr><th>모달 ② 속성 하단</th><td>수정 모드 진입 시 상시</td><td class="msg">"속성을 바꾸려면 삭제하고 다시 등록해야 합니다. 연결이 들고 있는 사본이 어긋나고 고객에게 보이는 이름도 함께 바뀝니다."</td><td class="tok">12px / warning</td></tr>
-  </tbody></table>
-
-  <div class="msec-h" style="margin-top:16px"><span class="t" style="font-size:13px">A-3. 검증 에러</span>
-    <span class="msec-s" style="margin:0">아이콘 + error 색 텍스트 + input 빨간 테두리</span></div>
-  <table class="mx"><thead><tr><th style="width:24%">표시 위치</th><th style="width:22%">트리거</th><th>메시지 문구</th></tr></thead><tbody>
-    <tr><th>모달 ① 표기명</th><td>20자 초과 입력 시도</td><td class="msg">에러 없음. 21번째 글자 입력 자동 차단</td></tr>
-    <tr><th>모달 ①②⑤ 월요금 · 결합요금</th><td>숫자 외 입력 후 포커스 아웃</td><td class="msg">"요금은 숫자만 입력할 수 있습니다."</td></tr>
-  </tbody></table>
-
-  <div class="msec-h" style="margin-top:16px"><span class="t" style="font-size:13px">A-4. 안내 박스 (Notice)</span></div>
-  <table class="mx"><thead><tr><th style="width:24%">표시 위치</th><th style="width:20%">트리거</th><th>메시지 문구</th><th style="width:10%">톤</th></tr></thead><tbody>
-    <tr><th>목록 상단 (탭 위)</th><td>상품 태그 탭 진입 시 상시</td><td class="msg">인터넷 — "인터넷 태그명은 속성(표기명)으로 자동 조립되며, 그대로 고객에게 노출됩니다 — 100Mbps(슬림). …"<br>인터넷 외 — "인터넷 외 태그명은 업체별로 직접 입력하며, 고객에게는 상품명과 조합되어 노출됩니다 — 우리끼리3000(인터넷전화(정액)) · 기가지니3A(스마트셋탑). …"</td><td>Info</td></tr>
-    <tr><th>목록 상단</th><td>검색어 입력 시</td><td class="msg">"검색 중에는 순서를 바꿀 수 없습니다. 일부 태그만 보이는 상태에서 끌어 놓으면 화면에 없는 태그의 순번이 함께 밀립니다. 검색어를 지우면 핸들이 다시 열립니다."</td><td>Warning</td></tr>
-    <tr><th>목록 상단</th><td>조회 API 실패</td><td class="msg">"목록을 불러오지 못했습니다. 잠시 후 다시 시도해주세요."</td><td>Error</td></tr>
-    <tr><th>모달 ④ 본문</th><td>모달 진입 시</td><td class="msg">"삭제 후에는 복구할 수 없습니다. 상품 연결 화면의 태그 선택 목록에서도 즉시 제거됩니다."</td><td>Error</td></tr>
-  </tbody></table>
-</div>
-
-<div class="msec">
-  <div class="msec-h"><span class="c">B</span><span class="t">토스트 메시지</span></div>
-  <div class="msec-s">저장 · 실패 시 화면에 일시적으로 노출되는 피드백</div>
-
-  <div class="msec-h" style="margin-top:16px"><span class="t" style="font-size:13px">B-1. 성공 토스트 · green</span></div>
-  <table class="mx"><thead><tr><th style="width:32%">트리거</th><th>메시지 문구</th><th style="width:26%">부가 동작</th></tr></thead><tbody>
-    <tr><th>표시 순서 변경 (드래그 종료)</th><td class="msg">"저장되었습니다."</td><td>리스트 갱신 · 해당 속성 순번 1..n 재채번</td></tr>
-    <tr><th>모달 ①⑤ 태그 등록 [저장]</th><td class="msg">"태그가 등록되었습니다."</td><td>모달 닫힘 + 리스트 갱신</td></tr>
-    <tr><th>모달 ②③ 태그 수정 [저장]</th><td class="msg">"태그가 수정되었습니다."</td><td>모달 닫힘 + 리스트 갱신</td></tr>
-    <tr class="hl"><th>모달 ②③ 표기명 변경 [저장]</th><td class="msg">"태그가 수정되었습니다. 태그명이 '{변경 후 태그명}'으로 바뀌었습니다."</td><td>모달 닫힘 + 리스트 갱신 + <b>고객 노출 문자열 변경</b></td></tr>
-    <tr><th>모달 ④ 태그 삭제 확인 [삭제]</th><td class="msg">"삭제되었습니다."</td><td>두 모달 닫힘 + 리스트 갱신</td></tr>
-  </tbody></table>
-  <div class="desc" style="margin-top:8px"><div class="desc-l">DESCRIPTION</div>
-    <p>보라색 행: <b>고객에게 나가는 문자열이 바뀌는 케이스.</b> 표기명 변경은 태그명 변경이므로 토스트에 변경 후 태그명을 명시합니다.</p></div>
-
-  <div class="msec-h" style="margin-top:16px"><span class="t" style="font-size:13px">B-2. 실패 토스트 · red</span></div>
-  <table class="mx"><thead><tr><th style="width:32%">트리거</th><th>메시지 문구</th><th style="width:26%">부가 동작</th></tr></thead><tbody>
-    <tr><th>표시 순서 변경 실패 (드래그 후 API 실패)</th><td class="msg">"순서 저장에 실패했습니다. 다시 시도해주세요."</td><td>원래 순서로 자동 롤백</td></tr>
-    <tr><th>드래그 — 다른 속성에 놓았을 때</th><td class="msg">"다른 속성으로는 옮길 수 없습니다. 표시 순서는 같은 속성 안에서만 의미가 있습니다."</td><td>원위치 · 저장 없음</td></tr>
-    <tr><th>모달 ①②⑤ 중복 검증 (서버)</th><td class="msg">"같은 업체·속성에 동일한 표기명의 태그가 이미 있습니다."</td><td>모달 유지 + 입력값 보존</td></tr>
-    <tr><th>삭제 실패 — 그사이 연결이 생긴 경우</th><td class="msg">"연결이 있어 삭제할 수 없습니다. 목록을 새로고침해주세요."</td><td>모달 유지 + 연결 목록 갱신</td></tr>
-    <tr><th>모든 모달 · 서버 저장 실패 (공통)</th><td class="msg">"저장에 실패했습니다. 잠시 후 다시 시도해주세요."</td><td>모달 유지 + 입력값 보존</td></tr>
-  </tbody></table>
-  <div class="desc" style="margin-top:8px"><div class="desc-l">DESCRIPTION</div>
-    <p>서버 검증 실패는 토스트(red) + 모달 유지. 프론트 형식 검증(요금 숫자 · 프로그램명 공백)만 포커스 아웃 시 인라인 에러(A-3)로 처리합니다. 필수 미입력은 [저장] 버튼 disabled로만 처리하고 별도 인라인 에러를 띄우지 않습니다.</p>
-    <p><b>목록 조회 실패는 토스트가 아니라 화면 내 안내(A-4)</b>로 처리합니다 — 토스트는 사라지면 재시도 경로가 없습니다.</p></div>
-</div>
-
-</div>
-
-<footer>실데이터 기준 태그 230건 (인터넷 97 · TV 97 · 인터넷전화 27 · 일반전화 9) · 모달 ①은 동작 시안 · 정본은 [CRM Admin] 태그 관리 - 기능 정의서 · 컨플루언스는 조회 전용</footer>
-</div>
+</body>
+</html>
