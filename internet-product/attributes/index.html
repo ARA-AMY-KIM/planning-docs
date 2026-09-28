@@ -145,6 +145,9 @@ table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
  box-shadow:0 8px 28px rgba(19,19,20,.10);overflow:hidden}
 .modal .mh{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px}
 .modal .mh h3{font-size:17px;font-weight:700;letter-spacing:-.4px}
+.modal .mh .mx{border:none;background:none;color:var(--g400);font-size:15px;line-height:1;
+ cursor:pointer;padding:4px;margin:-4px -4px -4px 0;font-family:inherit}
+.modal .mh .mx:hover{color:var(--g700)}
 .modal .x{color:var(--g400);font-size:17px;line-height:1}
 .modal .mb{padding:0 20px 18px}
 .modal .mf{display:flex;gap:8px;padding:14px 20px;border-top:1px solid var(--g100);background:#fff}
@@ -204,12 +207,12 @@ table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
 
 /* 사이드패널 — 어드민 biz-tunnel/message-history 구현 기준 */
 .stage{position:relative;overflow:hidden;border:1px solid var(--g100);border-radius:10px;background:#fff}
-.drawer{position:absolute;top:0;right:0;bottom:0;width:560px;background:#fff;
+.drawer{position:absolute;top:0;right:0;bottom:0;width:620px;background:#fff;
  box-shadow:-8px 0 24px rgba(19,19,20,.14),0 0 0 1px rgba(19,19,20,.04);display:flex;flex-direction:column;z-index:5}
 .drawer .dh{flex:0 0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;
  border-bottom:1px solid var(--g100)}
 .drawer .dh .lft{display:flex;align-items:center;gap:8px}
-.drawer .dh h4{font-size:14px;font-weight:600;letter-spacing:-.3px;color:#213547}
+.drawer .dh h4{font-size:16px;font-weight:700;letter-spacing:-.4px;color:var(--g900)}
 .drawer .dh .id{font-size:12px;color:var(--g500)}
 .drawer .dh .x{color:var(--g400);font-size:16px;cursor:pointer}
 .drawer .db{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
@@ -218,28 +221,34 @@ table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
  display:flex;align-items:center;justify-content:space-between}
 .dsec>h5 em{font-style:normal;font-size:12px;font-weight:400;color:var(--g500)}
 /* 태그 정보 카드 */
-.tagcard{background:var(--g25);border:1px solid var(--g100);border-radius:8px;padding:14px 16px}
-.tc-name{font-size:17px;font-weight:700;letter-spacing:-.4px;color:var(--g900);
- padding-bottom:11px;margin-bottom:12px;border-bottom:1px solid var(--g100);display:flex;
- align-items:center;justify-content:space-between;gap:10px}
-.tc-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px}
-.tc-grid>div{display:flex;flex-direction:column;gap:2px;min-width:0}
-.tc-grid .k{font-size:11.5px;color:var(--g500);letter-spacing:-.2px}
-.tc-grid .v{font-size:13.5px;font-weight:600;color:var(--g900);letter-spacing:-.3px;
+.tagcard{background:var(--g25);border:1px solid var(--g100);border-radius:8px;padding:14px 18px}
+.tc-grid{display:flex;flex-direction:column;gap:9px}
+.tc-grid>div{display:flex;align-items:baseline;gap:14px;min-width:0}
+.tc-grid .k{font-size:12.5px;color:var(--g500);letter-spacing:-.2px;flex:0 0 66px}
+.tc-grid .v{font-size:13.5px;font-weight:600;color:var(--g900);letter-spacing:-.3px;flex:1 1 auto;
  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* 연결 목록 */
 .dlist-h{display:flex;align-items:center;justify-content:space-between;padding:14px 24px 10px}
 .dlist-h .t{font-size:14px;font-weight:600;letter-spacing:-.3px;color:#213547}
 .dlist-h .c{font-size:12px;color:var(--g500)}
 .dlist{flex:1;overflow-y:auto;border-top:1px solid var(--g100)}
-.dl{padding:9px 24px;border-bottom:1px solid var(--g50)}
+.dtbl{width:100%;border-collapse:collapse;table-layout:fixed}
+.dtbl th{position:sticky;top:0;z-index:1;background:#fff;font-size:11.5px;font-weight:400;color:var(--g500);
+ text-align:left;letter-spacing:-.2px;padding:9px 10px;border-bottom:1px solid var(--g100)}
+.dtbl th:first-child{padding-left:24px}.dtbl th:last-child{padding-right:24px}
+.dtbl td{font-size:12.5px;color:var(--g900);letter-spacing:-.3px;line-height:1.45;
+ padding:11px 10px;border-bottom:1px solid var(--g50);vertical-align:top;word-break:keep-all}
+.dtbl td:first-child{padding-left:24px;color:var(--g700)}.dtbl td:last-child{padding-right:24px;color:var(--g600)}
+.dtbl td .non{color:var(--g300)}
+.dempty{padding:28px 24px;text-align:center;color:var(--g300);font-size:13px}
+.mgc{display:inline-flex;gap:6px;justify-content:center}
 .dl .p{font-size:13px;font-weight:600;color:var(--g900);letter-spacing:-.3px;
  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dl .p .xs{color:var(--g300);font-weight:400;margin:0 6px}
 .dl .p .st{color:var(--g600);font-weight:500}
 .dl .m{font-size:12px;color:var(--g500);margin-top:2px;letter-spacing:-.2px;line-height:1.45;
  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dl .m .cur{color:var(--g900);font-weight:700}
+.dl .m .cur{color:var(--g900)}
 .dl .m .non{color:var(--g300)}
 .scrollhint{position:absolute;right:6px;top:0;bottom:0;width:4px;pointer-events:none}
 .scrollhint i{position:absolute;left:0;width:4px;border-radius:2px;background:var(--g200);
@@ -279,6 +288,17 @@ table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
 .vcell:hover .bub{opacity:1;visibility:visible}
 .vcell .bub .h{display:block;font-size:11px;color:#9C9EA2;margin-bottom:3px}
 .vzero{font-size:14px;color:var(--g300)}
+/* 비활성 버튼 사유 툴팁 — disabled 버튼은 마우스 이벤트를 받지 못하므로 래퍼에 건다 */
+.tw{position:relative;display:inline-flex}
+.tw::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);right:0;
+ background:var(--g800);color:#fff;font-size:12px;font-weight:400;line-height:1.55;letter-spacing:-.2px;
+ padding:8px 11px;border-radius:6px;width:max-content;max-width:240px;text-align:left;white-space:normal;
+ opacity:0;visibility:hidden;transition:.12s;z-index:30;pointer-events:none;
+ box-shadow:0 4px 14px rgba(19,19,20,.18)}
+.tw::before{content:"";position:absolute;bottom:calc(100% + 3px);right:14px;
+ border:5px solid transparent;border-top-color:var(--g800);
+ opacity:0;visibility:hidden;transition:.12s;z-index:31;pointer-events:none}
+.tw:hover::after,.tw:hover::before{opacity:1;visibility:visible}
 
 
 [hidden]{display:none!important}
@@ -492,7 +512,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
   <div class="in">
     <span class="lb">변경 표시</span>
     <span class="tx">AS-IS 시안 대비 <b>바뀜 자리에 주황 번호</b>, <b>없어진 자리에 회색 칩</b>을 두었습니다. <b>누르면</b> 무엇이 어떻게 바뀌었는지 뜨웁니다.</span>
-    <button class="mkmore" data-mk="10">그 밖의 변경 4건</button>
+    <button class="mkmore" data-mk="10">그 밖의 변경 11건</button>
     <label class="cb on" id="mkToggle"><i></i>표시 켜기</label>
   </div>
 </div>
@@ -527,13 +547,13 @@ body.mk-on .mkrow:hover{color:var(--g700)}
   </div>
 
   <div class="cntrow">
-    <span class="cnt">총 <b id="totN">9</b>개</span>
+    <span class="cnt">총 <b id="totN">9</b>건</span>
   </div>
 
   <div class="tcard">
     <table class="atbl">
-      <colgroup><col style="width:44px"><col style="width:280px"><col><col style="width:110px"><col style="width:84px"></colgroup>
-      <thead><tr><th class="mk th" data-mk="7"></th><th class="mk th" data-mk="8">속성</th><th>사용 업체</th><th class="c">연결 상품</th><th class="c mk th" data-mk="9">삭제</th></tr></thead>
+      <colgroup><col style="width:44px"><col style="width:240px"><col><col style="width:110px"><col style="width:132px"></colgroup>
+      <thead><tr><th class="mk th" data-mk="7"></th><th class="mk th" data-mk="8">속성</th><th>사용 업체</th><th class="c">연결 상품</th><th class="c mk th" data-mk="9">관리</th></tr></thead>
       <tbody id="attrBody"></tbody>
     </table>
     <div class="mkrow" data-mk="6"><span class="n">6</span>제거 · <s>표 하단 인라인 추가행(입력칸 + [추가])</s> → 상단 [＋ 속성 추가] 버튼으로 이동</div>
@@ -542,66 +562,61 @@ body.mk-on .mkrow:hover{color:var(--g700)}
 </div>
 
 <aside class="drawer live" id="dw" hidden>
-  <div class="dh"><div class="lft"><h4>연결 상품</h4></div><span class="x" id="dwx">✕</span></div>
+  <div class="dh"><div class="lft"><h4 id="dwName"></h4></div><span class="x" id="dwx">✕</span></div>
   <div class="db">
     <div class="dsec">
       <div class="tagcard">
-        <div class="tc-name"><span id="dwName"></span></div>
         <div class="tc-grid">
           <div><span class="k">구분</span><span class="v" id="dwSvc"></span></div>
           <div><span class="k">속성 타입</span><span class="v" id="dwDiv"></span></div>
           <div><span class="k">사용 업체</span><span class="v" id="dwVend"></span></div>
-          <div><span class="k">연결 상품</span><span class="v" id="dwCnt2"></span></div>
         </div>
       </div>
     </div>
     <div class="dlist-h"><span class="t">연결 상품</span><span class="c" id="dwCnt"></span></div>
     <div class="dlist" id="dwList"></div>
   </div>
-  <div class="df"><button class="btn-out" style="width:100%;justify-content:center">상품 연결 화면에서 보기</button></div>
+  <div class="df"><button class="btn-out" style="width:100%;justify-content:center">상품 연결 관리에서 보기</button></div>
 </aside>
 
 <div id="ovAdd" hidden style="position:fixed;inset:0;background:rgba(19,19,20,.35);z-index:950;display:flex;align-items:center;justify-content:center">
   <div class="modal" style="width:600px">
-    <div class="mh"><h3>속성 추가</h3></div>
+    <div class="mh"><h3>속성 추가</h3><button class="mx" id="adX" type="button" aria-label="닫기">✕</button></div>
     <div class="mb">
       <div class="ctx" style="margin-bottom:14px">
         <div><span class="k">구분</span><span class="v" id="adSvc"></span></div>
         <div><span class="k">속성 타입</span><span class="v" id="adDiv"></span></div>
       </div>
-      <div class="fld"><label>속성명 <span class="req">*</span></label>
+      <div class="fld"><label>속성 <span class="req">*</span></label>
         <input class="inp" id="adName" placeholder="예) 2Gbps" maxlength="20">
         <div class="inerr" id="adErr" hidden style="margin:6px 0 0"></div>
       </div>
-      <div class="notice info" style="margin-bottom:0"><span class="i"></span>
-        <span>추가한 속성은 <b>목록 맨 아래에 붙습니다.</b> 순서는 목록에서 드래그로 바꾸고, 삭제는 <b>사용 업체가 0개일 때만</b> 할 수 있습니다.</span></div>
     </div>
-    <div class="mf"><div class="sp"></div><button class="btn-out" id="adCancel">취소</button><button class="btn-solid" id="adOk">확인</button></div>
+    <div class="mf"><div class="sp"></div><button class="btn-out" id="adCancel">취소</button><button class="btn-solid" id="adOk">추가</button></div>
   </div>
 </div>
 
 <div id="ovRen" hidden style="position:fixed;inset:0;background:rgba(19,19,20,.35);z-index:950;display:flex;align-items:center;justify-content:center">
   <div class="modal" style="width:600px">
-    <div class="mh"><h3>속성 이름 변경</h3></div>
+    <div class="mh"><h3>속성 이름 변경</h3><button class="mx" id="renX" type="button" aria-label="닫기">✕</button></div>
     <div class="mb">
-      <div class="fld"><label>지금</label><div class="inp ro" id="renOld"></div></div>
+      <div class="fld"><label>현재 이름</label><div class="inp ro" id="renOld"></div></div>
       <div class="fld"><label>변경할 이름 <span class="req">*</span></label>
         <input class="inp" id="renInput" maxlength="20">
         <div class="inerr" id="renErr" hidden style="margin:6px 0 0"></div>
       </div>
       <div id="renNetBox">
         <div class="notice warn" style="margin-bottom:12px"><span class="i">!</span>
-          <span><b id="renImpact"></b>의 <b>고객 노출 문구가 함께 바뀝니다.</b> 태그명이 <code>속성(표기명)</code>으로 조립되기 때문입니다.</span></div>
+          <span><b id="renImpact"></b>의 <b>고객 노출 문구가 함께 바뀝니다.</b></span></div>
       </div>
-      <div class="hint g3" style="margin-top:10px">[확인]을 누르면 바로 저장되고 상품속성 캐시가 비워집니다.</div>
     </div>
-    <div class="mf"><div class="sp"></div><button class="btn-out" id="renCancel">취소</button><button class="btn-solid" id="renOk">확인</button></div>
+    <div class="mf"><div class="sp"></div><button class="btn-out" id="renCancel">취소</button><button class="btn-solid" id="renOk">변경</button></div>
   </div>
 </div>
 
 <div id="ovDel" hidden style="position:fixed;inset:0;background:rgba(19,19,20,.35);z-index:950;display:flex;align-items:center;justify-content:center">
   <div class="modal" style="width:600px">
-    <div class="mh"><h3>속성을 삭제할까요?</h3></div>
+    <div class="mh"><h3>속성 삭제</h3><button class="mx" id="dlX" type="button" aria-label="닫기">✕</button></div>
     <div class="mb">
       <div class="ctx" style="margin-bottom:14px">
         <div><span class="k">구분 · 속성 타입</span><span class="v" id="dlScope"></span></div>
@@ -631,41 +646,51 @@ body.mk-on .mkrow:hover{color:var(--g700)}
   <div>
     <div class="spec-head"><span class="chip-n">1</span><span class="spec-t">속성 추가</span><span class="spec-s">진입: 우상단 [＋ 속성 추가]</span></div>
     <div class="modal" style="width:600px">
-      <div class="mh"><h3>속성 추가</h3></div>
+      <div class="mh"><h3>속성 추가</h3><button class="mx" type="button" aria-label="닫기">✕</button></div>
       <div class="mb">
         <div class="ctx" style="margin-bottom:14px">
           <div><span class="k">구분</span><span class="v">인터넷</span></div>
           <div><span class="k">속성 타입</span><span class="v">속도</span></div>
         </div>
-        <div class="fld"><label>속성명 <span class="req">*</span></label>
+        <div class="fld"><label>속성 <span class="req">*</span></label>
           <div class="inp">2Gbps</div>
         </div>
-        <div class="notice info" style="margin-bottom:0"><span class="i"></span>
-          <span>추가한 속성은 <b>목록 맨 아래에 붙습니다.</b> 순서는 목록에서 드래그로 바꾸고, 삭제는 <b>사용 업체가 0개일 때만</b> 할 수 있습니다.</span></div>
       </div>
-      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">확인</button></div>
+      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">추가</button></div>
     </div>
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">속성 이름 변경</span><span class="spec-s">진입: 목록의 속성명 클릭 · 영향 경고는 <b>인터넷만</b></span></div>
+    <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">속성 이름 변경 — 인터넷</span><span class="spec-s">진입: 관리 컬럼 [변경]</span></div>
     <div class="modal" style="width:600px">
-      <div class="mh"><h3>속성 이름 변경</h3></div>
+      <div class="mh"><h3>속성 이름 변경</h3><button class="mx" type="button" aria-label="닫기">✕</button></div>
       <div class="mb">
-        <div class="fld"><label>지금</label><div class="inp ro">1Gbps</div></div>
+        <div class="fld"><label>현재 이름</label><div class="inp ro">1Gbps</div></div>
         <div class="fld"><label>변경할 이름 <span class="req">*</span></label><div class="inp">1기가</div></div>
-        <div class="notice warn" style="margin-bottom:12px"><span class="i">!</span>
-          <span><b>사용 업체 8개 · 연결 상품 66건</b>의 <b>고객 노출 문구가 함께 바뀝니다.</b> 태그명이 <code>속성(표기명)</code>으로 조립되기 때문입니다.</span></div>
-        <div class="hint g3" style="margin-top:10px">[확인]을 누르면 바로 저장되고 상품속성 캐시가 비워집니다.</div>
-      </div>
-      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">확인</button></div>
+        <div class="notice warn" style="margin-bottom:0"><span class="i">!</span>
+          <span><b>사용 업체 8개 · 연결 상품 66건</b>의 <b>고객 노출 문구가 함께 바뀝니다.</b></span></div>
+        </div>
+      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">변경</button></div>
     </div>
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">삭제 확인</span><span class="spec-s">진입: 행 오른쪽 [삭제] · 사용 업체 0일 때만</span></div>
+    <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">속성 이름 변경 — 인터넷 외</span><span class="spec-s">TV · 인터넷전화 · 일반전화 — <b>영향 경고 없음</b></span></div>
     <div class="modal" style="width:600px">
-      <div class="mh"><h3>속성을 삭제할까요?</h3></div>
+      <div class="mh"><h3>속성 이름 변경</h3><button class="mx" type="button" aria-label="닫기">✕</button></div>
+      <div class="mb">
+        <div class="fld"><label>현재 이름</label><div class="inp ro">일반셋탑</div></div>
+        <div class="fld" style="margin-bottom:0"><label>변경할 이름 <span class="req">*</span></label><div class="inp">일반 셋톱박스</div></div>
+        </div>
+      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">변경</button></div>
+    </div>
+    <div class="hint g3" style="margin-top:10px">인터넷 외는 태그명을 <b>직접 입력</b>하므로 속성 이름을 바꿔도 고객 노출 문구가 따라 바뀌지 않습니다. 그래도 모달은 뜹니다 — 즉시 저장이라 되돌리는 방법이 다시 고치는 것뿐입니다.</div>
+  </div>
+
+  <div>
+    <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">삭제 확인</span><span class="spec-s">진입: 관리 컬럼 [삭제] · 사용 업체 0일 때만</span></div>
+    <div class="modal" style="width:600px">
+      <div class="mh"><h3>속성 삭제</h3><button class="mx" type="button" aria-label="닫기">✕</button></div>
       <div class="mb">
         <div class="ctx" style="margin-bottom:14px">
           <div><span class="k">구분 · 속성 타입</span><span class="v">TV › 셋탑</span></div>
@@ -682,7 +707,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
     <div class="spec-head"><span class="chip-v">인라인</span><span class="spec-t">모달 안 에러 2종</span><span class="spec-s">모달을 닫지 않고 입력칸 아래에 붙습니다</span></div>
     <div class="frame" style="padding:16px;background:var(--g25);max-width:600px">
       <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:14px">
-        <div style="font-size:12px;color:var(--g500);margin-bottom:6px">속성 추가 · 속성명 중복</div>
+        <div style="font-size:12px;color:var(--g500);margin-bottom:6px">속성 추가 · 속성 중복</div>
         <div class="inp err" style="border-color:var(--error);background:var(--red50)">1Gbps</div>
         <div class="inerr" style="margin:8px 0 0">같은 속성 타입에 이미 있는 이름입니다.</div>
       </div>
@@ -723,12 +748,9 @@ function renderDivSel(){
 
 function vcell(v){
   if(!v.length) return '<span class="vzero">0</span>';
-  var N=4;
-  var head=v.slice(0,N).join(' · ');
-  var rest=v.length>N ? ' <em>외 '+(v.length-N)+'</em>' : '';
+  /* 시안 반영 : 「외 N」 축약과 hover 툴팁을 없애고 업체를 전부 나열한다 */
   return '<span class="vcell"><span class="cnt">'+v.length+'</span>'
-    +'<span class="vn">'+head+rest+'</span>'
-    +'<span class="bub"><span class="h">사용 업체 '+v.length+'개</span>'+v.join('<br>')+'</span></span>';
+    +'<span class="vn">'+v.join(' · ')+'</span></span>';
 }
 
 /* ── 목록 ── */
@@ -738,16 +760,24 @@ function renderAttrs(){
   $('attrBody').innerHTML=as.map(function(a,i){
     var hd = a.none ? '' :
       '<div class="hdw"><i><svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg></i></div>';
-    var nameCell = a.none
-      ? '<span style="font-weight:600">'+a.n+'</span><span class="submut">자동 등록</span>'
-      : '<span class="nml" data-ren="'+i+'" title="클릭하면 이름을 바꿉니다">'+a.n+'</span>';
+    /* 시안 반영 : 「자동 등록」 배지 제거. 「없음」은 볼드 텍스트만 */
+    var nameCell = '<span style="font-weight:600">'+a.n+'</span>';
+    /* 진입점 : 속성 클릭 → 관리 컬럼 [변경] 버튼 */
+    var S='height:28px;padding:2px 10px;font-size:12px';
+    var W=function(tip,btn){ return '<span class="tw" data-tip="'+tip+'">'+btn+'</span>'; };
+    var ren = a.none
+      ? W('자동 등록 값이라 이름을 바꿀 수 없습니다.','<button class="btn-out dis" style="'+S+'" disabled>변경</button>')
+      : '<button class="btn-out" style="'+S+'" data-ren="'+i+'">변경</button>';
     var canDel = !a.none && a.v.length===0;
-    var btn = a.none ? '<button class="btn-danger dis" style="height:28px;padding:2px 8px;font-size:12px" disabled title="자동 등록 값이라 삭제할 수 없습니다">삭제</button>'
-      : canDel ? '<button class="btn-danger" style="height:28px;padding:2px 10px;font-size:12px" data-del="'+i+'">삭제</button>'
-      : '<button class="btn-danger dis" style="height:28px;padding:2px 8px;font-size:12px" disabled title="사용 업체가 있어 삭제할 수 없습니다">삭제</button>';
-    var lnk = a.r.length ? '<span class="lnk" data-open="'+i+'">'+a.r.length+'</span>' : '<span class="lnk zero">0</span>';
+    var del = a.none
+      ? W('자동 등록 값이라 삭제할 수 없습니다.','<button class="btn-danger dis" style="'+S+'" disabled>삭제</button>')
+      : canDel ? '<button class="btn-danger" style="'+S+'" data-del="'+i+'">삭제</button>'
+      : W('사용 업체 '+a.v.length+'개가 쓰고 있어 삭제할 수 없습니다.','<button class="btn-danger dis" style="'+S+'" disabled>삭제</button>');
+    var n = panelRows(d,a).length;
+    var lnk = n ? '<span class="lnk" data-open="'+i+'">'+n+'</span>' : '<span class="lnk zero">0</span>';
     return '<tr data-i="'+i+'"><td class="c">'+hd+'</td><td>'+nameCell+'</td>'
-      +'<td>'+vcell(a.v)+'</td><td class="c">'+lnk+'</td><td class="c">'+btn+'</td></tr>';
+      +'<td>'+vcell(a.v)+'</td><td class="c">'+lnk+'</td>'
+      +'<td class="c"><span class="mgc">'+ren+del+'</span></td></tr>';
   }).join('');
   $('attrBody').querySelectorAll('[data-ren]').forEach(b=>b.onclick=()=>openRename(+b.dataset.ren));
   $('attrBody').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>openDel(+b.dataset.del));
@@ -774,38 +804,57 @@ function bindDrag(){
   });
 }
 
+
+/* ── 사이드패널 행 계산 ─────────────────────────────────────────
+   인터넷   : 한 줄 = 연결 상품(상품 × 세트상품 단품). 태그는 3자리 조합.
+   인터넷 외 : 한 줄 = 속성이 붙는 단품 1개. 태그는 그 자리 태그만.
+              자리1(라인·요금방식) → 상품,  자리2(셋탑·전화기기) → 셋탑/전화기기 단품
+   목록의 「연결 상품」 건수도 이 함수의 결과 수를 쓴다 — 숫자가 갈리지 않게.        */
+function panelRows(d,a){
+  var by={}; a.r.forEach(function(j){var x=L[j]; (by[x[0]]=by[x[0]]||[]).push(x);});
+  var out=[], seen={};
+  a.v.forEach(function(v){
+    (by[v]||[]).forEach(function(x){
+      if(isNet()){
+        out.push([v, x[1]+(x[2]?' <span class="non">×</span> '+x[2]:''),
+                  [x[3],x[4],x[5]].filter(function(t){return t!=='';})
+                    .map(function(t){return t==='없음'?'<span class="non">없음</span>':t;}).join(' · ')]);
+        return;
+      }
+      var ent = (d.slot===1) ? x[1] : (x[2]||x[1]);
+      var tag = x[2+d.slot];
+      var k=v+'\u0001'+ent+'\u0001'+tag;
+      if(seen[k]) return; seen[k]=1;
+      out.push([v, ent, tag==='없음'?'<span class="non">없음</span>':tag]);
+    });
+  });
+  return out;
+}
+
 /* ── 연결 상품 사이드패널 ── */
 function openPanel(i){
   var d=cur(), a=d.attrs[i]; if(!a)return;
   $('dwName').textContent=a.n; $('dwSvc').textContent=SV; $('dwDiv').textContent=d.name;
-  var net=isNet(), lbl=net?'연결 상품':'이 속성을 쓰는 상품';
-  document.querySelectorAll('#dw .dlist-h .t, #dw .dh h4').forEach(function(e){e.textContent=lbl;});
+  document.querySelector('#dw .dlist-h .t').textContent='연결 상품';
   $('dwVend').textContent=a.v.length+'개';
-  $('dwCnt2').textContent=a.r.length+(net?'건':'개');
-  $('dwCnt').textContent=a.r.length+(net?'건':'개');
-  var by={}; a.r.forEach(function(j){var x=L[j]; (by[x[0]]=by[x[0]]||[]).push(x);});
-  var html='';
-  a.v.forEach(function(v){
-    var rows=by[v]||[];
-    if(!net){
-      var seen={}, uniq=[];
-      rows.forEach(function(x){ var n=(d.slot===2 && x[2])?x[2]:x[1]; if(!seen[n]){seen[n]=1;uniq.push(n);} });
-      html+='<div class="vgrp"><span class="v">'+v+'</span><span class="c">'+uniq.length+'개</span></div>';
-      html+=uniq.map(n=>'<div class="dl"><div class="p"><span class="cur">'+n+'</span></div></div>').join('');
-      return;
-    }
-    html+='<div class="vgrp"><span class="v">'+v+'</span><span class="c">'+rows.length+'건</span></div>';
-    html+=rows.map(function(x){
-      var trio=[x[3],x[4],x[5]].map(function(t,j){
-        var c=(j===d.slot-1)?'cur':(t==='없음'?'non':'');
-        return '<span'+(c?' class="'+c+'"':'')+'>'+t+'</span>';}).join(' · ');
-      return '<div class="dl"><div class="p">'+x[1]+(x[2]?'<span class="xs">×</span><span class="st">'+x[2]+'</span>':'')+'</div><div class="m">'+trio+'</div></div>';
-    }).join('');
-  });
-  $('dwList').innerHTML=html||'<div class="dl" style="color:var(--g300)">연결된 상품이 없습니다</div>';
+
+  var rows=panelRows(d,a);
+  $('dwCnt').textContent='총 '+rows.length+'건';
+  var body=rows.map(function(r){
+    return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td></tr>';
+  }).join('');
+
+  $('dwList').innerHTML = rows.length
+    ? '<table class="dtbl"><colgroup><col style="width:118px"><col><col style="width:210px"></colgroup>'
+      +'<thead><tr><th>사용 업체명</th><th>상품명</th><th>태그명</th></tr></thead><tbody>'+body+'</tbody></table>'
+    : '<div class="dempty">연결된 상품이 없습니다</div>';
   $('dw').hidden=false;
 }
 $('dwx').onclick=()=>{$('dw').hidden=true;};
+/* 모달 ✕ = 취소와 동일 (디자인시스템 상 ✕ 유지) */
+$('adX').onclick=()=>$('adCancel').click();
+$('renX').onclick=()=>$('renCancel').click();
+$('dlX').onclick=()=>$('dlCancel').click();
 
 /* ── ① 속성 추가 ── */
 $('addOpen').onclick=function(){
@@ -915,13 +964,20 @@ var MK={
     b:'<b>드롭 즉시 저장.</b> 확인 모달 없음 — 다시 끌면 되돌아오는 동작이기 때문입니다. 단, 저장 1회 = 캐시 무효화 1회라 기능정의서에서 다시 다룹니다.'},
  8:{t:'이름 변경',
     a:'표 안에서 <b>인라인 편집</b> → 포컬스 아웃할 때 확인 모달(인터넷만) → 변경 대기 목록에 쌓임',
-    b:'<b>속성명 클릭 → 입력 모달 → [변경] 즉시 저장.</b> 입력과 확인이 한 곳으로 모였습니다. <b>인터넷 외에도 모달이 뜨고</b>, 영향 경고 블록만 빠집니다.'},
+    b:'<b>관리 컬럼 [변경] → 입력 모달 → 즉시 저장.</b> 디자인 시안 반영으로 진입점이 속성 텍스트 클릭에서 버튼으로 바뀌었습니다. <b>인터넷 외에도 모달이 뜨고</b>, 영향 경고 블록만 빠집니다.'},
  9:{t:'삭제',
     a:'[삭제] 클릭 → 행이 빨간 「삭제 예정」 상태로 바뀜고 <b>[되돌리기]</b> 버튼이 생김',
-    b:'<b>삭제 확인 모달 → 즉시 삭제.</b> [되돌리기] 없음 — 모달이 유일한 방어선입니다. 사용 업체가 1 이상이면 버튼이 disabled라 모달까지 오지 않습니다.'},
+    b:'<b>「관리」 컬럼으로 통합 — [변경] · [삭제] 두 버튼.</b> 삭제는 확인 모달 → 즉시 삭제, [되돌리기] 없음. 사용 업체가 1 이상이면 disabled라 모달까지 오지 않습니다. 「없음」 행은 <b>둘 다 비활성</b>입니다.'},
  10:{t:'그 밖의 변경 — 화면에 자리가 없는 것', gx:1, list:[
-   '<b>「없음」 표기</b> — 보라색 <code>자동 · 고정</code> 배지 → 회색 보조 텍스트 <code>자동 등록</code>. 강조할 값이 아닙니다.',
-   '<b>모달 구성</b> — (이름 변경 · <s>저장 확인</s> · <s>이탈 확인</s>) → (<b>속성 추가</b> · 이름 변경 · <b>삭제 확인</b>)',
+   '<b>「없음」 표기</b> — 보라색 <code>자동 · 고정</code> 배지 <b>전부 제거</b>. 다른 속성과 같은 볼드 텍스트로만 둡니다(디자인 시안 반영).',
+   '<b>사용 업체 컬럼</b> — 앞 4개 + <code>외 N</code> 축약과 hover 툴팁 폐기. <b>전부 나열</b>합니다(디자인 시안 반영).',
+   '<b>건수 단위</b> — 총 N<s>개</s> → 총 N<b>건</b>. 사이드패널도 구분 상관없이 <b>행 단위(건)</b>로 통일했습니다.',
+   '<b>연결 상품 사이드패널</b> — 업체별 그룹 목록 → <b>사용 업체명 · 상품명 · 태그명 3컬럼 표</b>(디자인 시안).',
+   '<b>사이드패널 · 인터넷 외</b> — 한 줄이 <b>속성이 붙는 단품 1개</b>입니다. 상품×단품 조합을 늘어놓지 않고, 태그명도 그 자리 것만 보여줍니다. 예) <code>TV › 셋탑 › 스마트셋탑</code> → <code>기가지니3A / 스마트셋탑(기가지니3A)</code>. 인터넷은 시안대로 조합을 유지합니다.',
+   '<b>모달 구성</b> — (이름 변경 · <s>저장 확인</s> · <s>이탈 확인</s>) → (<b>속성 추가</b> · <b>속성 이름 변경</b> · <b>속성 삭제</b>)',
+   '<b>모달 주 버튼</b> — 「확인」 통일안 폐기. <b>동작을 그대로 씁니다</b> — [추가] · [변경] · [삭제]. 버튼만 보고 무엇이 일어나는지 알 수 있어야 합니다.',
+   '<b>비활성 버튼 사유</b> — 브라우저 기본 <code>title</code>은 <b>disabled 버튼에서 뜨지 않습니다</b>(마우스 이벤트가 전달되지 않음). 버튼을 래퍼로 감싸 <b>커스텀 툴팁</b>으로 띄웁니다. 라벨에 사유를 적는 방식(태그 관리 5.5)은 문구가 길어 쓰지 않습니다.',
+   '<b>모달 ✕ 닫기</b> — 「✕ 없음」안 폐기. <b>디자인시스템 규정에 따라 우상단 ✕를 유지</b>합니다. 동작은 [취소]와 같습니다.',
    '<b>건수 경고</b> — 변경 10건에서 뜨던 주황 토스트 폐기. 일괄 저장 전제가 사라졌습니다.',
    '<b>이탈 방지</b> — <code>beforeunload</code> + 이탈 확인 모달 폐기. 잃을 미저장 변경이 없습니다.'
  ]}
