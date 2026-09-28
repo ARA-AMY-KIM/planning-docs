@@ -809,7 +809,7 @@ renderTabs(); render();
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
     <p><b>조합 칩은 이 경로에서만 생깁니다</b> — 목록의 자리 칸을 눌러서 필터하는 동작은 뺐습니다. 조합의 86%가 상품 1건이라 눌러도 결과가 그 한 줄이고, 복수 조합도 <code>rowspan</code> 병합으로 이미 한 덩어리로 보입니다. 칩이 생기는 경로를 하나로 두어야 운영자가 지금 무엇이 걸려 있는지 압니다.</p>
     <p><b>현재창인 이유</b> — 조회만 하고 끝나지 않습니다. 대개 삭제로 이어지는데, 새창이면 뒤에 남은 인터넷 상품 관리가 이미 지운 연결의 선을 계속 그립니다.</p>
-    <p class="q">URL 안 — <code>/crm/internet/product-connections?service=INTERNET&amp;vendor=KT&amp;combo=&lt;조합키&gt;&amp;focus=&lt;연결ID&gt;</code>. 링크 공유가 되어야 하므로 쿼리에 담는 쪽을 권합니다. 경로 체계는 PNB 도메인 분리 계획과 같이 봐야 합니다.</p>
+    <p class="q">URL — <code>/crm/products/internet/connections?vendor=KT&amp;combo=&lt;조합키&gt;&amp;focus=&lt;연결ID&gt;</code> (PNB-1669 2026-09-28 확정). 링크 공유가 되어야 하므로 쿼리에 담습니다. <b>확정안에 구분(service) 파라미터가 없습니다</b> — 이 화면은 인터넷 외 구분도 다루므로 <code>service=</code> 추가가 필요한지 PNB-1669에서 확인해야 합니다.</p>
   </div>
 </div>
 

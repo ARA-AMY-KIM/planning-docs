@@ -170,6 +170,7 @@ body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Ne
 .usebox ul{list-style:none;max-height:120px;overflow-y:auto}
 .usebox li{padding:8px 12px;border-top:1px solid var(--g50);font-size:13px;color:var(--g700);letter-spacing:-.2px}
 .usebox li b{color:var(--g900);font-weight:600}
+.usebox li.uempty{color:var(--g300);text-align:center;padding:16px 12px}
 .inerr{margin:6px 0 0;font-size:12.5px;color:var(--error);letter-spacing:-.2px}
 
 /* 체크박스 */
@@ -392,6 +393,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div><span class="k">업체</span><span class="v" id="adVen"></span></div>
         <div><span class="k">구분</span><span class="v" id="adSvc"></span></div>
       </div>
+      <div class="notice info" id="adBndBox" hidden style="margin:-4px 0 18px"><span class="i"></span><span>결합할인 태그는 업체별 <b>결합할인명</b>이라 <b>속성 타입 · 속성 · 표기명 · 노출 등급 · 추가 노출 · 요금을 쓰지 않습니다.</b> 결합할인명을 그대로 입력하고, 같은 업체 안에서 중복될 수 없습니다.</span></div>
       <div class="row2" id="adAttrRow">
         <div class="fld"><label>속성 타입 <span class="req">*</span></label>
           <select class="inp" id="adType"></select></div>
@@ -400,7 +402,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       </div>
       <div class="fld" id="adSubFld"><label id="adSubLb">표기명</label>
         <input class="inp" id="adSub" maxlength="20" placeholder="예) 슬림 · 광랜 1년">
-        <div class="hint g3"><span id="adCnt">0</span> / 20<span id="adSubHint"></span></div>
+        <div class="hint g3"><span id="adCnt">0</span><span id="adSubHint"></span></div>
         <div class="inerr" id="adErr" hidden></div>
       </div>
       <div class="fld" id="adTagFld"><label id="adTagLb">태그명 <span class="ro">자동 생성</span></label>
@@ -437,7 +439,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       </div>
       <div class="fld" id="edSubFld"><label id="edSubLb">표기명</label>
         <input class="inp" id="edSub" maxlength="20">
-        <div class="hint g3"><span id="edCnt">0</span> / 20<span id="edSubHint"></span></div>
+        <div class="hint g3"><span id="edCnt">0</span><span id="edSubHint"></span></div>
         <div class="inerr" id="edErr" hidden></div>
       </div>
       <div class="fld" id="edTagFld"><label id="edTagLb">태그명 <span class="ro">자동 생성</span></label>
@@ -456,7 +458,6 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       </div>
       <div class="fld" style="margin-bottom:0"><label>이 태그를 쓰는 상품 <span class="ro" id="edUseN"></span></label>
         <div class="usebox">
-          <div class="uh"><span>연결</span><span id="edUseN2"></span></div>
           <ul id="edUseList"></ul>
         </div>
       </div>
@@ -476,7 +477,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div><span class="k">태그명</span><span class="v" id="dlName"></span></div>
       </div>
       <div class="notice err" style="margin-bottom:0"><span class="i">!</span>
-        <span><b>삭제 후에는 복구할 수 없습니다.</b> 상품 연결 화면의 태그 선택 목록에서도 즉시 제거됩니다.</span></div>
+        <span><b>삭제 후에는 복구할 수 없습니다.</b></span></div>
     </div>
     <div class="mf"><div class="sp"></div><button class="btn-out" data-close="ovDel">취소</button><button class="btn-danger solid" id="dlOk">삭제</button></div>
   </div>
@@ -535,7 +536,6 @@ body.mk-on .mkrow:hover{color:var(--g700)}
           <div class="fld"><label>속성 타입 <span class="req">*</span></label><div class="inp sel">구성제품</div></div>
           <div class="fld" style="margin-bottom:0"><label>속성 <span class="req">*</span></label><div class="inp sel">없음</div></div>
         </div>
-        <div class="hint g3" style="margin-top:2px">「없음」은 그 자리를 비워 파는 구성입니다. <b>표기명 · 설명 · 노출 등급 · 추가 노출 · 요금을 쓰지 않아 입력 칸이 없습니다.</b> 태그명은 항상 <code>없음</code>, 노출 등급은 <code>기본</code>으로 저장됩니다.</div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">등록</button></div>
     </div>
@@ -552,15 +552,14 @@ body.mk-on .mkrow:hover{color:var(--g700)}
           <div class="fld"><label>속성 <span class="req">*</span></label><div class="inp sel">기본</div></div>
         </div>
         <div class="fld"><label>태그명 <span class="req">*</span> <span class="ro">직접 입력</span></label><div class="inp">203채널</div>
-          <div class="hint g3">4 / 20 · <b>고객에게는 상품명과 조합되어 노출됩니다</b> — 예) Btv cable190(203채널)</div></div>
+          <div class="hint g3">4 / 20</div></div>
         <div class="fld"><label>설명</label><div class="ta ph">상담 상세의 느낌표 아이콘에 노출되는 문구</div></div>
         <div class="row2">
           <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">기본</div></div>
           <div class="fld"><label>추가 노출</label>
             <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb"><i></i>플랫폼</span></div></div>
         </div>
-        <div class="fld" style="margin-bottom:0;max-width:50%"><label>월요금</label><div class="inp ph">0</div>
-          <div class="hint w">결합요금 필드 없음 — 인터넷 외는 등록 · 수정 모두 미노출</div></div>
+        <div class="fld" style="margin-bottom:0;max-width:50%"><label>월요금</label><div class="inp ph">0</div></div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">등록</button></div>
     </div>
@@ -572,10 +571,9 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       <div class="mh"><h3>태그 등록</h3><span class="x">✕</span></div>
       <div class="mb">
         <div class="ctx"><div><span class="k">업체</span><span class="v">KT</span></div><div><span class="k">구분</span><span class="v">결합할인</span></div></div>
-        <div class="fld"><label>태그명 <span class="req">*</span></label><div class="inp ph">예) 프리미엄가족결합</div>
-          <div class="hint g3">0 / 30 · 결합 프로그램명을 그대로 입력합니다. 같은 업체 안에서 중복될 수 없습니다.</div></div>
+        <div class="notice info" style="margin:-4px 0 18px"><span class="i"></span><span>결합할인 태그는 업체별 <b>결합할인명</b>이라 <b>속성 타입 · 속성 · 표기명 · 노출 등급 · 추가 노출 · 요금을 쓰지 않습니다.</b> 결합할인명을 그대로 입력하고, 같은 업체 안에서 중복될 수 없습니다.</span></div><div class="fld"><label>태그명 <span class="req">*</span></label><div class="inp ph">예) 프리미엄가족결합</div>
+          <div class="hint g3">0 / 30</div></div>
         <div class="fld" style="margin-bottom:0"><label>설명</label><div class="ta ph">상담 상세의 느낌표 아이콘에 노출되는 문구</div></div>
-        <div class="hint g3" style="margin-top:12px">속성 타입 · 속성 · 표기명 · 노출 등급 · 추가 노출 · 요금이 <b>모두 없습니다.</b> 업체마다 고유한 마케팅 상품이라 공통 속성으로 정규화되지 않습니다.</div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">등록</button></div>
     </div>
@@ -631,7 +629,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
           <div class="fld"><label>속성</label><div class="inp ro">기본</div></div>
         </div>
         <div class="fld"><label>태그명 <span class="req">*</span> <span class="ro">직접 입력</span></label><div class="inp">203채널</div>
-          <div class="hint g3">4 / 20 · <b>고객에게는 상품명과 조합되어 노출됩니다</b></div></div>
+          <div class="hint g3">4 / 20</div></div>
         <div class="fld"><label>설명</label><div class="ta ph">상담 상세의 느낌표 아이콘에 노출되는 문구</div></div>
         <div class="row2">
           <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">기본</div></div>
@@ -663,7 +661,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div class="fld" style="margin-bottom:0"><label>이 태그를 쓰는 상품 <span class="ro">1건</span></label>
           <div class="usebox">
             <div class="uh"><span>연결</span><span>1건</span></div>
-            <ul><li style="color:var(--g500)">연결 1건 — 이 시안에는 목록 데이터가 없습니다</li></ul>
+            <ul><li>분류명 1</li></ul>
           </div>
         </div>
       </div>
@@ -678,7 +676,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       <div class="mb">
         <div class="ctx"><div><span class="k">업체 · 구분</span><span class="v">KT · 인터넷</span></div><div><span class="k">태그명</span><span class="v">2.5Gbps(프리미엄)</span></div></div>
         <div class="notice err" style="margin-bottom:0"><span class="i">!</span>
-          <span><b>삭제 후에는 복구할 수 없습니다.</b> 상품 연결 화면의 태그 선택 목록에서도 즉시 제거됩니다.</span></div>
+          <span><b>삭제 후에는 복구할 수 없습니다.</b></span></div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-danger solid">삭제</button></div>
     </div>
@@ -729,9 +727,9 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div class="inerr">태그명을 입력해주세요.</div>
       </div>
       <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:14px;margin-top:12px">
-        <div style="font-size:12px;color:var(--g500);margin-bottom:6px">결합할인 등록 · 프로그램명 중복</div>
+        <div style="font-size:12px;color:var(--g500);margin-bottom:6px">결합할인 등록 · 결합할인명 중복</div>
         <div class="inp err">패밀리</div>
-        <div class="inerr">같은 업체에 이미 있는 프로그램명입니다.</div>
+        <div class="inerr">같은 업체에 이미 있는 결합할인명입니다.</div>
       </div>
     </div>
   </div>
@@ -781,7 +779,7 @@ const CN=[["인터넷","HCN","100M(1년)","",["100Mbps","없음","없음"]],["�
 ["인터넷전화","딜라이브","50 요금제","CO-302",["표준","모뎀"]],["인터넷전화","딜라이브","정액요금제","CO-302",["정액","모뎀"]],["인터넷전화","LG HelloVision","표준요금제","WPI-9900",["표준","전화기"]],["인터넷전화","LG HelloVision","모바일 30+","WPI-9900",["정액","전화기"]],["인터넷전화","KT","기본요금제","AT05-704V",["표준","전화기"]],["인터넷전화","KT","우리끼리3000","AT05-704V",["정액","전화기"]],["인터넷전화","LG","표준형","CPG 4020",["표준","모뎀"]],["인터넷전화","LG","망내무한 9000","CPG 4020",["정액","모뎀"]],["인터넷전화","LG","고급형(센트릭스)","IP450S",["표준","전화기"]],["인터넷전화","LG","TV 플러스","G패드3 8.0",["표준","태블릿"]],["인터넷전화","LG","AI전화","IP520S",["표준","전화기"]],["인터넷전화","SKB","인터넷전화","MWP-2500H",["표준","전화기"]],["인터넷전화","SKB","집전화프리5000","MWP-2500H",["정액","전화기"]],["인터넷전화","SKT","인터넷전화","MWP-2500H",["표준","전화기"]],["인터넷전화","SKT","집전화프리5000","MWP-2500H",["정액","전화기"]],
 ["일반전화","KT","기본요금제","",["표준","없음"]],["일반전화","KT","유선3000","",["정액","없음"]],["일반전화","KT","사장님 배달POS 전화","",["정액","없음"]],["일반전화","SKB","일반전화","",["표준","없음"]],["일반전화","SKB","집전화프리5000","",["정액","없음"]],["일반전화","SKT","일반전화","",["표준","없음"]],["일반전화","SKT","집전화프리5000","",["정액","없음"]]];
 
-/* 결합할인 : [태그명(=결합 프로그램명), 설명, 연결 상품 수] — 실측은 KT 6건뿐, 전 업체 41건 */
+/* 결합할인 : [태그명(=결합할인명), 설명, 연결 상품 수] — 실측은 KT 6건뿐, 전 업체 41건 */
 const BND={"KT":[["패밀리","인터넷과 인터넷의 결합",4],["총액 결합할인","가족들의 휴대폰과 결합",5],["프리미엄싱글결합","나혼자 무제한요금결합",3],["프리미엄가족결합","가족과 무제한요금결합",1],["정액 결합할인","모바일 요금제별로 할인 받는 정액 결합할인",4],["따로 살아도 가족결합","따로 사는 가족끼리 뭉치면, 더 커지는 할인 혜택",0]]};
 const BVEN=["KT","LG","SKT","SKB","SkyLife","LG HelloVision","딜라이브","HCN"];
 const SLOTN={"인터넷":{1:"속도",2:"구성제품",3:"추가구성옵션"},"TV":{1:"라인",2:"셋탑"},
@@ -858,8 +856,7 @@ function renderList(){
     if(!src){
       $("tagBody").innerHTML=""; $("totN").textContent=0;
       $("tagTable").hidden=true; $("empty").hidden=false;
-      $("empty").innerHTML='<div class="t">이 시안에는 '+esc(VD)+' 결합할인 데이터가 없습니다.</div>'
-        +'<div class="s">결합할인은 전 업체 41건이고, 시안에는 실제로 확인한 KT 6건만 넣었습니다.</div>';
+      $("empty").innerHTML='<div class="t">등록된 태그가 없습니다.</div><div class="s">[＋ 태그 등록]으로 추가할 수 있습니다.</div>';
       mkPaint(); return;
     }
     $("empty").innerHTML='<div class="t">등록된 태그가 없습니다.</div><div class="s">[＋ 태그 등록]으로 추가할 수 있습니다.</div>';
@@ -884,7 +881,7 @@ function renderList(){
     var r=o.r, i=o.i, key=r[0]+"|"+r[1];
     var mv = per[key]>1 && !isNone(r);
     if(mv) movable++;
-    var cs=conns(r), g=r[4]||"기본";
+    var cs=panelRows(r), g=r[4]||"기본";   /* 목록 건수도 사이드패널과 같은 함수를 쓴다 — 상품속성 관리 동일 */
     var hd='<div class="hdw'+(mv?"":" off")+'" data-mv="'+(mv?1:0)+'"><i>'+HD+"</i></div>";
     var lnk = cs.length ? '<span class="lnk" data-open="'+i+'">'+cs.length+"</span>" : '<span class="lnk zero">0</span>';
     return '<tr data-i="'+i+'">'
@@ -898,7 +895,7 @@ function renderList(){
       +'<td class="r">'+(r[5]||'<span class="mut">–</span>')+"</td>"
       +(net?'<td class="r">'+(r[6]||'<span class="mut">–</span>')+"</td>":"")
       +'<td class="c mg">'+mgBtns(i, !isNone(r), "「없음」 태그는 고칠 항목이 없습니다. 연결 상품은 건수를 눌러 확인하세요.",
-            cs.length===0, "연결 상품 "+cs.length+(net?"건":"개")+"에서 사용 중이라 삭제할 수 없습니다.")+"</td></tr>";
+            cs.length===0, "연결 상품 "+cs.length+"건에서 사용 중이라 삭제할 수 없습니다.")+"</td></tr>";
   }).join("");
   $("totN").textContent=view.length;
   $("empty").hidden=view.length>0;
@@ -973,11 +970,14 @@ function openDw(i){
     var n=conns(r).length;
     $("dwCnt").textContent="총 "+n+"건";
     $("dwList").innerHTML = n
-      ? '<div class="dempty">연결 '+n+'건 — 이 시안에는 목록 데이터가 없습니다</div>'
-      : '<div class="dempty">연결된 상품이 없습니다</div>';
+      ? '<table class="dtbl"><colgroup><col><col style="width:210px"></colgroup>'
+        +'<thead><tr><th>분류명</th><th>태그명</th></tr></thead><tbody>'
+        + Array.from({length:n},(_,k)=>'<tr><td>분류명 '+(k+1)+'</td><td>'+esc(r[0])+'</td></tr>').join("")
+        +'</tbody></table>'
+      : '<div class="dempty">연결된 분류가 없습니다</div>';
   } else {
     var pr=panelRows(r);
-    $("dwCnt").textContent="총 "+pr.length+(isNet()?"건":"개");
+    $("dwCnt").textContent="총 "+pr.length+"건";
     $("dwList").innerHTML = pr.length
       ? '<table class="dtbl"><colgroup><col><col style="width:210px"></colgroup>'
         +'<thead><tr><th>상품명</th><th>태그명</th></tr></thead><tbody>'
@@ -1011,28 +1011,29 @@ function adPaint(){
     $("adAttrRow").hidden=true; $("adTagFld").hidden=true;
     $("adGradeRow").hidden=true; $("adFeeRow").hidden=true;
     $("adSubFld").hidden=false; $("adDescFld").hidden=false;
+    $("adBndBox").hidden=false;
     $("adSubLb").innerHTML='태그명 <span class="req">*</span>';
     $("adSub").disabled=false; $("adSub").maxLength=30;
     $("adSub").placeholder="예) 프리미엄가족결합";
     $("adCnt").textContent=$("adSub").value.length;
-    $("adSubHint").innerHTML=" / 30 · 결합 프로그램명을 그대로 입력합니다. 같은 업체 안에서 중복될 수 없습니다.";
+    $("adSubHint").innerHTML=" / 30";
     return;
   }
-  $("adAttrRow").hidden=false;
+  $("adAttrRow").hidden=false; $("adBndBox").hidden=true;
   $("adSub").maxLength=20; $("adSub").placeholder="예) 슬림 · 광랜 1년";
   var net=isNet(), av=$("adAttr").value, sv=$("adSub").value.trim(), none=adNone();
   if(none){ $("adSub").value=""; sv=""; }
   $("adSubFld").hidden=none;
   $("adDescFld").hidden=none; $("adGradeRow").hidden=none;
   $("adCnt").textContent=$("adSub").value.length;
-  $("adSubHint").innerHTML = net ? " / 20" : " / 20 · <b>고객에게는 상품명과 조합되어 노출됩니다</b> — 예) 일반형(190채널)";
+  $("adSubHint").innerHTML = " / 20";
   var t = !av ? "" : (net ? (sv?av+"("+sv+")":av) : (sv||av));
   $("adTag").textContent = av ? t : "속성을 먼저 선택해주세요";
   $("adTag").style.color = av ? "var(--g900)" : "var(--g300)";
   if(none){ $("adFee1").value=""; $("adFee2").value=""; }
   $("adFeeRow").hidden=none; $("adFee2Fld").hidden=!net;
   /* 인터넷 : 표기명 / 인터넷 외 : 태그명 직접 입력 */
-  $("adSubLb").innerHTML = net ? "표기명" : '태그명 <span class="req">*</span> <span class="ro">직접 입력</span>';
+  $("adSubLb").innerHTML = net ? '표기명 <span class="req">*</span>' : '태그명 <span class="req">*</span> <span class="ro">직접 입력</span>';
   $("adTagFld").hidden = !net;
 }
 $("addOpen").onclick=function(){
@@ -1056,13 +1057,13 @@ $("adOk").onclick=function(){
     var bv=$("adSub").value.trim();
     if(!bv){ $("adErr").textContent="태그명을 입력해주세요."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
     var bsrc=BND[VD]||(BND[VD]=[]);
-    if(bsrc.some(x=>x[0]===bv)){ $("adErr").textContent="같은 업체에 이미 있는 프로그램명입니다."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
+    if(bsrc.some(x=>x[0]===bv)){ $("adErr").textContent="같은 업체에 이미 있는 결합할인명입니다."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
     bsrc.push([bv,$("adDesc").value.trim(),0]);
     $("ovAdd").hidden=true; renderList(); toast("「"+bv+"」 태그를 등록했습니다."); return;
   }
   var slot=+$("adType").value, av=$("adAttr").value, sv=$("adSub").value.trim(), net=isNet();
   if(!slot||!av){ toast("속성 타입과 속성을 선택해주세요.","#D75011"); return; }
-  if(!net && !sv && av!=="없음"){ $("adErr").textContent="태그명을 입력해주세요."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
+  if(!sv && av!=="없음"){ $("adErr").textContent=net?"표기명을 입력해주세요.":"태그명을 입력해주세요."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
   var nr=[slot,av,sv,$("adDesc").value.trim(),$("adGrade").value,$("adFee1").value.trim(),$("adFee2").value.trim(),1];
   if(rows().some(r=>r[0]===slot&&r[1]===av&&tagName(r)===tagName(nr))){
     $("adErr").textContent="같은 속성에 이미 있는 태그명입니다."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
@@ -1082,8 +1083,8 @@ function edPaint(){
   $("edTagFld").hidden = !net;
   $("edSubLb").innerHTML = none
     ? (net?'표기명 <span class="ro">입력 불가</span>':'태그명 <span class="ro">입력 불가</span>')
-    : (net?"표기명":'태그명 <span class="req">*</span> <span class="ro">직접 입력</span>');
-  $("edSubHint").innerHTML = (net||none) ? "" : " · <b>고객에게는 상품명과 조합되어 노출됩니다</b>";
+    : (net?'표기명 <span class="req">*</span>':'태그명 <span class="req">*</span> <span class="ro">직접 입력</span>');
+  $("edSubHint").innerHTML = " / 20";
 }
 function openEdit(i){
   edI=i; var r=rows()[i], cs=conns(r);
@@ -1098,10 +1099,10 @@ function openEdit(i){
     $("edSubHint").innerHTML=" / 30";
     $("edDesc").value=r[1]||"";
     $("edErr").hidden=true; $("edSub").classList.remove("err");
-    $("edUseN").textContent=cs.length+"건"; $("edUseN2").textContent=cs.length+"건";
+    $("edUseN").textContent=cs.length+"건";
     $("edUseList").innerHTML = cs.length
-      ? '<li style="color:var(--g500)">연결 '+cs.length+'건 — 이 시안에는 목록 데이터가 없습니다</li>'
-      : '<li style="color:var(--g300)">쓰는 상품이 없습니다</li>';
+      ? Array.from({length:cs.length},(_,k)=>'<li>분류명 '+(k+1)+'</li>').join("")
+      : '<li class="uempty">이 태그를 쓰는 분류가 없습니다</li>';
     edPaint(); $("ovEdit").hidden=false; return;
   }
   var none=false, net=isNet();
@@ -1115,11 +1116,12 @@ function openEdit(i){
   $("edFee1").value=r[5]||""; $("edFee2").value=r[6]||"";
   $("edFee2Fld").hidden=!net;
   $("edErr").hidden=true; $("edSub").classList.remove("err");
-  $("edUseN").textContent=cs.length+(net?"건":"개"); $("edUseN2").textContent=cs.length+(net?"건":"개");
-  $("edUseList").innerHTML = cs.length
-    ? cs.slice(0,8).map(c=>"<li><b>"+esc(c[2])+"</b>"+(c[3]?" · "+esc(c[3]):"")+"</li>").join("")
-      +(cs.length>8?'<li style="color:var(--g300)">… '+(cs.length-8)+"건 더</li>":"")
-    : '<li style="color:var(--g300)">쓰는 상품이 없습니다</li>';
+  /* 사이드패널(panelRows)과 같은 집계를 쓴다 — 대상·중복 제거 기준이 어긋나면 안 된다 */
+  var pr=panelRows(r), un=pr.length+"건";
+  $("edUseN").textContent=un;
+  $("edUseList").innerHTML = pr.length
+    ? pr.map(x=>"<li><b>"+x[0]+"</b></li>").join("")
+    : '<li class="uempty">이 태그를 쓰는 상품이 없습니다</li>';
   edPaint(); $("ovEdit").hidden=false;
 }
 $("edSub").oninput=function(){ $("edErr").hidden=true; $("edSub").classList.remove("err"); edPaint(); };
@@ -1128,12 +1130,12 @@ $("edOk").onclick=function(){
   if(isBnd()){
     var bv=$("edSub").value.trim();
     if(!bv){ $("edErr").textContent="태그명을 입력해주세요."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
-    if((BND[VD]||[]).some((x,j)=>j!==edI&&x[0]===bv)){ $("edErr").textContent="같은 업체에 이미 있는 프로그램명입니다."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
+    if((BND[VD]||[]).some((x,j)=>j!==edI&&x[0]===bv)){ $("edErr").textContent="같은 업체에 이미 있는 결합할인명입니다."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
     r[0]=bv; r[1]=$("edDesc").value.trim();
     $("ovEdit").hidden=true; renderList(); toast("「"+bv+"」 태그를 수정했습니다."); return;
   }
   var net=isNet(), none=isNone(r), sv=$("edSub").value.trim();
-  if(!net && !none && !sv){ $("edErr").textContent="태그명을 입력해주세요."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
+  if(!none && !sv){ $("edErr").textContent=net?"표기명을 입력해주세요.":"태그명을 입력해주세요."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
   r[2]=none?"":sv; r[3]=$("edDesc").value.trim(); r[4]=$("edGrade").value;
   r[5]=none?"0":$("edFee1").value.trim(); r[6]=none?"0":$("edFee2").value.trim();
   $("ovEdit").hidden=true; renderList();
@@ -1192,10 +1194,10 @@ var MK={
     b:"<b>추천 · 기본 · 비추천 3종으로 축소.</b> 실측상 `rank1`(기본)이 462건(99.1%)이고 나머지는 4건뿐이라 이관 부담이 거의 없습니다. rank ↔ 등급 매핑만 개발 확인이 필요합니다."},
  8:{t:"결합요금 열 · 인터넷만",
     a:"구분과 무관하게 <b>결합요금 열이 항상 노출</b>",
-    b:"<b>인터넷에서만 노출.</b> 인터넷 외에는 결합요금 개념이 없어 열과 모달 필드를 모두 뺐습니다. 인터넷 10열 · 인터넷 외 9열입니다.<br><span class='q'>결합요금이 태그 단위인지 조합 단위인지 미확정 — 조합 단위로 확정되면 이 열이 통째로 빠집니다.</span>"},
+    b:"<b>인터넷에서만 노출.</b> 인터넷 외에는 결합요금 개념이 없어 열과 모달 필드를 모두 뺐습니다. 인터넷 10열 · 인터넷 외 9열입니다.<br>결합요금은 <b>태그 단위로 확정</b>됐습니다(2026-09-28) — 인터넷은 <code>attr_tag_combine_amt</code>를 그대로 쓰고, 인터넷 외 <code>combine_charge</code>는 미사용 데이터로 폐기합니다."},
  9:{t:"결합할인 — 구분 5번째",
     a:"구분 드롭다운은 <b>4종</b>(인터넷 · TV · 인터넷전화 · 일반전화). 결합할인 41건은 어느 구분에도 들어가지 않았습니다",
-    b:"<b>구분 드롭다운의 다섯 번째 항목으로 넣었습니다.</b> 결합할인 태그는 업체별 결합 프로그램명이라 <b>속성 타입 · 속성 · 노출 등급 · 추가 노출 · 요금이 모두 없습니다</b> — 입력 칸은 <b>태그명 · 설명 2개뿐</b>이고, 목록 컬럼도 태그명 · 설명 · 연결 상품 · 수정 4개로 바뀝니다.<br>개발 8장 DDL 근거 — 결합할인은 상품이 아니라 <b>분류에 붙는 </b><code>internet_product_direct_tag</code>(분류 41건)이고, <code>direct_tag_amt</code> 한 컬럼만 두며 결합 금액 컬럼은 두지 않습니다."},
+    b:"<b>구분 드롭다운의 다섯 번째 항목으로 넣었습니다.</b> 결합할인 태그는 업체별 <b>결합할인명</b>이라 <b>속성 타입 · 속성 · 노출 등급 · 추가 노출 · 요금이 모두 없습니다</b> — 입력 칸은 <b>태그명 · 설명 2개뿐</b>이고, 목록 컬럼도 태그명 · 설명 · 연결 상품 · 관리 4개로 바뀝니다.<br>개발 8장 DDL 근거 — 결합할인은 상품이 아니라 <b>분류에 붙는 </b><code>internet_product_direct_tag</code>(분류 41건)이고, <code>direct_tag_amt</code> 한 컬럼만 두며 결합 금액 컬럼은 두지 않습니다.<br><span class='q'>이 화면기획의 결합할인 데이터는 KT 6건만 실측값이고, 연결 분류명은 자리표시자입니다.</span>"},
  10:{t:"관리 열 — [수정] · [삭제]",
     a:"마지막 열이 <b>「수정」 아이콘 버튼 1개</b>. 삭제는 수정 모달 안에 들어가 있어, 지우려면 모달을 한 번 열어야 했습니다",
     b:"<b>목록에서 바로 [수정] · [삭제].</b> 상품속성 관리와 같은 구조입니다.<br>"
@@ -1208,7 +1210,7 @@ var MK={
       +"<li><b>모달 주 버튼은 그 동작을 그대로 씁니다</b> — [등록] · [수정] · [삭제]. 「확인」처럼 중립적인 라벨은 쓰지 않습니다. 9/22에 정했던 「확인 통일」 안은 <b>어드민 문구 규칙(2026-09-28)</b>으로 폐기됐습니다.</li>"
       +"<li><b>「없음」 태그도 업체가 소유합니다</b> — 등록 모달에서 속성 「없음」을 고를 수 있고, 연결 0건이면 삭제됩니다. 실데이터상 「없음」 태그가 없는 업체가 있고(LG·딜라이브 구성제품), 그게 정상입니다.</li>"
       +"<li><b>「없음」 태그는 고칠 항목이 없습니다</b> — 표기명 · 설명 · 노출 등급 · 추가 노출 · 요금을 전부 쓰지 않습니다. 「없음」 전용 수정 모달(1차 3번)은 폐기했고, 목록 [수정]이 비활성입니다. <b>노출 등급은 DB가 </b><code>NOT NULL</code><b> 이라 「기본」으로 고정 저장</b>합니다.</li>"
-      +"<li><b>즉시 저장</b> — [저장] 버튼이 없습니다. 순서는 드롭 직후, 값은 모달 [확인] 직후 저장됩니다.</li>"
+      +"<li><b>즉시 저장</b> — [저장] 버튼이 없습니다. 순서는 드롭 직후, 값은 모달 주 버튼([등록] · [수정] · [삭제]) 직후 저장됩니다.</li>"
       +"</ul>"}
 };
 var mkPop=null, mkCur=null;
