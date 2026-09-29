@@ -164,13 +164,6 @@ body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Ne
 .preview.off{background:var(--g25)}
 .preview.off .k{color:var(--g500)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.usebox{border:1px solid var(--g100);border-radius:8px;overflow:hidden}
-.usebox .uh{background:var(--g25);padding:8px 12px;font-size:12px;font-weight:700;color:var(--g600);
- display:flex;justify-content:space-between}
-.usebox ul{list-style:none;max-height:120px;overflow-y:auto}
-.usebox li{padding:8px 12px;border-top:1px solid var(--g50);font-size:13px;color:var(--g700);letter-spacing:-.2px}
-.usebox li b{color:var(--g900);font-weight:600}
-.usebox li.uempty{color:var(--g300);text-align:center;padding:16px 12px}
 .inerr{margin:6px 0 0;font-size:12.5px;color:var(--error);letter-spacing:-.2px}
 
 /* 체크박스 */
@@ -256,6 +249,10 @@ select.sel,select.inp{appearance:none;-webkit-appearance:none;font-family:inheri
  background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
 select.inp{padding-right:34px}
 select.inp:disabled{background-image:none}
+/* 시안(정적 목업)의 셀렉트 표현 — 실제 select와 같은 화살표를 붙인다 */
+.inp.sel{padding-right:34px;
+ background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
 
 /* ── 변경 마크 (AS-IS 대비) ── */
 .mkband{border-bottom:1px solid var(--g100);background:var(--orange50)}
@@ -339,7 +336,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
 
   <div class="bar">
     <select class="sel" id="svcSel" style="min-width:140px">
-      <option>인터넷</option><option>TV</option><option>인터넷전화</option><option>일반전화</option><option>결합할인</option></select>
+      <option>인터넷</option><option>TV</option><option>인터넷전화</option><option>일반전화</option></select>
     <span class="mk" id="typeWrap" data-mk="1"><select class="sel" id="typeSel" style="min-width:170px"></select></span>
     <span class="mkx" data-mk="2"><span class="n">2</span>제거 · <s>검색창(속성 · 표기명)</s></span>
     <span class="mkx" data-mk="3"><span class="n">3</span>제거 · <s>[상품속성 관리]</s></span>
@@ -393,7 +390,6 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div><span class="k">업체</span><span class="v" id="adVen"></span></div>
         <div><span class="k">구분</span><span class="v" id="adSvc"></span></div>
       </div>
-      <div class="notice info" id="adBndBox" hidden style="margin:-4px 0 18px"><span class="i"></span><span>결합할인 태그는 업체별 <b>결합할인명</b>이라 <b>속성 타입 · 속성 · 표기명 · 노출 등급 · 추가 노출 · 요금을 쓰지 않습니다.</b> 결합할인명을 그대로 입력하고, 같은 업체 안에서 중복될 수 없습니다.</span></div>
       <div class="row2" id="adAttrRow">
         <div class="fld"><label>속성 타입 <span class="req">*</span></label>
           <select class="inp" id="adType"></select></div>
@@ -444,7 +440,6 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       </div>
       <div class="fld" id="edTagFld"><label id="edTagLb">태그명 <span class="ro">자동 생성</span></label>
         <div class="preview" id="edPrev"><span class="k">고객 노출</span><span class="v" id="edTag"></span></div></div>
-      <div class="hint w" id="edBndWarn" hidden style="margin:-8px 0 14px">⚠ 태그명을 바꾸면 상담 상세에 나가는 문구가 함께 바뀝니다.</div>
       <div class="fld" id="edDescFld"><label>설명</label><textarea class="ta" id="edDesc"></textarea></div>
       <div class="row2" id="edGradeRow">
         <div class="fld"><label>노출 등급 <span class="req">*</span></label>
@@ -455,11 +450,6 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       <div class="row2" id="edFeeRow">
         <div class="fld"><label>월요금</label><input class="inp" id="edFee1" inputmode="numeric"></div>
         <div class="fld" id="edFee2Fld"><label>결합요금</label><input class="inp" id="edFee2" inputmode="numeric"></div>
-      </div>
-      <div class="fld" style="margin-bottom:0"><label>이 태그를 쓰는 상품 <span class="ro" id="edUseN"></span></label>
-        <div class="usebox">
-          <ul id="edUseList"></ul>
-        </div>
       </div>
     </div>
     <div class="mf"><div class="sp"></div>
@@ -507,7 +497,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
           <div class="fld"><label>속성 타입 <span class="req">*</span></label><div class="inp sel">속도</div></div>
           <div class="fld"><label>속성 <span class="req">*</span></label><div class="inp sel">1Gbps</div></div>
         </div>
-        <div class="fld"><label>표기명</label><div class="inp">에센스</div><div class="hint g3">3 / 20</div></div>
+        <div class="fld"><label>표기명 <span class="req">*</span></label><div class="inp">에센스</div><div class="hint g3">3 / 20</div></div>
         <div class="fld"><label>태그명 <span class="ro">자동 생성</span></label>
           <div class="preview"><span class="k">고객 노출</span><span class="v">1Gbps(에센스)</span></div></div>
         <div class="fld"><label>설명</label><div class="ta" style="height:auto;min-height:60px">게임·고화질 스트리밍</div></div>
@@ -566,21 +556,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">4</span><span class="spec-t">태그 등록 — 결합할인</span><span class="spec-s">입력 칸 2개 · 속성 체계 없음</span></div>
-    <div class="modal">
-      <div class="mh"><h3>태그 등록</h3><span class="x">✕</span></div>
-      <div class="mb">
-        <div class="ctx"><div><span class="k">업체</span><span class="v">KT</span></div><div><span class="k">구분</span><span class="v">결합할인</span></div></div>
-        <div class="notice info" style="margin:-4px 0 18px"><span class="i"></span><span>결합할인 태그는 업체별 <b>결합할인명</b>이라 <b>속성 타입 · 속성 · 표기명 · 노출 등급 · 추가 노출 · 요금을 쓰지 않습니다.</b> 결합할인명을 그대로 입력하고, 같은 업체 안에서 중복될 수 없습니다.</span></div><div class="fld"><label>태그명 <span class="req">*</span></label><div class="inp ph">예) 프리미엄가족결합</div>
-          <div class="hint g3">0 / 30</div></div>
-        <div class="fld" style="margin-bottom:0"><label>설명</label><div class="ta ph">상담 상세의 느낌표 아이콘에 노출되는 문구</div></div>
-      </div>
-      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">등록</button></div>
-    </div>
-  </div>
-
-  <div>
-    <div class="spec-head"><span class="chip-n">5</span><span class="spec-t">태그 수정 — 인터넷</span><span class="spec-s">진입: 관리 열 [수정] · 속성 타입 · 속성은 읽기 전용</span></div>
+    <div class="spec-head"><span class="chip-n">4</span><span class="spec-t">태그 수정 — 인터넷</span><span class="spec-s">진입: 관리 열 [수정] · 속성 타입 · 속성은 읽기 전용</span></div>
     <div class="modal">
       <div class="mh"><h3>태그 수정</h3><span class="x">✕</span></div>
       <div class="mb">
@@ -589,7 +565,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
           <div class="fld"><label>속성 타입</label><div class="inp ro">속도</div></div>
           <div class="fld"><label>속성</label><div class="inp ro">1Gbps</div></div>
         </div>
-        <div class="fld"><label>표기명</label><div class="inp">에센스</div><div class="hint g3">3 / 20</div></div>
+        <div class="fld"><label>표기명 <span class="req">*</span></label><div class="inp">에센스</div><div class="hint g3">3 / 20</div></div>
         <div class="fld"><label>태그명 <span class="ro">자동 생성</span></label>
           <div class="preview"><span class="k">고객 노출</span><span class="v">1Gbps(에센스)</span></div></div>
         <div class="fld"><label>설명</label><div class="ta" style="height:auto;min-height:60px">게임·고화질 스트리밍</div></div>
@@ -602,24 +578,13 @@ body.mk-on .mkrow:hover{color:var(--g700)}
           <div class="fld"><label>월요금</label><div class="inp">38,500</div></div>
           <div class="fld"><label>결합요금</label><div class="inp">33,000</div></div>
         </div>
-        <div class="fld" style="margin-bottom:0"><label>이 태그를 쓰는 상품 <span class="ro">7건</span></label>
-          <div class="usebox">
-            <div class="uh"><span>연결</span><span>7건</span></div>
-            <ul>
-              <li><b>에센스</b> · 기가 와이파이 홈ax</li>
-              <li><b>에센스</b> · KT와이파이7D</li>
-              <li><b>안심 에센스 와이파이</b> · 기가 와이파이 홈ax</li>
-              <li style="color:var(--g300)">… 4건 더</li>
-            </ul>
-          </div>
-        </div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">수정</button></div>
     </div>
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">6</span><span class="spec-t">태그 수정 — 인터넷 외</span><span class="spec-s">미리보기 · 결합요금 없음 · 태그명 직접 입력</span></div>
+    <div class="spec-head"><span class="chip-n">5</span><span class="spec-t">태그 수정 — 인터넷 외</span><span class="spec-s">미리보기 · 결합요금 없음 · 태그명 직접 입력</span></div>
     <div class="modal">
       <div class="mh"><h3>태그 수정</h3><span class="x">✕</span></div>
       <div class="mb">
@@ -637,40 +602,13 @@ body.mk-on .mkrow:hover{color:var(--g700)}
             <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb"><i></i>플랫폼</span></div></div>
         </div>
         <div class="fld" style="max-width:50%"><label>월요금</label><div class="inp ph">0</div></div>
-        <div class="fld" style="margin-bottom:0"><label>이 태그를 쓰는 상품 <span class="ro">1개</span></label>
-          <div class="usebox">
-            <div class="uh"><span>연결</span><span>1개</span></div>
-            <ul><li><b>Btv cable190</b></li></ul>
-          </div>
-        </div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">수정</button></div>
     </div>
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">7</span><span class="spec-t">태그 수정 — 결합할인</span><span class="spec-s">태그명을 바꾸면 고객 노출 문구가 바뀝니다</span></div>
-    <div class="modal">
-      <div class="mh"><h3>태그 수정</h3><span class="x">✕</span></div>
-      <div class="mb">
-        <div class="ctx"><div><span class="k">업체</span><span class="v">KT</span></div><div><span class="k">구분</span><span class="v">결합할인</span></div></div>
-        <div class="hint w" style="margin:0 0 14px">⚠ 태그명을 바꾸면 상담 상세에 나가는 문구가 함께 바뀝니다.</div>
-        <div class="fld"><label>태그명 <span class="req">*</span></label><div class="inp">프리미엄가족결합</div>
-          <div class="hint g3">8 / 30</div></div>
-        <div class="fld"><label>설명</label><div class="ta" style="height:auto;min-height:60px">가족과 무제한요금결합</div></div>
-        <div class="fld" style="margin-bottom:0"><label>이 태그를 쓰는 상품 <span class="ro">1건</span></label>
-          <div class="usebox">
-            <div class="uh"><span>연결</span><span>1건</span></div>
-            <ul><li>분류명 1</li></ul>
-          </div>
-        </div>
-      </div>
-      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">수정</button></div>
-    </div>
-  </div>
-
-  <div>
-    <div class="spec-head"><span class="chip-n">8</span><span class="spec-t">태그 삭제</span><span class="spec-s">진입: 관리 열 [삭제] · 연결 0건일 때만</span></div>
+    <div class="spec-head"><span class="chip-n">6</span><span class="spec-t">태그 삭제</span><span class="spec-s">진입: 관리 열 [삭제] · 연결 0건일 때만</span></div>
     <div class="modal">
       <div class="mh"><h3>태그 삭제</h3><span class="x">✕</span></div>
       <div class="mb">
@@ -681,7 +619,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-danger solid">삭제</button></div>
     </div>
     <div style="font-size:12px;color:var(--g500);margin-top:10px;line-height:1.7">
-      ESC · [취소] · ✕ 로 닫힙니다. 바깥을 눌러서는 닫히지 않습니다. 결합할인 태그 삭제도 같은 모달을 씁니다.</div>
+      ESC · [취소] · ✕ 로 닫힙니다. 바깥을 눌러서는 닫히지 않습니다.</div>
   </div>
 
   <div>
@@ -722,14 +660,9 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div class="inerr">같은 속성에 이미 있는 태그명입니다.</div>
       </div>
       <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:14px;margin-top:12px">
-        <div style="font-size:12px;color:var(--g500);margin-bottom:6px">태그 등록 · 빈 태그명 (인터넷 외 · 결합할인)</div>
+        <div style="font-size:12px;color:var(--g500);margin-bottom:6px">태그 등록 · 빈 태그명 (인터넷 외)</div>
         <div class="inp err"></div>
         <div class="inerr">태그명을 입력해주세요.</div>
-      </div>
-      <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:14px;margin-top:12px">
-        <div style="font-size:12px;color:var(--g500);margin-bottom:6px">결합할인 등록 · 결합할인명 중복</div>
-        <div class="inp err">패밀리</div>
-        <div class="inerr">같은 업체에 이미 있는 결합할인명입니다.</div>
       </div>
     </div>
   </div>
@@ -737,7 +670,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
 </div>
 </div>
 
-<footer>KT 외 7개 업체 실데이터 · 구분 5종(인터넷 · TV · 인터넷전화 · 일반전화 · 결합할인) · 결합할인은 KT 6건만 실측<br>정본 · <a href="https://ajnetworks.atlassian.net/wiki/spaces/BO/pages/1673461799" target="_blank" rel="noopener" style="color:var(--primary)">[CRM Admin] 태그 관리 - 기능 정의서</a></footer>
+<footer>KT 외 7개 업체 실데이터 · 구분 4종(인터넷 · TV · 인터넷전화 · 일반전화)<br>정본 · <a href="https://ajnetworks.atlassian.net/wiki/spaces/BO/pages/1673461799" target="_blank" rel="noopener" style="color:var(--primary)">[CRM Admin] 태그 관리 - 기능 정의서</a></footer>
 </div>
 
 <script>
@@ -779,9 +712,6 @@ const CN=[["인터넷","HCN","100M(1년)","",["100Mbps","없음","없음"]],["�
 ["인터넷전화","딜라이브","50 요금제","CO-302",["표준","모뎀"]],["인터넷전화","딜라이브","정액요금제","CO-302",["정액","모뎀"]],["인터넷전화","LG HelloVision","표준요금제","WPI-9900",["표준","전화기"]],["인터넷전화","LG HelloVision","모바일 30+","WPI-9900",["정액","전화기"]],["인터넷전화","KT","기본요금제","AT05-704V",["표준","전화기"]],["인터넷전화","KT","우리끼리3000","AT05-704V",["정액","전화기"]],["인터넷전화","LG","표준형","CPG 4020",["표준","모뎀"]],["인터넷전화","LG","망내무한 9000","CPG 4020",["정액","모뎀"]],["인터넷전화","LG","고급형(센트릭스)","IP450S",["표준","전화기"]],["인터넷전화","LG","TV 플러스","G패드3 8.0",["표준","태블릿"]],["인터넷전화","LG","AI전화","IP520S",["표준","전화기"]],["인터넷전화","SKB","인터넷전화","MWP-2500H",["표준","전화기"]],["인터넷전화","SKB","집전화프리5000","MWP-2500H",["정액","전화기"]],["인터넷전화","SKT","인터넷전화","MWP-2500H",["표준","전화기"]],["인터넷전화","SKT","집전화프리5000","MWP-2500H",["정액","전화기"]],
 ["일반전화","KT","기본요금제","",["표준","없음"]],["일반전화","KT","유선3000","",["정액","없음"]],["일반전화","KT","사장님 배달POS 전화","",["정액","없음"]],["일반전화","SKB","일반전화","",["표준","없음"]],["일반전화","SKB","집전화프리5000","",["정액","없음"]],["일반전화","SKT","일반전화","",["표준","없음"]],["일반전화","SKT","집전화프리5000","",["정액","없음"]]];
 
-/* 결합할인 : [태그명(=결합할인명), 설명, 연결 상품 수] — 실측은 KT 6건뿐, 전 업체 41건 */
-const BND={"KT":[["패밀리","인터넷과 인터넷의 결합",4],["총액 결합할인","가족들의 휴대폰과 결합",5],["프리미엄싱글결합","나혼자 무제한요금결합",3],["프리미엄가족결합","가족과 무제한요금결합",1],["정액 결합할인","모바일 요금제별로 할인 받는 정액 결합할인",4],["따로 살아도 가족결합","따로 사는 가족끼리 뭉치면, 더 커지는 할인 혜택",0]]};
-const BVEN=["KT","LG","SKT","SKB","SkyLife","LG HelloVision","딜라이브","HCN"];
 const SLOTN={"인터넷":{1:"속도",2:"구성제품",3:"추가구성옵션"},"TV":{1:"라인",2:"셋탑"},
  "인터넷전화":{1:"요금방식",2:"전화기기"},"일반전화":{1:"요금방식",2:"전화기기"}};
 const GB={"추천":"rec","기본":"base","비추천":"low"};
@@ -790,15 +720,13 @@ const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").rep
 let SV="인터넷", VD="KT", TY="";
 
 function isNet(){ return SV==="인터넷"; }
-function isBnd(){ return SV==="결합할인"; }
-function vendors(){ return isBnd()?BVEN:Object.keys(T[SV]); }
-function rows(){ return isBnd() ? (BND[VD]||null) : ((T[SV]||{})[VD]||[]); }
+function vendors(){ return Object.keys(T[SV]); }
+function rows(){ return (T[SV]||{})[VD]||[]; }
 function types(){ var m=SLOTN[SV]; return m?Object.keys(m).map(k=>[+k,m[k]]):[]; }
 /* 태그명 : 인터넷 = 속성(표기명) 자동 조립 / 인터넷 외 = 직접 입력값 */
-function tagName(r){ return isBnd() ? r[0] : (isNet() ? (r[2] ? r[1]+"("+r[2]+")" : r[1]) : (r[2]||r[1])); }
+function tagName(r){ return isNet() ? (r[2] ? r[1]+"("+r[2]+")" : r[1]) : (r[2]||r[1]); }
 function isNone(r){ return r[1]==="없음"; }
 function conns(r){
-  if(isBnd()) return new Array(r[2]||0);   /* 결합할인 : 건수만 실측 · 목록 데이터 없음 */
   if(r[7]) return [];              /* 방금 등록한 태그 — 연결 0건 */
   var slot=r[0];
   return CN.filter(c=>c[0]===SV && c[1]===VD && c[4][slot-1]===r[1]);
@@ -811,7 +739,6 @@ function toast(msg,bg){
 
 /* ── 상단 · 탭 ── */
 function renderTypeSel(){
-  if(isBnd()){ $("typeSel").innerHTML=""; return; }
   $("typeSel").innerHTML='<option value="">전체</option>'
     +types().map(t=>'<option value="'+t[0]+'"'+(String(t[0])===TY?" selected":"")+">"+t[1]+"</option>").join("");
 }
@@ -820,17 +747,12 @@ function renderTabs(){
   $("venTabs").querySelectorAll("[data-v]").forEach(el=>el.onclick=()=>{VD=el.dataset.v; closeDw(); renderList();});
 }
 function renderHead(){
-  if(isBnd()){
-    $("cg").innerHTML='<col style="width:280px"><col><col style="width:110px"><col style="width:130px">';
-    $("thd").innerHTML='<tr><th class="mk th" data-mk="9">태그명</th><th>설명</th><th class="c">연결 상품</th><th class="c mk th" data-mk="10">관리</th></tr>';
-    return;
-  }
   var net=isNet();
   $("cg").innerHTML='<col style="width:44px"><col style="width:104px"><col style="width:116px"><col style="width:200px"><col>'
     +'<col style="width:92px"><col style="width:84px"><col style="width:92px">'+(net?'<col style="width:92px">':"")+'<col style="width:130px">';
   $("thd").innerHTML='<tr><th></th><th class="mk th" data-mk="5">속성 타입</th><th class="mk th" data-mk="6">속성</th>'
     +'<th>태그명</th><th>설명</th><th class="mk th" data-mk="7">노출 등급</th><th class="c">연결 상품</th>'
-    +'<th class="r">월요금</th>'+(net?'<th class="r mk th" data-mk="8">결합요금</th>':"")+'<th class="c mk th" data-mk="10">관리</th></tr>';
+    +'<th class="r">월요금</th>'+(net?'<th class="r mk th" data-mk="8">결합요금</th>':"")+'<th class="c mk th" data-mk="9">관리</th></tr>';
 }
 
 /* ── 목록 ── */
@@ -849,28 +771,6 @@ const PEN='<svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3
 function renderList(){
   if(vendors().indexOf(VD)<0) VD=vendors()[0];
   renderTypeSel(); renderTabs(); renderHead();
-  $("typeWrap").hidden=isBnd();
-
-  if(isBnd()){
-    var src=rows();
-    if(!src){
-      $("tagBody").innerHTML=""; $("totN").textContent=0;
-      $("tagTable").hidden=true; $("empty").hidden=false;
-      $("empty").innerHTML='<div class="t">등록된 태그가 없습니다.</div><div class="s">[＋ 태그 등록]으로 추가할 수 있습니다.</div>';
-      mkPaint(); return;
-    }
-    $("empty").innerHTML='<div class="t">등록된 태그가 없습니다.</div><div class="s">[＋ 태그 등록]으로 추가할 수 있습니다.</div>';
-    $("tagBody").innerHTML=src.map(function(r,i){
-      var lnk = r[2] ? '<span class="lnk" data-open="'+i+'">'+r[2]+"</span>" : '<span class="lnk zero">0</span>';
-      return '<tr data-i="'+i+'"><td><span class="nml" data-edit="'+i+'">'+esc(r[0])+"</span></td>"
-        +"<td"+(r[1]?"":' class="mut"')+">"+(r[1]?esc(r[1]):"–")+"</td>"
-        +'<td class="c">'+lnk+"</td>"
-        +'<td class="c mg">'+mgBtns(i,true,"",r[2]===0,"연결 상품 "+r[2]+"건에서 사용 중이라 삭제할 수 없습니다.")+"</td></tr>";
-    }).join("");
-    $("totN").textContent=src.length;
-    $("empty").hidden=src.length>0; $("tagTable").hidden=src.length===0;
-    bindRowBtns(); mkPaint(); return;
-  }
 
   var all=rows(), net=isNet();
   var view=all.map((r,i)=>({r:r,i:i})).filter(o=>!TY||String(o.r[0])===TY);
@@ -940,7 +840,6 @@ function resolveTag(slot,attr){
 }
 function panelRows(r){
   var cs=conns(r), out=[], seen={};
-  if(isBnd()) return [];
   if(isNet()){
     return cs.map(function(c){
       return [ esc(c[2])+(c[3]?' <span class="non">×</span> '+esc(c[3]):''),
@@ -960,30 +859,17 @@ function panelRows(r){
 }
 function openDw(i){
   var r=rows()[i]; if(!r)return;
-  var bnd=isBnd();
   $("dwName").textContent=tagName(r);
   $("dwSvc").textContent=SV; $("dwVen").textContent=VD;
-  $("dwTypeBox").hidden=bnd; $("dwAttrBox").hidden=bnd;
-  if(!bnd){ $("dwType").textContent=SLOTN[SV][r[0]]; $("dwAttr").textContent=r[1]; }
+  $("dwType").textContent=SLOTN[SV][r[0]]; $("dwAttr").textContent=r[1];
 
-  if(bnd){
-    var n=conns(r).length;
-    $("dwCnt").textContent="총 "+n+"건";
-    $("dwList").innerHTML = n
-      ? '<table class="dtbl"><colgroup><col><col style="width:210px"></colgroup>'
-        +'<thead><tr><th>분류명</th><th>태그명</th></tr></thead><tbody>'
-        + Array.from({length:n},(_,k)=>'<tr><td>분류명 '+(k+1)+'</td><td>'+esc(r[0])+'</td></tr>').join("")
-        +'</tbody></table>'
-      : '<div class="dempty">연결된 분류가 없습니다</div>';
-  } else {
-    var pr=panelRows(r);
-    $("dwCnt").textContent="총 "+pr.length+"건";
-    $("dwList").innerHTML = pr.length
-      ? '<table class="dtbl"><colgroup><col><col style="width:210px"></colgroup>'
-        +'<thead><tr><th>상품명</th><th>태그명</th></tr></thead><tbody>'
-        +pr.map(x=>"<tr><td>"+x[0]+"</td><td>"+x[1]+"</td></tr>").join("")+"</tbody></table>"
-      : '<div class="dempty">연결된 상품이 없습니다</div>';
-  }
+  var pr=panelRows(r);
+  $("dwCnt").textContent="총 "+pr.length+"건";
+  $("dwList").innerHTML = pr.length
+    ? '<table class="dtbl"><colgroup><col><col style="width:210px"></colgroup>'
+      +'<thead><tr><th>상품명</th><th>태그명</th></tr></thead><tbody>'
+      +pr.map(x=>"<tr><td>"+x[0]+"</td><td>"+x[1]+"</td></tr>").join("")+"</tbody></table>"
+    : '<div class="dempty">연결된 상품이 없습니다</div>';
   document.querySelectorAll("#tagBody tr.rowsel").forEach(t=>t.classList.remove("rowsel"));
   var tr=$("tagBody").querySelector('tr[data-i="'+i+'"]'); if(tr)tr.classList.add("rowsel");
   $("dw").hidden=false;
@@ -1007,19 +893,7 @@ function attrsOf(slot){
 }
 function adNone(){ return $("adAttr").value==="없음"; }
 function adPaint(){
-  if(isBnd()){
-    $("adAttrRow").hidden=true; $("adTagFld").hidden=true;
-    $("adGradeRow").hidden=true; $("adFeeRow").hidden=true;
-    $("adSubFld").hidden=false; $("adDescFld").hidden=false;
-    $("adBndBox").hidden=false;
-    $("adSubLb").innerHTML='태그명 <span class="req">*</span>';
-    $("adSub").disabled=false; $("adSub").maxLength=30;
-    $("adSub").placeholder="예) 프리미엄가족결합";
-    $("adCnt").textContent=$("adSub").value.length;
-    $("adSubHint").innerHTML=" / 30";
-    return;
-  }
-  $("adAttrRow").hidden=false; $("adBndBox").hidden=true;
+  $("adAttrRow").hidden=false;
   $("adSub").maxLength=20; $("adSub").placeholder="예) 슬림 · 광랜 1년";
   var net=isNet(), av=$("adAttr").value, sv=$("adSub").value.trim(), none=adNone();
   if(none){ $("adSub").value=""; sv=""; }
@@ -1038,7 +912,7 @@ function adPaint(){
 }
 $("addOpen").onclick=function(){
   $("adVen").textContent=VD; $("adSvc").textContent=SV;
-  $("adType").innerHTML='<option value="">속성 타입 선택</option>'+(isBnd()?[]:types()).map(t=>'<option value="'+t[0]+'">'+t[1]+"</option>").join("");
+  $("adType").innerHTML='<option value="">속성 타입 선택</option>'+types().map(t=>'<option value="'+t[0]+'">'+t[1]+"</option>").join("");
   $("adAttr").innerHTML='<option value="">속성 선택</option>'; $("adAttr").disabled=true;
   $("adSub").value=""; $("adSub").disabled=false; $("adDesc").value="";
   $("adFee1").value=""; $("adFee2").value=""; $("adGrade").value="기본";
@@ -1053,14 +927,6 @@ $("adType").onchange=function(){
 $("adAttr").onchange=adPaint;
 $("adSub").oninput=function(){ $("adErr").hidden=true; $("adSub").classList.remove("err"); adPaint(); };
 $("adOk").onclick=function(){
-  if(isBnd()){
-    var bv=$("adSub").value.trim();
-    if(!bv){ $("adErr").textContent="태그명을 입력해주세요."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
-    var bsrc=BND[VD]||(BND[VD]=[]);
-    if(bsrc.some(x=>x[0]===bv)){ $("adErr").textContent="같은 업체에 이미 있는 결합할인명입니다."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
-    bsrc.push([bv,$("adDesc").value.trim(),0]);
-    $("ovAdd").hidden=true; renderList(); toast("「"+bv+"」 태그를 등록했습니다."); return;
-  }
   var slot=+$("adType").value, av=$("adAttr").value, sv=$("adSub").value.trim(), net=isNet();
   if(!slot||!av){ toast("속성 타입과 속성을 선택해주세요.","#D75011"); return; }
   if(!sv && av!=="없음"){ $("adErr").textContent=net?"표기명을 입력해주세요.":"태그명을 입력해주세요."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
@@ -1075,7 +941,6 @@ $("adOk").onclick=function(){
 let edI=null;
 function edPaint(){
   var r=rows()[edI]; if(!r)return;
-  if(isBnd()){ $("edCnt").textContent=$("edSub").value.length; return; }
   var net=isNet(), none=isNone(r), sv=$("edSub").value.trim();
   $("edCnt").textContent=$("edSub").value.length;
   var t = net ? (sv?r[1]+"("+sv+")":r[1]) : (sv||r[1]);
@@ -1089,24 +954,8 @@ function edPaint(){
 function openEdit(i){
   edI=i; var r=rows()[i], cs=conns(r);
   $("edVen").textContent=VD; $("edSvc").textContent=SV;
-  if(isBnd()){
-    $("edAttrRow").hidden=true;
-    $("edTagFld").hidden=true; $("edGradeRow").hidden=true; $("edFeeRow").hidden=true;
-    $("edSubFld").hidden=false; $("edDescFld").hidden=false;
-    $("edBndWarn").hidden=false;
-    $("edSubLb").innerHTML='태그명 <span class="req">*</span>';
-    $("edSub").disabled=false; $("edSub").maxLength=30; $("edSub").value=r[0];
-    $("edSubHint").innerHTML=" / 30";
-    $("edDesc").value=r[1]||"";
-    $("edErr").hidden=true; $("edSub").classList.remove("err");
-    $("edUseN").textContent=cs.length+"건";
-    $("edUseList").innerHTML = cs.length
-      ? Array.from({length:cs.length},(_,k)=>'<li>분류명 '+(k+1)+'</li>').join("")
-      : '<li class="uempty">이 태그를 쓰는 분류가 없습니다</li>';
-    edPaint(); $("ovEdit").hidden=false; return;
-  }
   var none=false, net=isNet();
-  $("edAttrRow").hidden=false; $("edBndWarn").hidden=true;
+  $("edAttrRow").hidden=false;
   $("edSub").maxLength=20;
   $("edSubFld").hidden=false; $("edTagFld").hidden=false;
   $("edDescFld").hidden=false; $("edGradeRow").hidden=false; $("edFeeRow").hidden=false;
@@ -1116,24 +965,11 @@ function openEdit(i){
   $("edFee1").value=r[5]||""; $("edFee2").value=r[6]||"";
   $("edFee2Fld").hidden=!net;
   $("edErr").hidden=true; $("edSub").classList.remove("err");
-  /* 사이드패널(panelRows)과 같은 집계를 쓴다 — 대상·중복 제거 기준이 어긋나면 안 된다 */
-  var pr=panelRows(r), un=pr.length+"건";
-  $("edUseN").textContent=un;
-  $("edUseList").innerHTML = pr.length
-    ? pr.map(x=>"<li><b>"+x[0]+"</b></li>").join("")
-    : '<li class="uempty">이 태그를 쓰는 상품이 없습니다</li>';
   edPaint(); $("ovEdit").hidden=false;
 }
 $("edSub").oninput=function(){ $("edErr").hidden=true; $("edSub").classList.remove("err"); edPaint(); };
 $("edOk").onclick=function(){
   var r=rows()[edI];
-  if(isBnd()){
-    var bv=$("edSub").value.trim();
-    if(!bv){ $("edErr").textContent="태그명을 입력해주세요."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
-    if((BND[VD]||[]).some((x,j)=>j!==edI&&x[0]===bv)){ $("edErr").textContent="같은 업체에 이미 있는 결합할인명입니다."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
-    r[0]=bv; r[1]=$("edDesc").value.trim();
-    $("ovEdit").hidden=true; renderList(); toast("「"+bv+"」 태그를 수정했습니다."); return;
-  }
   var net=isNet(), none=isNone(r), sv=$("edSub").value.trim();
   if(!none && !sv){ $("edErr").textContent=net?"표기명을 입력해주세요.":"태그명을 입력해주세요."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
   r[2]=none?"":sv; r[3]=$("edDesc").value.trim(); r[4]=$("edGrade").value;
@@ -1151,7 +987,7 @@ function openDel(i){
 }
 $("dlOk").onclick=function(){
   var nm=tagName(rows()[dlI]);
-  (isBnd()?BND[VD]:rows()).splice(dlI,1);
+  rows().splice(dlI,1);
   dlI=null; $("ovDel").hidden=true; renderList();
   toast("「"+nm+"」 태그를 삭제했습니다.");
 };
@@ -1182,7 +1018,7 @@ var MK={
     b:"<b>제거.</b> 이동 경로를 GNB로 통일합니다(상품속성 관리 문서와 같은 방침). <span class='q'>다만 태그 등록 시 속성이 없으면 속성부터 만들어야 하는데 그 동선이 화면에서 끊깁니다 — 기능정의서 D 항목.</span>"},
  4:{t:"상단 안내 박스 · 제거", gx:1,
     a:"구분에 따라 <b>문구가 갈리는 안내 박스 2종</b> — 인터넷용(자동 조립 규칙) / 인터넷 외용(직접 입력 규칙)",
-    b:"<b>안내 박스 영역을 통째로 없앴습니다 — 전 구분 공통.</b> 드래그앤드랍은 어드민 공통 패턴이라 화면마다 설명하지 않고, 태그명 조립 규칙은 <b>등록·수정 모달의 미리보기</b>가 실시간으로 보여줍니다. 결합할인 전용 안내도 두지 않습니다."},
+    b:"<b>안내 박스 영역을 통째로 없앴습니다 — 전 구분 공통.</b> 드래그앤드랍은 어드민 공통 패턴이라 화면마다 설명하지 않고, 태그명 조립 규칙은 <b>등록·수정 모달의 미리보기</b>가 실시간으로 보여줍니다. "},
  5:{t:"속성 타입 열 신규",
     a:"속성 타입은 <b>표 중간의 회색 그룹 헤더 행</b>(속도 / 구성제품 / 추가구성옵션)",
     b:"<b>그룹 헤더 행을 없애고 1열로 내렸습니다.</b> 상단에 속성 타입 필터가 생겨 그룹 헤더와 중복되고, 필터를 걸면 화면에서 속성 타입을 확인할 곳이 사라집니다."},
@@ -1195,10 +1031,7 @@ var MK={
  8:{t:"결합요금 열 · 인터넷만",
     a:"구분과 무관하게 <b>결합요금 열이 항상 노출</b>",
     b:"<b>인터넷에서만 노출.</b> 인터넷 외에는 결합요금 개념이 없어 열과 모달 필드를 모두 뺐습니다. 인터넷 10열 · 인터넷 외 9열입니다.<br>결합요금은 <b>태그 단위로 확정</b>됐습니다(2026-09-28) — 인터넷은 <code>attr_tag_combine_amt</code>를 그대로 쓰고, 인터넷 외 <code>combine_charge</code>는 미사용 데이터로 폐기합니다."},
- 9:{t:"결합할인 — 구분 5번째",
-    a:"구분 드롭다운은 <b>4종</b>(인터넷 · TV · 인터넷전화 · 일반전화). 결합할인 41건은 어느 구분에도 들어가지 않았습니다",
-    b:"<b>구분 드롭다운의 다섯 번째 항목으로 넣었습니다.</b> 결합할인 태그는 업체별 <b>결합할인명</b>이라 <b>속성 타입 · 속성 · 노출 등급 · 추가 노출 · 요금이 모두 없습니다</b> — 입력 칸은 <b>태그명 · 설명 2개뿐</b>이고, 목록 컬럼도 태그명 · 설명 · 연결 상품 · 관리 4개로 바뀝니다.<br>개발 8장 DDL 근거 — 결합할인은 상품이 아니라 <b>분류에 붙는 </b><code>internet_product_direct_tag</code>(분류 41건)이고, <code>direct_tag_amt</code> 한 컬럼만 두며 결합 금액 컬럼은 두지 않습니다.<br><span class='q'>이 화면기획의 결합할인 데이터는 KT 6건만 실측값이고, 연결 분류명은 자리표시자입니다.</span>"},
- 10:{t:"관리 열 — [수정] · [삭제]",
+ 9:{t:"관리 열 — [수정] · [삭제]",
     a:"마지막 열이 <b>「수정」 아이콘 버튼 1개</b>. 삭제는 수정 모달 안에 들어가 있어, 지우려면 모달을 한 번 열어야 했습니다",
     b:"<b>목록에서 바로 [수정] · [삭제].</b> 상품속성 관리와 같은 구조입니다.<br>"
       +"<b>「없음」 태그는 [수정]이 비활성</b>입니다 — 표기명 · 설명 · 노출 등급 · 추가 노출 · 요금을 쓰지 않아 고칠 항목이 0개이고, 연결 상품은 건수를 눌러 사이드패널에서 봅니다. 그래서 「없음」 전용 수정 모달을 두지 않습니다.<br>"

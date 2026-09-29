@@ -191,6 +191,25 @@ table.mx{border-collapse:collapse;width:100%;font-size:13px;letter-spacing:-.2px
 .mx th,.mx td{border:1px solid var(--g100);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.55}
 .mx thead th{background:var(--g25);font-weight:700;font-size:12px;color:var(--g600)}
 .mx tbody th{background:#fff;font-weight:600;color:var(--g900);width:15%}
+
+/* ── 결합할인 · 설명 수정 ── */
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.dcols{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:16px}
+.dit{display:flex;align-items:center;gap:8px;height:34px;padding:0 10px;margin-bottom:8px;border:1px solid var(--g100);
+ border-radius:6px;background:#fff;font-size:13px;letter-spacing:-.3px;cursor:context-menu;user-select:none}
+.dit:hover{border-color:var(--g300)}
+.dit .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dit.cls{font-weight:600}
+.dit.sel{border-color:var(--primary);border-width:2px;background:var(--blue50)}
+.dit .ap{font-size:11px;font-weight:700;color:var(--primary);background:var(--blue50);border-radius:4px;padding:3px 6px;flex:none}
+.dempty{font-size:12px;color:var(--g300);text-align:center;padding:9px 0}
+.chg{font-size:10px;font-weight:700;background:var(--orange50);color:var(--warning);border-radius:3px;padding:1px 5px;margin-left:4px}
+textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
+.fgrp.new{border-color:var(--blue100);background:#FAFCFF}
+.menu .mi .chgb{font-size:10px;font-weight:700;background:var(--warning);color:#fff;border-radius:3px;padding:1px 5px}
+.cases td{vertical-align:middle}
+.cases .btn-out{height:30px;padding:0 10px;font-size:12.5px}
+.cases .sub{font-size:12px;color:var(--g500)}
 </style>
 </head>
 <body>
@@ -213,11 +232,11 @@ table.mx{border-collapse:collapse;width:100%;font-size:13px;letter-spacing:-.2px
   <div class="vtabs" id="vtabs"></div>
 
   <div class="chips" id="chips">
-    <button class="on">메인상품</button><button>부가서비스</button><button>기타상품</button>
-    <button>결합할인</button><button>결합카드</button><button>기타</button>
+    <button class="on" data-c="메인상품">메인상품</button><button data-c="부가서비스">부가서비스</button><button data-c="기타상품">기타상품</button>
+    <button data-c="결합할인">결합할인</button><button data-c="결합카드">결합카드</button><button data-c="기타">기타</button>
   </div>
 
-  <div class="legend">
+  <div class="legend" id="legend">
     <span><i style="background:#fff;border:1px solid var(--g100)"></i>판매중</span>
     <span><i style="background:var(--g25);border:1px solid var(--g100)"></i>미사용</span>
     <span><i style="background:var(--blue50);border:1px solid var(--primary)"></i>선택</span>
@@ -231,6 +250,33 @@ table.mx{border-collapse:collapse;width:100%;font-size:13px;letter-spacing:-.2px
   <div class="grid" id="grid"></div>
 </div>
 
+
+<div class="doc-band" id="modal-cases"><div class="sheet">
+  <div class="doc-eyebrow">모달 케이스</div>
+  <div class="doc-h">이 화면에서 새로 만들거나 바꾸는 모달 — 전부</div>
+  <div class="doc-sub">[열기]를 누르면 위 화면에서 그 상태 그대로 모달이 뜹니다. AS-IS 그대로 두는 모달(요금·할인·이벤트·금지 코드 설정 등)은 뺐습니다.</div>
+</div></div>
+<div class="sheet" style="padding-top:32px">
+<div class="spec">
+  <table class="mx cases">
+    <thead><tr><th style="width:18%">모달</th><th style="width:26%">케이스</th><th>진입 · 이 상태가 되는 조건</th><th style="width:84px"></th></tr></thead>
+    <tbody>
+      <tr><th rowspan="2">태그 연결<br><span class="chg">추가</span></th><td>신규 연결</td><td class="sub">TV·전화 세트 · 「태그 없음」 카드 우클릭 → 태그 연결</td><td><button class="btn-out" data-case="tag-new">열기</button></td></tr>
+      <tr><td>기존 태그 변경</td><td class="sub">TV·전화 세트 · 태그가 있는 카드 우클릭 → 태그 연결</td><td><button class="btn-out" data-case="tag-edit">열기</button></td></tr>
+      <tr><th rowspan="4">상품 연결 등록<br><span class="chg">추가</span></th><td>처음 열린 상태</td><td class="sub">인터넷상품 + 기본WIFI 선택 → 기본WIFI 위 우클릭. 첫 자리 미선택이라 [등록] 비활성</td><td><button class="btn-out" data-case="reg-empty">열기</button></td></tr>
+      <tr><td>조합의 첫 연결</td><td class="sub">고른 속성 조합에 기존 연결이 없음 → 대표 자동 켜짐 · 끌 수 없음(규칙 5)</td><td><button class="btn-out" data-case="reg-first">열기</button></td></tr>
+      <tr><td>조합에 기존 연결 있음</td><td class="sub">같은 조합 연결 목록 + 현재 대표 배지 → 대표 여부를 직접 고름</td><td><button class="btn-out" data-case="reg-exist">열기</button></td></tr>
+      <tr><td>이미 연결된 짝 (오류)</td><td class="sub">평소엔 메뉴가 「보기」로 바뀌어 안 열림. 동시 편집 대비 안전망(규칙 14) · [등록] 비활성</td><td><button class="btn-out" data-case="reg-dupe">열기</button></td></tr>
+      <tr><th rowspan="3">설명 수정<br><span class="chg">추가</span></th><td>신청서 노출 꺼짐</td><td class="sub">결합할인 · 분류 칸 우클릭 → 설명 수정(설명 바꾸기 대체). 신청서 설명은 선택 사항</td><td><button class="btn-out" data-case="ds-off">열기</button></td></tr>
+      <tr><td>신청서 노출 켜짐</td><td class="sub">「신청서에 노출」 체크 → 신청서 설명이 필수가 됨</td><td><button class="btn-out" data-case="ds-on">열기</button></td></tr>
+      <tr><td>켜짐 + 신청서 설명 비어 있음</td><td class="sub">[수정] 비활성 + 사유 안내 (할인명이 비어도 같음)</td><td><button class="btn-out" data-case="ds-empty">열기</button></td></tr>
+    </tbody>
+  </table>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p>「상품 연결 관리에서 보기」는 모달이 아니라 화면 이동이라 이 표에 없습니다(목업에선 안내 토스트).</p>
+  </div>
+</div>
+</div>
 
 <div class="doc-band" id="reg-spec"><div class="sheet">
   <div class="doc-eyebrow">모달</div>
@@ -272,7 +318,37 @@ table.mx{border-collapse:collapse;width:100%;font-size:13px;letter-spacing:-.2px
 </div>
 </div>
 
-<footer>인터넷 상품 관리 — 태그 연결 변경분 시안 · 카드를 클릭하면 조합이, 우클릭하면 메뉴가 열립니다.</footer>
+<div class="doc-band" id="desc-spec"><div class="sheet">
+  <div class="doc-eyebrow">모달</div>
+  <div class="doc-h">설명 수정 — 결합할인 분류 우클릭</div>
+  <div class="doc-sub">위 화면에서 상품군 <b>결합할인</b>을 누르고 <b>분류</b> 칸을 우클릭 → 「설명 수정」. KT만 실데이터로 채웠습니다.</div>
+</div></div>
+<div class="sheet" style="padding-top:32px">
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">「설명 바꾸기」를 대체하는 새 항목 · 새 모달</span><span class="spec-s">결합할인 · 분류 칸만</span></div>
+  <table class="mx">
+    <thead><tr><th style="width:22%">항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th>진입 <span class="chg">변경</span></th><td>결합할인 분류 칸 우클릭 메뉴에서 <b>「설명 바꾸기」 자리를 「설명 수정」이 대신함</b>. 항목 칸 · 다른 상품군은 「설명 바꾸기」 그대로</td></tr>
+      <tr><th>할인명</th><td>AS-IS 상품명과 같은 값 · 필수. CRM과 신청서가 같이 씀</td></tr>
+      <tr><th>CRM 설명</th><td>AS-IS 상품 설명과 같은 값 · 상담사 참고용(할인 조건 등)</td></tr>
+      <tr><th>신청서에 노출 <span class="chg">추가</span></th><td>체크박스. 끄면 신청서에 이 할인이 나가지 않음</td></tr>
+      <tr><th>신청서 설명 <span class="chg">추가</span></th><td>체크와 <b>무관하게 항상 입력 · 저장</b>, 체크를 켜면 필수. 고객용 짧은 문구 — CRM 설명과 별도 값</td></tr>
+      <tr><th>하단 설정값 표시</th><td>AS-IS와 같이 상품 옵션 JSON 읽기 전용 표시 · 개발용이라 추후 제거</td></tr>
+      <tr><th>목록 표시</th><td>신청서 노출 중인 분류 칸에 <b>신청서</b> 배지</td></tr>
+    </tbody>
+  </table>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p><b>기존 모달을 고치지 않고 새로 만든 이유</b> — 「설명 바꾸기」의 버튼명 · 필드 라벨 · JSON 표시가 전 상품 공통 컴포넌트라 바꾸면 모든 카드에 영향이 갑니다(FE 확인). 결합할인 분류에서만 새 모달로 갈아끼웁니다.</p>
+    <p><b>이름을 「설명 수정」으로 둔 이유</b> — 대체하는 「설명 바꾸기」와 이어져 운영자가 바로 알아봄. 「할인」은 위 「상품 할인 설정」과 헷갈려 제외, 「신청서」는 대체 항목이라 제외. 여러 필드를 편집하므로 문구 규칙상 「수정」.</p>
+    <p><b>체크를 꺼도 신청서 설명은 지우지 않습니다</b> — 노출만 멈추고 값은 보관.</p>
+    <p><b>결합할인 분류에서 「설명 바꾸기」 숨김</b> — 개발에서 처리 가능(주인 확인). 방식은 개발 판단.</p>
+    <p><b>신청서 설명 입력 제한 없음</b> — 글자 수 · 줄바꿈 제한 없음. AS-IS 상품 설명과 동일.</p>
+  </div>
+</div>
+</div>
+
+<footer>인터넷 상품 관리 — 태그 연결 · 상품 연결 등록 · 결합할인 설명 수정 시안 · 카드를 클릭하면 조합이, 우클릭하면 메뉴가 열립니다.</footer>
 </div>
 
 <div class="ov" id="ovTag" hidden>
@@ -330,13 +406,35 @@ table.mx{border-collapse:collapse;width:100%;font-size:13px;letter-spacing:-.2px
   </div>
 </div>
 
+<div class="ov" id="ovDesc" hidden>
+  <div class="modal" style="width:560px">
+    <div class="mh"><h3>설명 수정</h3><span class="x" id="dsX">✕</span></div>
+    <div class="mb">
+      <div class="fld"><label>할인명 <span class="req">*</span><span class="sp"></span><span class="ro">AS-IS 상품명 · CRM · 신청서 공통</span></label>
+        <input class="inp" id="dsName"></div>
+      <div class="fld"><label>CRM 설명 <span class="sp"></span><span class="ro">AS-IS 상품 설명 · 상담사 참고용(할인 조건 등)</span></label>
+        <textarea class="inp" id="dsCrm"></textarea></div>
+      <div class="fgrp new" style="margin-bottom:0">
+        <div class="fgc"><b>신청서</b><span class="chg">추가</span><em>고객이 보는 신청서에 할인명과 함께 나갑니다</em></div>
+        <span class="cb" id="dsApply"><i></i>신청서에 노출</span>
+        <div class="fld" style="margin:12px 0 0"><label>신청서 설명 <span class="req" id="dsReq">*</span><span class="sp"></span><span class="ro" id="dsCnt"></span></label>
+          <textarea class="inp" id="dsApp" placeholder="고객에게 보여줄 짧은 설명을 입력하세요"></textarea>
+          <div class="hint">체크를 꺼도 입력한 내용은 저장되고, 신청서에만 나가지 않습니다.</div></div>
+      </div>
+      <div class="notice warn" id="dsWarn" hidden style="margin:14px 0 0"><span class="i">!</span><span></span></div>
+      <pre id="dsPre" style="margin-top:14px;background:var(--g25);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.5;color:var(--g500);white-space:pre-wrap"></pre>
+    </div>
+    <div class="mf"><div class="sp"></div><button class="btn-out" id="dsCancel">취소</button><button class="btn-solid" id="dsSave">수정</button></div>
+  </div>
+</div>
+
 <script>
 const D = {"KT":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["슬림","100Mbps(슬림)"],["슬림 와이파이","100Mbps(슬림)"],["안심 슬림 와이파이","100Mbps(슬림)"],["슬림 와이드","100Mbps(슬림)"],["안심 슬림 와이드","100Mbps(슬림)"],["슬림플러스","200Mbps(슬림플러스)"],["베이직","500Mbps(베이직)"],["베이직 와이파이","500Mbps(베이직)"],["안심 베이직 와이파이","500Mbps(베이직)"],["베이직 와이드","500Mbps(베이직)"],["안심 베이직 와이드","500Mbps(베이직)"],["에센스","1Gbps(에센스)"],["에센스 와이파이","1Gbps(에센스)"],["안심 에센스 와이파이","1Gbps(에센스)"],["에센스 와이드","1Gbps(에센스)"],["안심 에센스 와이드","1Gbps(에센스)"],["프리미엄","2.5Gbps(프리미엄)"],["프리미엄 와이파이","2.5Gbps(프리미엄)"],["프리미엄 와이드","2.5Gbps(프리미엄)"],["프리미엄플러스","5Gbps(프리미엄플러스)"],["슈퍼프리미엄","10Gbps(슈퍼프리미엄)"]],"cols":[["기가 와이파이 홈ax",""],["KT와이파이7D",""],["기가 와이파이 (홈ax+버디)",""],["기가 와이파이(7D+버디)",""],["기가 와이파이 웨이브2(2대)",""]],"pair":{"슬림 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"안심 슬림 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"슬림 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"안심 슬림 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"베이직 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"안심 베이직 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"베이직 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"안심 베이직 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"에센스":["KT와이파이7D","기가 와이파이 홈ax"],"에센스 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"안심 에센스 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"에센스 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"안심 에센스 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"프리미엄":["KT와이파이7D","기가 와이파이 홈ax"],"프리미엄 와이파이":["KT와이파이7D","기가 와이파이 홈ax"],"프리미엄 와이드":["기가 와이파이 (홈ax+버디)","기가 와이파이(7D+버디)"],"프리미엄플러스":["KT와이파이7D","기가 와이파이 웨이브2(2대)"],"슈퍼프리미엄":["KT와이파이7D","기가 와이파이 웨이브2(2대)"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["Skylife 슬림","218채널"],["Skylife 베이직","221채널"],["Skylife 라이트","222채널"],["Skylife 에센스","229채널"],["Skylife 엔터","229채널"],["Skylife 키즈","229채널"],["교육형","89채널"],["선택형","113~121채널"],["슬림","220채널"],["베이직","238채널"],["라이트","240채널"],["에센스","263채널"],["에센스 플러스","266채널"],["VOD 플러스","266채널"],["VOD 초이스","266채널"],["키즈랜드팩 초이스","266채널"],["뮤즈 초이스","266채널"],["슈퍼팩 초이스","266채널"],["사장님 초이스","266채널"],["무비","266채널"],["세이브25","266채널"],["무비플러스","269채널"],["프라임 홈스쿨","266채널"],["모든G","250채널"],["디즈니+모든G","250채널"],["NEW모든G","250채널"],["넷플릭스 초이스HD","266채널"],["넷플릭스 초이스UHD","266채널"],["티빙 초이스 스탠다드","266채널"],["티빙 초이스 프리미엄","266채널"],["디즈니+ 초이스","266채널"],["디즈니+ 초이스 프리미엄","267채널"]],"cols":[["일반셋톱","일반셋탑"],["기가지니3A","스마트셋탑"],["올레TV탭","태블릿"]],"pair":{"Skylife 슬림":["일반셋톱"],"Skylife 베이직":["일반셋톱"],"Skylife 라이트":["일반셋톱"],"Skylife 에센스":["일반셋톱"],"Skylife 엔터":["일반셋톱"],"Skylife 키즈":["일반셋톱"],"교육형":["기가지니3A"],"선택형":["기가지니3A"],"슬림":["기가지니3A"],"베이직":["기가지니3A"],"라이트":["기가지니3A"],"에센스":["기가지니3A"],"에센스 플러스":["기가지니3A"],"VOD 플러스":["기가지니3A"],"VOD 초이스":["기가지니3A"],"키즈랜드팩 초이스":["기가지니3A"],"뮤즈 초이스":["기가지니3A"],"슈퍼팩 초이스":["기가지니3A"],"사장님 초이스":["기가지니3A"],"무비":["기가지니3A"],"세이브25":["기가지니3A"],"무비플러스":["기가지니3A"],"프라임 홈스쿨":["올레TV탭"],"모든G":["기가지니3A"],"디즈니+모든G":["기가지니3A"],"NEW모든G":["기가지니3A"],"넷플릭스 초이스HD":["기가지니3A"],"넷플릭스 초이스UHD":["기가지니3A"],"티빙 초이스 스탠다드":["기가지니3A"],"티빙 초이스 프리미엄":["기가지니3A"],"디즈니+ 초이스":["기가지니3A"],"디즈니+ 초이스 프리미엄":["기가지니3A"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["기본요금제","인터넷전화(일반)"],["표준+","인터넷전화(일반)"],["표준영상","인터넷전화(일반)"],["우리끼리3000","인터넷전화(정액)"],["유선3000","인터넷전화(정액)"],["유무선3000","인터넷전화(정액)"],["사장님 배달POS 인터넷전화","인터넷전화(정액)"]],"cols":[["AT05-704V","전화기"]],"pair":{"기본요금제":["AT05-704V"],"표준+":["AT05-704V"],"표준영상":["AT05-704V"],"우리끼리3000":["AT05-704V"],"유선3000":["AT05-704V"],"유무선3000":["AT05-704V"],"사장님 배달POS 인터넷전화":["AT05-704V"]}},{"svc":"일반전화","label":"일반전화세트","rowName":"전화상품","colName":"전화기기","rows":[["기본요금제","일반전화(일반)"],["유선3000","일반전화(정액)"],["유무선3000","일반전화(정액)"],["사장님 배달POS 전화","일반전화(정액)"]],"cols":[],"pair":{}}],"LG":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["와이파이기본_광랜안심","100Mbps(광랜 인터넷)"],["프리미엄 안심 100메가","100Mbps(광랜 인터넷)"],["프리미엄 안심 보상 100메가","100Mbps(광랜 인터넷)"],["스마트_광랜안심","100Mbps(광랜 인터넷)"],["와이파이기본_200M","200Mbps(200메가 인터넷)"],["프리미엄 안심 200M","200Mbps(200메가 인터넷)"],["프리미엄 안심 보상 200M","200Mbps(200메가 인터넷)"],["와이파이기본_기가슬림안심","500Mbps(기가슬림 인터넷)"],["프리미엄 안심 500메가","500Mbps(기가슬림 인터넷)"],["프리미엄 안심 보상 500메가","500Mbps(기가슬림 인터넷)"],["스마트_기가슬림안심","500Mbps(기가슬림 인터넷)"],["스마트기가_최대500메가","500Mbps(기가슬림 인터넷)"],["와이파이기본_기가안심","1Gbps(기가 인터넷)"],["프리미엄 안심 1기가","1Gbps(기가 인터넷)"],["프리미엄 안심 보상 1기가","1Gbps(기가 인터넷)"],["스마트_기가안심","1Gbps(기가 인터넷)"],["스마트기가_최대1기가","1Gbps(기가 인터넷)"],["와이파이기본_2.5기가","2.5Gbps(2.5기가 인터넷)"],["와이파이기본_2.5기가안심","2.5Gbps(2.5기가 인터넷)"],["스마트기가_최대2.5기가","2.5Gbps(2.5기가 인터넷)"],["와이파이기본_5기가","5Gbps(5기가 인터넷)"],["와이파이기본_10기가","10Gbps(10기가 인터넷)"]],"cols":[["기가WiFi",""],["기가WiFi+스마트홈스피커",""],["기가WiFi6+안심",""],["기가WiFi6",""],["기가WiFi6+스마트홈스피커",""],["기가WiFi6+스마트홈+보상",""],["기가WiFi6+크롬캐스트",""],["기가WiFi6+MESH",""],["기가WiFi6+MESH+보상",""],["기가WiFi 프리미엄",""]],"pair":{"와이파이기본_광랜안심":["기가WiFi"],"프리미엄 안심 100메가":["기가WiFi+스마트홈스피커"],"프리미엄 안심 보상 100메가":["기가WiFi6+안심"],"스마트_광랜안심":["기가WiFi+스마트홈스피커"],"와이파이기본_200M":["기가WiFi6"],"프리미엄 안심 200M":["기가WiFi6+스마트홈스피커"],"프리미엄 안심 보상 200M":["기가WiFi6+안심"],"와이파이기본_기가슬림안심":["기가WiFi6"],"프리미엄 안심 500메가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"프리미엄 안심 보상 500메가":["기가WiFi6+MESH+보상","기가WiFi6+스마트홈+보상"],"스마트_기가슬림안심":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"스마트기가_최대500메가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"와이파이기본_기가안심":["기가WiFi6"],"프리미엄 안심 1기가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"프리미엄 안심 보상 1기가":["기가WiFi6+MESH+보상","기가WiFi6+스마트홈+보상"],"스마트_기가안심":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"스마트기가_최대1기가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커","기가WiFi6+크롬캐스트"],"와이파이기본_2.5기가":["기가WiFi 프리미엄"],"와이파이기본_2.5기가안심":["기가WiFi 프리미엄"],"스마트기가_최대2.5기가":["기가WiFi6+MESH","기가WiFi6+스마트홈스피커"],"와이파이기본_5기가":["기가WiFi 프리미엄"],"와이파이기본_10기가":["기가WiFi 프리미엄"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["프리미엄 내맘대로","258채널"],["프리미엄 환승구독","260채널"],["프리미엄 플러스","260채널"],["일반형","190채널"],["베이직","212채널"],["실속형","219채널"],["기본형","225채널"],["고급형","231채널"],["프리미엄","253채널"],["프리미엄VOD","258채널"],["프리미엄 넷플릭스HD","258채널"],["프리미엄 넷플릭스UHD","258채널"],["프리미엄 티빙","260채널"],["프리미엄 티빙 플러스","260채널"],["(구)프리미엄 디즈니+","258채널"],["프리미엄 디즈니+스탠다드","257채널"],["프리미엄 디즈니+","257채널"],["프리미엄 유플레이","260채널"],["기본형방송패스","222채널"],["프리미엄방송패스","257채널"]],"cols":[["UHD4셋톱","일반셋탑"]],"pair":{"프리미엄 내맘대로":["UHD4셋톱"],"프리미엄 환승구독":["UHD4셋톱"],"프리미엄 플러스":["UHD4셋톱"],"일반형":["UHD4셋톱"],"베이직":["UHD4셋톱"],"실속형":["UHD4셋톱"],"기본형":["UHD4셋톱"],"고급형":["UHD4셋톱"],"프리미엄":["UHD4셋톱"],"프리미엄VOD":["UHD4셋톱"],"프리미엄 넷플릭스HD":["UHD4셋톱"],"프리미엄 넷플릭스UHD":["UHD4셋톱"],"프리미엄 티빙":["UHD4셋톱"],"프리미엄 티빙 플러스":["UHD4셋톱"],"(구)프리미엄 디즈니+":["UHD4셋톱"],"프리미엄 디즈니+스탠다드":["UHD4셋톱"],"프리미엄 디즈니+":["UHD4셋톱"],"프리미엄 유플레이":["UHD4셋톱"],"기본형방송패스":["UHD4셋톱"],"프리미엄방송패스":["UHD4셋톱"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["표준형","인터넷전화(일반/소호)"],["표준형+","인터넷전화(일반)"],["이동할인형","인터넷전화(일반)"],["이동할인형+","인터넷전화(일반)"],["망내무한 9000","인터넷전화(정액)"],["망내무한 9000+(일반형)","인터넷전화(정액)"],["망내무한 9000+(정액형)","인터넷전화(정액)"],["유무선무한 9000","인터넷전화(일반)"],["일반형/팩스","인터넷전화(소호)"],["고급형(센트릭스)","인터넷전화(소호)"],["자유통화3","인터넷전화(소호)"],["자유통화4","인터넷전화(소호)"],["자유통화6","인터넷전화(소호)"],["자유통화8","인터넷전화(소호)"],["자유통화10","인터넷전화(소호)"],["자유통화15","인터넷전화(소호)"],["자유통화20","인터넷전화(소호)"],["자유통화30","인터넷전화(소호)"],["자유통화50","인터넷전화(소호)"],["콜+6","인터넷전화(정액)"],["콜+10","인터넷전화(정액)"],["TV 플러스","인터넷전화(태블릿)"],["뮤직 플러스","인터넷전화(태블릿)"],["TV&뮤직 플러스","인터넷전화(태블릿)"],["키즈 플러스","인터넷전화(태블릿)"],["TV&콜 플러스","인터넷전화(태블릿)"],["EBS 플러스","인터넷전화(태블릿)"],["누리 홈스쿨","인터넷전화(태블릿)"],["AI전화","인터넷전화(기업)"]],"cols":[["CPG 4020","모뎀"],["IP450S","전화기"],["G패드3 8.0","태블릿"],["IP520S","전화기"]],"pair":{"표준형":["CPG 4020"],"표준형+":["CPG 4020"],"이동할인형":["CPG 4020"],"이동할인형+":["CPG 4020"],"망내무한 9000":["CPG 4020"],"망내무한 9000+(일반형)":["CPG 4020"],"망내무한 9000+(정액형)":["CPG 4020"],"유무선무한 9000":["CPG 4020"],"일반형/팩스":["CPG 4020"],"고급형(센트릭스)":["IP450S"],"자유통화3":["IP450S"],"자유통화4":["IP450S"],"자유통화6":["IP450S"],"자유통화8":["IP450S"],"자유통화10":["IP450S"],"자유통화15":["IP450S"],"자유통화20":["IP450S"],"자유통화30":["IP450S"],"자유통화50":["IP450S"],"콜+6":["CPG 4020"],"콜+10":["CPG 4020"],"TV 플러스":["G패드3 8.0"],"뮤직 플러스":["G패드3 8.0"],"TV&뮤직 플러스":["G패드3 8.0"],"키즈 플러스":["G패드3 8.0"],"TV&콜 플러스":["G패드3 8.0"],"EBS 플러스":["G패드3 8.0"],"누리 홈스쿨":["G패드3 8.0"],"AI전화":["IP520S"]}}],"SKT":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["광랜인터넷","100Mbps(광랜 인터넷)"],["광랜인터넷 와이파이","100Mbps(광랜 인터넷)"],["모두안심 광랜","100Mbps(광랜 인터넷)"],["파워백신 광랜","100Mbps(광랜 인터넷)"],["원격케어 광랜","100Mbps(광랜 인터넷)"],["기가라이트인터넷","500Mbps(기가라이트 인터넷)"],["기가라이트인터넷 와이파이","500Mbps(기가라이트 인터넷)"],["모두안심 기가라이트","500Mbps(기가라이트 인터넷)"],["파워백신 기가라이트","500Mbps(기가라이트 인터넷)"],["원격케어 기가라이트","500Mbps(기가라이트 인터넷)"],["기가인터넷","1Gbps(기가 인터넷)"],["기가인터넷 와이파이","1Gbps(기가 인터넷)"],["모두안심 기가","1Gbps(기가 인터넷)"],["파워백신 기가","1Gbps(기가 인터넷)"],["원격케어 기가","1Gbps(기가 인터넷)"],["기가인터넷멀티","2.5Gbps(기가프리미엄X2.5)"],["기가인터넷멀티 와이파이 1.7G","2.5Gbps(기가프리미엄X2.5)"],["기가프리미엄X2.5","2.5Gbps(기가프리미엄X2.5)"],["기가프리미엄X5","5Gbps(기가프리미엄X5)"],["기가프리미엄X10","10Gbps(기가프리미엄X10)"]],"cols":[["기가WiFi",""],["기가WiFi7",""],["기가WiFi 프리미엄",""]],"pair":{"광랜인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 광랜":["기가WiFi","기가WiFi7"],"파워백신 광랜":["기가WiFi","기가WiFi7"],"원격케어 광랜":["기가WiFi","기가WiFi7"],"기가라이트인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 기가라이트":["기가WiFi","기가WiFi7"],"파워백신 기가라이트":["기가WiFi","기가WiFi7"],"원격케어 기가라이트":["기가WiFi","기가WiFi7"],"기가인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 기가":["기가WiFi","기가WiFi7"],"파워백신 기가":["기가WiFi","기가WiFi7"],"원격케어 기가":["기가WiFi","기가WiFi7"],"기가인터넷멀티":["기가WiFi 프리미엄"],"기가인터넷멀티 와이파이 1.7G":["기가WiFi 프리미엄"],"기가프리미엄X2.5":["기가WiFi 프리미엄"],"기가프리미엄X5":["기가WiFi 프리미엄"],"기가프리미엄X10":["기가WiFi 프리미엄"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["Btv 미니","59채널"],["Btv 이코노미","182채널"],["Btv 스탠다드","235채널"],["Btv 스탠다드 넷플릭스","235채널"],["Btv 올 넷플릭스","255채널"],["Btv 스탠다드 플러스","235채널"],["Btv 올","255채널"],["Btv 스탠다드 넷플릭스 프리미엄","235채널"],["Btv 올 넷플릭스 프리미엄","255채널"],["Btv 올 플러스","255채널"],["Btv 올+캐치온","254채널"],["Btv+MAX","255채널"],["Btv 올+지상파","252채널"],["Btv 올+캐치온+지상파","254채널"]],"cols":[["스마트3","일반셋탑"]],"pair":{"Btv 미니":["스마트3"],"Btv 이코노미":["스마트3"],"Btv 스탠다드":["스마트3"],"Btv 스탠다드 넷플릭스":["스마트3"],"Btv 올 넷플릭스":["스마트3"],"Btv 스탠다드 플러스":["스마트3"],"Btv 올":["스마트3"],"Btv 스탠다드 넷플릭스 프리미엄":["스마트3"],"Btv 올 넷플릭스 프리미엄":["스마트3"],"Btv 올 플러스":["스마트3"],"Btv 올+캐치온":["스마트3"],"Btv+MAX":["스마트3"],"Btv 올+지상파":["스마트3"],"Btv 올+캐치온+지상파":["스마트3"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["인터넷전화","인터넷전화(일반)"],["인터넷전화(모)","인터넷전화(일반)"],["집전화프리5000","인터넷전화(정액)"],["케이블인터넷전화","케이블전화"],["무료100","인터넷전화(정액)"],["무료200","인터넷전화(정액)"],["무료250","인터넷전화(정액)"],["무료300","인터넷전화(정액)"],["무료700","인터넷전화(정액)"],["무료2500","인터넷전화(정액)"]],"cols":[["MWP-2500H","전화기"]],"pair":{"인터넷전화":["MWP-2500H"],"인터넷전화(모)":["MWP-2500H"],"집전화프리5000":["MWP-2500H"],"케이블인터넷전화":["MWP-2500H"],"무료100":["MWP-2500H"],"무료200":["MWP-2500H"],"무료250":["MWP-2500H"],"무료300":["MWP-2500H"],"무료700":["MWP-2500H"],"무료2500":["MWP-2500H"]}},{"svc":"일반전화","label":"일반전화세트","rowName":"전화상품","colName":"전화기기","rows":[["일반전화","일반전화(일반)"],["집전화프리5000","일반전화(정액)"],["무료100","일반전화(정액)"],["무료200","일반전화(정액)"],["무료250","일반전화(정액)"],["무료300","일반전화(정액)"],["무료700","일반전화(정액)"],["무료2500","일반전화(정액)"]],"cols":[],"pair":{}}],"SKB":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["광랜인터넷","100Mbps(광랜 인터넷)"],["광랜인터넷 와이파이","100Mbps(광랜 인터넷)"],["모두안심 광랜","100Mbps(광랜 인터넷)"],["파워백신 광랜","100Mbps(광랜 인터넷)"],["원격케어 광랜","100Mbps(광랜 인터넷)"],["광랜인터넷 윙즈","100Mbps(광랜 인터넷)"],["모두안심 광랜 윙즈","100Mbps(광랜 인터넷)"],["파워백신 광랜 윙즈","100Mbps(광랜 인터넷)"],["원격케어 광랜 윙즈","100Mbps(광랜 인터넷)"],["기가라이트인터넷","500Mbps(기가라이트 인터넷)"],["기가라이트인터넷 와이파이","500Mbps(기가라이트 인터넷)"],["모두안심 기가라이트","500Mbps(기가라이트 인터넷)"],["파워백신 기가라이트","500Mbps(기가라이트 인터넷)"],["원격케어 기가라이트","500Mbps(기가라이트 인터넷)"],["기가라이트인터넷 윙즈","500Mbps(기가라이트 인터넷)"],["모두안심 기가라이트 윙즈","500Mbps(기가라이트 인터넷)"],["파워백신 기가라이트 윙즈","500Mbps(기가라이트 인터넷)"],["원격케어 기가라이트 윙즈","500Mbps(기가라이트 인터넷)"],["기가인터넷","1Gbps(기가 인터넷)"],["기가인터넷 와이파이","1Gbps(기가 인터넷)"],["모두안심 기가","1Gbps(기가 인터넷)"],["파워백신 기가","1Gbps(기가 인터넷)"],["원격케어 기가","1Gbps(기가 인터넷)"],["기가인터넷 윙즈","1Gbps(기가 인터넷)"],["모두안심 기가 윙즈","1Gbps(기가 인터넷)"],["파워백신 기가 윙즈","1Gbps(기가 인터넷)"],["원격케어 기가 윙즈","1Gbps(기가 인터넷)"],["기가인터넷멀티 와이파이 1.7G","2.5Gbps(기가프리미엄X2.5)"],["기가프리미엄X2.5","2.5Gbps(기가프리미엄X2.5)"],["기가프리미엄X5","5Gbps(기가프리미엄X5)"],["기가프리미엄X10","10Gbps(기가프리미엄X10)"]],"cols":[["기가WiFi",""],["기가WiFi7",""],["기가WiFi+윙즈",""],["기가WiFi7+윙즈",""],["기가WiFi 프리미엄",""]],"pair":{"광랜인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 광랜":["기가WiFi","기가WiFi7"],"파워백신 광랜":["기가WiFi","기가WiFi7"],"원격케어 광랜":["기가WiFi","기가WiFi7"],"광랜인터넷 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"모두안심 광랜 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"파워백신 광랜 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"원격케어 광랜 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"기가라이트인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 기가라이트":["기가WiFi","기가WiFi7"],"파워백신 기가라이트":["기가WiFi","기가WiFi7"],"원격케어 기가라이트":["기가WiFi","기가WiFi7"],"기가라이트인터넷 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"모두안심 기가라이트 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"파워백신 기가라이트 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"원격케어 기가라이트 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"기가인터넷 와이파이":["기가WiFi","기가WiFi7"],"모두안심 기가":["기가WiFi","기가WiFi7"],"파워백신 기가":["기가WiFi","기가WiFi7"],"원격케어 기가":["기가WiFi","기가WiFi7"],"기가인터넷 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"모두안심 기가 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"파워백신 기가 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"원격케어 기가 윙즈":["기가WiFi+윙즈","기가WiFi7+윙즈"],"기가인터넷멀티 와이파이 1.7G":["기가WiFi 프리미엄"],"기가프리미엄X2.5":["기가WiFi 프리미엄"],"기가프리미엄X5":["기가WiFi 프리미엄"],"기가프리미엄X10":["기가WiFi 프리미엄"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["Btv cable20","41채널"],["Btv cable30","70채널"],["Btv cable60","84채널"],["Btv cable90","103채널"],["Btv cable100","108채널"],["Btv cable190","203채널"],["Btv cable200","224채널"],["Btv cable200 플러스 캐시","224채널"],["Btv pop100","109채널"],["Btv pop180","186채널"],["Btv pop180+","186채널"],["Btv pop230","231채널"],["Btv pop230+","231채널"],["Btv 미니","60채널"],["Btv 이코노미","182채널"],["Btv 스탠다드","235채널"],["Btv 스탠다드 넷플릭스","235채널"],["Btv 올 넷플릭스","255채널"],["Btv 스탠다드 플러스","235채널"],["Btv 올","255채널"],["Btv 스탠다드 넷플릭스 프리미엄","235채널"],["Btv 올 넷플릭스 프리미엄","255채널"],["Btv 올 플러스","255채널"],["Btv 올+캐치온","254채널"],["Btv+MAX","255채널"],["Btv 올+지상파","252채널"],["Btv 올+캐치온+지상파","254채널"]],"cols":[["UHD","일반셋탑"],["AI스피커형","스마트셋탑"],["스마트3","일반셋탑"]],"pair":{"Btv cable20":["UHD"],"Btv cable30":["UHD"],"Btv cable60":["UHD"],"Btv cable90":["UHD"],"Btv cable100":["UHD"],"Btv cable190":["UHD"],"Btv cable200":["UHD"],"Btv cable200 플러스 캐시":["UHD"],"Btv pop100":["AI스피커형"],"Btv pop180":["스마트3"],"Btv pop180+":["스마트3"],"Btv pop230":["스마트3"],"Btv pop230+":["스마트3"],"Btv 미니":["스마트3"],"Btv 이코노미":["스마트3"],"Btv 스탠다드":["스마트3"],"Btv 스탠다드 넷플릭스":["스마트3"],"Btv 올 넷플릭스":["스마트3"],"Btv 스탠다드 플러스":["스마트3"],"Btv 올":["스마트3"],"Btv 스탠다드 넷플릭스 프리미엄":["스마트3"],"Btv 올 넷플릭스 프리미엄":["스마트3"],"Btv 올 플러스":["스마트3"],"Btv 올+캐치온":["스마트3"],"Btv+MAX":["스마트3"],"Btv 올+지상파":["스마트3"],"Btv 올+캐치온+지상파":["스마트3"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["인터넷전화","인터넷전화(일반)"],["인터넷전화(모)","인터넷전화(일반)"],["집전화프리5000","인터넷전화(정액)"],["케이블인터넷전화","케이블전화"],["무료100","인터넷전화(정액)"],["무료200","인터넷전화(정액)"],["무료250","인터넷전화(정액)"],["무료300","인터넷전화(정액)"],["무료700","인터넷전화(정액)"],["무료2500","인터넷전화(정액)"]],"cols":[["MWP-2500H","전화기"]],"pair":{"인터넷전화":["MWP-2500H"],"인터넷전화(모)":["MWP-2500H"],"집전화프리5000":["MWP-2500H"],"케이블인터넷전화":["MWP-2500H"],"무료100":["MWP-2500H"],"무료200":["MWP-2500H"],"무료250":["MWP-2500H"],"무료300":["MWP-2500H"],"무료700":["MWP-2500H"],"무료2500":["MWP-2500H"]}},{"svc":"일반전화","label":"일반전화세트","rowName":"전화상품","colName":"전화기기","rows":[["일반전화","일반전화(일반)"],["집전화프리5000","일반전화(정액)"],["무료100","일반전화(정액)"],["무료200","일반전화(정액)"],["무료250","일반전화(정액)"],["무료300","일반전화(정액)"],["무료700","일반전화(정액)"],["무료2500","일반전화(정액)"]],"cols":[],"pair":{}}],"SkyLife":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["100메가","100Mbps(100M 인터넷)"],["100메가 안심","100Mbps(100M 인터넷)"],["200메가","200Mbps(기가 200M 인터넷)"],["200메가 안심","200Mbps(기가 200M 인터넷)"],["500메가","500Mbps(기가 500M 인터넷)"],["500메가 안심","500Mbps(기가 500M 인터넷)"],["1기가","1Gbps(기가 1G 인터넷)"],["1기가 안심","1Gbps(기가 1G 인터넷)"]],"cols":[["기가WiFi",""]],"pair":{"100메가":["기가WiFi"],"100메가 안심":["기가WiFi"],"200메가":["기가WiFi"],"200메가 안심":["기가WiFi"],"500메가":["기가WiFi"],"500메가 안심":["기가WiFi"],"1기가":["기가WiFi"],"1기가 안심":["기가WiFi"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["베이직","206채널"],["ipit TV Basic","196채널"],["올","242채널"],["ipit TV Plus","209채널"],["포인트","242채널"],["스포츠 프리미어","242채널"],["초이스","242채널"],["디즈니플러스","239채널"],["유튜브 프리미엄","239채널"],["올&OTT","242채널"]],"cols":[["안드로이드UHD","일반셋탑"],["기가지니A","일반셋탑"]],"pair":{"베이직":["안드로이드UHD"],"ipit TV Basic":["기가지니A"],"올":["안드로이드UHD"],"ipit TV Plus":["기가지니A"],"포인트":["안드로이드UHD"],"스포츠 프리미어":["안드로이드UHD"],"초이스":["안드로이드UHD"],"디즈니플러스":["안드로이드UHD"],"올&OTT":["안드로이드UHD"]}}],"LG HelloVision":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["광랜라이트","100Mbps(광랜라이트 인터넷)"],["광랜","160Mbps(광랜 인터넷)"],["기가라이트","500Mbps(기가라이트 인터넷)"],["기가라이트 Mesh","500Mbps(기가라이트 인터넷)"],["플래티넘기가","1Gbps(플래티넘기가 인터넷)"],["플래티넘기가 Mesh","1Gbps(플래티넘기가 인터넷)"]],"cols":[["일반와이파이",""],["프리미엄기가WiFi",""],["기가Mesh패키지",""]],"pair":{"광랜라이트":["일반와이파이"],"광랜":["프리미엄기가WiFi"],"기가라이트":["프리미엄기가WiFi"],"기가라이트 Mesh":["기가Mesh패키지"],"플래티넘기가":["프리미엄기가WiFi"],"플래티넘기가 Mesh":["기가Mesh패키지"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["UHD뉴베이직_반값","245채널"],["UHD이코노미&헬로Wifi","109채널"],["UHD뉴베이직&헬로Wifi","245채널"],["헬로tv플러스","102채널"],["HD이코노미","106채널"],["HD베이직","211채널"],["HD스탠다드","218채널"],["HD뉴베이직","242채널"],["HD뉴프리미엄","242채널"],["UHD이코노미","109채널"],["UHD베이직","214채널"],["UHD스탠다드","221채널"],["UHD뉴베이직","245채널"],["UHD뉴프리미엄","245채널"],["UHD뉴베이직디즈니","245채널"],["UHD뉴베이직 디즈니스탠다드","248채널"],["UHD뉴프리미엄디즈니","245채널"],["UHD뉴베이직 디즈니프리미엄","248채널"],["Pro라이트","218채널"],["Pro맥스","246채널"]],"cols":[["UHD셋톱","일반셋탑"],["HD셋톱","일반셋탑"],["IP STB셋탑","일반셋탑"]],"pair":{"UHD뉴베이직_반값":["UHD셋톱"],"UHD이코노미&헬로Wifi":["UHD셋톱"],"UHD뉴베이직&헬로Wifi":["UHD셋톱"],"HD이코노미":["HD셋톱"],"HD베이직":["HD셋톱"],"HD스탠다드":["HD셋톱"],"HD뉴베이직":["HD셋톱"],"HD뉴프리미엄":["HD셋톱"],"UHD이코노미":["UHD셋톱"],"UHD베이직":["UHD셋톱"],"UHD스탠다드":["UHD셋톱"],"UHD뉴베이직":["UHD셋톱"],"UHD뉴프리미엄":["UHD셋톱"],"UHD뉴베이직디즈니":["UHD셋톱"],"UHD뉴베이직 디즈니스탠다드":["UHD셋톱"],"UHD뉴프리미엄디즈니":["UHD셋톱"],"UHD뉴베이직 디즈니프리미엄":["UHD셋톱"],"Pro라이트":["IP STB셋탑"],"Pro맥스":["IP STB셋탑"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["표준요금제","인터넷전화(일반)"],["이동전화 할인요금제","인터넷전화(일반)"],["모바일 30+","인터넷전화(정액)"],["모바일 60+","인터넷전화(정액)"],["유선무제한","인터넷전화(정액)"],["유선무제한+200","인터넷전화(정액)"],["5천원 정액요금제","인터넷전화(정액)"],["1만원 정액요금제","인터넷전화(정액)"]],"cols":[["WPI-9900","전화기"]],"pair":{"표준요금제":["WPI-9900"],"이동전화 할인요금제":["WPI-9900"],"모바일 30+":["WPI-9900"],"모바일 60+":["WPI-9900"],"유선무제한":["WPI-9900"],"유선무제한+200":["WPI-9900"],"5천원 정액요금제":["WPI-9900"],"1만원 정액요금제":["WPI-9900"]}}],"딜라이브":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["ISP 스마트광랜","100Mbps(광랜 인터넷)"],["안심 스마트광랜","100Mbps(광랜 인터넷)"],["LG망 S광랜","100Mbps(광랜 인터넷 LG망)"],["안심 LG망 S광랜","100Mbps(광랜 인터넷 LG망)"],["ISP 스마트광랜 와이드","100Mbps(광랜 인터넷)"],["LG망 S광랜 와이드","100Mbps(광랜 인터넷 LG망)"],["ISP 스마트광랜플러스","160Mbps(광랜 플러스)"],["안심 스마트광랜플러스","160Mbps(광랜 플러스)"],["ISP 스마트광랜플러스 와이드","160Mbps(광랜 플러스)"],["ISP 스마트광랜세이브플러스","320Mbps(광랜 세이브 플러스)"],["안심 스마트광랜세이브플러스","320Mbps(광랜 세이브 플러스)"],["ISP 스마트광랜세이브플러스 와이드","320Mbps(광랜 세이브 플러스)"],["LG망 S기가500M","500Mbps(500메가 인터넷 LG망)"],["안심 LG망 S기가500M","500Mbps(500메가 인터넷 LG망)"],["LG망 S기가500M 와이드","500Mbps(500메가 인터넷 LG망)"],["ISP 스마트기가","1Gbps(기가 인터넷)"],["안심 스마트기가","1Gbps(기가 인터넷)"],["LG망 S기가","1Gbps(기가 인터넷 LG망)"],["안심 LG망 S기가","1Gbps(기가 인터넷 LG망)"],["ISP 스마트 기가 와이드","1Gbps(기가 인터넷)"],["LG망 S기가 와이드","1Gbps(기가 인터넷 LG망)"]],"cols":[["WiFi",""],["WiFi+Mesh",""],["기가WiFi",""],["기가WiFi+Mesh",""]],"pair":{"ISP 스마트광랜":["WiFi"],"안심 스마트광랜":["WiFi"],"LG망 S광랜":["WiFi"],"안심 LG망 S광랜":["WiFi"],"ISP 스마트광랜 와이드":["WiFi+Mesh"],"LG망 S광랜 와이드":["WiFi+Mesh"],"ISP 스마트광랜플러스":["WiFi"],"안심 스마트광랜플러스":["WiFi"],"ISP 스마트광랜플러스 와이드":["WiFi+Mesh"],"ISP 스마트광랜세이브플러스":["기가WiFi"],"안심 스마트광랜세이브플러스":["기가WiFi"],"ISP 스마트광랜세이브플러스 와이드":["기가WiFi+Mesh"],"LG망 S기가500M":["기가WiFi"],"안심 LG망 S기가500M":["기가WiFi"],"LG망 S기가500M 와이드":["기가WiFi+Mesh"],"ISP 스마트기가":["기가WiFi"],"안심 스마트기가":["기가WiFi"],"LG망 S기가":["기가WiFi"],"안심 LG망 S기가":["기가WiFi"],"ISP 스마트 기가 와이드":["기가WiFi+Mesh"],"LG망 S기가 와이드":["기가WiFi+Mesh"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["복지형","25채널"],["알뜰 의무형","30채널"],["알뜰 보급형","90채널"],["알뜰 보급형플러스","100채널"],["알뜰 실속형","120채널"],["이코노미","170채널"],["패밀리","200채널"],["프리미엄","230채널"],["프리미엄플러스","240채널"]],"cols":[["HD","일반셋탑"]],"pair":{"이코노미":["HD"],"패밀리":["HD"],"프리미엄":["HD"],"프리미엄플러스":["HD"]}},{"svc":"인터넷전화","label":"인터넷전화세트","rowName":"전화상품","colName":"전화기기","rows":[["50 요금제","인터넷전화(일반)"],["표준요금제","인터넷전화(일반)"],["정액요금제","일반전화(정액)"]],"cols":[["CO-302","모뎀"]],"pair":{"50 요금제":["CO-302"],"표준요금제":["CO-302"],"정액요금제":["CO-302"]}}],"HCN":[{"svc":"인터넷","label":"인터넷세트","rowName":"인터넷상품","colName":"기본WIFI","rows":[["100M(1년)","100Mbps(광랜 1년)"],["100M(2년)","100Mbps(광랜 2년)"],["100M(3년)","100Mbps(광랜 3년)"],["100M(4년)","100Mbps(광랜 4년)"],["기가(1년)","1Gbps(기가 인터넷 1년)"],["기가(2년)","1Gbps(기가 인터넷 2년)"],["기가(3년)","1Gbps(기가 인터넷 3년)"],["기가(4년)","1Gbps(기가 인터넷 4년)"]],"cols":[["WiFi",""]],"pair":{"100M(1년)":["WiFi"],"100M(2년)":["WiFi"],"100M(3년)":["WiFi"],"100M(4년)":["WiFi"],"기가(1년)":["WiFi"],"기가(2년)":["WiFi"],"기가(3년)":["WiFi"],"기가(4년)":["WiFi"]}},{"svc":"TV","label":"TV세트","rowName":"TV채널","colName":"셋탑박스","rows":[["무약정TV","100채널"],["STB+WiFi(3년)","240채널"],["STB골드(1년)","240채널"],["STB골드(2년)","240채널"],["STB골드(3년)","240채널"],["무비원TV(3년)","240채널"]],"cols":[["안드로이드셋탑","일반셋탑"]],"pair":{"STB+WiFi(3년)":["안드로이드셋탑"],"STB골드(1년)":["안드로이드셋탑"],"STB골드(2년)":["안드로이드셋탑"],"STB골드(3년)":["안드로이드셋탑"],"무비원TV(3년)":["안드로이드셋탑"]}}]};
 /* 태그 미연결 예시 — 신규 등록 직후 상태를 보여주기 위한 지정값 */
 const NOTAG = {"KT|TV세트|row":["NEW모든G","넷플릭스 초이스HD"],"KT|TV세트|col":["올레TV탭"],
  "KT|인터넷전화세트|row":["표준영상"],"LG|TV세트|row":["프리미엄 티빙"],"SKB|TV세트|col":["AI스피커형"]};
 const VENS = Object.keys(D);
-let V = VENS[0], SEL = null, MENU = null, CUR = null, ONLY = false;
+let V = VENS[0], SEL = null, MENU = null, CUR = null, ONLY = false, CAT = '메인상품';
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const isNet = g => g.svc === '인터넷';
@@ -353,7 +451,7 @@ $('noteTx').innerHTML = '인터넷 외(TV · 전화) 상품은 <b>카드를 우�
 
 function renderTabs(){
   $('vtabs').innerHTML = VENS.map(v => '<div class="ti'+(v===V?' on':'')+'" data-v="'+esc(v)+'">'+esc(v)+'</div>').join('');
-  $('vtabs').querySelectorAll('[data-v]').forEach(el => el.onclick = () => { V = el.dataset.v; SEL = null; render(); });
+  $('vtabs').querySelectorAll('[data-v]').forEach(el => el.onclick = () => { V = el.dataset.v; SEL = null; DSEL = null; render(); });
 }
 
 function card(g, side, name){
@@ -367,6 +465,8 @@ function card(g, side, name){
 
 function render(){
   renderTabs();
+  $('legend').hidden = CAT !== '메인상품';
+  if (CAT !== '메인상품') return renderOther();
   const gs = D[V] || [];
   let miss = 0;
   gs.forEach(g => {
@@ -630,7 +730,128 @@ $('rSave').onclick=()=>{
   toast('등록되었습니다 — '+REG.prod+' × '+(REG.set||'미적용'), '#10A10E');
   paintSel();
 };
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeReg(); $('ovTag').hidden = true; closeMenu(); } });
+
+/* ── 결합할인 (KT 실데이터 — 할인명 · CRM 설명은 AS-IS 실측, 신청서 설명만 예시) ── */
+const DISC = {"KT":[
+ {n:'패밀리', items:[], crm:'인터넷+인터넷 결합', ap:false, app:'', fam:true, ct:'preCombine'},
+ {n:'총액 결합할인', items:['22,000원 미만','22,000원 이상','64,900원 이상','108,900원 이상','141,900원 이상','174,900원 이상'],
+  crm:'가족이 힘! 모일수록 더 큰 할인으로 돌아오는 총액 결합할인', ap:true, app:'인터넷과 휴대폰 요금을 합친 금액에 따라 매달 할인됩니다. (예시)'},
+ {n:'프리미엄싱글결합', items:['LTE(8.9만)','5G(8만)','5G(9만)','5G(10만)','5G(11만)','5G(13만)'],
+  crm:'인터넷 베이직 이상과 모바일 월정액 77,000원 이상 회선이 결합하면 5G/LTE 데이터 완전 무제한 최대 반값', ap:false, app:''},
+ {n:'프리미엄가족결합', items:['7.7만'], crm:'', ap:false, app:''},
+ {n:'정액 결합할인', items:['추가상품선택필요'], crm:'모바일 요금제별로 할인 받는 정액 결합할인', ap:false, app:''},
+ {n:'따로 살아도 가족결합', items:[], crm:'따로 사는 가족끼리 뭉치면, 더 커지는 할인 혜택', ap:false, app:''}
+]};
+let DSEL = null;
+function renderOther(){
+  $('pairbar').hidden = true;
+  if (CAT !== '결합할인') {
+    $('cnt').innerHTML = '';
+    $('grid').innerHTML = '<div style="grid-column:1/-1;padding:60px 0;text-align:center;color:var(--g400);font-size:14px">이 시안은 메인상품 · 결합할인만 다룹니다</div>';
+    return;
+  }
+  const list = DISC[V];
+  if (!list) {
+    $('cnt').innerHTML = '';
+    $('grid').innerHTML = '<div style="grid-column:1/-1;padding:60px 0;text-align:center;color:var(--g400);font-size:14px">결합할인은 KT만 실데이터로 채웠습니다 — KT 탭에서 보세요</div>';
+    return;
+  }
+  const on = list.filter(x => x.ap).length;
+  $('cnt').innerHTML = '결합할인 <b>'+list.length+'</b>개 · 신청서 노출 <b>'+on+'</b>개'
+    + ' <span style="color:var(--g400);margin-left:8px">분류 칸을 우클릭 → 「설명 수정」</span>';
+  $('grid').innerHTML = list.map((x, i) =>
+    '<div class="gcard"><div class="gh">'+esc(x.n)+'</div><div class="dcols">'
+    + '<div class="col"><div class="ch">분류</div>'
+    +   '<div class="dit cls'+(DSEL===i?' sel':'')+'" data-d="'+i+'" data-k="cls"><span class="nm">'+esc(x.n)+'</span>'+(x.ap?'<span class="ap">신청서</span>':'')+'</div></div>'
+    + '<div class="col"><div class="ch">항목</div>'
+    +   (x.items.length ? x.items.map(t => '<div class="dit" data-d="'+i+'" data-k="item"><span class="nm">'+esc(t)+'</span></div>').join('')
+                        : '<div class="dempty">항목 없음</div>')
+    + '</div></div></div>').join('');
+  document.querySelectorAll('.dit').forEach(el => {
+    el.oncontextmenu = e => { e.preventDefault(); e.stopPropagation(); openDiscMenu(el, e.clientX, e.clientY); };
+  });
+}
+function openDiscMenu(el, x, y){
+  closeMenu();
+  const i = +el.dataset.d, cls = el.dataset.k === 'cls';
+  if (cls) { DSEL = i; document.querySelectorAll('.dit').forEach(d => d.classList.toggle('sel', d === el)); }
+  const L = ['상품 할인 설정','상품 이벤트 설정','금지 코드 설정'];
+  const m = document.createElement('div'); m.className = 'menu';
+  m.innerHTML = L.map(l => '<div class="mi">'+l+'</div>').join('')
+    + (cls ? '<div class="mi act" id="miDesc">설명 수정<span class="newb">추가</span></div>'   // 결합할인 분류: 설명 바꾸기 대체
+           : '<div class="mi">설명 바꾸기</div>')
+    + '<div class="sep"></div><div class="mi">우선순위 변경 (기본)</div><div class="mi">사용중지</div>';
+  document.body.appendChild(m);
+  m.style.left = Math.min(x, innerWidth - 242) + 'px';
+  m.style.top = Math.min(y, innerHeight - m.offsetHeight - 12) + 'px';
+  MENU = m;
+  const a = document.getElementById('miDesc');
+  if (a) a.onclick = () => { closeMenu(); openDesc(i); };
+}
+let DS = null;
+function openDesc(i, preset){
+  const x = DISC[V][i]; DS = { i: i, ap: x.ap };
+  $('dsName').value = x.n; $('dsCrm').value = x.crm; $('dsApp').value = x.app;
+  const meta = { rightOptions: ['discount','event','order','priority','display','use'] };
+  if (x.fam) meta.isFamily = true;
+  meta.combineType = ['sys:regist:productCombine:' + (x.ct || 'postCombine')];
+  $('dsPre').textContent = JSON.stringify(meta, null, 4);
+  if (preset) { if ('ap' in preset) DS.ap = preset.ap; if ('app' in preset) $('dsApp').value = preset.app; }
+  paintDesc();
+  $('ovDesc').hidden = false;
+}
+function paintDesc(){
+  $('dsApply').classList.toggle('on', DS.ap);
+  $('dsReq').hidden = !DS.ap;   // 입력은 체크와 무관 — 필수는 체크했을 때만
+  const nm = $('dsName').value.trim(), app = $('dsApp').value.trim();
+  $('dsCnt').textContent = app.length + '자';
+  const why = !nm ? '할인명을 입력해야 수정할 수 있습니다.'
+            : DS.ap && !app ? '신청서에 노출하려면 신청서 설명을 입력해야 합니다.' : '';
+  $('dsWarn').hidden = !why; $('dsWarn').querySelector('span:last-child').textContent = why;
+  $('dsSave').disabled = !!why;
+}
+$('dsApply').onclick = () => { DS.ap = !DS.ap; paintDesc(); if (DS.ap) $('dsApp').focus(); };
+$('dsName').oninput = $('dsApp').oninput = paintDesc;
+const closeDesc = () => { $('ovDesc').hidden = true; };
+$('dsX').onclick = $('dsCancel').onclick = closeDesc;
+$('dsSave').onclick = () => {
+  if ($('dsSave').disabled) return;
+  const x = DISC[V][DS.i];
+  x.n = $('dsName').value.trim(); x.crm = $('dsCrm').value; x.ap = DS.ap; x.app = $('dsApp').value;
+  closeDesc(); toast('수정되었습니다 — '+x.n+(x.ap?' · 신청서 노출':''), '#10A10E'); render();
+};
+$('chips').querySelectorAll('button').forEach(b => b.onclick = () => {
+  CAT = b.dataset.c; SEL = null; DSEL = null;
+  $('chips').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+  render();
+});
+function setCat(c){ CAT = c; $('chips').querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.c === c)); }
+
+/* ── 모달 케이스 바로 열기 ── */
+function goKT(cat){ closeReg(); closeDesc(); $('ovTag').hidden = true; closeMenu(); V = 'KT'; setCat(cat); SEL = null; DSEL = null; render(); }
+function regWith(p, set, pickR1){
+  goKT('메인상품');
+  SEL = { g: '인터넷세트', s: 'col', n: set, p: p, set: set }; paintSel();
+  openReg();
+  if (pickR1) {
+    const opts = [...$('r1').options].map(o => o.value).filter(Boolean);
+    const v = opts.find(a => pickR1(R.filter(r => r[12] === ['KT',a,$('r2').value,$('r3').value].join('|')).length));
+    if (v) { $('r1').value = v; previewReg(); }
+  }
+}
+const CASE = {
+  'tag-new':  () => { goKT('메인상품'); CUR = { g: grp('TV세트'), side: 'row', name: 'NEW모든G' }; openTag(); },
+  'tag-edit': () => { goKT('메인상품'); CUR = { g: grp('TV세트'), side: 'row', name: 'Skylife 슬림' }; openTag(); },
+  'reg-empty': () => regWith('슬림', '기가 와이파이 홈ax'),
+  'reg-first': () => regWith('슬림', '기가 와이파이 홈ax', n => n === 0),
+  'reg-exist': () => regWith('슬림', '기가 와이파이 홈ax', n => n > 0),
+  'reg-dupe':  () => regWith('슬림 와이파이', 'KT와이파이7D'),
+  'ds-off':   () => { goKT('결합할인'); openDesc(2); },
+  'ds-on':    () => { goKT('결합할인'); openDesc(1); },
+  'ds-empty': () => { goKT('결합할인'); openDesc(3, { ap: true, app: '' }); }
+};
+document.querySelectorAll('[data-case]').forEach(b => b.onclick = () => { window.scrollTo({ top: 0, behavior: 'instant' }); CASE[b.dataset.case](); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeReg(); closeDesc(); $('ovTag').hidden = true; closeMenu(); } });
 
 render();
 </script>
