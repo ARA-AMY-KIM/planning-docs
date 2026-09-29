@@ -850,7 +850,12 @@ const CASE = {
   'ds-on':    () => { goKT('결합할인'); openDesc(1); },
   'ds-empty': () => { goKT('결합할인'); openDesc(3, { ap: true, app: '' }); }
 };
-document.querySelectorAll('[data-case]').forEach(b => b.onclick = () => { window.scrollTo({ top: 0, behavior: 'instant' }); CASE[b.dataset.case](); });
+// 케이스를 열어도 표 위치 그대로 — 위쪽 화면이 다시 그려져 높이가 바뀌어도 누른 버튼이 같은 자리에 오도록 보정
+document.querySelectorAll('[data-case]').forEach(b => b.onclick = () => {
+  const y = b.getBoundingClientRect().top;
+  CASE[b.dataset.case]();
+  window.scrollBy({ top: b.getBoundingClientRect().top - y, behavior: 'instant' });
+});
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeReg(); closeDesc(); $('ovTag').hidden = true; closeMenu(); } });
 
 render();
