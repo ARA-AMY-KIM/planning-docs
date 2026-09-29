@@ -3,14 +3,31 @@
    사용법: 각 목업 HTML 맨 끝에 아래 한 줄만 추가
      <script src="/internet-product/assets/updated.js" defer></script>
 
-   - 우하단 고정 배지. 페이지(HTML 파일) 자신의 최종 수정 시각을 표기합니다.
-   - 날짜는 document.lastModified 에서 자동 계산 → 손으로 고칠 일 없음.
+   - 우하단 고정 배지. 그 문서의 최종 업데이트 일시를 표기합니다.
+   - 일시는 아래 DATES 표에서 읽습니다. 문서를 고치면 해당 줄만 바꾸세요.
    - pointer-events:none 이라 아래 버튼 클릭을 막지 않습니다.
    - 디자인 변경은 이 파일 하나만 고치면 전 목업에 반영됩니다.
+
+   ※ document.lastModified 를 쓰지 않는 이유:
+     Netlify는 배포할 때마다 모든 파일에 새 타임스탬프를 찍습니다.
+     그래서 내용을 안 고친 문서까지 날짜가 같이 바뀌어, 4개가 늘 동일하게 나왔습니다.
    ============================================================ */
 (function () {
   if (window.__updBadge) return;
   window.__updBadge = 1;
+
+  /* ------------------------------------------------------------
+     문서별 최종 업데이트 날짜 — 여기만 고치면 됩니다.
+     키는 경로(뒤 슬래시 포함), 값은 'YYYY-MM-DD HH:MM' (한국 시간).
+     새 문서를 추가하면 여기에 한 줄 추가하세요.
+  ------------------------------------------------------------ */
+  var DATES = {
+    '/internet-product/tags/':          '2026-09-29 16:00',  // 태그 관리
+    '/internet-product/products/':      '2026-09-29 15:55',  // 인터넷 상품 관리
+    '/internet-product/product-links/': '2026-09-28 17:33',  // 상품 연결 관리
+    '/internet-product/attributes/':    '2026-09-28 13:59',  // 상품속성 관리
+    '/internet-product/wbs/':           '2026-09-22 20:53'   // WBS
+  };
 
   var CSS =
     '.updfab{position:fixed;right:18px;bottom:18px;z-index:40;display:flex;align-items:center;gap:7px;' +
@@ -23,18 +40,20 @@
     '@media print{.updfab{display:none}}' +
     '@media(max-width:860px){.updfab{right:10px;bottom:10px;font-size:11.5px;padding:6px 11px}}';
 
-  function z(n) { return (n < 10 ? '0' : '') + n; }
+  /* 현재 경로로 날짜 조회. /index.html 로 들어와도, 뒤 슬래시가 없어도 찾습니다. */
+  function lookup() {
+    var p = location.pathname.replace(/index\.html$/, '');
+    if (p.charAt(p.length - 1) !== '/') p += '/';
+    if (DATES[p]) return DATES[p];
 
-  function stamp() {
-    var d = new Date(document.lastModified);
-    if (isNaN(d)) return '';
-    return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) +
-           ' ' + z(d.getHours()) + ':' + z(d.getMinutes());
+    /* 표에 없으면, 스크립트 태그의 data-updated 값을 차선책으로 사용 */
+    var tag = document.querySelector('script[src*="updated.js"][data-updated]');
+    return tag ? tag.getAttribute('data-updated') : '';
   }
 
   function mount() {
-    var t = stamp();
-    if (!t) return;                                   // 시각을 못 읽으면 아예 안 띄움
+    var t = lookup();
+    if (!t) return;                                   // 일시를 못 찾으면 아예 안 띄움
     if (document.querySelector('.updfab')) return;    // 중복 방지
 
     var st = document.createElement('style');
