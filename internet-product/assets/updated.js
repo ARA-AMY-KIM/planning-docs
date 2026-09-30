@@ -23,8 +23,10 @@
   ------------------------------------------------------------ */
   var DATES = {
     '/internet-product/tags/':          '2026-09-29 16:00',  // 태그 관리
-    '/internet-product/products/':      '2026-09-30 10:19',  // 인터넷 상품 관리
-    '/internet-product/product-links/': '2026-09-28 17:33',  // 상품 연결 관리
+    '/internet-product/products/':   '2026-09-30 13:10',  // 인터넷 상품 관리
+    '/internet-product/products-v2/':   '2026-09-30 14:22',  // 인터넷 상품 관리 V2
+    '/internet-product/product-links/':   '2026-09-30 14:35',  // 상품 연결 관리
+    '/internet-product/product-links-v2/':   '2026-09-30 14:40',  // 태그 연결 관리 V2
     '/internet-product/attributes/':    '2026-09-28 13:59',  // 상품속성 관리
     '/internet-product/wbs/':           '2026-09-22 20:53'   // WBS
   };
