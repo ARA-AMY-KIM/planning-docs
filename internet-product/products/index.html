@@ -242,7 +242,6 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
     <span><i style="background:var(--g25);border:1px solid var(--g100)"></i>미사용</span>
     <span><i style="background:var(--blue50);border:1px solid var(--primary)"></i>선택</span>
     <span><i style="background:#F1FBF5;border:1px solid var(--link)"></i>연결된 짝</span>
-    <span style="color:var(--negative);font-weight:600">· 태그 없음 = 태그 미연결</span>
   </div>
 
   <div class="cnt" id="cnt"></div>
@@ -274,7 +273,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
     <thead><tr><th style="width:9%">구분</th><th style="width:12%">모달</th><th style="width:15%">우클릭 버튼명</th><th style="width:18%">케이스</th><th>진입 · 이 상태가 되는 조건</th><th style="width:76px"></th></tr></thead>
     <tbody>
       <tr><th rowspan="2">인터넷 외<br><span class="sub">TV · 인터넷전화 · 일반전화</span></th><th rowspan="2">태그 연결<br><span class="chg">추가</span></th><td rowspan="2">「태그 연결」<br><span class="sub">상품 카드 어디든</span></td>
-        <td>신규 연결</td><td class="sub">「태그 없음」 카드 우클릭</td><td><button class="btn-out" data-case="tag-new">열기</button></td></tr>
+        <td>신규 연결</td><td class="sub">「태그 없음」 카드 우클릭 — 「선택하세요」로 열림</td><td><button class="btn-out" data-case="tag-new">열기</button></td></tr>
       <tr><td>기존 태그 변경</td><td class="sub">태그가 있는 카드 우클릭 — 현재 태그가 선택된 채로 열림</td><td><button class="btn-out" data-case="tag-edit">열기</button></td></tr>
       <tr><th rowspan="5">인터넷</th><th rowspan="4">상품 연결 등록<br><span class="chg">추가</span></th><td rowspan="4">「상품 연결 등록」<br><span class="sub">인터넷상품 + 기본WIFI 선택 후 기본WIFI 위</span></td>
         <td>처음 열린 상태</td><td class="sub">연결 없는 짝 · 첫 자리 미선택이라 [등록] 비활성</td><td><button class="btn-out" data-case="reg-empty">열기</button></td></tr>
@@ -391,7 +390,7 @@ function tagOf(g, side, name){
   return hit ? hit[1] : '';
 }
 
-$('noteTx').innerHTML = '인터넷 외(TV · 전화) 상품은 <b>카드를 우클릭해 「태그 연결」</b>로 태그를 붙입니다. 인터넷 상품은 <b>인터넷상품과 기본WIFI(없으면 「미적용」)를 고른 뒤 기본WIFI 위에서 우클릭 → 「상품 연결 등록」</b>으로 연결을 만듭니다.';
+$('noteTx').innerHTML = '<b>TV · 전화</b> : 카드 우클릭 → 「태그 연결」 · <b>인터넷</b> : 인터넷상품 + 기본WIFI 선택 → 기본WIFI 우클릭 → 「상품 연결 등록」';
 
 function renderTabs(){
   $('vtabs').innerHTML = VENS.map(v => '<div class="ti'+(v===V?' on':'')+'" data-v="'+esc(v)+'">'+esc(v)+'</div>').join('');
@@ -418,8 +417,7 @@ function render(){
     g.cols.forEach(c => { if (noTag(g,'col',c[0])) miss++; });
   });
   const tot = gs.reduce((a,g) => a + g.rows.length + g.cols.length, 0);
-  $('cnt').innerHTML = '상품 <b>'+tot+'</b>개'
-    + (miss ? '<span class="warn" id="onlyBtn">'+(ONLY?'전체 보기':'태그 미연결 '+miss+'건')+'</span>' : '');
+  $('cnt').innerHTML = '상품 <b>'+tot+'</b>개';
 
   $('grid').innerHTML = gs.map(g => {
     const rows = g.rows.filter(r => !ONLY || noTag(g,'row',r[0]));
@@ -500,8 +498,8 @@ function paintPair(){
   bar.hidden = false;
   bar.innerHTML = '지금 선택 <b>'+esc(SEL.p)+' × '+(!picked ? '<span class="non">'+esc(g.colName)+' 미선택</span>' : SEL.set ? esc(SEL.set) : '미적용')+'</b> — '
     + (!picked ? '<span style="color:var(--g400)">오른쪽 '+esc(g.colName)+'를 고르면 연결 항목이 생깁니다</span>'
-      : dupe ? '<span class="dup">이미 연결이 있습니다</span> · '+esc(g.colName)+' 위에서 우클릭하면 「상품 연결 관리에서 보기」'
-             : '<span class="ok">아직 연결이 없습니다</span> · '+esc(g.colName)+' 위에서 우클릭하면 「상품 연결 등록」');
+      : dupe ? '<span class="dup">이미 연결이 있습니다</span>'
+             : '<span class="ok">아직 연결이 없습니다</span>');
 }
 
 function drawLanes(box, el, mates, fromRow, cand){
