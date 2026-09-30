@@ -23,7 +23,7 @@
   ------------------------------------------------------------ */
   var DATES = {
     '/internet-product/tags/':          '2026-09-29 16:00',  // 태그 관리
-    '/internet-product/products/':      '2026-09-29 19:10',  // 인터넷 상품 관리
+    '/internet-product/products/':      '2026-09-30 09:56',  // 인터넷 상품 관리
     '/internet-product/product-links/': '2026-09-28 17:33',  // 상품 연결 관리
     '/internet-product/attributes/':    '2026-09-28 13:59',  // 상품속성 관리
     '/internet-product/wbs/':           '2026-09-22 20:53'   // WBS
