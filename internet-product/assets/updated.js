@@ -27,7 +27,7 @@
     '/internet-product/products/':   '2026-09-30 13:10',  // 인터넷 상품 관리
     '/internet-product/products-v2/':   '2026-10-01 21:52',  // 인터넷 상품 관리 V2
     '/internet-product/product-links/':   '2026-09-30 14:35',  // 상품 연결 관리
-    '/internet-product/product-links-v2/':   '2026-10-01 21:52',  // 상품 조합 관리 V2
+    '/internet-product/product-links-v2/':   '2026-10-01 22:20',  // 상품 조합 관리 V2
     '/internet-product/glossary/':   '2026-10-01 21:52',  // 용어집
     '/internet-product/attributes/':    '2026-09-28 13:59',  // 상품속성 관리
     '/internet-product/wbs/':           '2026-09-22 20:53'   // WBS
@@ -35,10 +35,10 @@
 
   var CSS =
     '.updbar{position:fixed;right:18px;bottom:18px;z-index:40;display:flex;align-items:center;gap:8px;pointer-events:none}' +
-    '.updhome{pointer-events:auto;display:flex;align-items:center;padding:7px 13px;background:#fff;border:1px solid #C3C5C9;border-radius:999px;' +
-    'box-shadow:0 3px 12px rgba(19,19,20,.12);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;' +
-    'font-size:12px;font-weight:600;line-height:1;letter-spacing:-.2px;white-space:nowrap;color:#131314;text-decoration:none}' +
-    '.updhome:hover{border-color:#131314}' +
+    '.updhome{pointer-events:auto;display:flex;align-items:center;padding:7px 14px;background:#145CE6;border:1px solid #145CE6;border-radius:999px;' +
+    'box-shadow:0 3px 12px rgba(20,92,230,.35);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;' +
+    'font-size:12px;font-weight:600;line-height:1;letter-spacing:-.2px;white-space:nowrap;color:#fff;text-decoration:none}' +
+    '.updhome:hover{background:#073894;border-color:#073894}' +
     '.updfab{display:flex;align-items:center;gap:7px;' +
     'padding:7px 13px;background:#131314;border-radius:999px;box-shadow:0 3px 12px rgba(19,19,20,.22);' +
     'font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;' +
