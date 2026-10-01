@@ -112,7 +112,7 @@
   <div class="doc-type">Term Sheet · V2</div>
   <h1>인터넷 상품 V2 — 상담상세 노출 규칙과 용어 정리</h1>
   <div class="meta">
-    <span><strong>일자</strong>2026.10.01 (2차 개정)</span>
+    <span><strong>일자</strong>2026.10.01 (3차 개정)</span>
     <span><strong>범위</strong>인터넷 상품 관리 V2 · 상품 조합 관리 V2</span>
     <span><strong>작성</strong>김아라 (AI)</span>
   </div>
@@ -137,12 +137,15 @@
       <tr><td><span class="avoid">자동 선택</span></td><td><strong>기본값</strong></td><td>시스템이 알아서 골랐다는 뜻으로 읽혔습니다. 실제로는 운영자가 정하는 셀렉트 기본값입니다</td></tr>
       <tr><td>조합 (속성 3개)</td><td><strong>속성 조합</strong></td><td>「상품 조합」이 생기면서 단독 「조합」이 모호해졌습니다</td></tr>
       <tr><td><span class="avoid">연결된 태그의 속성</span> (목록 머리글)</td><td><strong>속성 조합</strong></td><td>위와 같음</td></tr>
+      <tr><td>상품 조합 = 상품 × 세트상품 전부</td><td><strong>상품 조합 = 초록선이 있는 것만</strong><br>+ <strong>등록된 상품 조합</strong></td><td>한 단어가 "아무 짝 · 판매 가능한 짝 · 등록된 짝" 세 층을 다 가리켜 혼동됐습니다. 초록선 없는 짝은 아무 동작도 할 수 없어 이름이 필요 없습니다 (3차)</td></tr>
+      <tr><td><span class="avoid">상품 2개 이상</span> (필터 · 개수)</td><td><strong>대표 선택 필요</strong></td><td>상품 4개로 읽혔습니다. 세는 것은 속성 조합이고, 숫자를 보고 할 일은 대표 선택입니다 (3차)</td></tr>
+      <tr><td><span class="avoid">상품 조합 삭제</span></td><td><strong>등록 해제</strong></td><td>판매 조합(초록선)을 지우는 것으로 읽혔습니다. 실제로는 속성 조합 등록만 풀고 초록선은 남습니다 (3차)</td></tr>
     </tbody>
   </table>
   </div>
 
   <div class="callout">
-    <strong>용어 체계는 두 축입니다</strong> — <strong>속성 조합</strong>(속도 · 구성제품 · 추가구성옵션)에 <strong>상품 조합</strong>(상품 × 세트상품)을 등록하고, 그중 하나를 <strong>대표</strong>로 고릅니다. 한 문장으로 설명되면 맞게 쓰고 있는 것입니다.
+    <strong>용어 체계는 두 축입니다</strong> — <strong>상품 조합</strong>(초록선이 있는 상품 × 세트상품)을 <strong>속성 조합</strong>(속도 · 구성제품 · 추가구성옵션)에 등록하고, 같은 속성 조합에 등록된 상품 조합 중 하나를 <strong>대표</strong>로 고릅니다. 한 문장으로 설명되면 맞게 쓰고 있는 것입니다.
   </div>
 </section>
 
@@ -156,7 +159,7 @@
     <thead><tr><th style="width:24%"></th><th>인터넷</th><th>인터넷 외 (TV · 전화)</th></tr></thead>
     <tbody>
       <tr><th>태그 보기</th>
-        <td><strong>상품 조합이 등록된</strong> 것만 두 드롭다운에 나옵니다</td>
+        <td><strong>등록된 상품 조합</strong>만 두 드롭다운에 나옵니다</td>
         <td>상품 보기와 같은 규칙</td></tr>
       <tr><th>상품 보기</th>
         <td><strong>초록선</strong>이 있으면 나옵니다. 상품 조합 등록과는 무관합니다</td>
@@ -194,11 +197,11 @@
       <tr><th>상품 조합 등록 <span class="tag-src new">개정</span></th>
         <td>인터넷 상품 조합을 속성 조합에 올려 태그 보기에 나오게 만드는 일. 태그는 두 카드에 지정된 값을 그대로 씁니다</td>
         <td>인터넷</td>
-        <td><span class="menu">상품 조합 등록</span> → 첫 조합이면 모달 없이 즉시, 기존 조합이 있으면 모달. 이미 등록돼 있으면 <span class="menu">상품 조합 관리에서 보기</span></td></tr>
+        <td><span class="menu">상품 조합 등록</span> → 속성 조합에 처음 등록되는 상품 조합이면 모달 없이 즉시, 이미 등록된 상품 조합이 있으면 모달. 이미 등록돼 있으면 <span class="menu">상품 조합 관리에서 보기</span></td></tr>
       <tr><th>대표</th>
         <td>같은 업체 · 같은 속성 조합에 등록된 상품 조합 중 기준이 되는 1건</td>
         <td>인터넷</td>
-        <td>등록 모달의 「이 상품 조합을 대표로」로 지정. <strong>변경은 상품 조합 관리에서만</strong>. 속성 조합의 첫 조합은 자동으로 대표 <span class="tag-src new">개정</span></td></tr>
+        <td>등록 모달의 「이 상품 조합을 대표로」로 지정. <strong>변경은 상품 조합 관리에서만</strong>. 속성 조합에 처음 등록되는 상품 조합은 자동으로 대표 <span class="tag-src new">개정</span></td></tr>
       <tr><th>기본값 <span class="tag-src new">개정</span></th>
         <td>상품을 고르면 상담상세 두 번째 드롭다운에 미리 들어갈 세트상품</td>
         <td>인터넷 외</td>
@@ -217,12 +220,12 @@
 
   <h3>함께 정해진 규칙</h3>
   <ul>
-    <li><strong>초록선이 없는 상품 조합</strong>에서는 등록도 기본값 지정도 할 수 없습니다. 초록선은 판매 가능한 조합이라는 뜻입니다. 메뉴 항목 자체가 뜨지 않습니다.</li>
-    <li>상품 조합 등록 · 기본값 지정 메뉴는 <strong>조합을 고른 뒤 세트상품 위</strong>에서 우클릭할 때만 뜹니다.</li>
+    <li><strong>초록선이 없는 조합</strong>은 판매하지 않는 조합이라 상품 조합이 아닙니다. 등록도 기본값 지정도 할 수 없고, 메뉴 항목 자체가 뜨지 않습니다. <span class="tag-src new">개정</span></li>
+    <li>상품 조합 등록 · 기본값 지정 메뉴는 <strong>상품 조합을 고른 뒤 세트상품 위</strong>에서 우클릭할 때만 뜹니다.</li>
     <li>세트상품에 붙는 태그는 <strong>1개가 원칙</strong>입니다. 2개면 운영 데이터 오류입니다.</li>
     <li>인터넷상품의 속도 태그가 없으면 상품 조합을 등록할 수 없습니다.</li>
     <li><strong>이미 기본값인 세트상품</strong>에는 메뉴 항목이 뜨지 않습니다. 카드의 「기본값」 배지가 이미 그 사실을 보여주고, 해제 수단도 없기 때문입니다. <span class="tag-src new">개정</span></li>
-    <li><strong>대표 변경과 상품 조합 삭제는 인터넷 상품 관리에서 할 수 없습니다.</strong> 상품 조합 관리로 넘어가야 합니다. 05 참고 <span class="tag-src new">개정</span></li>
+    <li><strong>대표 변경과 등록 해제는 인터넷 상품 관리에서 할 수 없습니다.</strong> 상품 조합 관리로 넘어가야 합니다. 05 참고 <span class="tag-src new">개정</span></li>
   </ul>
 
   <h3>쓰지 않는 말</h3>
@@ -255,10 +258,13 @@
       <tr><th>상품</th><td>세트 그룹의 왼쪽 열 카드</td><td>인터넷상품 · TV채널 · 전화상품</td></tr>
       <tr><th>세트상품</th><td>세트 그룹의 오른쪽 열 카드</td><td>기본WIFI · 셋탑박스 · 전화기기</td></tr>
       <tr><th>카드</th><td>상품이나 세트상품 하나를 나타내는 네모 칸</td><td>—</td></tr>
-      <tr><th>상품 조합 <span class="tag-src new">개정</span></th><td>상품 1개 + 세트상품 1개. <strong>등록 단위</strong></td><td>에센스 × 기가지니3A</td></tr>
+      <tr><th>상품 조합 <span class="tag-src new">개정</span></th><td><strong>초록선으로 연결된</strong> 상품 1개 + 세트상품 1개. 판매 가능한 것만 상품 조합이라 부릅니다. 등록 단위</td><td>에센스 × 기가지니3A</td></tr>
+      <tr><th>등록된 상품 조합 <span class="tag-src new">개정</span></th><td>상품 조합 중 속성 조합에 등록된 것. 태그 보기에 나오고, 상품 조합 관리 목록 한 줄이 1건</td><td>KT 39건</td></tr>
       <tr><th>속성 조합 <span class="tag-src new">개정</span></th><td>속도 · 구성제품 · 추가구성옵션 3칸. 두 카드의 태그에서 <strong>자동으로 정해집니다</strong></td><td>1Gbps · 프리미엄WiFi · 없음</td></tr>
-      <tr><th>초록선</th><td>함께 팔 수 있는 상품 조합을 잇는 선. 상품 보기 노출의 기준</td><td>AS-IS 연결선 그대로</td></tr>
-      <tr><th>미적용</th><td>세트상품 없이 파는 조합의 오른쪽 자리. 인터넷세트 기본WIFI 칸 맨 위 카드</td><td>슬림 × 미적용</td></tr>
+      <tr><th>초록선</th><td>상품과 세트상품을 함께 팔 수 있다는 표시. 초록선이 있어야 상품 조합이고, 상품 보기 노출의 기준입니다</td><td>AS-IS 연결선 그대로</td></tr>
+      <tr><th>대표 선택 필요 <span class="tag-src new">개정</span></th><td>등록된 상품 조합이 2개 이상인 속성 조합. 대표를 운영자가 골라야 하는 곳이며, 상품 조합 관리의 필터 · 개수 표시에 씁니다</td><td>KT 4개</td></tr>
+      <tr><th>등록 해제 <span class="tag-src new">개정</span></th><td>등록된 상품 조합을 속성 조합에서 빼는 것. 초록선(판매 조합)은 그대로 남고, 다시 등록할 수 있습니다. 상품 조합 관리에서만 합니다</td><td>행 끝 ✕</td></tr>
+      <tr><th>미적용</th><td>세트상품 없이 파는 상품 조합의 오른쪽 자리. 인터넷세트 기본WIFI 칸 맨 위 카드</td><td>슬림 × 미적용</td></tr>
     </tbody>
   </table>
   </div>
@@ -276,7 +282,7 @@
     <thead><tr><th style="width:22%">화면</th><th style="width:22%">이전 이름</th><th>하는 일</th></tr></thead>
     <tbody>
       <tr><th>인터넷 상품 관리</th><td>같음</td><td>태그 지정 · 상품 조합 등록 · 기본값 지정 · 플랫폼 노출 관리</td></tr>
-      <tr><th>상품 조합 관리 <span class="tag-src new">개정</span></th><td>V1 상품 연결 관리<br>9/30 태그 연결 관리</td><td>등록된 상품 조합을 모아 보고, 대표를 바꾸고, 삭제합니다. 표에는 태그명 대신 속성이 보입니다 — 대표가 속성 조합 기준이기 때문이며, 속성 3칸 위에 <strong>「속성 조합」</strong> 머리글을 둡니다</td></tr>
+      <tr><th>상품 조합 관리 <span class="tag-src new">개정</span></th><td>V1 상품 연결 관리<br>9/30 태그 연결 관리</td><td><strong>속성 조합별로 묶어 본 등록된 상품 조합 목록</strong>입니다. 대표를 바꾸고, 등록을 해제합니다. 표에는 태그명 대신 속성이 보입니다 — 대표가 속성 조합 기준이기 때문이며, 속성 3칸 위에 <strong>「속성 조합」</strong> 머리글을 둡니다</td></tr>
       <tr><th>태그 관리</th><td>같음</td><td>업체별 태그(<code>1Gbps(에센스)</code>)를 등록 · 수정합니다</td></tr>
       <tr><th>상품속성 관리</th><td>같음</td><td>업체 공통 속성(<code>1Gbps</code>)을 관리합니다</td></tr>
     </tbody>
@@ -300,7 +306,7 @@
       <tr><th>상품 조합 등록</th><td><strong>여기서</strong></td><td>안 함</td></tr>
       <tr><th>등록 시점의 대표 지정</th><td><strong>여기서</strong></td><td>—</td></tr>
       <tr><th>대표 변경</th><td>안 함</td><td><strong>여기서</strong></td></tr>
-      <tr><th>상품 조합 삭제</th><td>안 함</td><td><strong>여기서</strong></td></tr>
+      <tr><th>등록 해제</th><td>안 함</td><td><strong>여기서</strong></td></tr>
       <tr><th>태그 지정 · 기본값 · 플랫폼 노출</th><td><strong>여기서</strong></td><td>안 함</td></tr>
     </tbody>
   </table>
@@ -309,10 +315,18 @@
   <p><strong>한 줄로는 — 인터넷 상품 관리는 만들고, 상품 조합 관리는 고치고 지웁니다.</strong></p>
 
   <div class="callout">
-    <strong>왜 나눴나</strong> — 한 모달에 등록 · 대표 변경 · 삭제를 모두 넣으니 주 버튼이 여러 개가 되고, 그걸 감당하려고 삭제 확인 · 되돌리기 · 임시 저장 같은 장치가 계속 붙었습니다. 장치가 늘어나는 것은 설계가 정교해지는 신호가 아니라 <strong>모달이 자기 일이 아닌 걸 하고 있다는 신호</strong>로 보고 역할을 잘랐습니다. 자른 뒤 그 장치는 전부 사라졌고, 등록 모달의 버튼은 [취소] [등록] 둘만 남았습니다. <span class="tag-src interp">해석</span>
+    <strong>왜 나눴나</strong> — 한 모달에 등록 · 대표 변경 · 등록 해제를 모두 넣으니 주 버튼이 여러 개가 되고, 그걸 감당하려고 해제 확인 · 되돌리기 · 임시 저장 같은 장치가 계속 붙었습니다. 장치가 늘어나는 것은 설계가 정교해지는 신호가 아니라 <strong>모달이 자기 일이 아닌 걸 하고 있다는 신호</strong>로 보고 역할을 잘랐습니다. 자른 뒤 그 장치는 전부 사라졌고, 등록 모달의 버튼은 [취소] [등록] 둘만 남았습니다. <span class="tag-src interp">해석</span>
   </div>
 
-  <p>대표를 바꾸려면 반드시 상품 조합 관리로 넘어가야 합니다. 의도한 제약이며, 인터넷 상품 관리에서 이미 등록된 조합을 우클릭하면 <span class="menu">상품 조합 관리에서 보기</span>가 떠서 그 속성 조합으로 필터가 걸린 채 열립니다.</p>
+  <h3>속성 조합별로 상품 조합을 보는 곳 <span class="tag-src new">개정</span></h3>
+  <ul>
+    <li><strong>상품 조합 관리 목록</strong> — 같은 속성 조합의 등록된 상품 조합이 연달아 나오고 속성 3칸이 병합됩니다. 첫 줄에 「상품 조합 N개」 배지</li>
+    <li><strong>상품 조합 관리 · 속성 조합 필터</strong> — 인터넷 상품 관리의 「상품 조합 관리에서 보기」로 넘어오면 걸립니다</li>
+    <li><strong>상품 조합 등록 모달</strong> — 「같은 속성 조합의 다른 상품 조합」 목록과 현재 대표</li>
+    <li>인터넷 상품 관리 화면에서는 보이지 않습니다. 카드와 초록선은 상품 조합 단위로만 그려집니다</li>
+  </ul>
+
+  <p>대표를 바꾸려면 반드시 상품 조합 관리로 넘어가야 합니다. 의도한 제약이며, 인터넷 상품 관리에서 이미 등록된 상품 조합을 우클릭하면 <span class="menu">상품 조합 관리에서 보기</span>가 떠서 그 속성 조합으로 필터가 걸린 채 열립니다.</p>
 </section>
 
 <footer>
@@ -321,5 +335,6 @@
 
 </div>
 
+<script src="/internet-product/assets/updated.js" defer></script>
 </body>
 </html>

@@ -263,7 +263,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
     <span><i style="background:#fff;border:1px solid var(--g100)"></i>판매중</span>
     <span><i style="background:var(--g25);border:1px solid var(--g100)"></i>미사용</span>
     <span><i style="background:var(--blue50);border:1px solid var(--primary)"></i>선택</span>
-    <span><i style="background:#F1FBF5;border:1px solid var(--link)"></i>판매 가능 조합</span>
+    <span><i style="background:#F1FBF5;border:1px solid var(--link)"></i>상품 조합 (초록선)</span>
     <span><i style="background:var(--hold)"></i>기본값 (TV · 전화)</span>
   </div>
 
@@ -301,13 +301,13 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
       <tr><td>기본WIFI</td><td class="sub">구성제품 1칸</td><td><button class="btn-out" data-case="tg-col">열기</button></td></tr>
       <tr><td>인터넷 외 · 신규</td><td class="sub">「태그 없음」 카드 · 태그 1칸 + 고객 노출 미리보기</td><td><button class="btn-out" data-case="tag-new">열기</button></td></tr>
       <tr><td>인터넷 외 · 변경</td><td class="sub">현재 태그가 선택된 채로 열림</td><td><button class="btn-out" data-case="tag-edit">열기</button></td></tr>
-      <tr><th rowspan="5">인터넷</th><th rowspan="4">상품 조합 등록<br><span class="chg">추가</span></th><td rowspan="4">「상품 조합 등록」<br><span class="sub">초록선 조합 선택 후 기본WIFI 위</span></td>
+      <tr><th rowspan="5">인터넷</th><th rowspan="4">상품 조합 등록<br><span class="chg">추가</span></th><td rowspan="4">「상품 조합 등록」<br><span class="sub">상품 조합 선택 후 기본WIFI 위</span></td>
         <td>속성 조합의 첫 등록</td><td class="sub"><b>모달 없음</b> — 대표로 즉시 등록 + 토스트</td><td><button class="btn-out" data-case="reg-first">실행</button></td></tr>
       <tr><td>같은 속성 조합에 다른 상품 조합이 있음</td><td class="sub">모달 — 그 목록은 <b>읽기 전용</b> · 「이 상품 조합을 대표로」만 선택. 켜면 기존 대표는 밀려남</td><td><button class="btn-out" data-case="reg-exist">열기</button></td></tr>
       <tr><td>상품 태그 없음 (오류)</td><td class="sub">속도 태그가 없는 상품 → 「태그 지정」 먼저 안내 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-notag">열기</button></td></tr>
       <tr><td>이미 등록돼 있음 (오류)</td><td class="sub">평소엔 메뉴가 「상품 조합 관리」로 바뀌어 안 열림. 동시 편집 안전망 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-dupe">열기</button></td></tr>
-      <tr><th>— (화면 이동)</th><td>「상품 조합 관리에서 보기」<br><span class="sub">이미 등록된 조합 · 기본WIFI 위</span></td><td>모달 없음</td><td class="sub">상품 조합 관리로 이동 · 그 속성 조합 필터 + 행 강조 (목업은 안내 토스트). <b>대표 변경 · 삭제는 그 화면에서만</b></td><td><button class="btn-out" data-case="m-view">메뉴 열기</button></td></tr>
-      <tr><th rowspan="2">인터넷 외</th><th rowspan="2">— (토스트)<br><span class="chg">추가</span></th><td rowspan="2">「기본값 지정」<br><span class="sub">초록선 조합 선택 후 세트상품 위</span></td>
+      <tr><th>— (화면 이동)</th><td>「상품 조합 관리에서 보기」<br><span class="sub">이미 등록된 상품 조합 · 기본WIFI 위</span></td><td>모달 없음</td><td class="sub">상품 조합 관리로 이동 · 그 속성 조합 필터 + 행 강조 (목업은 안내 토스트). <b>대표 변경 · 등록 해제는 그 화면에서만</b></td><td><button class="btn-out" data-case="m-view">메뉴 열기</button></td></tr>
+      <tr><th rowspan="2">인터넷 외</th><th rowspan="2">— (토스트)<br><span class="chg">추가</span></th><td rowspan="2">「기본값 지정」<br><span class="sub">상품 조합 선택 후 세트상품 위</span></td>
         <td>변경</td><td class="sub">다른 세트상품이 기본값 → 「기본값 지정」 · 교체</td><td><button class="btn-out" data-case="m-auto-chg">메뉴 열기</button></td></tr>
       <tr><td>현재 기본값</td><td class="sub">이 세트상품이 기본값 → <b>메뉴 항목 없음</b>. 카드의 「기본값」 배지로 이미 보이고, 해제 수단도 두지 않습니다</td><td><button class="btn-out" data-case="m-auto-cur">메뉴 열기</button></td></tr>
       <tr><th rowspan="3">전 구분</th><th rowspan="3">플랫폼 노출 관리<br><span class="chg">추가</span></th><td rowspan="3">「플랫폼 노출 관리」</td>
@@ -802,7 +802,7 @@ reindex();
 let REG = null, regMain = false, regForced = false;
 /* 상품 조합 등록 — 모달이 받는 값은 「대표 여부」 하나뿐이다.
    속성 조합의 첫 상품 조합은 대표가 자명하므로 묻지 않고 바로 대표로 등록한다.
-   이미 등록된 상품 조합에서는 같은 메뉴가 관리 모드로 열려 대표 변경 · 삭제를 받는다. */
+   이미 등록된 상품 조합에서는 같은 메뉴가 관리 모드로 열려 대표 변경 · 등록 해제를 받는다. */
 function doReg(){
   const g = grp(SEL.g);
   const pr = pt(g,'row',SEL.p), ps = SEL.set ? pt(g,'col',SEL.set) : { s2:'없음' };
@@ -853,14 +853,14 @@ function previewReg(){
     msg.innerHTML='<b>'+esc(miss)+'</b> 상품 카드를 우클릭해 먼저 「태그 지정」을 하세요.';
   } else if(same.length){
     n.hidden=false; n.className='notice err'; ok=false;
-    msg.innerHTML='<b>이 상품 조합은 이미 등록돼 있습니다.</b> 속성 조합을 바꾸려면 삭제하고 다시 등록해야 합니다.';
+    msg.innerHTML='<b>이 상품 조합은 이미 등록돼 있습니다.</b> 속성 조합을 바꾸려면 등록 해제하고 다시 등록해야 합니다.';
   } else { n.hidden=true; }
   $('rOthN').textContent = ok0 ? inGrp.length+'건' : '';
   $('rOth').innerHTML = !ok0
     ? '<div class="othempty">태그가 모두 지정되면 같은 속성 조합의 상품 조합이 나옵니다</div>'
     : inGrp.length
       ? inGrp.map(r=>{
-          /* 읽기 전용 — 대표 변경 · 삭제는 상품 조합 관리에서만 한다 */
+          /* 읽기 전용 — 대표 변경 · 등록 해제는 상품 조합 관리에서만 한다 */
           const isM = REP[r[12]]===R.indexOf(r);
           return '<div class="othrow"><span class="p">'+esc(r[2])
             +(r[3]?'<span class="xs">×</span><span class="st">'+esc(r[3])+'</span>'
