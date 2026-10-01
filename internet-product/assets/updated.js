@@ -22,11 +22,11 @@
      새 문서를 추가하면 여기에 한 줄 추가하세요.
   ------------------------------------------------------------ */
   var DATES = {
-    '/internet-product/tags/':          '2026-09-29 16:00',  // 태그 관리
+    '/internet-product/tags/':          '2026-10-01 13:30',  // 태그 관리
     '/internet-product/products/':   '2026-09-30 13:10',  // 인터넷 상품 관리
-    '/internet-product/products-v2/':   '2026-09-30 14:22',  // 인터넷 상품 관리 V2
+    '/internet-product/products-v2/':   '2026-10-01 20:45',  // 인터넷 상품 관리 V2
     '/internet-product/product-links/':   '2026-09-30 14:35',  // 상품 연결 관리
-    '/internet-product/product-links-v2/':   '2026-09-30 14:40',  // 태그 연결 관리 V2
+    '/internet-product/product-links-v2/':   '2026-10-01 19:55',  // 상품 조합 관리 V2
     '/internet-product/attributes/':    '2026-09-28 13:59',  // 상품속성 관리
     '/internet-product/wbs/':           '2026-09-22 20:53'   // WBS
   };

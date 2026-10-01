@@ -1,5 +1,5 @@
 <meta charset="utf-8">
-<title>태그 연결 관리 목업 V2</title>
+<title>상품 조합 관리 목업 V2</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700&display=swap">
 <style>
 :root{
@@ -369,7 +369,7 @@ input.err,.nmi.err,.dvnm.err{border-color:var(--error)!important;background:var(
 .vgrp .c{font-size:11.5px;color:var(--g500)}
 
 
-/* ── 태그 연결 관리 전용 ── */
+/* ── 상품 조합 관리 전용 ── */
 .chips{display:inline-flex;border:1px solid var(--g200);border-radius:8px;overflow:hidden;height:36px}
 .chips button{border:none;background:#fff;padding:0 14px;font-size:13px;font-family:inherit;color:var(--g600);
  cursor:pointer;letter-spacing:-.2px;border-right:1px solid var(--g100)}
@@ -518,7 +518,7 @@ input.srch{font-family:inherit;outline:none;color:var(--g900);padding:8px 34px 8
  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' fill='%238D8F94'/%3E%3C/svg%3E");
  background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
 input.srch::placeholder{color:var(--g300)}
-/* 구분 고정 표기 (연결은 인터넷 전용) */
+/* 구분 고정 표기 (상품 조합은 인터넷 전용) */
 .lockfld{display:inline-flex;align-items:center;gap:8px;height:36px;padding:8px 12px;border:1px solid var(--g100);
  border-radius:8px;background:var(--g25);font-size:14px;letter-spacing:-.3px}
 .lockfld .lk{font-size:12px;color:var(--g500)}
@@ -536,15 +536,15 @@ input.srch::placeholder{color:var(--g300)}
 </div>
 
 <div class="sheet page">
-  <div class="bc"><a href="#">상품 관리</a> › <a href="#">인터넷 상품 관리</a> › 태그 연결 관리</div>
-  <div class="ptitle"><h1>태그 연결 관리</h1><span style="margin-left:12px;display:inline-flex;gap:2px;padding:3px;background:var(--g50);border-radius:8px;vertical-align:middle"><a href="/internet-product/product-links/" style="padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;color:var(--g500)">V1</a><a href="/internet-product/product-links-v2/" style="padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;background:#fff;color:var(--g900);box-shadow:0 1px 2px rgba(19,19,20,.12)">V2</a></span><span class="star off">☆</span></div>
-  <div class="pdesc">인터넷 태그 연결을 조회하고 대표를 지정합니다. 등록은 <a href="/internet-product/products-v2/#modal-cases" style="color:var(--primary);font-weight:600">인터넷 상품 관리</a>에서 합니다.</div>
+  <div class="bc"><a href="#">상품 관리</a> › <a href="#">인터넷 상품 관리</a> › 상품 조합 관리</div>
+  <div class="ptitle"><h1>상품 조합 관리</h1><span style="margin-left:12px;display:inline-flex;gap:2px;padding:3px;background:var(--g50);border-radius:8px;vertical-align:middle"><a href="/internet-product/product-links/" style="padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;color:var(--g500)">V1</a><a href="/internet-product/product-links-v2/" style="padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;background:#fff;color:var(--g900);box-shadow:0 1px 2px rgba(19,19,20,.12)">V2</a></span><span class="star off">☆</span></div>
+  <div class="pdesc">인터넷 상품 조합을 조회하고 대표를 지정합니다. 등록은 <a href="/internet-product/products-v2/#modal-cases" style="color:var(--primary);font-weight:600">인터넷 상품 관리</a>에서 합니다.</div>
 
   <div class="bar">
-    <div class="lockfld"><span class="lk">구분</span><b>인터넷</b><span class="lktag">연결은 인터넷 전용</span></div>
+    <div class="lockfld"><span class="lk">구분</span><b>인터넷</b><span class="lktag">상품 조합은 인터넷 전용</span></div>
     <div class="chips" id="chips">
       <button data-f="all" class="on">전체</button>
-      <button data-f="dup">복수 상품 조합</button>
+      <button data-f="dup">상품 2개 이상</button>
       <button data-f="rep">대표만</button>
     </div>
     <div class="srchbox"><input id="q" placeholder="상품명 검색"></div>
@@ -565,7 +565,7 @@ input.srch::placeholder{color:var(--g300)}
     </colgroup>
     <thead><tr>
       <th rowspan="2">인터넷상품</th><th rowspan="2">기본WIFI</th>
-      <th colspan="3" class="c" style="height:26px;padding:4px 12px;border-bottom:0;font-weight:600;color:var(--g600)">연결된 태그의 속성</th>
+      <th colspan="3" class="c" style="height:26px;padding:4px 12px;border-bottom:0;font-weight:600;color:var(--g600)">속성 조합</th>
       <th rowspan="2" class="c">대표</th><th rowspan="2" class="c">삭제</th>
     </tr><tr>
       <th>속도</th><th>구성제품</th><th>추가구성옵션</th>
@@ -577,7 +577,7 @@ input.srch::placeholder{color:var(--g300)}
 
 <div id="ovDel" hidden style="position:fixed;inset:0;background:rgba(19,19,20,.35);z-index:950;display:flex;align-items:center;justify-content:center">
   <div class="modal" style="width:600px">
-    <div class="mh"><h3>연결 삭제</h3></div>
+    <div class="mh"><h3>상품 조합 삭제</h3></div>
     <div class="mb">
       <div class="ctx dlctx" style="margin-bottom:14px">
         <div><span class="k">상품</span><span class="v" id="dlProd"></span></div>
@@ -623,19 +623,19 @@ function render(){
   const grp=new Set(all.map(r=>r[12])), dup=new Set(all.filter(r=>r[10]>1).map(r=>r[12]));
   if(COMBO){
     const inC=all.filter(r=>r[12]===COMBO);
-    $('cnt').innerHTML='<span class="dupn">조합 필터</span> · 이 조합의 연결 <b>'+inC.length+'</b>건'
+    $('cnt').innerHTML='<span class="dupn">속성 조합 필터</span> · 이 속성 조합의 상품 조합 <b>'+inC.length+'</b>건'
       + (inC.length>1?' — 대표를 고를 수 있습니다':' — 상품이 하나뿐이라 자동으로 대표입니다');
   } else {
     const bad=all.filter((r,x)=>REP[r[12]]===R.indexOf(r) && !r[13]).length;
-    $('cnt').innerHTML='연결 <b>'+all.length+'</b>건 · 조합 <b>'+grp.size+'</b>개'
-      + (dup.size?' · <span class="dupn">복수 상품 조합 '+dup.size+'개</span>':' · <span style="color:var(--g400)">복수 상품 조합 없음</span>')
+    $('cnt').innerHTML='상품 조합 <b>'+all.length+'</b>건 · 속성 조합 <b>'+grp.size+'</b>개'
+      + (dup.size?' · <span class="dupn">상품 2개 이상 '+dup.size+'개</span>':' · <span style="color:var(--g400)">상품 2개 이상 없음</span>')
       + (bad?' · <span class="badlink" id="badLink">대표 미사용 '+bad+'건</span>':'');
   }
   $('badChip').hidden=!BADREP;
   $('comboChip').hidden=!COMBO;
   if(COMBO) $('comboTx').textContent=COMBO.split('|').slice(1).join(' · ');
   const page=rows();
-  // 페이지 안에서 조합별 rowspan 계산
+  // 페이지 안에서 속성 조합별 rowspan 계산
   const span={};
   page.forEach((o,n)=>{ const k=o.r[12]; if(span[k]===undefined) span[k]=0; span[k]++; });
   const seen={};
@@ -645,7 +645,7 @@ function render(){
     const rs=span[r[12]];
     const rep = isDup
       ? '<span class="rep'+(isRep?' on':'')+'" data-rep="'+o.i+'" title="대표로 지정"></span>'
-      : '<span class="repauto" title="이 조합을 쓰는 상품이 하나뿐이라 자동으로 대표입니다">자동</span>';
+      : '<span class="repauto" title="이 속성 조합을 쓰는 상품이 하나뿐이라 자동으로 대표입니다">자동</span>';
     const cellA = (n,tn) => '<td class="mg" rowspan="'+rs+'" title="이 업체의 태그명: '+tn+'">'+tag(n)+'</td>';
     const combo = first ? cellA(r[4],r[7])+cellA(r[5],r[8])+cellA(r[6],r[9]) : '';
     const badRep = isRep && !r[13];
@@ -655,9 +655,9 @@ function render(){
         +((isDup&&first)?' <span class="gtag">상품 '+r[10]+'개</span>':'')+'</td>'
       +'<td title="'+(r[3]||'미적용')+'">'+(r[3]?r[3]+(r[14]?'':' <span class="ub">미사용</span>'):'<span class="non">미적용</span>')+'</td>'
       +combo
-      +'<td class="c">'+rep+(badRep?'<span class="repwarn" title="대표인데 미사용입니다 — 이 조합은 상담 화면에 아무것도 노출되지 않습니다">!</span>':'')+'</td>'
-      +'<td class="c"><button class="xbtn" data-del="'+o.i+'" title="삭제">✕</button></td></tr>';
-  }).join('') : '<tr><td colspan="7" style="height:140px;text-align:center;color:var(--g400)">조건에 맞는 연결이 없습니다</td></tr>';
+      +'<td class="c">'+rep+(badRep?'<span class="repwarn" title="대표인데 미사용입니다 — 이 속성 조합은 상담 화면에 아무것도 노출되지 않습니다">!</span>':'')+'</td>'
+      +'<td class="c"><button class="xbtn" data-del="'+o.i+'" title="상품 조합 삭제">✕</button></td></tr>';
+  }).join('') : '<tr><td colspan="7" style="height:140px;text-align:center;color:var(--g400)">조건에 맞는 상품 조합이 없습니다</td></tr>';
 
   if($('badLink')) $('badLink').onclick=()=>{ BADREP=true; COMBO=null; FOCUS=null; render(); };
   $('body').querySelectorAll('[data-rep]').forEach(el=>el.onclick=()=>{
@@ -672,10 +672,10 @@ function openDel(i){
   $('dlCombo').textContent = [r[7],r[8],r[9]].join(' · ');
   const isRep = REP[r[12]]===i, others = r[10]-1;
   $('dlNotice').querySelector('span:last-child').innerHTML = isRep && others>0
-    ? '<b>이 연결이 대표입니다.</b> 삭제하면 같은 조합의 남은 '+others+'건 중 첫 연결이 대표가 됩니다.'
+    ? '<b>이 상품 조합이 대표입니다.</b> 삭제하면 같은 속성 조합의 남은 '+others+'건 중 첫 상품 조합이 대표가 됩니다.'
     : others>0
-      ? '같은 조합에 '+others+'건이 더 있습니다. 대표는 바뀌지 않습니다.'
-      : '<b>이 조합의 유일한 연결입니다.</b> 삭제하면 상담 상세에서 이 조합으로는 아무 상품도 나오지 않습니다.';
+      ? '같은 속성 조합에 '+others+'건이 더 있습니다. 대표는 바뀌지 않습니다.'
+      : '<b>이 속성 조합의 유일한 상품 조합입니다.</b> 삭제하면 상담 상세에서 이 속성 조합으로는 아무 상품도 나오지 않습니다.';
   $('ovDel').hidden=false;
 }
 $('dlCancel').onclick=()=>{$('ovDel').hidden=true;};
@@ -706,19 +706,19 @@ renderTabs(); render();
 <div class="sheet" style="padding-top:32px">
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">범위</span><span class="spec-t">인터넷 전용 · 조회 · 대표 지정 · 삭제</span></div>
+  <div class="spec-head"><span class="chip-v">범위</span><span class="spec-t">인터넷 전용 · 조회 · 대표 지정 · 상품 조합 삭제</span></div>
   <div class="desc" style="margin:0 0 12px"><div class="desc-l">DESCRIPTION</div>
-    <p><b>연결은 인터넷 전용입니다.</b> 개발 목업 <code>w_15.html</code>(2026-09-09) 기준 — <b>TV · 인터넷전화 · 일반전화는 태그가 상품에 직접 붙어</b> 연결(태그 조합)을 쓰지 않습니다. 조합 칸의 사용여부만 Phase 2 ⑤에서 다룹니다.<br>
-    그래서 이 화면은 <b>구분 드롭다운을 없애고 「인터넷」 고정 표기</b>로 바꿨습니다. 대상은 연결 442건 중 <b>인터넷 217건</b>입니다.</p></div>
+    <p><b>상품 조합은 인터넷 전용입니다.</b> 개발 목업 <code>w_15.html</code>(2026-09-09) 기준 — <b>TV · 인터넷전화 · 일반전화는 태그가 상품에 직접 붙어</b> 상품 조합을 쓰지 않습니다. 조합 칸의 사용여부만 Phase 2 ⑤에서 다룹니다.<br>
+    그래서 이 화면은 <b>구분 드롭다운을 없애고 「인터넷」 고정 표기</b>로 바꿨습니다. 대상은 상품 조합 442건 중 <b>인터넷 217건</b>입니다.</p></div>
   <div class="table-wrap">
   <table class="mx">
     <thead><tr><th style="width:22%">동작</th><th style="width:16%">여기서</th><th>비고</th></tr></thead>
     <tbody>
       <tr><th>조회 · 검색</th><td>합니다</td><td>업체 탭 + 상품명 검색 (구분은 인터넷 고정)</td></tr>
       <tr><th>대표 지정</th><td>합니다</td><td>목록 라디오 한 번 · 삭제 왼쪽 컬럼</td></tr>
-      <tr><th>삭제</th><td>합니다</td><td>행 끝 ✕ → 확인 모달 · <b>이 화면의 유일한 모달</b></td></tr>
-      <tr><th>새 연결 등록</th><td class="bad">안 합니다</td><td>인터넷 상품 관리에서 초록선 짝을 고른 뒤 기본WIFI 우클릭 → 「태그 연결 등록」 — 모달 시안은 <a href="/internet-product/products-v2/#modal-cases">인터넷 상품 관리 V2</a> 하단</td></tr>
-      <tr><th>조합 수정</th><td class="bad">불가</td><td>규칙 9 — 삭제 후 재등록</td></tr>
+      <tr><th>상품 조합 삭제</th><td>합니다</td><td>행 끝 ✕ → 확인 모달 · <b>이 화면의 유일한 모달</b></td></tr>
+      <tr><th>새 상품 조합 등록</th><td class="bad">안 합니다</td><td>인터넷 상품 관리에서 판매 가능 조합을 고른 뒤 기본WIFI 우클릭 → 「상품 조합 등록」 — 모달 시안은 <a href="/internet-product/products-v2/#modal-cases">인터넷 상품 관리 V2</a> 하단</td></tr>
+      <tr><th>속성 조합 수정</th><td class="bad">불가</td><td>규칙 9 — 삭제 후 재등록</td></tr>
       <tr><th>사용여부 변경</th><td class="bad">안 합니다</td><td>인터넷 상품 관리의 상품 패널에서만. 여기선 결과만 표시</td></tr>
     </tbody>
   </table>
@@ -738,7 +738,7 @@ renderTabs(); render();
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
     <p>인터넷 상품 관리의 컬럼명을 그대로 씁니다. 구분이 하나로 고정되면서 <b>구분별 컬럼명 전환 로직이 사라졌습니다.</b></p>
-    <p class="q">해소됨 — 「결합할인 연결을 별도 탭으로 뺄지」는 <b>결합할인이 Phase 2 ⑥으로 이동</b>하면서 이 화면의 논점이 아니게 됐습니다.</p>
+    <p class="q">해소됨 — 「결합할인을 별도 탭으로 뺄지」는 <b>결합할인이 Phase 2 ⑥으로 이동</b>하면서 이 화면의 논점이 아니게 됐습니다.</p>
   </div>
 </div>
 </div>
@@ -749,7 +749,7 @@ renderTabs(); render();
   <table class="mx">
     <thead><tr><th style="width:24%">대상</th><th>표시</th></tr></thead>
     <tbody>
-      <tr><th>같은 속성 조합</th><td>자리 3칸을 <code>rowspan</code>으로 <b>병합</b> · 첫 행에 <code>상품 N개</code> 배지 · 조합이 바뀌는 행에 진한 가로선(gray-200)</td></tr>
+      <tr><th>같은 속성 조합</th><td>자리 3칸을 <code>rowspan</code>으로 <b>병합</b> · 첫 행에 <code>상품 N개</code> 배지 · 속성 조합이 바뀌는 행에 진한 가로선(gray-200)</td></tr>
       <tr><th>속성 「없음」</th><td>회색</td></tr>
       <tr><th>세트상품 단품 행</th><td>AS-IS 목록에는 <b>세트상품 자체에 태그를 붙인 행</b>이 섞여 있습니다(<code>KT와이파이7D | – | 프리미엄WiFi</code> · KT 9건). <b>이관하지 않고 폐기</b>합니다 — 현재 노출되는 곳이 없습니다 (확인 필요 사항 C-7)</td></tr>
       <tr><th>세트상품 빈 값</th><td>회색 <b>「미적용」</b> — 인터넷 217건 중 20건(9%)이 정상적으로 비어 있습니다(WiFi 없이 파는 상품)</td></tr>
@@ -762,19 +762,19 @@ renderTabs(); render();
 </div>
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">대표</span><span class="spec-t">복수 상품 조합에서만 고릅니다</span></div>
+  <div class="spec-head"><span class="chip-v">대표</span><span class="spec-t">상품 2개 이상에서만 고릅니다</span></div>
   <div class="table-wrap">
   <table class="mx">
     <thead><tr><th style="width:26%">상태</th><th style="width:18%">건수</th><th>UI</th></tr></thead>
     <tbody>
-      <tr><th>조합에 상품 1개</th><td><b>142</b> / 165 (86%)</td><td>라디오 대신 회색 <code>자동</code></td></tr>
-      <tr><th>조합에 상품 2개 이상</th><td class="hl"><b>23</b> (14%) · 최대 8</td><td>라디오 활성화 · 「복수 상품 조합」 필터가 진입점</td></tr>
+      <tr><th>속성 조합에 상품 1개</th><td><b>142</b> / 165 (86%)</td><td>라디오 대신 회색 <code>자동</code></td></tr>
+      <tr><th>속성 조합에 상품 2개 이상</th><td class="hl"><b>23</b> (14%) · 최대 8</td><td>라디오 활성화 · 「상품 2개 이상」 필터가 진입점</td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
     <p>그룹 기준은 <b>(업체 · 속성 3개)</b> — v22 원문 <code>const grp=[v,p1.a,p2.a,p3.a]</code>과 같습니다. 태그명이 아니라 <b>속성</b>이 키입니다.</p>
-    <p class="q">확인 필요 — <b>이관 시 대표 자동 지정 기준.</b> 개발자는 <code>level</code>로 찍으려 했는데 그 값은 이번에 삭제합니다. 상품 우선순위 · 등록순 · 가나다 중에서 정해야 합니다. <b>23개 조합에만 필요</b>합니다 (확인 필요 사항 C-3).</p>
+    <p class="q">확인 필요 — <b>이관 시 대표 자동 지정 기준.</b> 개발자는 <code>level</code>로 찍으려 했는데 그 값은 이번에 삭제합니다. 상품 우선순위 · 등록순 · 가나다 중에서 정해야 합니다. <b>23개 속성 조합에만 필요</b>합니다 (확인 필요 사항 C-3).</p>
     <p><b>대표가 미사용인 2건</b>(딜라이브 <code>ISP 스마트광랜</code> · LG <code>프리미엄 안심 200M</code>)은 <b>Phase 1에서 경고만 하고 막지 않습니다.</b> 이관 시 수동으로 대표만 옮기면 되고, 규칙 보강과 자동 이관은 Phase 2입니다.</p>
   </div>
 </div>
@@ -785,14 +785,14 @@ renderTabs(); render();
   <table class="mx">
     <thead><tr><th style="width:24%">항목</th><th>값</th></tr></thead>
     <tbody>
-      <tr><th>페이징</th><td><b>없음 — 전체 렌더.</b> 업체당 최대 <b>55건</b>(SKB) · 인터넷 연결 217건</td></tr>
+      <tr><th>페이징</th><td><b>없음 — 전체 렌더.</b> 업체당 최대 <b>55건</b>(SKB) · 인터넷 상품 조합 217건</td></tr>
       <tr><th>요청</th><td><code>limit=200</code> 고정 + 응답에 <code>total</code></td></tr>
-      <tr><th><code>total &gt; 200</code></th><td>경고 — 「이 조건의 연결이 200건을 넘습니다. 검색으로 좁혀주세요」</td></tr>
+      <tr><th><code>total &gt; 200</code></th><td>경고 — 「이 조건의 상품 조합이 200건을 넘습니다. 검색으로 좁혀주세요」</td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p>페이징을 두면 <b>조합이 페이지 경계에 걸립니다.</b> 대표가 앞 페이지에 있으면 라디오가 아무것도 안 켜진 채로 보여서, 뭐가 대표인지 모르는 상태에서 새 대표를 지정하게 됩니다.</p>
+    <p>페이징을 두면 <b>속성 조합이 페이지 경계에 걸립니다.</b> 대표가 앞 페이지에 있으면 라디오가 아무것도 안 켜진 채로 보여서, 뭐가 대표인지 모르는 상태에서 새 대표를 지정하게 됩니다.</p>
     <p class="q">BE와 정할 것 — 구분 · 업체를 바꿀 때마다 재조회할지, 전체를 한 번에 받아 클라이언트에서 거를지. <b>재조회를 권합니다.</b></p>
   </div>
 </div>
@@ -803,20 +803,20 @@ renderTabs(); render();
   <table class="mx">
     <thead><tr><th style="width:26%">경로</th><th>도착 상태</th></tr></thead>
     <tbody>
-      <tr><th>툴바 [태그 연결 관리]</th><td>구분 · 업체만 세팅 · 전체 목록</td></tr>
-      <tr><th>우클릭 「태그 연결 관리에서 보기」<br><span class="tok">이미 연결이 있는 상품일 때</span></th><td>구분 · 업체 + <b>그 연결의 조합 필터</b> + 해당 행 강조 · 검색어와 다른 필터는 초기화 · <b>현재창 이동</b></td></tr>
+      <tr><th>툴바 [상품 조합 관리]</th><td>구분 · 업체만 세팅 · 전체 목록</td></tr>
+      <tr><th>우클릭 「상품 조합 관리에서 보기」<br><span class="tok">이미 등록된 상품일 때</span></th><td>구분 · 업체 + <b>그 상품 조합의 속성 조합 필터</b> + 해당 행 강조 · 검색어와 다른 필터는 초기화 · <b>현재창 이동</b></td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>조합 칩은 이 경로에서만 생깁니다</b> — 목록의 자리 칸을 눌러서 필터하는 동작은 뺐습니다. 조합의 86%가 상품 1건이라 눌러도 결과가 그 한 줄이고, 복수 조합도 <code>rowspan</code> 병합으로 이미 한 덩어리로 보입니다. 칩이 생기는 경로를 하나로 두어야 운영자가 지금 무엇이 걸려 있는지 압니다.</p>
-    <p><b>현재창인 이유</b> — 조회만 하고 끝나지 않습니다. 대개 삭제로 이어지는데, 새창이면 뒤에 남은 인터넷 상품 관리가 이미 지운 연결의 선을 계속 그립니다.</p>
-    <p class="q">URL — <code>/crm/products/internet/connections?vendor=KT&amp;combo=&lt;조합키&gt;&amp;focus=&lt;연결ID&gt;</code> (PNB-1669 2026-09-28 확정). 링크 공유가 되어야 하므로 쿼리에 담습니다. <b>확정안에 구분(service) 파라미터가 없습니다</b> — 이 화면은 인터넷 외 구분도 다루므로 <code>service=</code> 추가가 필요한지 PNB-1669에서 확인해야 합니다.</p>
+    <p><b>속성 조합 칩은 이 경로에서만 생깁니다</b> — 목록의 자리 칸을 눌러서 필터하는 동작은 뺐습니다. 속성 조합의 86%가 상품 1건이라 눌러도 결과가 그 한 줄이고, 복수 조합도 <code>rowspan</code> 병합으로 이미 한 덩어리로 보입니다. 칩이 생기는 경로를 하나로 두어야 운영자가 지금 무엇이 걸려 있는지 압니다.</p>
+    <p><b>현재창인 이유</b> — 조회만 하고 끝나지 않습니다. 대개 삭제로 이어지는데, 새창이면 뒤에 남은 인터넷 상품 관리가 이미 지운 상품 조합의 선을 계속 그립니다.</p>
+    <p class="q">URL — <code>/crm/products/internet/connections?vendor=KT&amp;combo=&lt;조합키&gt;&amp;focus=&lt;상품조합ID&gt;</code> (PNB-1669 2026-09-28 확정). 링크 공유가 되어야 하므로 쿼리에 담습니다. <b>확정안에 구분(service) 파라미터가 없습니다</b> — 이 화면은 인터넷 외 구분도 다루므로 <code>service=</code> 추가가 필요한지 PNB-1669에서 확인해야 합니다.</p>
   </div>
 </div>
 
 </div>
 
-<footer>엑셀 실데이터 인터넷 217건 · 베타 어드민 AS-IS 대조 · 정본은 [CRM Admin] 태그 연결 관리 - 기능 정의서</footer>
+<footer>엑셀 실데이터 인터넷 217건 · 베타 어드민 AS-IS 대조 · 정본은 [CRM Admin] 상품 조합 관리 - 기능 정의서</footer>
 </div>
 <script src="/internet-product/assets/updated.js" defer></script>
