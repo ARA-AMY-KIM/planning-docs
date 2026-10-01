@@ -7,6 +7,7 @@
    - 일시는 아래 DATES 표에서 읽습니다. 문서를 고치면 해당 줄만 바꾸세요.
    - pointer-events:none 이라 아래 버튼 클릭을 막지 않습니다.
    - 디자인 변경은 이 파일 하나만 고치면 전 목업에 반영됩니다.
+   - 배지 왼쪽에 인덱스(/internet-product/)로 돌아가는 「← 목록」 버튼을 함께 띄웁니다.
 
    ※ document.lastModified 를 쓰지 않는 이유:
      Netlify는 배포할 때마다 모든 파일에 새 타임스탬프를 찍습니다.
@@ -33,15 +34,20 @@
   };
 
   var CSS =
-    '.updfab{position:fixed;right:18px;bottom:18px;z-index:40;display:flex;align-items:center;gap:7px;' +
+    '.updbar{position:fixed;right:18px;bottom:18px;z-index:40;display:flex;align-items:center;gap:8px;pointer-events:none}' +
+    '.updhome{pointer-events:auto;display:flex;align-items:center;padding:7px 13px;background:#fff;border:1px solid #C3C5C9;border-radius:999px;' +
+    'box-shadow:0 3px 12px rgba(19,19,20,.12);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;' +
+    'font-size:12px;font-weight:600;line-height:1;letter-spacing:-.2px;white-space:nowrap;color:#131314;text-decoration:none}' +
+    '.updhome:hover{border-color:#131314}' +
+    '.updfab{display:flex;align-items:center;gap:7px;' +
     'padding:7px 13px;background:#131314;border-radius:999px;box-shadow:0 3px 12px rgba(19,19,20,.22);' +
     'font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;' +
     'font-size:12px;line-height:1;letter-spacing:-.2px;white-space:nowrap;color:rgba(255,255,255,.62);' +
     'font-feature-settings:"tnum";user-select:none;pointer-events:none}' +
     '.updfab i{width:6px;height:6px;border-radius:50%;background:#10A10E;flex:none;font-style:normal}' +
     '.updfab b{color:#fff;font-weight:600}' +
-    '@media print{.updfab{display:none}}' +
-    '@media(max-width:860px){.updfab{right:10px;bottom:10px;font-size:11.5px;padding:6px 11px}}';
+    '@media print{.updbar{display:none}}' +
+    '@media(max-width:860px){.updbar{right:10px;bottom:10px;gap:6px}.updfab,.updhome{font-size:11.5px;padding:6px 11px}}';
 
   /* 현재 경로로 날짜 조회. /index.html 로 들어와도, 뒤 슬래시가 없어도 찾습니다. */
   function lookup() {
@@ -55,20 +61,35 @@
   }
 
   function mount() {
+    if (document.querySelector('.updbar')) return;    // 중복 방지
     var t = lookup();
-    if (!t) return;                                   // 일시를 못 찾으면 아예 안 띄움
-    if (document.querySelector('.updfab')) return;    // 중복 방지
 
     var st = document.createElement('style');
     st.textContent = CSS;
     document.head.appendChild(st);
 
-    var el = document.createElement('div');
-    el.className = 'updfab';
-    el.setAttribute('aria-hidden', 'true');
-    el.innerHTML = '<i></i>최종 업데이트 <b></b>';
-    el.querySelector('b').textContent = t;
-    document.body.appendChild(el);
+    var bar = document.createElement('div');
+    bar.className = 'updbar';
+
+    /* 인덱스로 돌아가기 — 인덱스 자신에서는 띄우지 않음 */
+    if (!/^\/internet-product\/(index\.html)?$/.test(location.pathname)) {
+      var home = document.createElement('a');
+      home.className = 'updhome';
+      home.href = '/internet-product/';
+      home.textContent = '\u2190 목록';
+      bar.appendChild(home);
+    }
+
+    if (t) {                                          // 일시를 못 찾으면 배지만 생략
+      var el = document.createElement('div');
+      el.className = 'updfab';
+      el.setAttribute('aria-hidden', 'true');
+      el.innerHTML = '<i></i>최종 업데이트 <b></b>';
+      el.querySelector('b').textContent = t;
+      bar.appendChild(el);
+    }
+
+    if (bar.children.length) document.body.appendChild(bar);
   }
 
   if (document.readyState === 'loading') {
