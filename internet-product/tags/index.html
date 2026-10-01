@@ -250,6 +250,23 @@ select.sel,select.inp{appearance:none;-webkit-appearance:none;font-family:inheri
 select.inp{padding-right:34px}
 select.inp:disabled{background-image:none}
 /* 시안(정적 목업)의 셀렉트 표현 — 실제 select와 같은 화살표를 붙인다 */
+.imgbox{border:1px dashed var(--g200);border-radius:8px;padding:20px 16px;text-align:center;background:var(--g25)}
+.imgbox.over{border-color:var(--primary);background:var(--blue50)}
+.imgbox .ib-ico{font-size:22px;line-height:1;margin-bottom:8px;filter:grayscale(1);opacity:.5}
+.imgbox .ib-t{font-size:13px;color:var(--g600);letter-spacing:-.2px}
+.imgbox .ib-t b{color:var(--primary);font-weight:600}
+.imgbox .ib-s{font-size:11.5px;color:var(--g300);margin-top:4px}
+.imgset{display:flex;align-items:center;gap:12px;border:1px solid var(--g100);border-radius:8px;padding:12px}
+.imgset .ib-thumb{width:56px;height:56px;border-radius:6px;flex:0 0 56px;
+ background:linear-gradient(135deg,#DCE6FB 0%,#F0F3F8 100%);border:1px solid var(--g100)}
+.imgset .ib-meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.imgset .ib-meta b{font-size:13px;color:var(--g900);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.imgset .ib-meta span{font-size:11.5px;color:var(--g400)}
+.imgset .ib-act{display:flex;gap:6px;flex:0 0 auto}
+.imgset .ib-act .btn-out{height:30px;padding:2px 12px;font-size:12px}
+.btn-out.dgr{color:var(--error);border-color:#F2C7C7}
+.imgchip{margin-left:6px;font-size:10.5px;font-weight:600;color:var(--primary);background:var(--blue50);
+ border-radius:4px;padding:1px 5px;vertical-align:1px;letter-spacing:-.2px}
 .inp.sel{padding-right:34px;
  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E");
  background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
@@ -341,6 +358,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
     <span class="mkx" data-mk="2"><span class="n">2</span>제거 · <s>검색창(속성 · 표기명)</s></span>
     <span class="mkx" data-mk="3"><span class="n">3</span>제거 · <s>[상품속성 관리]</s></span>
     <span class="mkx" data-mk="4"><span class="n">4</span>제거 · <s>상단 안내 박스</s></span>
+    <span class="mkx" data-mk="10"><span class="n">10</span>이관 · <s>설명 · 요금 · 추가 노출</s></span>
     <span class="sp"></span>
     <button class="btn-solid" id="addOpen">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>태그 등록</button>
@@ -403,17 +421,20 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       </div>
       <div class="fld" id="adTagFld"><label id="adTagLb">태그명 <span class="ro">자동 생성</span></label>
         <div class="preview" id="adPrev"><span class="k">고객 노출</span><span class="v" id="adTag" style="color:var(--g300)">속성을 먼저 선택해주세요</span></div></div>
-      <div class="fld" id="adDescFld"><label>설명</label>
-        <textarea class="ta" id="adDesc" placeholder="상담 상세의 느낌표 아이콘에 노출되는 문구"></textarea></div>
-      <div class="row2" id="adGradeRow">
-        <div class="fld"><label>노출 등급 <span class="req">*</span></label>
-          <select class="inp" id="adGrade"><option>기본</option><option>추천</option><option>비추천</option></select></div>
-        <div class="fld"><label>추가 노출</label>
-          <div class="cbs"><span class="cb on" data-ck><i></i>신청서</span><span class="cb" data-ck><i></i>플랫폼</span></div></div>
-      </div>
-      <div class="row2" id="adFeeRow">
-        <div class="fld"><label>월요금</label><input class="inp" id="adFee1" placeholder="0" inputmode="numeric"></div>
-        <div class="fld" id="adFee2Fld"><label>결합요금</label><input class="inp" id="adFee2" placeholder="0" inputmode="numeric"></div>
+      <div class="fld" id="adGradeRow" style="max-width:50%"><label>노출 등급 <span class="req">*</span></label>
+        <select class="inp" id="adGrade"><option>기본</option><option>추천</option><option>비추천</option></select></div>
+      <div class="fld" id="adImgFld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
+        <div class="imgbox" id="adImgEmpty">
+          <div class="ib-ico">🖼</div>
+          <div class="ib-t">이미지를 끌어다 놓거나 <b>파일 선택</b></div>
+          <div class="ib-s">JPG · PNG · 최대 1MB · 권장 120×120</div>
+          <button class="btn-out" id="adImgPick" style="margin-top:10px">파일 선택</button>
+        </div>
+        <div class="imgset" id="adImgSet" hidden>
+          <div class="ib-thumb" id="adImgThumb"></div>
+          <div class="ib-meta"><b id="adImgName"></b><span id="adImgSize"></span></div>
+          <div class="ib-act"><button class="btn-out" id="adImgChg">변경</button><button class="btn-out dgr" id="adImgDel">제거</button></div>
+        </div>
       </div>
     </div>
     <div class="mf"><div class="sp"></div><button class="btn-out" data-close="ovAdd">취소</button><button class="btn-solid" id="adOk">등록</button></div>
@@ -440,16 +461,20 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       </div>
       <div class="fld" id="edTagFld"><label id="edTagLb">태그명 <span class="ro">자동 생성</span></label>
         <div class="preview" id="edPrev"><span class="k">고객 노출</span><span class="v" id="edTag"></span></div></div>
-      <div class="fld" id="edDescFld"><label>설명</label><textarea class="ta" id="edDesc"></textarea></div>
-      <div class="row2" id="edGradeRow">
-        <div class="fld"><label>노출 등급 <span class="req">*</span></label>
-          <select class="inp" id="edGrade"><option>기본</option><option>추천</option><option>비추천</option></select></div>
-        <div class="fld"><label>추가 노출</label>
-          <div class="cbs"><span class="cb on" data-ck><i></i>신청서</span><span class="cb" data-ck><i></i>플랫폼</span></div></div>
-      </div>
-      <div class="row2" id="edFeeRow">
-        <div class="fld"><label>월요금</label><input class="inp" id="edFee1" inputmode="numeric"></div>
-        <div class="fld" id="edFee2Fld"><label>결합요금</label><input class="inp" id="edFee2" inputmode="numeric"></div>
+      <div class="fld" id="edGradeRow" style="max-width:50%"><label>노출 등급 <span class="req">*</span></label>
+        <select class="inp" id="edGrade"><option>기본</option><option>추천</option><option>비추천</option></select></div>
+      <div class="fld" id="edImgFld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
+        <div class="imgbox" id="edImgEmpty">
+          <div class="ib-ico">🖼</div>
+          <div class="ib-t">이미지를 끌어다 놓거나 <b>파일 선택</b></div>
+          <div class="ib-s">JPG · PNG · 최대 1MB · 권장 120×120</div>
+          <button class="btn-out" id="edImgPick" style="margin-top:10px">파일 선택</button>
+        </div>
+        <div class="imgset" id="edImgSet" hidden>
+          <div class="ib-thumb" id="edImgThumb"></div>
+          <div class="ib-meta"><b id="edImgName"></b><span id="edImgSize"></span></div>
+          <div class="ib-act"><button class="btn-out" id="edImgChg">변경</button><button class="btn-out dgr" id="edImgDel">제거</button></div>
+        </div>
       </div>
     </div>
     <div class="mf"><div class="sp"></div>
@@ -500,17 +525,14 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div class="fld"><label>표기명 <span class="req">*</span></label><div class="inp">에센스</div><div class="hint g3">3 / 20</div></div>
         <div class="fld"><label>태그명 <span class="ro">자동 생성</span></label>
           <div class="preview"><span class="k">고객 노출</span><span class="v">1Gbps(에센스)</span></div></div>
-        <div class="fld"><label>설명</label><div class="ta" style="height:auto;min-height:60px">게임·고화질 스트리밍</div></div>
-        <div class="row2">
-          <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">추천</div>
-            <div class="hint g3">추천 · 기본 · 비추천 3종</div></div>
-          <div class="fld"><label>추가 노출</label>
-            <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb"><i></i>플랫폼</span></div></div>
-        </div>
-        <div class="row2" style="margin-bottom:0">
-          <div class="fld" style="margin-bottom:0"><label>월요금</label><div class="inp">38,500</div></div>
-          <div class="fld" style="margin-bottom:0"><label>결합요금</label><div class="inp">33,000</div></div>
-        </div>
+        <div class="fld" style="max-width:50%"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">추천</div>
+          <div class="hint g3">추천 · 기본 · 비추천 3종</div></div>
+        <div class="fld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
+          <div class="imgset">
+            <div class="ib-thumb"></div>
+            <div class="ib-meta"><b>tag-1gbps.png</b><span>PNG · 48KB · 120×120</span></div>
+            <div class="ib-act"><button class="btn-out">변경</button><button class="btn-out dgr">제거</button></div>
+          </div></div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">등록</button></div>
     </div>
@@ -532,7 +554,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">태그 등록 — 인터넷 외</span><span class="spec-s">표기명 없음 · 태그명 직접 입력 · 결합요금 없음</span></div>
+    <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">태그 등록 — 인터넷 외</span><span class="spec-s">표기명 없음 · 태그명 직접 입력</span></div>
     <div class="modal">
       <div class="mh"><h3>태그 등록</h3><span class="x">✕</span></div>
       <div class="mb">
@@ -543,13 +565,13 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         </div>
         <div class="fld"><label>태그명 <span class="req">*</span> <span class="ro">직접 입력</span></label><div class="inp">203채널</div>
           <div class="hint g3">4 / 20</div></div>
-        <div class="fld"><label>설명</label><div class="ta ph">상담 상세의 느낌표 아이콘에 노출되는 문구</div></div>
-        <div class="row2">
-          <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">기본</div></div>
-          <div class="fld"><label>추가 노출</label>
-            <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb"><i></i>플랫폼</span></div></div>
-        </div>
-        <div class="fld" style="margin-bottom:0;max-width:50%"><label>월요금</label><div class="inp ph">0</div></div>
+        <div class="fld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
+          <div class="imgbox">
+            <div class="ib-ico">🖼</div>
+            <div class="ib-t">이미지를 끌어다 놓거나 <b>파일 선택</b></div>
+            <div class="ib-s">JPG · PNG · 최대 1MB · 권장 120×120</div>
+            <button class="btn-out" style="margin-top:10px">파일 선택</button>
+          </div></div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">등록</button></div>
     </div>
@@ -568,23 +590,21 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div class="fld"><label>표기명 <span class="req">*</span></label><div class="inp">에센스</div><div class="hint g3">3 / 20</div></div>
         <div class="fld"><label>태그명 <span class="ro">자동 생성</span></label>
           <div class="preview"><span class="k">고객 노출</span><span class="v">1Gbps(에센스)</span></div></div>
-        <div class="fld"><label>설명</label><div class="ta" style="height:auto;min-height:60px">게임·고화질 스트리밍</div></div>
-        <div class="row2">
-          <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">추천</div></div>
-          <div class="fld"><label>추가 노출</label>
-            <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb on"><i></i>플랫폼</span></div></div>
-        </div>
-        <div class="row2">
-          <div class="fld"><label>월요금</label><div class="inp">38,500</div></div>
-          <div class="fld"><label>결합요금</label><div class="inp">33,000</div></div>
-        </div>
+        <div class="fld" style="max-width:50%"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">추천</div>
+          <div class="hint g3">추천 · 기본 · 비추천 3종</div></div>
+        <div class="fld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
+          <div class="imgset">
+            <div class="ib-thumb"></div>
+            <div class="ib-meta"><b>tag-1gbps.png</b><span>PNG · 48KB · 120×120</span></div>
+            <div class="ib-act"><button class="btn-out">변경</button><button class="btn-out dgr">제거</button></div>
+          </div></div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">수정</button></div>
     </div>
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">5</span><span class="spec-t">태그 수정 — 인터넷 외</span><span class="spec-s">미리보기 · 결합요금 없음 · 태그명 직접 입력</span></div>
+    <div class="spec-head"><span class="chip-n">5</span><span class="spec-t">태그 수정 — 인터넷 외</span><span class="spec-s">미리보기 없음 · 태그명 직접 입력</span></div>
     <div class="modal">
       <div class="mh"><h3>태그 수정</h3><span class="x">✕</span></div>
       <div class="mb">
@@ -595,13 +615,13 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         </div>
         <div class="fld"><label>태그명 <span class="req">*</span> <span class="ro">직접 입력</span></label><div class="inp">203채널</div>
           <div class="hint g3">4 / 20</div></div>
-        <div class="fld"><label>설명</label><div class="ta ph">상담 상세의 느낌표 아이콘에 노출되는 문구</div></div>
-        <div class="row2">
-          <div class="fld"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">기본</div></div>
-          <div class="fld"><label>추가 노출</label>
-            <div class="cbs"><span class="cb on"><i></i>신청서</span><span class="cb"><i></i>플랫폼</span></div></div>
-        </div>
-        <div class="fld" style="max-width:50%"><label>월요금</label><div class="inp ph">0</div></div>
+        <div class="fld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
+          <div class="imgbox">
+            <div class="ib-ico">🖼</div>
+            <div class="ib-t">이미지를 끌어다 놓거나 <b>파일 선택</b></div>
+            <div class="ib-s">JPG · PNG · 최대 1MB · 권장 120×120</div>
+            <button class="btn-out" style="margin-top:10px">파일 선택</button>
+          </div></div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">수정</button></div>
     </div>
@@ -625,18 +645,25 @@ body.mk-on .mkrow:hover{color:var(--g700)}
   <div>
     <div class="spec-head"><span class="chip-v">관리 열</span><span class="spec-t">비활성 버튼의 사유</span><span class="spec-s">래퍼 툴팁 · <code>title</code> 안 씀</span></div>
     <div class="frame" style="padding:20px;background:var(--g25)">
-      <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:18px 16px 46px">
-        <div style="font-size:12px;color:var(--g500);margin-bottom:12px">「없음」 태그 행 — 고칠 항목이 없어 [수정] 비활성</div>
-        <div style="position:relative;display:inline-flex;gap:6px">
+      <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:18px 16px">
+        <div style="font-size:12px;color:var(--g500);margin-bottom:12px">「없음」 태그 · 연결 0건 — [수정] 비활성 · <b>[삭제] 활성</b></div>
+        <div style="display:inline-flex;gap:6px">
           <button class="btn-out dis" style="height:28px;padding:2px 10px;font-size:12px" disabled>수정</button>
           <button class="btn-danger" style="height:28px;padding:2px 10px;font-size:12px">삭제</button>
-          <span style="position:absolute;top:calc(100% + 10px);left:0;background:var(--g800);color:#fff;font-size:12px;
-            line-height:1.55;letter-spacing:-.2px;padding:8px 11px;border-radius:6px;width:238px;
-            box-shadow:0 4px 14px rgba(19,19,20,.18)">「없음」 태그는 고칠 항목이 없습니다. 연결 상품은 건수를 눌러 확인하세요.</span>
         </div>
       </div>
       <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:18px 16px 46px;margin-top:12px">
-        <div style="font-size:12px;color:var(--g500);margin-bottom:12px">연결 상품이 있는 행 — [삭제] 비활성</div>
+        <div style="font-size:12px;color:var(--g500);margin-bottom:12px">「없음」 태그 · 연결 2건 — 둘 다 비활성</div>
+        <div style="position:relative;display:inline-flex;gap:6px">
+          <button class="btn-out dis" style="height:28px;padding:2px 10px;font-size:12px" disabled>수정</button>
+          <button class="btn-danger dis" style="height:28px;padding:2px 10px;font-size:12px" disabled>삭제</button>
+          <span style="position:absolute;top:calc(100% + 10px);left:0;background:var(--g800);color:#fff;font-size:12px;
+            line-height:1.55;letter-spacing:-.2px;padding:8px 11px;border-radius:6px;width:238px;
+            box-shadow:0 4px 14px rgba(19,19,20,.18)">연결 상품 2건에서 사용 중이라 삭제할 수 없습니다.</span>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:18px 16px 46px;margin-top:12px">
+        <div style="font-size:12px;color:var(--g500);margin-bottom:12px">일반 태그 · 연결 7건 — [삭제] 비활성</div>
         <div style="position:relative;display:inline-flex;gap:6px">
           <button class="btn-out" style="height:28px;padding:2px 10px;font-size:12px">수정</button>
           <button class="btn-danger dis" style="height:28px;padding:2px 10px;font-size:12px" disabled>삭제</button>
@@ -646,6 +673,11 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         </div>
       </div>
       <div style="font-size:12px;color:var(--g600);margin-top:14px;line-height:1.7">
+        <b>[삭제] 활성 조건은 「연결 상품 0건」 하나뿐입니다.</b> 「없음」 태그인지 여부와는 무관합니다.
+        <b>[수정]</b> 은 「없음」 태그에서 영구 비활성입니다 — 속성 · 태그명 · 노출 등급이 모두 자동값이라 모달에 바꿀 항목이 없습니다.<br>
+        실데이터상 「없음」 태그 21건은 모두 연결 1건 이상이라 위 첫 번째 상태가 화면에 바로 보이지는 않지만,
+        그 자리를 비우는 상품이 전부 단종되면 연결 0건이 되고 그때 삭제가 필요합니다.</div>
+      <div style="font-size:12px;color:var(--g600);margin-top:10px;line-height:1.7">
         <b>HTML <code>title</code> 을 쓰지 않습니다.</b> <code>disabled</code> 버튼은 마우스 이벤트를 받지 못해 브라우저 기본 툴팁이 뜨지 않습니다.
         버튼을 <b>래퍼로 감싸고 래퍼에 툴팁</b>을 겁니다. 이때 <b>관리 열 셀의 <code>overflow</code> 를 <code>visible</code></b> 로 둬야 말풍선이 잘리지 않습니다.</div>
     </div>
@@ -674,7 +706,8 @@ body.mk-on .mkrow:hover{color:var(--g700)}
 </div>
 
 <script>
-/* 태그 : [slot, 속성, 표기명(인터넷)/태그명(인터넷외), 설명, 노출등급, 월요금, 결합요금] */
+/* 태그 : [slot, 속성, 표기명(인터넷)/태그명(인터넷외), −, 노출등급, −, −, 신규여부, 이미지]
+   4번째·6번째·7번째 자리는 설명·월요금·결합요금이던 곳 — 인터넷 상품 관리로 넘어가 비어 있다 */
 const T={
 "인터넷":{
 "KT":[[1,"100Mbps","슬림","1-2인 가구","기본","22,000","22,000"],[1,"200Mbps","슬림플러스","2-3인 가구","기본","30,250","24,200"],[1,"500Mbps","베이직","3-4인 가구","기본","33,000","27,500"],[1,"1Gbps","에센스","게임·고화질 스트리밍","추천","38,500","33,000"],[1,"2.5Gbps","프리미엄","","기본","44,000","38,500"],[1,"5Gbps","프리미엄플러스","","비추천","60,500","55,000"],[1,"10Gbps","슈퍼프리미엄","","비추천","88,000","77,000"],[2,"없음","","","기본","0","0"],[2,"WiFi포함","","","기본","1,100","1,100"],[2,"프리미엄WiFi","WiFi 7D","","추천","3,300","3,300"],[2,"WiFi+증폭기","Buddy","","기본","4,400","4,400"],[2,"프리미엄WiFi+증폭기","WiFi 7D+Buddy","","기본","6,600","6,600"],[3,"없음","","","기본","0","0"],[3,"안심","유해사이트 방패","유해사이트 차단·자녀 보호","기본","2,200","2,200"]],
@@ -747,20 +780,23 @@ function renderTabs(){
   $("venTabs").querySelectorAll("[data-v]").forEach(el=>el.onclick=()=>{VD=el.dataset.v; closeDw(); renderList();});
 }
 function renderHead(){
+  /* 설명 · 월요금 · 결합요금은 인터넷 상품 관리로 넘어갔고, 노출 등급은 인터넷에만 남는다 */
   var net=isNet();
-  $("cg").innerHTML='<col style="width:44px"><col style="width:104px"><col style="width:116px"><col style="width:200px"><col>'
-    +'<col style="width:92px"><col style="width:84px"><col style="width:92px">'+(net?'<col style="width:92px">':"")+'<col style="width:130px">';
+  $("cg").innerHTML='<col style="width:44px"><col style="width:120px"><col style="width:140px"><col>'
+    +(net?'<col style="width:92px">':"")+'<col style="width:96px"><col style="width:130px">';
   $("thd").innerHTML='<tr><th></th><th class="mk th" data-mk="5">속성 타입</th><th class="mk th" data-mk="6">속성</th>'
-    +'<th>태그명</th><th>설명</th><th class="mk th" data-mk="7">노출 등급</th><th class="c">연결 상품</th>'
-    +'<th class="r">월요금</th>'+(net?'<th class="r mk th" data-mk="8">결합요금</th>':"")+'<th class="c mk th" data-mk="9">관리</th></tr>';
+    +'<th class="mk th" data-mk="8">태그명</th>'
+    +(net?'<th class="mk th" data-mk="7">노출 등급</th>':"")
+    +'<th class="c">연결 상품</th><th class="c mk th" data-mk="9">관리</th></tr>';
 }
 
 /* ── 목록 ── */
 const HD='<svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="2"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="9" cy="18" r="2"/><circle cx="15" cy="18" r="2"/></svg>';
 function mgBtns(i,canEdit,editWhy,canDel,delWhy){
+  var eDis = '<button class="btn-out dis" style="height:28px;padding:2px 10px;font-size:12px" disabled>수정</button>';
   var e = canEdit
     ? '<button class="btn-out" style="height:28px;padding:2px 10px;font-size:12px" data-edit="'+i+'">수정</button>'
-    : '<span class="tw" data-tip="'+esc(editWhy)+'"><button class="btn-out dis" style="height:28px;padding:2px 10px;font-size:12px" disabled>수정</button></span>';
+    : (editWhy ? '<span class="tw" data-tip="'+esc(editWhy)+'">'+eDis+'</span>' : eDis);
   var d = canDel
     ? '<button class="btn-danger" style="height:28px;padding:2px 10px;font-size:12px" data-del="'+i+'">삭제</button>'
     : '<span class="tw" data-tip="'+esc(delWhy)+'"><button class="btn-danger dis" style="height:28px;padding:2px 10px;font-size:12px" disabled>삭제</button></span>';
@@ -788,13 +824,11 @@ function renderList(){
       +'<td class="c">'+hd+"</td>"
       +"<td>"+esc(SLOTN[SV][r[0]])+"</td>"
       +"<td>"+esc(r[1])+(isNone(r)?'<span class="submut">자동</span>':"")+"</td>"
-      +"<td>"+(isNone(r)?esc(tagName(r)):'<span class="nml" data-edit="'+i+'">'+esc(tagName(r))+"</span>")+"</td>"
-      +"<td"+(r[3]?"":' class="mut"')+">"+(r[3]?esc(r[3]):"–")+"</td>"
-      +'<td><span class="bdg '+(GB[g]||"base")+'">'+esc(g)+"</span></td>"
+      +"<td>"+(isNone(r)?esc(tagName(r)):'<span class="nml" data-edit="'+i+'">'+esc(tagName(r))+"</span>")
+        +(r[8]?'<span class="imgchip" title="이미지 첨부됨">이미지</span>':"")+"</td>"
+      +(net?'<td><span class="bdg '+(GB[g]||"base")+'">'+esc(g)+"</span></td>":"")
       +'<td class="c">'+lnk+"</td>"
-      +'<td class="r">'+(r[5]||'<span class="mut">–</span>')+"</td>"
-      +(net?'<td class="r">'+(r[6]||'<span class="mut">–</span>')+"</td>":"")
-      +'<td class="c mg">'+mgBtns(i, !isNone(r), "「없음」 태그는 고칠 항목이 없습니다. 연결 상품은 건수를 눌러 확인하세요.",
+      +'<td class="c mg">'+mgBtns(i, !isNone(r), "",
             cs.length===0, "연결 상품 "+cs.length+"건에서 사용 중이라 삭제할 수 없습니다.")+"</td></tr>";
   }).join("");
   $("totN").textContent=view.length;
@@ -898,14 +932,12 @@ function adPaint(){
   var net=isNet(), av=$("adAttr").value, sv=$("adSub").value.trim(), none=adNone();
   if(none){ $("adSub").value=""; sv=""; }
   $("adSubFld").hidden=none;
-  $("adDescFld").hidden=none; $("adGradeRow").hidden=none;
+  $("adGradeRow").hidden=none||!net; $("adImgFld").hidden=none;
   $("adCnt").textContent=$("adSub").value.length;
   $("adSubHint").innerHTML = " / 20";
   var t = !av ? "" : (net ? (sv?av+"("+sv+")":av) : (sv||av));
   $("adTag").textContent = av ? t : "속성을 먼저 선택해주세요";
   $("adTag").style.color = av ? "var(--g900)" : "var(--g300)";
-  if(none){ $("adFee1").value=""; $("adFee2").value=""; }
-  $("adFeeRow").hidden=none; $("adFee2Fld").hidden=!net;
   /* 인터넷 : 표기명 / 인터넷 외 : 태그명 직접 입력 */
   $("adSubLb").innerHTML = net ? '표기명 <span class="req">*</span>' : '태그명 <span class="req">*</span> <span class="ro">직접 입력</span>';
   $("adTagFld").hidden = !net;
@@ -914,8 +946,8 @@ $("addOpen").onclick=function(){
   $("adVen").textContent=VD; $("adSvc").textContent=SV;
   $("adType").innerHTML='<option value="">속성 타입 선택</option>'+types().map(t=>'<option value="'+t[0]+'">'+t[1]+"</option>").join("");
   $("adAttr").innerHTML='<option value="">속성 선택</option>'; $("adAttr").disabled=true;
-  $("adSub").value=""; $("adSub").disabled=false; $("adDesc").value="";
-  $("adFee1").value=""; $("adFee2").value=""; $("adGrade").value="기본";
+  $("adSub").value=""; $("adSub").disabled=false; $("adGrade").value="기본";
+  setImg("ad",null);
   $("adErr").hidden=true; $("adSub").classList.remove("err");
   adPaint(); $("ovAdd").hidden=false;
 };
@@ -930,12 +962,35 @@ $("adOk").onclick=function(){
   var slot=+$("adType").value, av=$("adAttr").value, sv=$("adSub").value.trim(), net=isNet();
   if(!slot||!av){ toast("속성 타입과 속성을 선택해주세요.","#D75011"); return; }
   if(!sv && av!=="없음"){ $("adErr").textContent=net?"표기명을 입력해주세요.":"태그명을 입력해주세요."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
-  var nr=[slot,av,sv,$("adDesc").value.trim(),$("adGrade").value,$("adFee1").value.trim(),$("adFee2").value.trim(),1];
+  var nr=[slot,av,sv,"",net?$("adGrade").value:"기본","","",1,IMG.ad];
   if(rows().some(r=>r[0]===slot&&r[1]===av&&tagName(r)===tagName(nr))){
     $("adErr").textContent="같은 속성에 이미 있는 태그명입니다."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
   rows().push(nr); $("ovAdd").hidden=true; renderList();
   toast("「"+tagName(nr)+"」 태그를 등록했습니다.");
 };
+
+
+/* ── 태그 이미지 : 첨부 전 / 첨부 후 두 상태 ────────────────────────
+   목업이므로 실제 업로드는 하지 않고 상태만 전환한다. 파일명·용량은 예시값. */
+var IMG={ad:null,ed:null};
+function setImg(pre,v){
+  IMG[pre]=v;
+  $(pre+"ImgEmpty").hidden = !!v;
+  $(pre+"ImgSet").hidden   = !v;
+  if(v){ $(pre+"ImgName").textContent=v.n; $(pre+"ImgSize").textContent=v.s; }
+}
+function pickImg(pre){
+  /* 실제 화면에서는 파일 선택 창이 열린다 */
+  setImg(pre,{n:"tag-"+(Math.floor(Math.random()*900)+100)+".png", s:"PNG · 48KB · 120×120"});
+}
+["ad","ed"].forEach(function(pre){
+  $(pre+"ImgPick").onclick=()=>pickImg(pre);
+  $(pre+"ImgChg").onclick =()=>pickImg(pre);
+  $(pre+"ImgDel").onclick =()=>setImg(pre,null);
+  $(pre+"ImgEmpty").ondragover=e=>{e.preventDefault(); $(pre+"ImgEmpty").classList.add("over");};
+  $(pre+"ImgEmpty").ondragleave=()=>$(pre+"ImgEmpty").classList.remove("over");
+  $(pre+"ImgEmpty").ondrop=e=>{e.preventDefault(); $(pre+"ImgEmpty").classList.remove("over"); pickImg(pre);};
+});
 
 /* ── ② 태그 수정 ── */
 let edI=null;
@@ -958,12 +1013,11 @@ function openEdit(i){
   $("edAttrRow").hidden=false;
   $("edSub").maxLength=20;
   $("edSubFld").hidden=false; $("edTagFld").hidden=false;
-  $("edDescFld").hidden=false; $("edGradeRow").hidden=false; $("edFeeRow").hidden=false;
+  $("edGradeRow").hidden=!net; $("edImgFld").hidden=false;
   $("edType").textContent=SLOTN[SV][r[0]]; $("edAttr").textContent=r[1];
   $("edSub").value=r[2]||""; $("edSub").disabled=none;
-  $("edDesc").value=r[3]||""; $("edGrade").value=r[4]||"기본";
-  $("edFee1").value=r[5]||""; $("edFee2").value=r[6]||"";
-  $("edFee2Fld").hidden=!net;
+  $("edGrade").value=r[4]||"기본";
+  setImg("ed", r[8]||null);
   $("edErr").hidden=true; $("edSub").classList.remove("err");
   edPaint(); $("ovEdit").hidden=false;
 }
@@ -972,8 +1026,7 @@ $("edOk").onclick=function(){
   var r=rows()[edI];
   var net=isNet(), none=isNone(r), sv=$("edSub").value.trim();
   if(!none && !sv){ $("edErr").textContent=net?"표기명을 입력해주세요.":"태그명을 입력해주세요."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
-  r[2]=none?"":sv; r[3]=$("edDesc").value.trim(); r[4]=$("edGrade").value;
-  r[5]=none?"0":$("edFee1").value.trim(); r[6]=none?"0":$("edFee2").value.trim();
+  r[2]=none?"":sv; r[4]=net?$("edGrade").value:"기본"; r[8]=IMG.ed;
   $("ovEdit").hidden=true; renderList();
   toast("「"+tagName(r)+"」 태그를 수정했습니다.");
 };
@@ -1025,24 +1078,27 @@ var MK={
  6:{t:"속성 열",
     a:"1열이 <b>속성</b>",
     b:"<b>2열로 이동.</b> 속성 타입 · 속성을 각각 열로 분리해 상단 필터 구조와 표 구조를 일치시켰습니다. 「없음」 속성에는 <b>자동</b> 표기가 붙습니다."},
- 7:{t:"노출 등급 3종",
+ 7:{t:"노출 등급 — 3종 · 인터넷만",
     a:"<b>5종</b> — 추천 · 기본 · 비인기 상품 · 비추천 · 판매금지(폐지 검토)",
-    b:"<b>추천 · 기본 · 비추천 3종으로 축소.</b> 실측상 `rank1`(기본)이 462건(99.1%)이고 나머지는 4건뿐이라 이관 부담이 거의 없습니다. rank ↔ 등급 매핑만 개발 확인이 필요합니다."},
- 8:{t:"결합요금 열 · 인터넷만",
-    a:"구분과 무관하게 <b>결합요금 열이 항상 노출</b>",
-    b:"<b>인터넷에서만 노출.</b> 인터넷 외에는 결합요금 개념이 없어 열과 모달 필드를 모두 뺐습니다. 인터넷 10열 · 인터넷 외 9열입니다.<br>결합요금은 <b>태그 단위로 확정</b>됐습니다(2026-09-28) — 인터넷은 <code>attr_tag_combine_amt</code>를 그대로 쓰고, 인터넷 외 <code>combine_charge</code>는 미사용 데이터로 폐기합니다."},
+     b:"<b>추천 · 기본 · 비추천 3종으로 축소하고, 열과 모달 입력을 <u>인터넷에만</u> 남겼습니다.</b> 실측상 등급이 갈리는 태그는 인터넷 4건(추천 2 · 비추천 2)뿐이고 <b>인터넷 외 128건은 전부 「기본」</b>입니다. 인터넷 외는 DB가 <code>NOT NULL</code>이라 「기본」으로 고정 저장합니다.<br>AS-IS 전체로는 <code>rank1</code>(기본)이 462건(99.1%), 나머지는 <code>rank4</code> 3건 · <code>rank3</code> 1건이라 이관 부담이 거의 없습니다."},
+ 8:{t:"태그 이미지 · 신규",
+    a:"<b>이미지 필드 없음</b> — AS-IS 데이터에는 태그 이미지가 466건 중 262건(56%) 있으나 1차 설계에는 필드가 없었음",
+    b:"<b>등록 · 수정 모달에 이미지 첨부 1개를 넣었습니다 — 선택 입력.</b> 첨부 전에는 업로드 영역(끌어다 놓기 · [파일 선택]), 첨부 후에는 미리보기 + [변경] · [제거]가 보입니다. 첨부한 태그는 목록 태그명 옆에 <b>이미지</b> 칩이 붙습니다.<br><span class='q'>형식 · 용량 · 권장 크기는 목업 기준값(JPG · PNG · 1MB · 120×120)이며 확정 전입니다.</span>"},
  9:{t:"관리 열 — [수정] · [삭제]",
     a:"마지막 열이 <b>「수정」 아이콘 버튼 1개</b>. 삭제는 수정 모달 안에 들어가 있어, 지우려면 모달을 한 번 열어야 했습니다",
     b:"<b>목록에서 바로 [수정] · [삭제].</b> 상품속성 관리와 같은 구조입니다.<br>"
-      +"<b>「없음」 태그는 [수정]이 비활성</b>입니다 — 표기명 · 설명 · 노출 등급 · 추가 노출 · 요금을 쓰지 않아 고칠 항목이 0개이고, 연결 상품은 건수를 눌러 사이드패널에서 봅니다. 그래서 「없음」 전용 수정 모달을 두지 않습니다.<br>"
+      +"<b>「없음」 태그는 [수정]이 비활성</b>입니다 — 표기명 · 노출 등급 · 이미지를 쓰지 않아 고칠 항목이 0개이고, 연결 상품은 건수를 눌러 사이드패널에서 봅니다. 그래서 「없음」 전용 수정 모달을 두지 않습니다.<br>"
       +"비활성 사유는 <b>래퍼 툴팁</b>으로 띄웁니다 — <code>disabled</code> 버튼은 마우스 이벤트를 받지 못해 HTML <code>title</code>이 뜨지 않습니다."},
+ 10:{t:"설명 · 요금 · 추가 노출 · 이관", gx:1,
+    a:"<b>설명 · 월요금 · 결합요금</b> 열과 모달 입력, <b>추가 노출(신청서 · 플랫폼)</b> 체크가 모두 태그에 달려 있었음",
+    b:"<b>전부 인터넷 상품 관리로 넘겼습니다.</b> 이 값들은 본래 <b>플랫폼 노출용</b>이고, 같은 태그라도 붙는 상품마다 금액과 문구가 달라야 합니다. 태그에 매달려 있으면 금액이 다를 때마다 똑같은 <code>250채널</code>을 여러 번 등록해야 했습니다.<br>이제 인터넷 상품 관리에서 단품 카드마다 <b>[플랫폼 노출 관리]</b>로 입력합니다 — 추가 노출 체크 · 월요금 · 플랫폼 노출용 설명(인터넷은 결합요금 추가).<br>남은 결과로 목록은 <b>인터넷 7열 · 인터넷 외 6열</b>이 됐습니다 — 차이는 노출 등급 하나뿐입니다(마크 7)."},
  20:{t:"그 밖의 변경 5건", gx:1,
     a:"1차 시안 기준",
     b:"<ul>"
       +"<li><b>모달 5종 → 3종</b> — 등록 · 수정 · 삭제 확인. 나머지 2종은 구분·태그 종류에 따른 변형이지 별도 모달이 아닙니다.</li>"
       +"<li><b>모달 주 버튼은 그 동작을 그대로 씁니다</b> — [등록] · [수정] · [삭제]. 「확인」처럼 중립적인 라벨은 쓰지 않습니다. 9/22에 정했던 「확인 통일」 안은 <b>어드민 문구 규칙(2026-09-28)</b>으로 폐기됐습니다.</li>"
       +"<li><b>「없음」 태그도 업체가 소유합니다</b> — 등록 모달에서 속성 「없음」을 고를 수 있고, 연결 0건이면 삭제됩니다. 실데이터상 「없음」 태그가 없는 업체가 있고(LG·딜라이브 구성제품), 그게 정상입니다.</li>"
-      +"<li><b>「없음」 태그는 고칠 항목이 없습니다</b> — 표기명 · 설명 · 노출 등급 · 추가 노출 · 요금을 전부 쓰지 않습니다. 「없음」 전용 수정 모달(1차 3번)은 폐기했고, 목록 [수정]이 비활성입니다. <b>노출 등급은 DB가 </b><code>NOT NULL</code><b> 이라 「기본」으로 고정 저장</b>합니다.</li>"
+      +"<li><b>「없음」 태그는 고칠 항목이 없습니다</b> — 표기명 · 노출 등급 · 이미지를 전부 쓰지 않습니다. 「없음」 전용 수정 모달(1차 3번)은 폐기했고, 목록 [수정]이 비활성입니다. <b>노출 등급은 DB가 </b><code>NOT NULL</code><b> 이라 「기본」으로 고정 저장</b>합니다.</li>"
       +"<li><b>즉시 저장</b> — [저장] 버튼이 없습니다. 순서는 드롭 직후, 값은 모달 주 버튼([등록] · [수정] · [삭제]) 직후 저장됩니다.</li>"
       +"</ul>"}
 };
