@@ -54,6 +54,16 @@
   .menu-name{font-size:17px; font-weight:600; color:var(--g900);}
   .menu-name a{color:var(--primary); text-decoration:none; border-bottom:1px solid transparent;}
   .menu-name a:hover{border-bottom-color:var(--primary);}
+  .tkt{display:inline-flex; align-items:center; gap:5px; vertical-align:2px; margin-left:6px;
+    font-size:12px; font-weight:700; letter-spacing:.01em; line-height:1; color:var(--primary);
+    background:#fff; border:1px solid var(--primary); border-radius:5px; padding:4px 7px; text-decoration:none;
+    font-variant-numeric:tabular-nums; transition:background .15s, color .15s;}
+  .tkt:hover{background:var(--primary); color:#fff;}
+  .menu-name a.tkt{border:1px solid var(--primary);}
+  .tkt .tl{font-weight:600; opacity:.75; padding-right:5px; margin-right:1px; border-right:1px solid currentColor;}
+  .tkt .ar{font-size:11px; opacity:.7;}
+  header .epic{margin:0 0 12px;}
+  header .epic .tkt{margin-left:0; font-size:13px; padding:5px 9px;}
   .menu-slug{font-size:13px; color:var(--g400); margin-top:3px;}
   .menu-links{display:flex; gap:8px; flex-shrink:0;}
   .btn{font-size:14px; font-weight:600; text-decoration:none; padding:9px 16px; border-radius:var(--radius); white-space:nowrap; transition:.15s;}
@@ -117,6 +127,7 @@
       <div>
         <div class="eyebrow">PROJECT</div>
         <h1>인터넷 상품 구조 개선</h1>
+        <p class="epic"><a class="tkt" href="https://ajnetworks.atlassian.net/browse/PNB-1669" target="_blank" rel="noopener" title="Jira에서 열기"><span class="tl">에픽</span>PNB-1669<span class="ar">↗</span></a></p>
         <!-- 담당자 이름은 여기서 수정 -->
         <p class="owner"><strong>기획 담당</strong> : 김아라</p>
       </div>
@@ -139,7 +150,7 @@
 
       <div class="menu-row">
         <div>
-          <div class="menu-name">[Phase 1] 상품속성 관리</div>
+          <div class="menu-name">[Phase 1] 상품속성 관리 <a class="tkt" href="https://ajnetworks.atlassian.net/browse/PNB-1782" target="_blank" rel="noopener" title="Jira에서 열기">PNB-1782<span class="ar">↗</span></a></div>
           <div class="menu-slug">/crm/products/internet/attributes</div>
         </div>
         <div class="menu-links">
@@ -150,19 +161,18 @@
 
       <div class="menu-row">
         <div>
-          <div class="menu-name"><a href="https://ajnetworks.atlassian.net/browse/PNB-1670" target="_blank" rel="noopener">[Phase 1] 태그 관리</a></div>
+          <div class="menu-name">[Phase 1] 태그 관리 <a class="tkt" href="https://ajnetworks.atlassian.net/browse/PNB-1781" target="_blank" rel="noopener" title="Jira에서 열기">PNB-1781<span class="ar">↗</span></a></div>
           <div class="menu-slug">/crm/products/internet/tags</div>
         </div>
         <div class="menu-links">
           <a class="btn btn-mock" href="/internet-product/tags/" target="_blank">화면 목업</a>
-          <a class="btn btn-alt" href="https://claude.ai/code/artifact/0f3d48fb-c1c2-469b-9e5f-b2949fe0f42d?org=d5581a7b-5dcd-44b9-a387-101f729c6e1d" target="_blank" rel="noopener">화면 구성안</a>
           <a class="btn btn-alt" href="https://ajnetworks.atlassian.net/wiki/x/JwC-Yw" target="_blank" rel="noopener">기능정의서</a>
         </div>
       </div>
 
       <div class="menu-row">
         <div>
-          <div class="menu-name">[Phase 1] 인터넷 상품 관리</div>
+          <div class="menu-name">[Phase 1] 인터넷 상품 관리 <a class="tkt" href="https://ajnetworks.atlassian.net/browse/PNB-1783" target="_blank" rel="noopener" title="Jira에서 열기">PNB-1783<span class="ar">↗</span></a></div>
           <div class="menu-slug">/crm/products/internet</div>
         </div>
         <div class="menu-links">
@@ -174,12 +184,11 @@
 
       <div class="menu-row">
         <div>
-          <div class="menu-name">[Phase 1] 상품 조합 관리</div>
+          <div class="menu-name">[Phase 1] 상품 조합 관리 <a class="tkt" href="https://ajnetworks.atlassian.net/browse/PNB-1868" target="_blank" rel="noopener" title="Jira에서 열기">PNB-1868<span class="ar">↗</span></a></div>
           <div class="menu-slug">/crm/products/internet/connections</div>
         </div>
         <div class="menu-links">
           <a class="btn btn-mock" href="/internet-product/product-links-v2/" target="_blank">화면 목업</a>
-          <a class="btn btn-alt" href="https://claude.ai/code/artifact/3a4e0062-e288-45cf-be97-3057dcdc3969" target="_blank" rel="noopener">화면 구성안</a>
           <span class="btn btn-disabled" aria-disabled="true" title="준비 중">기능정의서</span>
         </div>
       </div>
