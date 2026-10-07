@@ -100,6 +100,11 @@ svg.lane{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .ctx div{display:flex;align-items:baseline;gap:10px}
 .ctx .k{font-size:12px;color:var(--g500)}
 .ctx .v{font-size:15px;font-weight:700;color:var(--g900);letter-spacing:-.3px}
+.ctx.col{flex-direction:column;gap:8px}
+.ctx.col div{gap:0}
+.ctx.col .k{flex:0 0 76px}
+.tgh{font-size:14px;font-weight:700;color:var(--g900);margin-top:4px}
+.tgh+.hint{margin:2px 0 12px}
 .fld{margin-bottom:14px}
 .fld>label{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;margin-bottom:6px}
 .fld>label .req{color:var(--error)}
@@ -116,6 +121,10 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:
 .prev .k{font-size:11px;font-weight:700;color:var(--primary);flex:none}
 .prev .v{font-size:15px;font-weight:700;color:var(--primary-strong);letter-spacing:-.3px}
 .hint{font-size:12px;color:var(--g500);margin-top:6px;line-height:1.5}
+.refb{margin-top:8px;border:1px solid var(--g100);background:var(--g25);border-radius:8px;padding:9px 11px}
+.refh{font-size:11px;font-weight:700;color:var(--g500);letter-spacing:-.2px;margin-bottom:3px}
+.refv{font-size:12.5px;color:var(--g700);line-height:1.6;letter-spacing:-.2px}
+.refv.non{color:var(--g400)}
 .btn-solid{background:var(--primary);border:none;border-radius:8px;padding:8px 16px;font-size:14px;
  font-weight:600;color:#fff;cursor:pointer;height:36px;font-family:inherit}
 .btn-out{background:#fff;border:1px solid var(--g200);border-radius:8px;padding:6px 12px;font-size:14px;
@@ -124,7 +133,7 @@ select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:
  padding:12px 18px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
 footer{padding:40px 32px 60px;font-size:12px;color:var(--g400);text-align:center;border-top:1px solid var(--g100);margin-top:48px}
 
-/* ── 상품 연결 등록 (상품 연결 관리에서 옮겨옴) ── */
+/* ── 상품 조합 등록 ── */
 .pairbar{display:flex;align-items:center;gap:8px;margin:-4px 0 12px;font-size:13px;color:var(--g600);letter-spacing:-.2px;min-height:20px}
 .pairbar b{color:var(--g900)}
 .pairbar .ok{color:var(--success);font-weight:700}
@@ -158,17 +167,35 @@ footer{padding:40px 32px 60px;font-size:12px;color:var(--g400);text-align:center
  display:inline-flex;align-items:center;justify-content:center;flex:none}
 .fgc b{white-space:nowrap;font-weight:700;flex:none}
 .fgc em{font-style:normal;font-weight:400;font-size:11.5px;color:var(--g400);margin-left:2px;line-height:1.5}
+.tglab{display:flex;align-items:baseline;gap:7px;font-size:12.5px;font-weight:700;color:var(--g900);letter-spacing:-.3px}
+.tglab em{font-style:normal;font-weight:400;font-size:11.5px;color:var(--g400)}
+.tgro{border:1px solid var(--g100);border-radius:8px;background:var(--g25);overflow:hidden;margin-top:7px}
+.tgro .r{display:flex;align-items:center;gap:8px;padding:6px 11px;border-bottom:1px solid var(--g100);font-size:13px}
+.tgro .r:last-child{border-bottom:none}
+.tgro .k{flex:none;width:76px;font-size:11.5px;font-weight:700;color:var(--g500);letter-spacing:-.2px}
+.tgro .v{flex:1;color:var(--g900);letter-spacing:-.3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tgro .v .non{color:var(--g400)}
+.tgro .s{flex:none;font-size:10.5px;font-weight:700;color:var(--g400);background:#fff;border:1px solid var(--g100);border-radius:4px;padding:1px 6px}
 .cmbstrip{display:flex;align-items:center;gap:10px;background:var(--blue50);border-radius:8px;padding:10px 12px}
 .cmbstrip .k{font-size:11px;font-weight:700;color:var(--primary);letter-spacing:.02em;flex:none}
 .cmbstrip .v{font-size:14px;font-weight:700;color:var(--g900);letter-spacing:-.3px}
 .othbox{border:1px solid var(--g100);border-radius:8px;max-height:132px;overflow-y:auto;background:#fff}
+.othbox.ro{background:var(--g25)}
+.othbox.ro .othrow{border-bottom-color:var(--g100)}
 .othrow{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--g50);font-size:13px}
 .othrow:last-child{border-bottom:none}
 .othrow .p{flex:1;color:var(--g900);letter-spacing:-.3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .othrow .p .xs{color:var(--g300);margin:0 5px}
 .othrow .p .st{color:var(--g600)}
 .othrow .m{font-size:11px;font-weight:700;color:var(--primary);background:var(--blue50);border-radius:4px;padding:2px 7px;flex:none}
+.othrow.cur{background:#FAFCFF}
+.othrow .me{font-size:11px;font-weight:700;color:var(--g600);background:var(--g50);border-radius:4px;padding:2px 7px;flex:none}
+.othrow .rep{flex:none;height:24px;padding:0 9px;font-size:11.5px;font-weight:700;letter-spacing:-.2px;
+  border-radius:5px;border:1px solid var(--primary);background:#fff;color:var(--primary);cursor:pointer}
+.golink{font-size:12.5px;font-weight:700;color:var(--primary);text-decoration:none;letter-spacing:-.2px}
+.golink:hover{text-decoration:underline}
 .othempty{padding:14px 12px;font-size:12.5px;color:var(--g300);text-align:center}
+.othrow .m .mx{color:var(--g500);font-weight:700}
 /* 시안 설명 블록 */
 .doc-band{background:var(--g25);border-top:1px dashed var(--g200);border-bottom:1px dashed var(--g200);
  padding:40px 0 8px;margin-top:56px}
@@ -210,7 +237,13 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 .cases td{vertical-align:middle}
 .cases .btn-out{height:30px;padding:0 10px;font-size:12.5px}
 .cases .sub{font-size:12px;color:var(--g500);font-weight:400}
+.mx .sub{font-size:12px;color:var(--g500);font-weight:400}
+.table-wrap{overflow-x:auto}
+#card-flags + .sheet .btn-out{white-space:nowrap}
 .cases tbody th{vertical-align:middle}
+
+/* ── V2 ── */
+.pit.auto::after{content:"기본값";font-size:10.5px;font-weight:700;color:#fff;background:var(--hold);border-radius:4px;padding:2px 6px;flex:none}
 </style>
 </head>
 <body>
@@ -224,11 +257,8 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 
 <div class="sheet page">
   <div class="bc">상품 관리</div>
-  <div class="ptitle"><h1>인터넷 상품 관리</h1><span style="margin-left:12px;display:inline-flex;gap:2px;padding:3px;background:var(--g50);border-radius:8px;vertical-align:middle"><a href="/internet-product/products/" style="padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;background:#fff;color:var(--g900);box-shadow:0 1px 2px rgba(19,19,20,.12)">V1</a><a href="/internet-product/products-v2/" style="padding:4px 12px;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;color:var(--g500)">V2</a></span><span class="star">☆</span></div>
+  <div class="ptitle"><h1>인터넷 상품 관리</h1><span class="star">☆</span></div>
   <div class="pdesc">인터넷 상품의 요금제와 판매 정보를 관리합니다.</div>
-
-  <div class="notice info"><span class="i">i</span>
-    <span id="noteTx"></span></div>
 
   <div class="vtabs" id="vtabs"></div>
 
@@ -241,11 +271,11 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
     <span><i style="background:#fff;border:1px solid var(--g100)"></i>판매중</span>
     <span><i style="background:var(--g25);border:1px solid var(--g100)"></i>미사용</span>
     <span><i style="background:var(--blue50);border:1px solid var(--primary)"></i>선택</span>
-    <span><i style="background:#F1FBF5;border:1px solid var(--link)"></i>연결된 짝</span>
+    <span><i style="background:#F1FBF5;border:1px solid var(--link)"></i>상품 조합 (초록선)</span>
+    <span><i style="background:var(--hold)"></i>기본값 (상품을 고르면 표시)</span>
   </div>
 
   <div class="cnt" id="cnt"></div>
-  <div class="pairbar" id="pairbar" hidden></div>
 
   <div class="grid" id="grid"></div>
 </div>
@@ -253,8 +283,8 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 
 <div class="doc-band"><div class="sheet">
   <div class="doc-eyebrow">정본 문서</div>
-  <div class="doc-h">기능 정의서는 컨플루언스에 있습니다</div>
-  <div class="doc-sub">이 페이지는 <b>화면</b>과 <b>모달 시안</b>만 담습니다. 메뉴 노출 조건 · 모달 필드 · 동작 규칙 · 메시지 · 결정 사항은 전부 기능정의서에 있고, <b>내용이 다르면 기능정의서를 따릅니다.</b></div>
+  <div class="doc-h">기능정의서</div>
+  <div class="doc-sub">화면 · 데이터 · 동작 · 메시지의 정본입니다. 이 목업과 내용이 다르면 기능정의서를 따릅니다.</div>
   <a class="btn-solid" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px" href="https://ajnetworks.atlassian.net/wiki/spaces/BO/pages/1686372410" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
     [CRM Admin] 인터넷 상품 관리 - 기능 정의서
@@ -270,18 +300,29 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 <div class="sheet" style="padding-top:32px">
 <div class="spec">
   <table class="mx cases">
-    <thead><tr><th style="width:9%">구분</th><th style="width:12%">모달</th><th style="width:15%">우클릭 버튼명</th><th style="width:18%">케이스</th><th>진입 · 이 상태가 되는 조건</th><th style="width:76px"></th></tr></thead>
+    <thead><tr><th style="width:9%">구분</th><th style="width:12%">모달</th><th style="width:15%">우클릭 버튼명</th><th style="width:18%">케이스</th><th>진입 · 이 상태가 되는 조건</th><th style="width:86px"></th></tr></thead>
     <tbody>
-      <tr><th rowspan="2">인터넷 외<br><span class="sub">TV · 인터넷전화 · 일반전화</span></th><th rowspan="2">태그 연결<br><span class="chg">추가</span></th><td rowspan="2">「태그 연결」<br><span class="sub">상품 카드 어디든</span></td>
-        <td>신규 연결</td><td class="sub">「태그 없음」 카드 우클릭 — 「선택하세요」로 열림</td><td><button class="btn-out" data-case="tag-new">열기</button></td></tr>
-      <tr><td>기존 태그 변경</td><td class="sub">태그가 있는 카드 우클릭 — 현재 태그가 선택된 채로 열림</td><td><button class="btn-out" data-case="tag-edit">열기</button></td></tr>
-      <tr><th rowspan="5">인터넷</th><th rowspan="4">상품 연결 등록<br><span class="chg">추가</span></th><td rowspan="4">「상품 연결 등록」<br><span class="sub">인터넷상품 + 기본WIFI 선택 후 기본WIFI 위</span></td>
-        <td>처음 열린 상태</td><td class="sub">연결 없는 짝 · 첫 자리 미선택이라 [등록] 비활성</td><td><button class="btn-out" data-case="reg-empty">열기</button></td></tr>
-      <tr><td>조합의 첫 연결</td><td class="sub">고른 속성 조합에 기존 연결이 없음 → 대표 자동 켜짐 · 끌 수 없음(규칙 5)</td><td><button class="btn-out" data-case="reg-first">열기</button></td></tr>
-      <tr><td>조합에 기존 연결 있음</td><td class="sub">같은 조합 연결 목록 + 현재 대표 배지 → 대표 여부를 직접 고름</td><td><button class="btn-out" data-case="reg-exist">열기</button></td></tr>
-      <tr><td>이미 연결된 짝 (오류)</td><td class="sub">평소엔 버튼이 「상품 연결 관리에서 보기」로 바뀌어 안 열림. 동시 편집 대비 안전망(규칙 14) · [등록] 비활성</td><td><button class="btn-out" data-case="reg-dupe">열기</button></td></tr>
-      <tr><th>— (화면 이동)</th><td>「상품 연결 관리에서 보기」<br><span class="sub">이미 연결된 짝 · 기본WIFI 위</span></td><td>모달 없음</td><td class="sub">상품 연결 관리로 이동 · 그 연결의 조합 필터 + 행 강조 (목업은 안내 토스트)</td><td></td></tr>
-      <tr><th rowspan="3">결합할인</th><th rowspan="3">설명 수정<br><span class="chg">추가</span></th><td rowspan="3">「설명 수정」<br><span class="sub">분류 칸 · 「설명 바꾸기」 대체</span></td>
+      <tr><th rowspan="5">전 구분</th><th rowspan="5">태그 지정<br><span class="chg">추가</span></th><td rowspan="5">「태그 지정」<br><span class="sub">카드 어디든 · 「미적용」 제외</span></td>
+        <td>인터넷상품</td><td class="sub">속도(필수) + 추가구성옵션(선택, 기본 「없음」) 2칸</td><td><button class="btn-out" data-case="tg-row">열기</button></td></tr>
+      <tr><td>인터넷상품 · 태그 없음</td><td class="sub">「태그 없음」 카드 — 「선택하세요」로 열림</td><td><button class="btn-out" data-case="tg-empty">열기</button></td></tr>
+      <tr><td>기본WIFI</td><td class="sub">구성제품 1칸</td><td><button class="btn-out" data-case="tg-col">열기</button></td></tr>
+      <tr><td>인터넷 외 · 신규</td><td class="sub">「태그 없음」 카드 · 태그 1칸 + 고객 노출 미리보기</td><td><button class="btn-out" data-case="tag-new">열기</button></td></tr>
+      <tr><td>인터넷 외 · 변경</td><td class="sub">현재 태그가 선택된 채로 열림</td><td><button class="btn-out" data-case="tag-edit">열기</button></td></tr>
+      <tr><th rowspan="5">인터넷</th><th rowspan="4">상품 조합 등록<br><span class="chg">추가</span></th><td rowspan="4">「상품 조합 등록」<br><span class="sub">상품 조합 선택 후 기본WIFI 위</span></td>
+        <td>속성 조합의 첫 등록</td><td class="sub"><b>모달 없음</b> — 대표로 즉시 등록 + 토스트</td><td><button class="btn-out" data-case="reg-first">실행</button></td></tr>
+      <tr><td>같은 속성 조합에 다른 상품 조합이 있음</td><td class="sub">모달 — 그 목록은 <b>읽기 전용</b> · 「이 상품 조합을 대표로」만 선택. 켜면 기존 대표는 밀려남</td><td><button class="btn-out" data-case="reg-exist">열기</button></td></tr>
+      <tr><td>상품 태그 없음 (오류)</td><td class="sub">속도 태그가 없는 상품 → 「태그 지정」 먼저 안내 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-notag">열기</button></td></tr>
+      <tr><td>이미 등록돼 있음 (오류)</td><td class="sub">평소엔 메뉴가 「상품 조합 관리」로 바뀌어 안 열림. 동시 편집 안전망 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-dupe">열기</button></td></tr>
+      <tr><th>— (화면 이동)</th><td>「상품 조합 관리로 이동」<br><span class="sub">이미 등록된 상품 조합 · 기본WIFI 위</span></td><td>모달 없음</td><td class="sub">상품 조합 관리로 현재창 이동 · 필터 없이 기본 상태 (목업은 안내 토스트). <b>대표 변경 · 등록 해제는 그 화면에서만</b></td><td><button class="btn-out" data-case="m-view">메뉴 열기</button></td></tr>
+      <tr><th rowspan="3">전 구분</th><th rowspan="3">— (토스트)<br><span class="chg">추가</span></th><td rowspan="3">「기본값 지정」<br><span class="sub">상품 조합 선택 후 두 번째 칸(기본WIFI · 세트상품) 위 · 초록선 있음</span></td>
+        <td>변경</td><td class="sub">다른 세트상품이 기본값 → 「기본값 지정」 · 교체</td><td><button class="btn-out" data-case="m-auto-chg">메뉴 열기</button></td></tr>
+      <tr><td>현재 기본값</td><td class="sub">이 세트상품이 기본값 → <b>메뉴 항목 없음</b>. 카드의 「기본값」 배지로 이미 보이고, 해제 수단도 두지 않습니다</td><td><button class="btn-out" data-case="m-auto-cur">메뉴 열기</button></td></tr>
+      <tr><td>인터넷 <span class="chg">10/07</span></td><td class="sub">기본WIFI 위 — 「상품 조합 등록」 또는 「상품 조합 관리로 이동」과 함께 뜸. <b>등록 여부와 무관</b>(대표는 속성으로 찾을 때, 기본값은 상품을 직접 고를 때)</td><td><button class="btn-out" data-case="m-auto-net">메뉴 열기</button></td></tr>
+      <tr><th rowspan="3">전 구분</th><th rowspan="3">플랫폼 노출 설정<br><span class="chg">추가</span></th><td rowspan="3">「플랫폼 노출 설정」</td>
+        <td>인터넷</td><td class="sub">추가 노출 2개 + 월요금 · <b>결합요금</b> · 플랫폼 노출용 설명</td><td><button class="btn-out" data-case="pl-net">열기</button></td></tr>
+      <tr><td>인터넷 외</td><td class="sub">결합요금 칸이 빠진다 — 나머지는 동일</td><td><button class="btn-out" data-case="pl-etc">열기</button></td></tr>
+      <tr><td>노출 체크 해제</td><td class="sub">신청서 · 플랫폼을 꺼도 입력값은 저장된다는 안내가 뜸</td><td><button class="btn-out" data-case="pl-off">열기</button></td></tr>
+      <tr><th rowspan="3">결합할인</th><th rowspan="3">설명 수정<br><span class="chg">추가</span></th><td rowspan="3">「설명 수정」<br><span class="sub">분류 칸 · 구분선 아래. 항목 칸의 「설명 수정」은 AS-IS 설명 바꾸기 모달(이름만 변경)</span></td>
         <td>신청서 노출 꺼짐</td><td class="sub">신청서 설명은 선택 사항 · 신청서엔 안 나감</td><td><button class="btn-out" data-case="ds-off">열기</button></td></tr>
       <tr><td>신청서 노출 켜짐</td><td class="sub">「신청서에 노출」 체크 → 신청서 설명이 필수가 됨</td><td><button class="btn-out" data-case="ds-on">열기</button></td></tr>
       <tr><td>켜짐 + 신청서 설명 비어 있음</td><td class="sub">[수정] 비활성 + 사유 안내 (할인명이 비어도 같음)</td><td><button class="btn-out" data-case="ds-empty">열기</button></td></tr>
@@ -291,61 +332,188 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 </div>
 
 
-<footer>인터넷 상품 관리 — 태그 연결 · 상품 연결 등록 · 결합할인 설명 수정 시안 · 정본은 <a href="https://ajnetworks.atlassian.net/wiki/spaces/BO/pages/1686372410" target="_blank" style="color:var(--primary)">[CRM Admin] 인터넷 상품 관리 - 기능 정의서</a></footer>
+<div class="doc-band" id="card-flags" style="margin-top:0;border-top:0;border-bottom:0;background:#fff"><div class="sheet">
+  <div class="doc-eyebrow">카드 표시 규칙</div>
+  <div class="doc-h">카드에 붙는 플래그 · 상태 표시 — 인터넷 / 인터넷 외</div>
+  <div class="doc-sub">[보기]를 누르면 위 화면이 그 상태로 바뀌고 카드 영역으로 이동합니다. 기능정의서 2.1 「카드 표시」를 이 표로 대체합니다.</div>
+</div></div>
+<div class="sheet" style="padding-top:8px">
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">1</span><span class="spec-t">플래그 (글자 배지)</span></div>
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:11%">플래그</th><th style="width:14%">붙는 카드</th><th style="width:19%">보이는 조건</th><th>인터넷</th><th style="width:17%">인터넷 외</th><th style="width:96px"></th></tr></thead>
+    <tbody>
+      <tr><th>태그 없음</th><td>첫 번째 · 두 번째 칸 모든 카드 (「미적용」 포함)</td><td><b>항상</b> — 선택과 무관</td><td>인터넷상품 : <b>속도</b> 태그 없음<br>기본WIFI : <b>구성제품</b> 태그 없음<br><span class="sub">추가구성옵션은 선택 항목이라 비어도 안 붙음</span></td><td>그 카드의 태그(1칸) 없음</td><td><button class="btn-out" data-flag="f-nt">보기</button></td></tr>
+      <tr><th rowspan="2">기본값</th><td rowspan="2">두 번째 칸 카드 (기본WIFI · 세트상품)</td><td><b>첫 번째 칸 상품을 선택했을 때만</b> — 그 상품의 기본값 카드 1개</td><td>동일 · 「미적용」도 기본값이 될 수 있음</td><td>동일</td><td><button class="btn-out" data-flag="f-auto-net">인터넷</button><br><button class="btn-out" data-flag="f-auto-etc" style="margin-top:6px">TV</button></td></tr>
+      <tr><td colspan="3"><b>안 보임</b> — 아무것도 선택 안 함 · 두 번째 칸 카드만 선택 · 선택한 상품에 초록선이 없음(기본값 자체가 없음)</td><td><button class="btn-out" data-flag="f-col-only">보기</button></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">상태 표시 (색)</span><span class="spec-s">전 구분 동일</span></div>
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:18%">표시</th><th>조건</th><th style="width:28%">비고</th></tr></thead>
+    <tbody>
+      <tr><th>선택 (파랑)</th><td>클릭한 카드. 상품 조합을 고르면 두 카드 모두</td><td></td></tr>
+      <tr><th>초록 + 초록선</th><td>선택한 카드와 판매 가능하게 연결된 반대쪽 카드</td><td class="sub">상품 선택 → 두 번째 칸 · 두 번째 칸만 선택 → 첫 번째 칸</td></tr>
+      <tr><th>흐리게</th><td>미사용 상품</td><td class="sub">AS-IS 동일</td></tr>
+      <tr><th>「미적용」 카드</th><td>인터넷 기본WIFI 칸 맨 위에 항상</td><td class="sub">특이사항은 아래 「미적용」 영역</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">카드에 표시하지 않는 것</span></div>
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:18%">항목</th><th style="width:36%">어디서 보이나</th><th>카드에 안 붙이는 이유</th></tr></thead>
+    <tbody>
+      <tr><th>등록 여부 (인터넷)</th><td>기본WIFI 우클릭 메뉴 — 미등록이면 「상품 조합 등록」, 등록됐으면 「상품 조합 관리로 이동」</td><td>등록은 짝 단위라 카드 하나에 붙일 수 없음</td></tr>
+      <tr><th>대표</th><td>상품 조합 관리</td><td>짝 단위 · 속성 조합 기준이라 카드 화면에서 판단 불가</td></tr>
+      <tr><th>태그명</th><td>태그 지정 모달</td><td>카드 태그명 표시는 전부 삭제(9/30)</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">4</span><span class="spec-t">기본값 자동 규칙</span><span class="spec-s">전 구분 동일 · 10/07</span></div>
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:24%">시점</th><th>동작</th></tr></thead>
+    <tbody>
+      <tr><th>상품에 첫 초록선이 생김</th><td>그 짝의 세트상품이 <b>자동으로 기본값</b>. 등록과 무관 — 대표는 속성 조합의 첫 등록, 기본값은 상품의 첫 초록선이 기준</td></tr>
+      <tr><th>바꾸고 싶을 때</th><td>두 번째 칸 카드 우클릭 「기본값 지정」 — 모달 없이 즉시 교체. 해제 수단 없음</td></tr>
+      <tr><th>미사용 세트상품</th><td><b>기본값 지정 불가</b> — 메뉴에 뜨지 않음. 미사용은 상담 상세에 노출되지 않아 기본값이 되면 빈 값이 들어감. 기본값인 세트상품을 사용중지하면 남은 짝으로 승계</td></tr>
+      <tr><th>기본값 짝의 초록선 삭제</th><td>남은 초록선 짝 중 하나로 승계(<b>미사용은 건너뜀</b>). 남은 짝이 없으면 기본값도 없음</td></tr>
+      <tr><th>이관</th><td>레벨 1순위 세트상품을 초기 기본값으로 (목업은 첫 번째 짝)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p><b>상품 조합 등록과 기본값을 묶지 않습니다.</b> 등록은 짝 단위(상품 하나에 여러 개)이고 기본값은 상품 하나에 1개입니다. 묶으면 등록하지 않은 상품은 기본값이 비고, 첫 등록에도 모달이 생깁니다.</p>
+  </div>
+</div>
+</div>
+
+<div class="doc-band" id="na-notes" style="margin-top:0;border-top:0;border-bottom:0;background:#fff"><div class="sheet">
+  <div class="doc-eyebrow">「미적용」 특이사항</div>
+  <div class="doc-h">「미적용」 카드에만 해당하는 규칙 — 한곳에</div>
+  <div class="doc-sub">WIFI 없이 파는 상품의 세트상품 자리입니다. 상품이 아니라서 일반 카드와 다른 점만 모았습니다.</div>
+</div></div>
+<div class="sheet" style="padding-top:8px">
+<div class="spec">
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:20%">항목</th><th>규칙</th><th style="width:22%">일반 기본WIFI와 비교</th></tr></thead>
+    <tbody>
+      <tr><th>위치</th><td>인터넷 기본WIFI 칸 맨 위에 항상</td><td class="sub">—</td></tr>
+      <tr><th>단독 우클릭</th><td><b>「미사용 / 사용」 하나뿐</b> — 사용 중이면 「미사용」, 미사용이면 「사용」 (AS-IS)</td><td class="sub">다름 — 요금 · 할인 · 이벤트 · 태그 · 플랫폼 메뉴 없음</td></tr>
+      <tr><th>짝으로 고른 뒤 우클릭</th><td>기본WIFI 짝과 같은 메뉴. 단 <b>「플랫폼 노출 설정」 없음</b></td><td class="sub">거의 같음</td></tr>
+      <tr><th>태그 지정</th><td><b>「없음」 태그만</b> 고를 수 있음. 단독 우클릭에는 메뉴가 없어 <b>짝을 고른 뒤</b> 지정</td><td class="sub">다름 — 구성제품 목록 전체가 아님</td></tr>
+      <tr><th>「태그 없음」 배지</th><td>「없음」 태그가 아직 없으면 표시 (선택과 무관)</td><td class="sub">같음</td></tr>
+      <tr><th>플랫폼 노출 설정</th><td><b>없음</b> — 금액 · 설명을 두지 않음</td><td class="sub">다름</td></tr>
+      <tr><th>기본값</th><td>될 수 있음 — WIFI 없이 파는 상품의 기본값. 「기본값」 배지도 같은 규칙</td><td class="sub">같음</td></tr>
+      <tr><th>상품 조합 등록</th><td>같은 방식으로 등록. 속성 조합의 구성제품 = 「없음」</td><td class="sub">같음</td></tr>
+      <tr><th>태그가 없을 때</th><td>속성 조합을 계산할 수 없음 → 등록 모달 [등록] 비활성 · 통신사 변경 매칭에서 빠짐</td><td class="sub">같음</td></tr>
+    </tbody>
+  </table></div>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p class="q">확인 필요 — AS-IS에는 TV · 인터넷전화 · 일반전화의 세트상품 칸에도 「미적용」이 있습니다(AS-IS 연결 데이터 · 디자인 시안). 이 목업은 인터넷만 「미적용」 카드를 그립니다. 같은 규칙을 인터넷 외에도 적용할지 정해야 합니다.</p>
+  </div>
+</div>
+</div>
+
+<footer>인터넷 상품 관리 — 태그 지정 · 상품 조합 등록 · 기본값 지정 · 플랫폼 노출 설정 · 결합할인 설명 수정</footer>
 </div>
 
 <div class="ov" id="ovTag" hidden>
   <div class="modal">
-    <div class="mh"><h3>태그 연결</h3><span class="x" id="tgX">✕</span></div>
+    <div class="mh"><h3>태그 지정</h3><span class="x" id="tgX">✕</span></div>
     <div class="mb">
-      <div class="ctx">
+      <div class="ctx col">
         <div><span class="k">업체</span><span class="v" id="tgVen"></span></div>
         <div><span class="k">구분</span><span class="v" id="tgSvc"></span></div>
-        <div><span class="k">축</span><span class="v" id="tgAxis"></span></div>
+        <div><span class="k">상품 유형</span><span class="v" id="tgAxis"></span></div>
+        <div><span class="k">상품</span><span class="v" id="tgProd"></span></div>
       </div>
-      <div class="row2">
-        <div class="fld"><label>상품</label><div class="inp ro" id="tgProd"></div></div>
-        <div class="fld"><label>태그 <span class="req">*</span></label>
-          <select class="inp" id="tgSel"></select></div>
-      </div>
-      <div class="fld" style="margin-bottom:0">
+      <div class="tgh">지정할 태그</div>
+      <div class="hint">태그 관리에 등록된 태그 중에서 고릅니다.</div>
+      <div id="tgFields"></div>
+      <div class="fld" id="tgPrevBox" style="margin-bottom:0">
         <label>고객 노출 <span class="sp"></span><span class="ro">자동 계산</span></label>
         <div class="prev"><span class="k">상담 상세</span><span class="v" id="tgPrev"></span></div>
-        <div class="hint">상품명과 태그명을 조합해 보여줍니다. 저장하면 상담 상세에 이 값으로 표시됩니다.</div>
+        <div class="hint">상품명과 태그명을 조합해 보여줍니다.</div>
       </div>
+      <div class="hint" id="tgNetHint" hidden>이 상품이 들어간 조합에도 바로 반영됩니다.</div>
     </div>
-    <div class="mf"><div class="sp"></div><button class="btn-out" id="tgCancel">취소</button><button class="btn-solid" id="tgSave">저장</button></div>
+    <div class="mf"><div class="sp"></div><button class="btn-out" id="tgCancel">취소</button><button class="btn-solid" id="tgSave">지정</button></div>
   </div>
 </div>
 
 <div class="ov" id="ovReg" hidden>
   <div class="modal" style="width:600px">
-    <div class="mh"><h3>상품 연결 등록</h3><span class="x" id="rX">✕</span></div>
+    <div class="mh"><h3>상품 조합 등록</h3><span class="x" id="rX">✕</span></div>
     <div class="mb">
       <div class="ctx dlctx" style="margin-bottom:16px">
         <div><span class="k">업체 · 구분</span><span class="v" id="rVen"></span></div>
         <div><span class="k" id="rPk"></span><span class="v" id="rProd"></span></div>
         <div><span class="k" id="rSk"></span><span class="v" id="rSet"></span></div>
       </div>
-      <div class="fgrp">
-        <div class="fgc"><span class="n">1</span><b>속성 선택</b><em>자리마다 이 업체의 태그를 고릅니다</em></div>
-        <div class="row2">
-          <div class="fld" style="margin-bottom:0"><label id="rl1">속도 <span class="req">*</span></label><select class="inp" id="r1"></select></div>
-          <div class="fld" style="margin-bottom:0"><label id="rl2">구성제품</label><select class="inp" id="r2"></select></div>
+      <div style="margin-bottom:14px">
+        <div class="tglab"><b>지정된 태그</b><em>바꾸려면 카드에서 「태그 지정」</em></div>
+        <div class="tgro">
+          <div class="r"><span class="k">속도</span><span class="v" id="rt1"></span><span class="s">상품</span></div>
+          <div class="r"><span class="k">구성제품</span><span class="v" id="rt2"></span><span class="s">세트상품</span></div>
+          <div class="r"><span class="k">추가구성옵션</span><span class="v" id="rt3"></span><span class="s">상품</span></div>
         </div>
-        <div class="fld" style="margin:12px 0 0"><label id="rl3">추가구성옵션</label><select class="inp" id="r3"></select></div>
       </div>
       <div class="fgrp">
-        <div class="fgc"><span class="n">2</span><b>대표 지정</b><em>대표는 조합마다 하나입니다</em></div>
+        <div class="fgc"><b>대표 지정</b><em>속성 조합마다 하나를 정합니다</em></div>
         <div class="cmbstrip"><span class="k">속성 조합</span><span class="v" id="rCombo"></span></div>
-        <div class="fld" style="margin:12px 0 0"><label>이 조합의 기존 연결 <span class="sp"></span><span class="ro" id="rOthN"></span></label>
-          <div class="othbox" id="rOth"></div></div>
-        <div class="fld" style="margin:12px 0 0"><label>대표</label>
-          <span class="cb" id="rMain"><i></i>이 상품을 대표로</span></div>
+        <div class="fld" style="margin:12px 0 0"><label>같은 속성 조합의 다른 상품 조합 <span class="sp"></span><span class="ro" id="rOthN"></span></label>
+          <div class="othbox ro" id="rOth"></div></div>
+        <div class="fld" style="margin:12px 0 0" id="rMainFld"><label>대표</label>
+          <span class="cb" id="rMain"><i></i>이 상품 조합을 대표로</span></div>
       </div>
       <div class="notice" id="rNotice" hidden style="margin-bottom:0"><span class="i">!</span><span></span></div>
     </div>
     <div class="mf"><div class="sp"></div><button class="btn-out" id="rCancel">취소</button><button class="btn-solid" id="rSave">등록</button></div>
+  </div>
+</div>
+
+<!-- 플랫폼 노출 설정 -->
+<div class="ov" id="ovPlat" hidden>
+  <div class="modal" style="width:620px">
+    <div class="mh"><h3>플랫폼 노출 설정</h3><span class="x" id="plX">✕</span></div>
+    <div class="mb">
+      <div class="ctx">
+        <div><span class="k">업체</span><span class="v" id="plVen"></span></div>
+        <div><span class="k">구분</span><span class="v" id="plSvc"></span></div>
+        <div><span class="k">열</span><span class="v" id="plAxis"></span></div>
+      </div>
+      <div class="fld"><label>상품</label><div class="inp ro" id="plProd"></div></div>
+
+      <div class="fgrp new">
+        <div class="fgc"><b>추가 노출</b><span class="chg">이관</span><em>이 상품의 태그를 어디에 내보낼지 고릅니다</em></div>
+        <div style="display:flex;gap:22px;margin-top:10px">
+          <span class="cb on" id="plApply"><i></i>신청서에 노출</span>
+          <span class="cb on" id="plPlat"><i></i>플랫폼에 노출</span>
+        </div>
+        <div class="hint" id="plOffHint" hidden>체크를 꺼도 입력한 값은 저장되고, 해당 채널에만 나가지 않습니다.</div>
+      </div>
+
+      <div class="fgrp new">
+        <div class="fgc"><b>플랫폼 노출값</b><span class="chg">이관</span><em>같은 태그라도 상품마다 다르게 나갑니다</em></div>
+        <div class="row2" style="margin-top:12px">
+          <div class="fld" style="margin-bottom:0"><label>월요금 <span class="sp"></span><span class="ro">플랫폼 표시용</span></label>
+            <input class="inp" id="plFee1" inputmode="numeric" placeholder="0">
+            <div class="hint">참고 · 상품 요금 <b id="plBase"></b></div></div>
+          <div class="fld" id="plFee2Fld" style="margin-bottom:0"><label>결합요금 <span class="sp"></span><span class="ro">인터넷만</span></label>
+            <input class="inp" id="plFee2" inputmode="numeric" placeholder="0"></div>
+        </div>
+        <div class="fld" style="margin:14px 0 0"><label>플랫폼 노출용 설명</label>
+          <textarea class="inp" id="plDesc" placeholder="플랫폼에서 이 상품의 태그와 함께 보여줄 짧은 설명"></textarea>
+          <div class="refb"><div class="refh">참고 · 상품 설명</div><div class="refv" id="plRef"></div></div></div>
+      </div>
+    </div>
+    <div class="mf"><div class="sp"></div><button class="btn-out" id="plCancel">취소</button><button class="btn-solid" id="plSave">저장</button></div>
   </div>
 </div>
 
@@ -390,7 +558,6 @@ function tagOf(g, side, name){
   return hit ? hit[1] : '';
 }
 
-$('noteTx').innerHTML = '<b>TV · 전화</b> : 카드 우클릭 → 「태그 연결」 · <b>인터넷</b> : 인터넷상품 + 기본WIFI 선택 → 기본WIFI 우클릭 → 「상품 연결 등록」';
 
 function renderTabs(){
   $('vtabs').innerHTML = VENS.map(v => '<div class="ti'+(v===V?' on':'')+'" data-v="'+esc(v)+'">'+esc(v)+'</div>').join('');
@@ -398,8 +565,10 @@ function renderTabs(){
 }
 
 function card(g, side, name){
-  const nt = !isNet(g) && noTag(g, side, name);   // 태그명은 표시하지 않음 — 인터넷 외 세트의 미연결만 표시
   const na = isNet(g) && side === 'col' && name === '';
+  const nt = na ? !pt(g,'col','').s2                 /* 미적용도 「없음」 태그를 붙인다 (10/07) */
+    : isNet(g) ? (side === 'row' ? !pt(g,'row',name).s1 : !pt(g,'col',name).s2)
+    : noTag(g, side, name);
   return '<div class="pit'+(na?' na':'')+'" data-g="'+esc(g.label)+'" data-s="'+side+'" data-n="'+esc(name)+'">'
     + '<span class="nm">'+(na ? '미적용' : esc(name))+'</span>'
     + (nt ? '<span class="nt">태그 없음</span>' : '')
@@ -448,15 +617,15 @@ function grp(label){ return (D[V]||[]).find(g => g.label === label); }
 function pick(el, keep){
   const g = grp(el.dataset.g); if (!g) return;
   const s = el.dataset.s, n = el.dataset.n;
-  if (isNet(g)) {
+  if (g.cols.length) {                              // V2 : 상품 조합 선택은 전 구분 공통
     const same = SEL && SEL.g === g.label && SEL.p;
-    if (s === 'col' && same) {                     // 세트상품 고르기 — 같은 카드를 다시 누르면 해제(미적용)
+    if (s === 'col' && same) {
       SEL.set = (SEL.set === n && !keep) ? null : n;
     } else if (s === 'row') {
       const keepSet = keep && same && SEL.p === n;
       SEL = { g: g.label, s: 'row', n: n, p: n, set: keepSet ? SEL.set : null };
     } else {
-      SEL = { g: g.label, s: 'col', n: n };           // 상품 없이 세트상품만 누른 경우 — 기존처럼 짝만 보여줌
+      SEL = { g: g.label, s: 'col', n: n };
     }
   } else {
     SEL = { g: g.label, s: s, n: n };
@@ -465,7 +634,7 @@ function pick(el, keep){
 }
 
 function paintSel(){
-  document.querySelectorAll('.pit').forEach(x => x.classList.remove('sel','lit'));
+  document.querySelectorAll('.pit').forEach(x => x.classList.remove('sel','lit','auto'));
   document.querySelectorAll('svg.lane').forEach(x => x.innerHTML = '');
   paintPair();
   if (!SEL) return;
@@ -479,28 +648,18 @@ function paintSel(){
   const mates = fromRow ? (g.pair[name] || [])
     : Object.keys(g.pair).filter(p => (g.pair[p]||[]).indexOf(name) >= 0);
   mates.forEach(m => { const t = q(fromRow ? 'col' : 'row', m); if (t) t.classList.add('lit'); });
+  if (SEL.p) { const a = AUTO[autoK(g.label, SEL.p)]; const t = a != null && q('col', a); if (t) t.classList.add('auto'); }
   let cand = null;
   if (SEL.p && SEL.set != null) {
     const t = q('col', SEL.set);
     if (t) { t.classList.remove('lit'); t.classList.add('sel'); }
-    if (mates.indexOf(SEL.set) < 0) cand = SEL.set;   // 아직 연결 없는 짝 — 점선
   }
   drawLanes(base.closest('.cols'), base, mates, fromRow, cand);
 }
 
 function hasLink(p, set){ return R.some(r => r[1] === V && r[2] === p && (r[3]||'') === (set||'')); }
-function paintPair(){
-  const bar = $('pairbar');
-  const g = SEL && grp(SEL.g);
-  if (!g || !isNet(g) || !SEL.p) { bar.hidden = true; return; }
-  const picked = SEL.set != null;
-  const dupe = picked && hasLink(SEL.p, SEL.set);
-  bar.hidden = false;
-  bar.innerHTML = '지금 선택 <b>'+esc(SEL.p)+' × '+(!picked ? '<span class="non">'+esc(g.colName)+' 미선택</span>' : SEL.set ? esc(SEL.set) : '미적용')+'</b> — '
-    + (!picked ? '<span style="color:var(--g400)">오른쪽 '+esc(g.colName)+'를 고르면 연결 항목이 생깁니다</span>'
-      : dupe ? '<span class="dup">이미 연결이 있습니다</span>'
-             : '<span class="ok">아직 연결이 없습니다</span>');
-}
+const isMate = (g, p, set) => (g.pair[p]||[]).indexOf(set) >= 0;
+function paintPair(){ /* 10/07 — 목록 위 안내 줄 삭제. 등록 여부는 우클릭 메뉴(등록 / 상품 조합 관리로 이동), 기본값은 카드 배지로만 보인다 */ }
 
 function drawLanes(box, el, mates, fromRow, cand){
   const svg = box && box.querySelector('svg.lane'); if (!svg) return;
@@ -522,72 +681,172 @@ function drawLanes(box, el, mates, fromRow, cand){
   if (cand) line(cand, '#145CE6', true);
 }
 
+/* 메뉴 순서 — 디자인 시안(10/07) */
 const BASE = ['상품 요금 설정','상품 할인 설정','상품 이벤트 설정','금지 코드 설정'];
 const TAIL = ['설명 바꾸기','위로','아래로','우선순위 변경 (기본)','사용중지'];
 
 function openMenu(el, x, y){
   closeMenu();
   const g = grp(el.dataset.g); if (!g) return;
-  const net = isNet(g);
-  // 인터넷: 상품 + 세트상품이 모두 선택된 상태에서 '세트상품(기본WIFI) 위'를 우클릭했을 때만 연결 항목이 뜬다
-  const ready = net && el.dataset.s === 'col' && SEL && SEL.g === g.label && SEL.p && SEL.set === el.dataset.n;
-  const dupe = ready && hasLink(SEL.p, SEL.set);
-  let act = '';
-  if (net && !ready) act = '';
-  else if (net)
-    act = '<div class="mi act" id="miAct">'+(dupe ? '상품 연결 관리에서 보기' : '상품 연결 등록<span class="newb">추가</span>')+'</div>';
-  else
-    act = '<div class="mi act" id="miAct">태그 연결<span class="newb">추가</span></div>';
+  const net = isNet(g), side = el.dataset.s, name = el.dataset.n;
+  const na = net && side === 'col' && name === '';
+  const ready = side === 'col' && SEL && SEL.g === g.label && SEL.p && SEL.set === name;
+  const mate = ready && isMate(g, SEL.p, SEL.set);
+  /* 순서는 디자인 시안 그대로 (10/07) : 태그 지정 · 플랫폼 노출 설정 · 기본값 지정 · 상품 조합 등록(이동) */
+  /* 「미적용」 짝 : 태그는 「없음」만 지정 가능 · 금액이 없어 플랫폼 노출 설정은 없음 */
+  let items = '<div class="mi act" data-a="tag">태그 지정<span class="newb">추가</span></div>'
+      + (na ? '' : '<div class="mi act" data-a="plat">플랫폼 노출 설정<span class="newb">추가</span></div>');
+  if (mate && AUTO[autoK(g.label, SEL.p)] !== SEL.set)       /* 기본값 — 전 구분 */
+    items += '<div class="mi act" data-a="auto">기본값 지정<span class="newb">추가</span></div>';
+  if (mate && net)                                            /* 초록선(판매 가능 조합)에서만 */
+    items += hasLink(SEL.p, SEL.set) ? '<div class="mi act" data-a="view">상품 조합 관리로 이동</div>'
+                                     : '<div class="mi act" data-a="reg">상품 조합 등록<span class="newb">추가</span></div>';
+  /* 「미적용」 단독 우클릭은 사용 상태 전환 하나뿐 (AS-IS). 짝으로 고른 뒤 우클릭하면 기본WIFI와 같은 메뉴 */
+  const solo = na && !mate;
   const m = document.createElement('div');
   m.className = 'menu';
-  m.innerHTML = BASE.map(l => '<div class="mi">'+l+'</div>').join('')
-    + act + '<div class="sep"></div>' + TAIL.map(l => '<div class="mi">'+l+'</div>').join('');
+  m.innerHTML = solo ? '<div class="mi">미사용</div>'
+    : BASE.map(l => '<div class="mi">'+l+'</div>').join('')
+    + items + '<div class="sep"></div>' + TAIL.map(l => '<div class="mi">'+l+'</div>').join('');
   document.body.appendChild(m);
   const w = 230, h = m.offsetHeight;
-  m.style.left = Math.min(x, innerWidth - w - 12) + 'px';
-  m.style.top = Math.min(y, innerHeight - h - 12) + 'px';
+  m.style.left = Math.max(12, Math.min(x, innerWidth - w - 12)) + 'px';
+  m.style.top = Math.max(12, Math.min(y, innerHeight - h - 12)) + 'px';
   MENU = m;
-  CUR = { g: g, side: el.dataset.s, name: el.dataset.n };
-  const a = document.getElementById('miAct'); if (!a) return;
-  a.onclick = () => {
+  CUR = { g: g, side: side, name: name };
+  m.querySelectorAll('[data-a]').forEach(a => a.onclick = () => {
     closeMenu();
-    if (!net) return openTag();
-    if (dupe) return toast('상품 연결 관리로 이동합니다 — 이 연결의 조합 필터와 행 강조가 걸린 상태로 열립니다.', '#73767A');
-    openReg();
-  };
+    const act = a.dataset.a;
+    if (act === 'tag') return openTag();
+    if (act === 'plat') return openPlat();
+    if (act === 'reg') return doReg();
+    if (act === 'view') return toast('상품 조합 관리로 이동합니다.', '#73767A');
+    if (act === 'auto') setAuto(g);
+  });
+}
+function setAuto(g){
+  const k = autoK(g.label, SEL.p), prev = AUTO[k];
+  AUTO[k] = SEL.set;                       /* 교체만 가능 — 비우는 경로가 없다 */
+  const nm = x => x === '' ? '미적용' : x;
+  toast(prev != null ? '기본값을 바꿨습니다 — '+SEL.p+' : '+nm(prev)+' → '+nm(SEL.set)
+                     : '기본값으로 지정했습니다 — '+SEL.p+' → '+nm(SEL.set), '#10A10E');
+  paintSel();
 }
 function closeMenu(){ if (MENU) { MENU.remove(); MENU = null; } }
 document.addEventListener('click', e => { if (e.target.closest('.mi.dis')) return; closeMenu(); });
 document.addEventListener('contextmenu', e => { if (!e.target.closest('.pit')) closeMenu(); });
 
+function tagSelect(id, label, list, cur, req, noneDefault){
+  return '<div class="fld"><label>'+label+(req?' <span class="req">*</span>':'')+'</label><select class="inp" id="'+id+'">'
+    + (req && !cur ? '<option value="">선택하세요</option>' : '')
+    + list.map(o => '<option'+(o===cur || (!cur && noneDefault && o==='없음') ? ' selected' : '')+'>'+esc(o)+'</option>').join('')
+    + '</select></div>';
+}
 function openTag(){
-  const g = CUR.g, side = CUR.side, name = CUR.name;
+  const g = CUR.g, side = CUR.side, name = CUR.name, net = isNet(g);
   $('tgVen').textContent = V;
   $('tgSvc').textContent = g.svc;
   $('tgAxis').textContent = side === 'row' ? g.rowName : g.colName;
-  $('tgProd').textContent = name;
-  const arr = side === 'row' ? g.rows : g.cols;
-  const opts = [...new Set(arr.map(x => x[1]).filter(Boolean))].sort();
-  const cur = tagOf(g, side, name);
-  $('tgSel').innerHTML = (cur ? '' : '<option value="">선택하세요</option>')
-    + opts.map(o => '<option'+(o===cur?' selected':'')+'>'+esc(o)+'</option>').join('');
-  const upd = () => {
-    const v = $('tgSel').value;
-    $('tgPrev').textContent = v ? name + '(' + v + ')' : name;
-  };
-  $('tgSel').onchange = upd; upd();
+  $('tgProd').textContent = name || '미적용';
+  $('tgPrevBox').hidden = net; $('tgNetHint').hidden = !net;
+  if (net) {
+    const T = TAGO['인터넷'][V] || {}, cur = pt(g, side, name);
+    const L = k => (T[k]||[]).map(x => x[0]);
+    if (side === 'col' && name === '') {                      /* 미적용 — 「없음」 태그만 */
+      $('tgFields').innerHTML = tagSelect('tg2', '구성제품', ['없음'], '없음', true);
+      $('ovTag').hidden = false; return;
+    }
+    $('tgFields').innerHTML = side === 'row'
+      ? '<div class="row2">' + tagSelect('tg1', '속도', L('1'), cur.s1, true) + tagSelect('tg3', '추가구성옵션', L('3'), cur.s3, false, true) + '</div>'
+      : tagSelect('tg2', '구성제품', L('2'), cur.s2, true);
+  } else {
+    const arr = side === 'row' ? g.rows : g.cols;
+    const opts = [...new Set(arr.map(x => x[1]).filter(Boolean))].sort();
+    const AN = {'TV':['라인','셋탑'],'인터넷전화':['요금방식','전화기기'],'일반전화':['요금방식','전화기기']}[g.svc] || ['태그','태그'];
+    $('tgFields').innerHTML = tagSelect('tgSel', AN[side === 'row' ? 0 : 1], opts, tagOf(g, side, name), true);
+    const upd = () => { const v = $('tgSel').value; $('tgPrev').textContent = v ? name + '(' + v + ')' : name; };
+    $('tgSel').onchange = upd; upd();
+  }
   $('ovTag').hidden = false;
 }
 $('tgX').onclick = $('tgCancel').onclick = () => $('ovTag').hidden = true;
+
+/* ── 플랫폼 노출 설정 ───────────────────────────────────────────────
+   태그 관리에 있던 설명 · 월요금 · 결합요금 · 추가 노출이 여기로 넘어왔다.
+   같은 태그라도 붙는 상품마다 금액과 문구가 달라야 하므로 단품 카드마다 1세트를 둔다. */
+var PLAT = {};                       /* key : 업체|분류|열|상품 */
+function platK(){ return V+'|'+CUR.g.label+'|'+CUR.side+'|'+CUR.name; }
+/* 상품 설명 : 카드 우클릭 「설명 바꾸기」가 쓰는 AS-IS 값. 플랫폼 노출용 설명을 쓸 때 참고만 한다.
+   이 시안에는 상품별 설명 데이터가 없어 몇 건만 예시로 넣고 나머지는 빈 상태로 둔다. */
+var PDESC = {
+  'KT|인터넷세트|에센스' : '1Gbps 인터넷. 와이파이 공유기 임대 포함, 3년 약정 기준 안내. (예시)',
+  'KT|인터넷세트|베이직' : '500Mbps 인터넷. 단독 가입 시 설치비 면제 대상. (예시)',
+  'KT|TV세트|에센스'     : '지니 TV 에센스 — 실시간 263채널 + VOD 기본 제공. (예시)'
+};
+function prodDesc(){ return PDESC[V+'|'+CUR.g.label+'|'+CUR.name] || ''; }
+/* 상품 요금 : 「상품 요금 설정」이 들고 있는 값. 이 시안에는 연동이 없어 자리표시자를 쓴다 */
+function baseFee(name){
+  var h=0; for(var i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0;
+  return ((h%28+8)*1000).toLocaleString();
+}
+function openPlat(){
+  var g=CUR.g, net=isNet(g), k=platK(), d=PLAT[k]||{ap:true,pf:true,f1:'',f2:'',ds:''};
+  $('plVen').textContent=V;
+  $('plSvc').textContent=g.svc;
+  $('plAxis').textContent=CUR.side==='row'?g.rowName:g.colName;
+  $('plProd').textContent=CUR.name || '미적용';
+  $('plApply').classList.toggle('on',d.ap);
+  $('plPlat').classList.toggle('on',d.pf);
+  $('plFee1').value=d.f1; $('plFee2').value=d.f2; $('plDesc').value=d.ds;
+  $('plFee2Fld').hidden=!net;
+  $('plBase').textContent=baseFee(CUR.name)+'원';
+  var pd=prodDesc();
+  $('plRef').textContent = pd || '등록된 상품 설명이 없습니다.';
+  $('plRef').classList.toggle('non', !pd);
+  platHint();
+  $('ovPlat').hidden=false;
+}
+function platHint(){
+  $('plOffHint').hidden = $('plApply').classList.contains('on') && $('plPlat').classList.contains('on');
+}
+$('plApply').onclick=function(){ this.classList.toggle('on'); platHint(); };
+$('plPlat').onclick =function(){ this.classList.toggle('on'); platHint(); };
+$('plX').onclick = $('plCancel').onclick = () => $('ovPlat').hidden = true;
+$('plSave').onclick = function(){
+  PLAT[platK()] = { ap:$('plApply').classList.contains('on'), pf:$('plPlat').classList.contains('on'),
+                    f1:$('plFee1').value.trim(), f2:$('plFee2').value.trim(), ds:$('plDesc').value.trim() };
+  $('ovPlat').hidden=true;
+  toast('「'+CUR.name+'」 플랫폼 노출값을 저장했습니다.');
+};
+
 $('tgSave').onclick = () => {
-  const v = $('tgSel').value;
-  if (!v) { toast('태그를 선택해주세요.', '#C31518'); return; }
-  const g = CUR.g, key = V+'|'+g.label+'|'+CUR.side;
-  if (NOTAG[key]) NOTAG[key] = NOTAG[key].filter(n => n !== CUR.name);
-  const arr = CUR.side === 'row' ? g.rows : g.cols;
-  const hit = arr.find(x => x[0] === CUR.name); if (hit) hit[1] = v;
+  const g = CUR.g, side = CUR.side, name = CUR.name;
+  if (isNet(g)) {
+    const k = ptk(V, g.label, side, name);
+    if (side === 'row') {
+      const s1 = $('tg1').value, s3 = $('tg3').value || '없음';
+      if (!s1) { toast('속도 태그를 선택해주세요.', '#C31518'); return; }
+      PT[k] = { s1: s1, s3: s3 };
+      R.forEach(r => { if (r[1]===V && r[2]===name) { r[7]=s1; r[9]=s3; r[4]=ATTR[V]['1'][s1]; r[6]=ATTR[V]['3'][s3]; r[12]=[V,r[4],r[5],r[6]].join('|'); } });
+      toast('태그를 지정했습니다 — ' + name + ' : ' + s1 + (s3 !== '없음' ? ' · ' + s3 : ''), '#0A8208');
+    } else {
+      const s2 = $('tg2').value;
+      if (!s2) { toast('구성제품 태그를 선택해주세요.', '#C31518'); return; }
+      PT[k] = { s2: s2 };
+      R.forEach(r => { if (r[1]===V && r[3]===name) { r[8]=s2; r[5]=ATTR[V]['2'][s2]; r[12]=[V,r[4],r[5],r[6]].join('|'); } });
+      toast('태그를 지정했습니다 — ' + (name || '미적용') + ' : ' + s2, '#0A8208');
+    }
+    reindex();
+  } else {
+    const v = $('tgSel').value;
+    if (!v) { toast('태그를 선택해주세요.', '#C31518'); return; }
+    const key = V+'|'+g.label+'|'+side;
+    if (NOTAG[key]) NOTAG[key] = NOTAG[key].filter(n => n !== name);
+    const arr = side === 'row' ? g.rows : g.cols;
+    const hit = arr.find(x => x[0] === name); if (hit) hit[1] = v;
+    toast('태그를 지정했습니다 — ' + name + '(' + v + ')', '#0A8208');
+  }
   $('ovTag').hidden = true;
-  toast('태그를 연결했습니다 — ' + CUR.name + '(' + v + ')', '#0A8208');
   render();
 };
 function toast(msg, color){
@@ -595,7 +854,7 @@ function toast(msg, color){
   n.style.background = color; document.body.appendChild(n);
   setTimeout(() => n.remove(), 3200);
 }
-/* ── 상품 연결 등록 (상품 연결 관리 화면에서 옮겨옴) ── */
+/* ── 상품 조합 등록 ── */
 const R=[["인터넷", "HCN", "100M(1년)", "", "100Mbps", "없음", "없음", "100Mbps(광랜 1년)", "없음", "없음", 4, 1, "HCN|100Mbps|없음|없음", 1, 1], ["인터넷", "LG HelloVision", "광랜라이트", "", "100Mbps", "없음", "없음", "100Mbps(광랜라이트 인터넷)", "없음", "없음", 1, 1, "LG HelloVision|100Mbps|없음|없음", 1, 1], ["인터넷", "KT", "슬림", "", "100Mbps", "없음", "없음", "100Mbps(슬림)", "없음", "없음", 1, 1, "KT|100Mbps|없음|없음", 1, 1], ["인터넷", "SKB", "광랜인터넷", "", "100Mbps", "없음", "없음", "100Mbps(광랜 인터넷)", "없음", "없음", 1, 1, "SKB|100Mbps|없음|없음", 1, 1], ["인터넷", "SKT", "광랜인터넷", "", "100Mbps", "없음", "없음", "100Mbps(광랜 인터넷)", "없음", "없음", 1, 1, "SKT|100Mbps|없음|없음", 1, 1], ["인터넷", "SkyLife", "100메가", "", "100Mbps", "없음", "없음", "100Mbps(100M 인터넷)", "없음", "없음", 1, 1, "SkyLife|100Mbps|없음|없음", 1, 1], ["인터넷", "HCN", "100M(2년)", "", "100Mbps", "없음", "없음", "100Mbps(광랜 2년)", "없음", "없음", 4, 0, "HCN|100Mbps|없음|없음", 1, 1], ["인터넷", "SkyLife", "100메가 안심", "", "100Mbps", "없음", "안심", "100Mbps(100M 인터넷)", "없음", "안심(유해사이트 방패)", 1, 1, "SkyLife|100Mbps|없음|안심", 1, 1], ["인터넷", "HCN", "100M(3년)", "", "100Mbps", "없음", "없음", "100Mbps(광랜 3년)", "없음", "없음", 4, 0, "HCN|100Mbps|없음|없음", 1, 1], ["인터넷", "HCN", "100M(4년)", "", "100Mbps", "없음", "없음", "100Mbps(광랜 4년)", "없음", "없음", 4, 0, "HCN|100Mbps|없음|없음", 1, 1], ["인터넷", "딜라이브", "ISP 스마트광랜", "WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜 인터넷)", "WiFi포함", "없음", 2, 1, "딜라이브|100Mbps|WiFi포함|없음", 0, 1], ["인터넷", "HCN", "100M(1년)", "WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜 1년)", "WiFi포함", "없음", 4, 1, "HCN|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "LG HelloVision", "광랜라이트", "일반와이파이", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜라이트 인터넷)", "WiFi포함", "없음", 1, 1, "LG HelloVision|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "슬림 와이파이", "기가 와이파이 홈ax", "100Mbps", "WiFi포함", "없음", "100Mbps(슬림)", "WiFi포함", "없음", 1, 1, "KT|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "와이파이기본_광랜안심", "기가WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜 인터넷)", "WiFi포함(의무임대)", "없음", 1, 1, "LG|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "SKB", "광랜인터넷 와이파이", "기가WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜 인터넷)", "WiFi포함", "없음", 1, 1, "SKB|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "SKT", "광랜인터넷 와이파이", "기가WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜 인터넷)", "WiFi포함", "없음", 1, 1, "SKT|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "SkyLife", "100메가", "기가WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(100M 인터넷)", "WiFi포함", "없음", 1, 1, "SkyLife|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "딜라이브", "안심 스마트광랜", "WiFi", "100Mbps", "WiFi포함", "안심", "100Mbps(광랜 인터넷)", "WiFi포함", "안심(안심 주치의)", 2, 1, "딜라이브|100Mbps|WiFi포함|안심", 1, 1], ["인터넷", "HCN", "100M(2년)", "WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜 2년)", "WiFi포함", "없음", 4, 0, "HCN|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "안심 슬림 와이파이", "기가 와이파이 홈ax", "100Mbps", "WiFi포함", "안심", "100Mbps(슬림)", "WiFi포함", "안심(유해사이트 방패)", 1, 1, "KT|100Mbps|WiFi포함|안심", 1, 1], ["인터넷", "LG", "프리미엄 안심 100메가", "기가WiFi+스마트홈스피커", "100Mbps", "프리미엄WiFi", "없음", "100Mbps(광랜 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 3, 1, "LG|100Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "모두안심 광랜", "기가WiFi", "100Mbps", "WiFi포함", "안심", "100Mbps(광랜 인터넷)", "WiFi포함", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|100Mbps|WiFi포함|안심", 1, 1], ["인터넷", "SKT", "모두안심 광랜", "기가WiFi", "100Mbps", "WiFi포함", "안심", "100Mbps(광랜 인터넷)", "WiFi포함", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKT|100Mbps|WiFi포함|안심", 1, 1], ["인터넷", "SkyLife", "100메가 안심", "기가WiFi", "100Mbps", "WiFi포함", "안심", "100Mbps(100M 인터넷)", "WiFi포함", "안심(유해사이트 방패)", 1, 1, "SkyLife|100Mbps|WiFi포함|안심", 1, 1], ["인터넷", "HCN", "100M(3년)", "WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜 3년)", "WiFi포함", "없음", 4, 0, "HCN|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "프리미엄 안심 보상 100메가", "기가WiFi6+안심", "100Mbps", "프리미엄WiFi", "없음", "100Mbps(광랜 인터넷)", "프리미엄WiFi(안심)", "없음", 3, 0, "LG|100Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "파워백신 광랜", "기가WiFi", "100Mbps", "WiFi포함", "파워백신", "100Mbps(광랜 인터넷)", "WiFi포함", "파워백신(백신적용 인터넷)", 1, 1, "SKB|100Mbps|WiFi포함|파워백신", 1, 1], ["인터넷", "SKT", "파워백신 광랜", "기가WiFi", "100Mbps", "WiFi포함", "파워백신", "100Mbps(광랜 인터넷)", "WiFi포함", "파워백신(백신적용 인터넷)", 1, 1, "SKT|100Mbps|WiFi포함|파워백신", 1, 1], ["인터넷", "HCN", "100M(4년)", "WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜 4년)", "WiFi포함", "없음", 4, 0, "HCN|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "SKB", "원격케어 광랜", "기가WiFi", "100Mbps", "WiFi포함", "원격케어", "100Mbps(광랜 인터넷)", "WiFi포함", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|100Mbps|WiFi포함|원격케어", 1, 1], ["인터넷", "SKT", "원격케어 광랜", "기가WiFi", "100Mbps", "WiFi포함", "원격케어", "100Mbps(광랜 인터넷)", "WiFi포함", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKT|100Mbps|WiFi포함|원격케어", 1, 1], ["인터넷", "딜라이브", "LG망 S광랜", "WiFi", "100Mbps", "WiFi포함", "없음", "100Mbps(광랜 인터넷 LG망)", "WiFi포함", "없음", 2, 0, "딜라이브|100Mbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "슬림 와이파이", "KT와이파이7D", "100Mbps", "프리미엄WiFi", "없음", "100Mbps(슬림)", "프리미엄WiFi(WiFi 7D)", "없음", 1, 1, "KT|100Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "LG", "스마트_광랜안심", "기가WiFi+스마트홈스피커", "100Mbps", "프리미엄WiFi", "없음", "100Mbps(광랜 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 3, 0, "LG|100Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "광랜인터넷 와이파이", "기가WiFi7", "100Mbps", "프리미엄WiFi", "없음", "100Mbps(광랜 인터넷)", "프리미엄WiFi(기가WiFi7)", "없음", 1, 1, "SKB|100Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKT", "광랜인터넷 와이파이", "기가WiFi7", "100Mbps", "프리미엄WiFi", "없음", "100Mbps(광랜 인터넷)", "프리미엄WiFi(기가WiFi7)", "없음", 1, 1, "SKT|100Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "딜라이브", "안심 LG망 S광랜", "WiFi", "100Mbps", "WiFi포함", "안심", "100Mbps(광랜 인터넷 LG망)", "WiFi포함", "안심(안심 주치의)", 2, 0, "딜라이브|100Mbps|WiFi포함|안심", 1, 1], ["인터넷", "KT", "안심 슬림 와이파이", "KT와이파이7D", "100Mbps", "프리미엄WiFi", "안심", "100Mbps(슬림)", "프리미엄WiFi(WiFi 7D)", "안심(유해사이트 방패)", 1, 1, "KT|100Mbps|프리미엄WiFi|안심", 1, 1], ["인터넷", "SKB", "모두안심 광랜", "기가WiFi7", "100Mbps", "프리미엄WiFi", "안심", "100Mbps(광랜 인터넷)", "프리미엄WiFi(기가WiFi7)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|100Mbps|프리미엄WiFi|안심", 1, 1], ["인터넷", "SKT", "모두안심 광랜", "기가WiFi7", "100Mbps", "프리미엄WiFi", "안심", "100Mbps(광랜 인터넷)", "프리미엄WiFi(기가WiFi7)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKT|100Mbps|프리미엄WiFi|안심", 1, 1], ["인터넷", "SKB", "파워백신 광랜", "기가WiFi7", "100Mbps", "프리미엄WiFi", "파워백신", "100Mbps(광랜 인터넷)", "프리미엄WiFi(기가WiFi7)", "파워백신(백신적용 인터넷)", 1, 1, "SKB|100Mbps|프리미엄WiFi|파워백신", 1, 1], ["인터넷", "SKT", "파워백신 광랜", "기가WiFi7", "100Mbps", "프리미엄WiFi", "파워백신", "100Mbps(광랜 인터넷)", "프리미엄WiFi(기가WiFi7)", "파워백신(백신적용 인터넷)", 1, 1, "SKT|100Mbps|프리미엄WiFi|파워백신", 1, 1], ["인터넷", "SKB", "원격케어 광랜", "기가WiFi7", "100Mbps", "프리미엄WiFi", "원격케어", "100Mbps(광랜 인터넷)", "프리미엄WiFi(기가WiFi7)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|100Mbps|프리미엄WiFi|원격케어", 1, 1], ["인터넷", "SKT", "원격케어 광랜", "기가WiFi7", "100Mbps", "프리미엄WiFi", "원격케어", "100Mbps(광랜 인터넷)", "프리미엄WiFi(기가WiFi7)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKT|100Mbps|프리미엄WiFi|원격케어", 1, 1], ["인터넷", "딜라이브", "ISP 스마트광랜 와이드", "WiFi+Mesh", "100Mbps", "WiFi+증폭기", "없음", "100Mbps(광랜 인터넷)", "WiFi+증폭기(Mesh)", "없음", 2, 1, "딜라이브|100Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "슬림 와이드", "기가 와이파이 (홈ax+버디)", "100Mbps", "WiFi+증폭기", "없음", "100Mbps(슬림)", "WiFi+증폭기(Buddy)", "없음", 1, 1, "KT|100Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "광랜인터넷 윙즈", "기가WiFi+윙즈", "100Mbps", "WiFi+증폭기", "없음", "100Mbps(광랜 인터넷)", "WiFi+증폭기(Wings)", "없음", 1, 1, "SKB|100Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "안심 슬림 와이드", "기가 와이파이 (홈ax+버디)", "100Mbps", "WiFi+증폭기", "안심", "100Mbps(슬림)", "WiFi+증폭기(Buddy)", "안심(유해사이트 방패)", 1, 1, "KT|100Mbps|WiFi+증폭기|안심", 1, 1], ["인터넷", "SKB", "모두안심 광랜 윙즈", "기가WiFi+윙즈", "100Mbps", "WiFi+증폭기", "안심", "100Mbps(광랜 인터넷)", "WiFi+증폭기(Wings)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|100Mbps|WiFi+증폭기|안심", 1, 1], ["인터넷", "SKB", "파워백신 광랜 윙즈", "기가WiFi+윙즈", "100Mbps", "WiFi+증폭기", "파워백신", "100Mbps(광랜 인터넷)", "WiFi+증폭기(Wings)", "파워백신(백신적용 인터넷)", 1, 1, "SKB|100Mbps|WiFi+증폭기|파워백신", 1, 1], ["인터넷", "SKB", "원격케어 광랜 윙즈", "기가WiFi+윙즈", "100Mbps", "WiFi+증폭기", "원격케어", "100Mbps(광랜 인터넷)", "WiFi+증폭기(Wings)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|100Mbps|WiFi+증폭기|원격케어", 1, 1], ["인터넷", "딜라이브", "LG망 S광랜 와이드", "WiFi+Mesh", "100Mbps", "WiFi+증폭기", "없음", "100Mbps(광랜 인터넷 LG망)", "WiFi+증폭기(Mesh)", "없음", 2, 0, "딜라이브|100Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "슬림 와이드", "기가 와이파이(7D+버디)", "100Mbps", "프리미엄WiFi+증폭기", "없음", "100Mbps(슬림)", "프리미엄WiFi+증폭기(WiFi 7D+Buddy)", "없음", 1, 1, "KT|100Mbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "광랜인터넷 윙즈", "기가WiFi7+윙즈", "100Mbps", "프리미엄WiFi+증폭기", "없음", "100Mbps(광랜 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "없음", 1, 1, "SKB|100Mbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "안심 슬림 와이드", "기가 와이파이(7D+버디)", "100Mbps", "프리미엄WiFi+증폭기", "안심", "100Mbps(슬림)", "프리미엄WiFi+증폭기(WiFi 7D+Buddy)", "안심(유해사이트 방패)", 1, 1, "KT|100Mbps|프리미엄WiFi+증폭기|안심", 1, 1], ["인터넷", "SKB", "모두안심 광랜 윙즈", "기가WiFi7+윙즈", "100Mbps", "프리미엄WiFi+증폭기", "안심", "100Mbps(광랜 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|100Mbps|프리미엄WiFi+증폭기|안심", 1, 1], ["인터넷", "SKB", "파워백신 광랜 윙즈", "기가WiFi7+윙즈", "100Mbps", "프리미엄WiFi+증폭기", "파워백신", "100Mbps(광랜 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "파워백신(백신적용 인터넷)", 1, 1, "SKB|100Mbps|프리미엄WiFi+증폭기|파워백신", 1, 1], ["인터넷", "SKB", "원격케어 광랜 윙즈", "기가WiFi7+윙즈", "100Mbps", "프리미엄WiFi+증폭기", "원격케어", "100Mbps(광랜 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|100Mbps|프리미엄WiFi+증폭기|원격케어", 1, 1], ["인터넷", "딜라이브", "ISP 스마트광랜플러스", "WiFi", "160Mbps", "WiFi포함", "없음", "160Mbps(광랜 플러스)", "WiFi포함", "없음", 1, 1, "딜라이브|160Mbps|WiFi포함|없음", 1, 1], ["인터넷", "딜라이브", "안심 스마트광랜플러스", "WiFi", "160Mbps", "WiFi포함", "안심", "160Mbps(광랜 플러스)", "WiFi포함", "안심(안심 주치의)", 1, 1, "딜라이브|160Mbps|WiFi포함|안심", 1, 1], ["인터넷", "딜라이브", "ISP 스마트광랜플러스 와이드", "WiFi+Mesh", "160Mbps", "WiFi+증폭기", "없음", "160Mbps(광랜 플러스)", "WiFi+증폭기(Mesh)", "없음", 1, 1, "딜라이브|160Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "LG HelloVision", "광랜", "프리미엄기가WiFi", "160Mbps", "프리미엄WiFi", "없음", "160Mbps(광랜 인터넷)", "프리미엄WiFi(WiFi6)", "없음", 1, 1, "LG HelloVision|160Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "KT", "슬림플러스", "", "200Mbps", "없음", "없음", "200Mbps(슬림플러스)", "없음", "없음", 1, 1, "KT|200Mbps|없음|없음", 1, 1], ["인터넷", "LG", "와이파이기본_200M", "기가WiFi6", "200Mbps", "WiFi포함", "없음", "200Mbps(200메가 인터넷)", "WiFi포함(의무임대)", "없음", 1, 1, "LG|200Mbps|WiFi포함|없음", 1, 1], ["인터넷", "SkyLife", "200메가", "기가WiFi", "200Mbps", "WiFi포함", "없음", "200Mbps(기가 200M 인터넷)", "WiFi포함", "없음", 1, 1, "SkyLife|200Mbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "프리미엄 안심 200M", "기가WiFi6+스마트홈스피커", "200Mbps", "프리미엄WiFi", "없음", "200Mbps(200메가 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 2, 1, "LG|200Mbps|프리미엄WiFi|없음", 0, 1], ["인터넷", "SkyLife", "200메가 안심", "기가WiFi", "200Mbps", "WiFi포함", "안심", "200Mbps(기가 200M 인터넷)", "WiFi포함", "안심(유해사이트 방패)", 1, 1, "SkyLife|200Mbps|WiFi포함|안심", 1, 1], ["인터넷", "LG", "프리미엄 안심 보상 200M", "기가WiFi6+안심", "200Mbps", "프리미엄WiFi", "없음", "200Mbps(200메가 인터넷)", "프리미엄WiFi(안심)", "없음", 2, 0, "LG|200Mbps|프리미엄WiFi|없음", 0, 1], ["인터넷", "딜라이브", "ISP 스마트광랜세이브플러스", "기가WiFi", "320Mbps", "WiFi포함", "없음", "320Mbps(광랜 세이브 플러스)", "WiFi포함", "없음", 1, 1, "딜라이브|320Mbps|WiFi포함|없음", 1, 1], ["인터넷", "딜라이브", "안심 스마트광랜세이브플러스", "기가WiFi", "320Mbps", "WiFi포함", "안심", "320Mbps(광랜 세이브 플러스)", "WiFi포함", "안심(안심 주치의)", 1, 1, "딜라이브|320Mbps|WiFi포함|안심", 1, 1], ["인터넷", "딜라이브", "ISP 스마트광랜세이브플러스 와이드", "기가WiFi+Mesh", "320Mbps", "WiFi+증폭기", "없음", "320Mbps(광랜 세이브 플러스)", "WiFi+증폭기(Mesh)", "없음", 1, 1, "딜라이브|320Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "베이직", "", "500Mbps", "없음", "없음", "500Mbps(베이직)", "없음", "없음", 1, 1, "KT|500Mbps|없음|없음", 1, 1], ["인터넷", "SKB", "기가라이트인터넷", "", "500Mbps", "없음", "없음", "500Mbps(기가라이트 인터넷)", "없음", "없음", 1, 1, "SKB|500Mbps|없음|없음", 1, 1], ["인터넷", "SKT", "기가라이트인터넷", "", "500Mbps", "없음", "없음", "500Mbps(기가라이트 인터넷)", "없음", "없음", 1, 1, "SKT|500Mbps|없음|없음", 1, 1], ["인터넷", "LG HelloVision", "기가라이트", "프리미엄기가WiFi", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi(WiFi6)", "없음", 1, 1, "LG HelloVision|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "KT", "베이직 와이파이", "기가 와이파이 홈ax", "500Mbps", "WiFi포함", "없음", "500Mbps(베이직)", "WiFi포함", "없음", 1, 1, "KT|500Mbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "와이파이기본_기가슬림안심", "기가WiFi6", "500Mbps", "WiFi포함", "없음", "500Mbps(기가슬림 인터넷)", "WiFi포함(의무임대)", "없음", 1, 1, "LG|500Mbps|WiFi포함|없음", 1, 1], ["인터넷", "SKB", "기가라이트인터넷 와이파이", "기가WiFi", "500Mbps", "WiFi포함", "없음", "500Mbps(기가라이트 인터넷)", "WiFi포함", "없음", 1, 1, "SKB|500Mbps|WiFi포함|없음", 1, 1], ["인터넷", "SKT", "기가라이트인터넷 와이파이", "기가WiFi", "500Mbps", "WiFi포함", "없음", "500Mbps(기가라이트 인터넷)", "WiFi포함", "없음", 1, 1, "SKT|500Mbps|WiFi포함|없음", 1, 1], ["인터넷", "SkyLife", "500메가", "기가WiFi", "500Mbps", "WiFi포함", "없음", "500Mbps(기가 500M 인터넷)", "WiFi포함", "없음", 1, 1, "SkyLife|500Mbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "안심 베이직 와이파이", "기가 와이파이 홈ax", "500Mbps", "WiFi포함", "안심", "500Mbps(베이직)", "WiFi포함", "안심(유해사이트 방패)", 1, 1, "KT|500Mbps|WiFi포함|안심", 1, 1], ["인터넷", "LG", "프리미엄 안심 500메가", "기가WiFi6+스마트홈스피커", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가슬림 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 7, 1, "LG|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "모두안심 기가라이트", "기가WiFi", "500Mbps", "WiFi포함", "안심", "500Mbps(기가라이트 인터넷)", "WiFi포함", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|500Mbps|WiFi포함|안심", 1, 1], ["인터넷", "SKT", "모두안심 기가라이트", "기가WiFi", "500Mbps", "WiFi포함", "안심", "500Mbps(기가라이트 인터넷)", "WiFi포함", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKT|500Mbps|WiFi포함|안심", 1, 1], ["인터넷", "SkyLife", "500메가 안심", "기가WiFi", "500Mbps", "WiFi포함", "안심", "500Mbps(기가 500M 인터넷)", "WiFi포함", "안심(유해사이트 방패)", 1, 1, "SkyLife|500Mbps|WiFi포함|안심", 1, 1], ["인터넷", "LG", "프리미엄 안심 보상 500메가", "기가WiFi6+스마트홈+보상", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가슬림 인터넷)", "프리미엄WiFi(Smart스피커+보상케어)", "없음", 7, 0, "LG|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "파워백신 기가라이트", "기가WiFi", "500Mbps", "WiFi포함", "파워백신", "500Mbps(기가라이트 인터넷)", "WiFi포함", "파워백신(백신적용 인터넷)", 1, 1, "SKB|500Mbps|WiFi포함|파워백신", 1, 1], ["인터넷", "SKT", "파워백신 기가라이트", "기가WiFi", "500Mbps", "WiFi포함", "파워백신", "500Mbps(기가라이트 인터넷)", "WiFi포함", "파워백신(백신적용 인터넷)", 1, 1, "SKT|500Mbps|WiFi포함|파워백신", 1, 1], ["인터넷", "LG", "프리미엄 안심 500메가", "기가WiFi6+크롬캐스트", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가슬림 인터넷)", "프리미엄WiFi(크롬캐스트)", "없음", 7, 0, "LG|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "원격케어 기가라이트", "기가WiFi", "500Mbps", "WiFi포함", "원격케어", "500Mbps(기가라이트 인터넷)", "WiFi포함", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|500Mbps|WiFi포함|원격케어", 1, 1], ["인터넷", "SKT", "원격케어 기가라이트", "기가WiFi", "500Mbps", "WiFi포함", "원격케어", "500Mbps(기가라이트 인터넷)", "WiFi포함", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKT|500Mbps|WiFi포함|원격케어", 1, 1], ["인터넷", "딜라이브", "LG망 S기가500M", "기가WiFi", "500Mbps", "WiFi포함", "없음", "500Mbps(500메가 인터넷 LG망)", "WiFi포함", "없음", 1, 1, "딜라이브|500Mbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "베이직 와이파이", "KT와이파이7D", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(베이직)", "프리미엄WiFi(WiFi 7D)", "없음", 1, 1, "KT|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "LG", "스마트_기가슬림안심", "기가WiFi6+스마트홈스피커", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가슬림 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 7, 0, "LG|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "기가라이트인터넷 와이파이", "기가WiFi7", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi(기가WiFi7)", "없음", 1, 1, "SKB|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKT", "기가라이트인터넷 와이파이", "기가WiFi7", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi(기가WiFi7)", "없음", 1, 1, "SKT|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "딜라이브", "안심 LG망 S기가500M", "기가WiFi", "500Mbps", "WiFi포함", "안심", "500Mbps(500메가 인터넷 LG망)", "WiFi포함", "안심(안심 주치의)", 1, 1, "딜라이브|500Mbps|WiFi포함|안심", 1, 1], ["인터넷", "KT", "안심 베이직 와이파이", "KT와이파이7D", "500Mbps", "프리미엄WiFi", "안심", "500Mbps(베이직)", "프리미엄WiFi(WiFi 7D)", "안심(유해사이트 방패)", 1, 1, "KT|500Mbps|프리미엄WiFi|안심", 1, 1], ["인터넷", "LG", "스마트기가_최대500메가", "기가WiFi6+스마트홈스피커", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가슬림 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 7, 0, "LG|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "모두안심 기가라이트", "기가WiFi7", "500Mbps", "프리미엄WiFi", "안심", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi(기가WiFi7)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|500Mbps|프리미엄WiFi|안심", 1, 1], ["인터넷", "SKT", "모두안심 기가라이트", "기가WiFi7", "500Mbps", "프리미엄WiFi", "안심", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi(기가WiFi7)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKT|500Mbps|프리미엄WiFi|안심", 1, 1], ["인터넷", "SKB", "파워백신 기가라이트", "기가WiFi7", "500Mbps", "프리미엄WiFi", "파워백신", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi(기가WiFi7)", "파워백신(백신적용 인터넷)", 1, 1, "SKB|500Mbps|프리미엄WiFi|파워백신", 1, 1], ["인터넷", "SKT", "파워백신 기가라이트", "기가WiFi7", "500Mbps", "프리미엄WiFi", "파워백신", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi(기가WiFi7)", "파워백신(백신적용 인터넷)", 1, 1, "SKT|500Mbps|프리미엄WiFi|파워백신", 1, 1], ["인터넷", "LG", "스마트_기가슬림안심", "기가WiFi6+크롬캐스트", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가슬림 인터넷)", "프리미엄WiFi(크롬캐스트)", "없음", 7, 0, "LG|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "원격케어 기가라이트", "기가WiFi7", "500Mbps", "프리미엄WiFi", "원격케어", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi(기가WiFi7)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|500Mbps|프리미엄WiFi|원격케어", 1, 1], ["인터넷", "SKT", "원격케어 기가라이트", "기가WiFi7", "500Mbps", "프리미엄WiFi", "원격케어", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi(기가WiFi7)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKT|500Mbps|프리미엄WiFi|원격케어", 1, 1], ["인터넷", "LG", "스마트기가_최대500메가", "기가WiFi6+크롬캐스트", "500Mbps", "프리미엄WiFi", "없음", "500Mbps(기가슬림 인터넷)", "프리미엄WiFi(크롬캐스트)", "없음", 7, 0, "LG|500Mbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "LG HelloVision", "기가라이트 Mesh", "기가Mesh패키지", "500Mbps", "프리미엄WiFi+증폭기", "없음", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi+증폭기(WiFi6+Mesh)", "없음", 1, 1, "LG HelloVision|500Mbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "베이직 와이드", "기가 와이파이 (홈ax+버디)", "500Mbps", "WiFi+증폭기", "없음", "500Mbps(베이직)", "WiFi+증폭기(Buddy)", "없음", 1, 1, "KT|500Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "LG", "프리미엄 안심 500메가", "기가WiFi6+MESH", "500Mbps", "WiFi+증폭기", "없음", "500Mbps(기가슬림 인터넷)", "WiFi+증폭기(Mesh)", "없음", 3, 1, "LG|500Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "기가라이트인터넷 윙즈", "기가WiFi+윙즈", "500Mbps", "WiFi+증폭기", "없음", "500Mbps(기가라이트 인터넷)", "WiFi+증폭기(Wings)", "없음", 1, 1, "SKB|500Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "안심 베이직 와이드", "기가 와이파이 (홈ax+버디)", "500Mbps", "WiFi+증폭기", "안심", "500Mbps(베이직)", "WiFi+증폭기(Buddy)", "안심(유해사이트 방패)", 1, 1, "KT|500Mbps|WiFi+증폭기|안심", 1, 1], ["인터넷", "LG", "프리미엄 안심 보상 500메가", "기가WiFi6+MESH+보상", "500Mbps", "프리미엄WiFi+증폭기", "없음", "500Mbps(기가슬림 인터넷)", "프리미엄WiFi+증폭기(Mesh+보상케어)", "없음", 1, 1, "LG|500Mbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "모두안심 기가라이트 윙즈", "기가WiFi+윙즈", "500Mbps", "WiFi+증폭기", "안심", "500Mbps(기가라이트 인터넷)", "WiFi+증폭기(Wings)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|500Mbps|WiFi+증폭기|안심", 1, 1], ["인터넷", "SKB", "파워백신 기가라이트 윙즈", "기가WiFi+윙즈", "500Mbps", "WiFi+증폭기", "파워백신", "500Mbps(기가라이트 인터넷)", "WiFi+증폭기(Wings)", "파워백신(백신적용 인터넷)", 1, 1, "SKB|500Mbps|WiFi+증폭기|파워백신", 1, 1], ["인터넷", "SKB", "원격케어 기가라이트 윙즈", "기가WiFi+윙즈", "500Mbps", "WiFi+증폭기", "원격케어", "500Mbps(기가라이트 인터넷)", "WiFi+증폭기(Wings)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|500Mbps|WiFi+증폭기|원격케어", 1, 1], ["인터넷", "딜라이브", "LG망 S기가500M 와이드", "기가WiFi+Mesh", "500Mbps", "WiFi+증폭기", "없음", "500Mbps(500메가 인터넷 LG망)", "WiFi+증폭기(Mesh)", "없음", 1, 1, "딜라이브|500Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "베이직 와이드", "기가 와이파이(7D+버디)", "500Mbps", "프리미엄WiFi+증폭기", "없음", "500Mbps(베이직)", "프리미엄WiFi+증폭기(WiFi 7D+Buddy)", "없음", 1, 1, "KT|500Mbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "LG", "스마트_기가슬림안심", "기가WiFi6+MESH", "500Mbps", "WiFi+증폭기", "없음", "500Mbps(기가슬림 인터넷)", "WiFi+증폭기(Mesh)", "없음", 3, 0, "LG|500Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "기가라이트인터넷 윙즈", "기가WiFi7+윙즈", "500Mbps", "프리미엄WiFi+증폭기", "없음", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "없음", 1, 1, "SKB|500Mbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "안심 베이직 와이드", "기가 와이파이(7D+버디)", "500Mbps", "프리미엄WiFi+증폭기", "안심", "500Mbps(베이직)", "프리미엄WiFi+증폭기(WiFi 7D+Buddy)", "안심(유해사이트 방패)", 1, 1, "KT|500Mbps|프리미엄WiFi+증폭기|안심", 1, 1], ["인터넷", "LG", "스마트기가_최대500메가", "기가WiFi6+MESH", "500Mbps", "WiFi+증폭기", "없음", "500Mbps(기가슬림 인터넷)", "WiFi+증폭기(Mesh)", "없음", 3, 0, "LG|500Mbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "모두안심 기가라이트 윙즈", "기가WiFi7+윙즈", "500Mbps", "프리미엄WiFi+증폭기", "안심", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|500Mbps|프리미엄WiFi+증폭기|안심", 1, 1], ["인터넷", "SKB", "파워백신 기가라이트 윙즈", "기가WiFi7+윙즈", "500Mbps", "프리미엄WiFi+증폭기", "파워백신", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "파워백신(백신적용 인터넷)", 1, 1, "SKB|500Mbps|프리미엄WiFi+증폭기|파워백신", 1, 1], ["인터넷", "SKB", "원격케어 기가라이트 윙즈", "기가WiFi7+윙즈", "500Mbps", "프리미엄WiFi+증폭기", "원격케어", "500Mbps(기가라이트 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|500Mbps|프리미엄WiFi+증폭기|원격케어", 1, 1], ["인터넷", "HCN", "기가(1년)", "", "1Gbps", "없음", "없음", "1Gbps(기가 인터넷 1년)", "없음", "없음", 4, 1, "HCN|1Gbps|없음|없음", 1, 1], ["인터넷", "KT", "에센스", "기가 와이파이 홈ax", "1Gbps", "WiFi포함", "없음", "1Gbps(에센스)", "WiFi포함", "없음", 2, 1, "KT|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKB", "기가인터넷", "", "1Gbps", "없음", "없음", "1Gbps(기가 인터넷)", "없음", "없음", 1, 1, "SKB|1Gbps|없음|없음", 1, 1], ["인터넷", "SKT", "기가인터넷", "", "1Gbps", "없음", "없음", "1Gbps(기가 인터넷)", "없음", "없음", 1, 1, "SKT|1Gbps|없음|없음", 1, 1], ["인터넷", "HCN", "기가(2년)", "", "1Gbps", "없음", "없음", "1Gbps(기가 인터넷 2년)", "없음", "없음", 4, 0, "HCN|1Gbps|없음|없음", 1, 1], ["인터넷", "HCN", "기가(3년)", "", "1Gbps", "없음", "없음", "1Gbps(기가 인터넷 3년)", "없음", "없음", 4, 0, "HCN|1Gbps|없음|없음", 1, 1], ["인터넷", "HCN", "기가(4년)", "", "1Gbps", "없음", "없음", "1Gbps(기가 인터넷 4년)", "없음", "없음", 4, 0, "HCN|1Gbps|없음|없음", 1, 1], ["인터넷", "KT", "에센스", "KT와이파이7D", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(에센스)", "프리미엄WiFi(WiFi 7D)", "없음", 2, 1, "KT|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "딜라이브", "ISP 스마트기가", "기가WiFi", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 인터넷)", "WiFi포함", "없음", 2, 1, "딜라이브|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "HCN", "기가(1년)", "WiFi", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 인터넷 1년)", "WiFi포함", "없음", 4, 1, "HCN|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "LG HelloVision", "플래티넘기가", "프리미엄기가WiFi", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(플래티넘기가 인터넷)", "프리미엄WiFi(WiFi6)", "없음", 1, 1, "LG HelloVision|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "KT", "에센스 와이파이", "기가 와이파이 홈ax", "1Gbps", "WiFi포함", "없음", "1Gbps(에센스)", "WiFi포함", "없음", 2, 0, "KT|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "와이파이기본_기가안심", "기가WiFi6", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 인터넷)", "WiFi포함(의무임대)", "없음", 1, 1, "LG|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKB", "기가인터넷 와이파이", "기가WiFi", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 인터넷)", "WiFi포함", "없음", 1, 1, "SKB|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKT", "기가인터넷 와이파이", "기가WiFi", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 인터넷)", "WiFi포함", "없음", 1, 1, "SKT|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SkyLife", "1기가", "기가WiFi", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 1G 인터넷)", "WiFi포함", "없음", 1, 1, "SkyLife|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "딜라이브", "안심 스마트기가", "기가WiFi", "1Gbps", "WiFi포함", "안심", "1Gbps(기가 인터넷)", "WiFi포함", "안심(안심 주치의)", 2, 1, "딜라이브|1Gbps|WiFi포함|안심", 1, 1], ["인터넷", "HCN", "기가(2년)", "WiFi", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 인터넷 2년)", "WiFi포함", "없음", 4, 0, "HCN|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "안심 에센스 와이파이", "기가 와이파이 홈ax", "1Gbps", "WiFi포함", "안심", "1Gbps(에센스)", "WiFi포함", "안심(유해사이트 방패)", 1, 1, "KT|1Gbps|WiFi포함|안심", 1, 1], ["인터넷", "LG", "프리미엄 안심 1기가", "기가WiFi6+스마트홈스피커", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 7, 1, "LG|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "모두안심 기가", "기가WiFi", "1Gbps", "WiFi포함", "안심", "1Gbps(기가 인터넷)", "WiFi포함", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|1Gbps|WiFi포함|안심", 1, 1], ["인터넷", "SKT", "모두안심 기가", "기가WiFi", "1Gbps", "WiFi포함", "안심", "1Gbps(기가 인터넷)", "WiFi포함", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKT|1Gbps|WiFi포함|안심", 1, 1], ["인터넷", "SkyLife", "1기가 안심", "기가WiFi", "1Gbps", "WiFi포함", "안심", "1Gbps(기가 1G 인터넷)", "WiFi포함", "안심(유해사이트 방패)", 1, 1, "SkyLife|1Gbps|WiFi포함|안심", 1, 1], ["인터넷", "HCN", "기가(3년)", "WiFi", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 인터넷 3년)", "WiFi포함", "없음", 4, 0, "HCN|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "프리미엄 안심 보상 1기가", "기가WiFi6+스마트홈+보상", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi(Smart스피커+보상케어)", "없음", 7, 0, "LG|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "파워백신 기가", "기가WiFi", "1Gbps", "WiFi포함", "파워백신", "1Gbps(기가 인터넷)", "WiFi포함", "파워백신(백신적용 인터넷)", 1, 1, "SKB|1Gbps|WiFi포함|파워백신", 1, 1], ["인터넷", "SKT", "파워백신 기가", "기가WiFi", "1Gbps", "WiFi포함", "파워백신", "1Gbps(기가 인터넷)", "WiFi포함", "파워백신(백신적용 인터넷)", 1, 1, "SKT|1Gbps|WiFi포함|파워백신", 1, 1], ["인터넷", "HCN", "기가(4년)", "WiFi", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 인터넷 4년)", "WiFi포함", "없음", 4, 0, "HCN|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "프리미엄 안심 1기가", "기가WiFi6+크롬캐스트", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi(크롬캐스트)", "없음", 7, 0, "LG|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "원격케어 기가", "기가WiFi", "1Gbps", "WiFi포함", "원격케어", "1Gbps(기가 인터넷)", "WiFi포함", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|1Gbps|WiFi포함|원격케어", 1, 1], ["인터넷", "SKT", "원격케어 기가", "기가WiFi", "1Gbps", "WiFi포함", "원격케어", "1Gbps(기가 인터넷)", "WiFi포함", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKT|1Gbps|WiFi포함|원격케어", 1, 1], ["인터넷", "딜라이브", "LG망 S기가", "기가WiFi", "1Gbps", "WiFi포함", "없음", "1Gbps(기가 인터넷 LG망)", "WiFi포함", "없음", 2, 0, "딜라이브|1Gbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "에센스 와이파이", "KT와이파이7D", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(에센스)", "프리미엄WiFi(WiFi 7D)", "없음", 2, 0, "KT|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "LG", "스마트_기가안심", "기가WiFi6+스마트홈스피커", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 7, 0, "LG|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "기가인터넷 와이파이", "기가WiFi7", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi(기가WiFi7)", "없음", 1, 1, "SKB|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKT", "기가인터넷 와이파이", "기가WiFi7", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi(기가WiFi7)", "없음", 1, 1, "SKT|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "딜라이브", "안심 LG망 S기가", "기가WiFi", "1Gbps", "WiFi포함", "안심", "1Gbps(기가 인터넷 LG망)", "WiFi포함", "안심(안심 주치의)", 2, 0, "딜라이브|1Gbps|WiFi포함|안심", 1, 1], ["인터넷", "KT", "안심 에센스 와이파이", "KT와이파이7D", "1Gbps", "프리미엄WiFi", "안심", "1Gbps(에센스)", "프리미엄WiFi(WiFi 7D)", "안심(유해사이트 방패)", 1, 1, "KT|1Gbps|프리미엄WiFi|안심", 1, 1], ["인터넷", "LG", "스마트기가_최대1기가", "기가WiFi6+스마트홈스피커", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 7, 0, "LG|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "모두안심 기가", "기가WiFi7", "1Gbps", "프리미엄WiFi", "안심", "1Gbps(기가 인터넷)", "프리미엄WiFi(기가WiFi7)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|1Gbps|프리미엄WiFi|안심", 1, 1], ["인터넷", "SKT", "모두안심 기가", "기가WiFi7", "1Gbps", "프리미엄WiFi", "안심", "1Gbps(기가 인터넷)", "프리미엄WiFi(기가WiFi7)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKT|1Gbps|프리미엄WiFi|안심", 1, 1], ["인터넷", "SKB", "파워백신 기가", "기가WiFi7", "1Gbps", "프리미엄WiFi", "파워백신", "1Gbps(기가 인터넷)", "프리미엄WiFi(기가WiFi7)", "파워백신(백신적용 인터넷)", 1, 1, "SKB|1Gbps|프리미엄WiFi|파워백신", 1, 1], ["인터넷", "SKT", "파워백신 기가", "기가WiFi7", "1Gbps", "프리미엄WiFi", "파워백신", "1Gbps(기가 인터넷)", "프리미엄WiFi(기가WiFi7)", "파워백신(백신적용 인터넷)", 1, 1, "SKT|1Gbps|프리미엄WiFi|파워백신", 1, 1], ["인터넷", "LG", "스마트_기가안심", "기가WiFi6+크롬캐스트", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi(크롬캐스트)", "없음", 7, 0, "LG|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "SKB", "원격케어 기가", "기가WiFi7", "1Gbps", "프리미엄WiFi", "원격케어", "1Gbps(기가 인터넷)", "프리미엄WiFi(기가WiFi7)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|1Gbps|프리미엄WiFi|원격케어", 1, 1], ["인터넷", "SKT", "원격케어 기가", "기가WiFi7", "1Gbps", "프리미엄WiFi", "원격케어", "1Gbps(기가 인터넷)", "프리미엄WiFi(기가WiFi7)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKT|1Gbps|프리미엄WiFi|원격케어", 1, 1], ["인터넷", "LG", "스마트기가_최대1기가", "기가WiFi6+크롬캐스트", "1Gbps", "프리미엄WiFi", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi(크롬캐스트)", "없음", 7, 0, "LG|1Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "딜라이브", "ISP 스마트 기가 와이드", "기가WiFi+Mesh", "1Gbps", "WiFi+증폭기", "없음", "1Gbps(기가 인터넷)", "WiFi+증폭기(Mesh)", "없음", 2, 1, "딜라이브|1Gbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "LG HelloVision", "플래티넘기가 Mesh", "기가Mesh패키지", "1Gbps", "프리미엄WiFi+증폭기", "없음", "1Gbps(플래티넘기가 인터넷)", "프리미엄WiFi+증폭기(WiFi6+Mesh)", "없음", 1, 1, "LG HelloVision|1Gbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "에센스 와이드", "기가 와이파이 (홈ax+버디)", "1Gbps", "WiFi+증폭기", "없음", "1Gbps(에센스)", "WiFi+증폭기(Buddy)", "없음", 1, 1, "KT|1Gbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "LG", "프리미엄 안심 1기가", "기가WiFi6+MESH", "1Gbps", "WiFi+증폭기", "없음", "1Gbps(기가 인터넷)", "WiFi+증폭기(Mesh)", "없음", 3, 1, "LG|1Gbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "기가인터넷 윙즈", "기가WiFi+윙즈", "1Gbps", "WiFi+증폭기", "없음", "1Gbps(기가 인터넷)", "WiFi+증폭기(Wings)", "없음", 1, 1, "SKB|1Gbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "안심 에센스 와이드", "기가 와이파이 (홈ax+버디)", "1Gbps", "WiFi+증폭기", "안심", "1Gbps(에센스)", "WiFi+증폭기(Buddy)", "안심(유해사이트 방패)", 1, 1, "KT|1Gbps|WiFi+증폭기|안심", 1, 1], ["인터넷", "LG", "프리미엄 안심 보상 1기가", "기가WiFi6+MESH+보상", "1Gbps", "프리미엄WiFi+증폭기", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi+증폭기(Mesh+보상케어)", "없음", 1, 1, "LG|1Gbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "모두안심 기가 윙즈", "기가WiFi+윙즈", "1Gbps", "WiFi+증폭기", "안심", "1Gbps(기가 인터넷)", "WiFi+증폭기(Wings)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|1Gbps|WiFi+증폭기|안심", 1, 1], ["인터넷", "SKB", "파워백신 기가 윙즈", "기가WiFi+윙즈", "1Gbps", "WiFi+증폭기", "파워백신", "1Gbps(기가 인터넷)", "WiFi+증폭기(Wings)", "파워백신(백신적용 인터넷)", 1, 1, "SKB|1Gbps|WiFi+증폭기|파워백신", 1, 1], ["인터넷", "SKB", "원격케어 기가 윙즈", "기가WiFi+윙즈", "1Gbps", "WiFi+증폭기", "원격케어", "1Gbps(기가 인터넷)", "WiFi+증폭기(Wings)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|1Gbps|WiFi+증폭기|원격케어", 1, 1], ["인터넷", "딜라이브", "LG망 S기가 와이드", "기가WiFi+Mesh", "1Gbps", "WiFi+증폭기", "없음", "1Gbps(기가 인터넷 LG망)", "WiFi+증폭기(Mesh)", "없음", 2, 0, "딜라이브|1Gbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "에센스 와이드", "기가 와이파이(7D+버디)", "1Gbps", "프리미엄WiFi+증폭기", "없음", "1Gbps(에센스)", "프리미엄WiFi+증폭기(WiFi 7D+Buddy)", "없음", 1, 1, "KT|1Gbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "LG", "스마트_기가안심", "기가WiFi6+MESH", "1Gbps", "WiFi+증폭기", "없음", "1Gbps(기가 인터넷)", "WiFi+증폭기(Mesh)", "없음", 3, 0, "LG|1Gbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "기가인터넷 윙즈", "기가WiFi7+윙즈", "1Gbps", "프리미엄WiFi+증폭기", "없음", "1Gbps(기가 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "없음", 1, 1, "SKB|1Gbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "안심 에센스 와이드", "기가 와이파이(7D+버디)", "1Gbps", "프리미엄WiFi+증폭기", "안심", "1Gbps(에센스)", "프리미엄WiFi+증폭기(WiFi 7D+Buddy)", "안심(유해사이트 방패)", 1, 1, "KT|1Gbps|프리미엄WiFi+증폭기|안심", 1, 1], ["인터넷", "LG", "스마트기가_최대1기가", "기가WiFi6+MESH", "1Gbps", "WiFi+증폭기", "없음", "1Gbps(기가 인터넷)", "WiFi+증폭기(Mesh)", "없음", 3, 0, "LG|1Gbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "SKB", "모두안심 기가 윙즈", "기가WiFi7+윙즈", "1Gbps", "프리미엄WiFi+증폭기", "안심", "1Gbps(기가 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "안심(모두안심 · 유해사이트 방패)", 1, 1, "SKB|1Gbps|프리미엄WiFi+증폭기|안심", 1, 1], ["인터넷", "SKB", "파워백신 기가 윙즈", "기가WiFi7+윙즈", "1Gbps", "프리미엄WiFi+증폭기", "파워백신", "1Gbps(기가 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "파워백신(백신적용 인터넷)", 1, 1, "SKB|1Gbps|프리미엄WiFi+증폭기|파워백신", 1, 1], ["인터넷", "SKB", "원격케어 기가 윙즈", "기가WiFi7+윙즈", "1Gbps", "프리미엄WiFi+증폭기", "원격케어", "1Gbps(기가 인터넷)", "프리미엄WiFi+증폭기(기가WiFi7+Wings)", "원격케어(PC&스마트폰 원격점검)", 1, 1, "SKB|1Gbps|프리미엄WiFi+증폭기|원격케어", 1, 1], ["인터넷", "KT", "프리미엄", "기가 와이파이 홈ax", "2.5Gbps", "WiFi포함", "없음", "2.5Gbps(프리미엄)", "WiFi포함", "없음", 2, 1, "KT|2.5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "프리미엄", "KT와이파이7D", "2.5Gbps", "프리미엄WiFi", "없음", "2.5Gbps(프리미엄)", "프리미엄WiFi(WiFi 7D)", "없음", 2, 1, "KT|2.5Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "KT", "프리미엄 와이파이", "기가 와이파이 홈ax", "2.5Gbps", "WiFi포함", "없음", "2.5Gbps(프리미엄)", "WiFi포함", "없음", 2, 0, "KT|2.5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "와이파이기본_2.5기가", "기가WiFi 프리미엄", "2.5Gbps", "WiFi포함", "없음", "2.5Gbps(2.5기가 인터넷)", "WiFi포함(의무임대 · 안심X)", "없음", 2, 1, "LG|2.5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKB", "기가인터넷멀티 와이파이 1.7G", "기가WiFi 프리미엄", "2.5Gbps", "WiFi포함", "없음", "2.5Gbps(기가프리미엄X2.5)", "WiFi포함", "없음", 2, 1, "SKB|2.5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKT", "기가인터넷멀티", "기가WiFi 프리미엄", "2.5Gbps", "WiFi포함", "없음", "2.5Gbps(기가프리미엄X2.5)", "WiFi포함", "없음", 3, 1, "SKT|2.5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "와이파이기본_2.5기가안심", "기가WiFi 프리미엄", "2.5Gbps", "WiFi포함", "없음", "2.5Gbps(2.5기가 인터넷)", "WiFi포함(의무임대)", "없음", 2, 0, "LG|2.5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKB", "기가프리미엄X2.5", "기가WiFi 프리미엄", "2.5Gbps", "WiFi포함", "없음", "2.5Gbps(기가프리미엄X2.5)", "WiFi포함", "없음", 2, 0, "SKB|2.5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKT", "기가인터넷멀티 와이파이 1.7G", "기가WiFi 프리미엄", "2.5Gbps", "WiFi포함", "없음", "2.5Gbps(기가프리미엄X2.5)", "WiFi포함", "없음", 3, 0, "SKT|2.5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKT", "기가프리미엄X2.5", "기가WiFi 프리미엄", "2.5Gbps", "WiFi포함", "없음", "2.5Gbps(기가프리미엄X2.5)", "WiFi포함", "없음", 3, 0, "SKT|2.5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "프리미엄 와이파이", "KT와이파이7D", "2.5Gbps", "프리미엄WiFi", "없음", "2.5Gbps(프리미엄)", "프리미엄WiFi(WiFi 7D)", "없음", 2, 0, "KT|2.5Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "LG", "스마트기가_최대2.5기가", "기가WiFi6+스마트홈스피커", "2.5Gbps", "프리미엄WiFi", "없음", "2.5Gbps(2.5기가 인터넷)", "프리미엄WiFi(Smart스피커)", "없음", 1, 1, "LG|2.5Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "KT", "프리미엄 와이드", "기가 와이파이 (홈ax+버디)", "2.5Gbps", "WiFi+증폭기", "없음", "2.5Gbps(프리미엄)", "WiFi+증폭기(Buddy)", "없음", 1, 1, "KT|2.5Gbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "프리미엄 와이드", "기가 와이파이(7D+버디)", "2.5Gbps", "프리미엄WiFi+증폭기", "없음", "2.5Gbps(프리미엄)", "프리미엄WiFi+증폭기(WiFi 7D+Buddy)", "없음", 1, 1, "KT|2.5Gbps|프리미엄WiFi+증폭기|없음", 1, 1], ["인터넷", "LG", "스마트기가_최대2.5기가", "기가WiFi6+MESH", "2.5Gbps", "WiFi+증폭기", "없음", "2.5Gbps(2.5기가 인터넷)", "WiFi+증폭기(Mesh)", "없음", 1, 1, "LG|2.5Gbps|WiFi+증폭기|없음", 1, 1], ["인터넷", "KT", "프리미엄플러스", "기가 와이파이 웨이브2(2대)", "5Gbps", "WiFi포함", "없음", "5Gbps(프리미엄플러스)", "WiFi포함", "없음", 1, 1, "KT|5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "와이파이기본_5기가", "기가WiFi 프리미엄", "5Gbps", "WiFi포함", "없음", "5Gbps(5기가 인터넷)", "WiFi포함(의무임대 · 안심X)", "없음", 1, 1, "LG|5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKB", "기가프리미엄X5", "기가WiFi 프리미엄", "5Gbps", "WiFi포함", "없음", "5Gbps(기가프리미엄X5)", "WiFi포함", "없음", 1, 1, "SKB|5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKT", "기가프리미엄X5", "기가WiFi 프리미엄", "5Gbps", "WiFi포함", "없음", "5Gbps(기가프리미엄X5)", "WiFi포함", "없음", 1, 1, "SKT|5Gbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "프리미엄플러스", "KT와이파이7D", "5Gbps", "프리미엄WiFi", "없음", "5Gbps(프리미엄플러스)", "프리미엄WiFi(WiFi 7D)", "없음", 1, 1, "KT|5Gbps|프리미엄WiFi|없음", 1, 1], ["인터넷", "KT", "슈퍼프리미엄", "기가 와이파이 웨이브2(2대)", "10Gbps", "WiFi포함", "없음", "10Gbps(슈퍼프리미엄)", "WiFi포함", "없음", 1, 1, "KT|10Gbps|WiFi포함|없음", 1, 1], ["인터넷", "LG", "와이파이기본_10기가", "기가WiFi 프리미엄", "10Gbps", "WiFi포함", "없음", "10Gbps(10기가 인터넷)", "WiFi포함(의무임대 · 안심X)", "없음", 1, 1, "LG|10Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKB", "기가프리미엄X10", "기가WiFi 프리미엄", "10Gbps", "WiFi포함", "없음", "10Gbps(기가프리미엄X10)", "WiFi포함", "없음", 1, 1, "SKB|10Gbps|WiFi포함|없음", 1, 1], ["인터넷", "SKT", "기가프리미엄X10", "기가WiFi 프리미엄", "10Gbps", "WiFi포함", "없음", "10Gbps(기가프리미엄X10)", "WiFi포함", "없음", 1, 1, "SKT|10Gbps|WiFi포함|없음", 1, 1], ["인터넷", "KT", "슈퍼프리미엄", "KT와이파이7D", "10Gbps", "프리미엄WiFi", "없음", "10Gbps(슈퍼프리미엄)", "프리미엄WiFi(WiFi 7D)", "없음", 1, 1, "KT|10Gbps|프리미엄WiFi|없음", 1, 1]];
 const REP={}; R.forEach((r,i)=>{ if(r[11]) REP[r[12]]=i; });
 const TAGO={"인터넷": {"HCN": {"1": [["100Mbps(광랜 1년)", "100Mbps"], ["100Mbps(광랜 2년)", "100Mbps"], ["100Mbps(광랜 3년)", "100Mbps"], ["100Mbps(광랜 4년)", "100Mbps"], ["1Gbps(기가 인터넷 1년)", "1Gbps"], ["1Gbps(기가 인터넷 2년)", "1Gbps"], ["1Gbps(기가 인터넷 3년)", "1Gbps"], ["1Gbps(기가 인터넷 4년)", "1Gbps"]], "2": [["없음", "없음"], ["WiFi포함", "WiFi포함"]], "3": [["없음", "없음"]]}, "LG HelloVision": {"1": [["100Mbps(광랜라이트 인터넷)", "100Mbps"], ["160Mbps(광랜 인터넷)", "160Mbps"], ["1Gbps(플래티넘기가 인터넷)", "1Gbps"], ["500Mbps(기가라이트 인터넷)", "500Mbps"]], "2": [["없음", "없음"], ["WiFi포함", "WiFi포함"], ["프리미엄WiFi(WiFi6)", "프리미엄WiFi"], ["프리미엄WiFi+증폭기(WiFi6+Mesh)", "프리미엄WiFi+증폭기"]], "3": [["없음", "없음"]]}, "KT": {"1": [["100Mbps(슬림)", "100Mbps"], ["10Gbps(슈퍼프리미엄)", "10Gbps"], ["1Gbps(에센스)", "1Gbps"], ["2.5Gbps(프리미엄)", "2.5Gbps"], ["200Mbps(슬림플러스)", "200Mbps"], ["500Mbps(베이직)", "500Mbps"], ["5Gbps(프리미엄플러스)", "5Gbps"]], "2": [["없음", "없음"], ["WiFi+증폭기(Buddy)", "WiFi+증폭기"], ["WiFi포함", "WiFi포함"], ["프리미엄WiFi(WiFi 7D)", "프리미엄WiFi"], ["프리미엄WiFi+증폭기(WiFi 7D+Buddy)", "프리미엄WiFi+증폭기"]], "3": [["없음", "없음"], ["안심(유해사이트 방패)", "안심"]]}, "SKB": {"1": [["100Mbps(광랜 인터넷)", "100Mbps"], ["10Gbps(기가프리미엄X10)", "10Gbps"], ["1Gbps(기가 인터넷)", "1Gbps"], ["2.5Gbps(기가프리미엄X2.5)", "2.5Gbps"], ["500Mbps(기가라이트 인터넷)", "500Mbps"], ["5Gbps(기가프리미엄X5)", "5Gbps"]], "2": [["없음", "없음"], ["WiFi+증폭기(Wings)", "WiFi+증폭기"], ["WiFi포함", "WiFi포함"], ["프리미엄WiFi(기가WiFi7)", "프리미엄WiFi"], ["프리미엄WiFi+증폭기(기가WiFi7+Wings)", "프리미엄WiFi+증폭기"]], "3": [["없음", "없음"], ["안심(모두안심 · 유해사이트 방패)", "안심"], ["원격케어(PC&스마트폰 원격점검)", "원격케어"], ["파워백신(백신적용 인터넷)", "파워백신"]]}, "SKT": {"1": [["100Mbps(광랜 인터넷)", "100Mbps"], ["10Gbps(기가프리미엄X10)", "10Gbps"], ["1Gbps(기가 인터넷)", "1Gbps"], ["2.5Gbps(기가프리미엄X2.5)", "2.5Gbps"], ["500Mbps(기가라이트 인터넷)", "500Mbps"], ["5Gbps(기가프리미엄X5)", "5Gbps"]], "2": [["없음", "없음"], ["WiFi포함", "WiFi포함"], ["프리미엄WiFi(기가WiFi7)", "프리미엄WiFi"]], "3": [["없음", "없음"], ["안심(모두안심 · 유해사이트 방패)", "안심"], ["원격케어(PC&스마트폰 원격점검)", "원격케어"], ["파워백신(백신적용 인터넷)", "파워백신"]]}, "SkyLife": {"1": [["100Mbps(100M 인터넷)", "100Mbps"], ["1Gbps(기가 1G 인터넷)", "1Gbps"], ["200Mbps(기가 200M 인터넷)", "200Mbps"], ["500Mbps(기가 500M 인터넷)", "500Mbps"]], "2": [["없음", "없음"], ["WiFi포함", "WiFi포함"]], "3": [["없음", "없음"], ["안심(유해사이트 방패)", "안심"]]}, "딜라이브": {"1": [["100Mbps(광랜 인터넷 LG망)", "100Mbps"], ["100Mbps(광랜 인터넷)", "100Mbps"], ["160Mbps(광랜 플러스)", "160Mbps"], ["1Gbps(기가 인터넷 LG망)", "1Gbps"], ["1Gbps(기가 인터넷)", "1Gbps"], ["320Mbps(광랜 세이브 플러스)", "320Mbps"], ["500Mbps(500메가 인터넷 LG망)", "500Mbps"]], "2": [["WiFi+증폭기(Mesh)", "WiFi+증폭기"], ["WiFi포함", "WiFi포함"]], "3": [["없음", "없음"], ["안심(안심 주치의)", "안심"]]}, "LG": {"1": [["100Mbps(광랜 인터넷)", "100Mbps"], ["10Gbps(10기가 인터넷)", "10Gbps"], ["1Gbps(기가 인터넷)", "1Gbps"], ["2.5Gbps(2.5기가 인터넷)", "2.5Gbps"], ["200Mbps(200메가 인터넷)", "200Mbps"], ["500Mbps(기가슬림 인터넷)", "500Mbps"], ["5Gbps(5기가 인터넷)", "5Gbps"]], "2": [["WiFi+증폭기(Mesh)", "WiFi+증폭기"], ["WiFi포함(의무임대 · 안심X)", "WiFi포함"], ["WiFi포함(의무임대)", "WiFi포함"], ["프리미엄WiFi(Smart스피커)", "프리미엄WiFi"], ["프리미엄WiFi(Smart스피커+보상케어)", "프리미엄WiFi"], ["프리미엄WiFi(안심)", "프리미엄WiFi"], ["프리미엄WiFi(크롬캐스트)", "프리미엄WiFi"], ["프리미엄WiFi+증폭기(Mesh+보상케어)", "프리미엄WiFi+증폭기"]], "3": [["없음", "없음"]]}}, "TV": {"딜라이브": {"1": [["기본(170채널)", "기본"], ["이코노미(100채널)", "이코노미"], ["이코노미(120채널)", "이코노미"], ["이코노미(25채널)", "이코노미"], ["이코노미(30채널)", "이코노미"], ["이코노미(90채널)", "이코노미"], ["프리미엄(200채널)", "프리미엄"], ["프리미엄(230채널)", "프리미엄"], ["프리미엄(240채널)", "프리미엄"]], "2": [["없음", "없음"], ["일반셋탑(HD)", "일반셋탑"]], "3": [["없음", "없음"]]}, "HCN": {"1": [["기본(240채널)", "기본"], ["이코노미(100채널)", "이코노미"], ["프리미엄(240채널)", "프리미엄"]], "2": [["없음", "없음"], ["일반셋탑(안드로이드셋탑)", "일반셋탑"]], "3": [["없음", "없음"], ["장비결합(WiFi)", "장비결합"]]}, "LG HelloVision": {"1": [["기본(211채널)", "기본"], ["기본(214채널)", "기본"], ["기본(218채널)", "기본"], ["기본(242채널)", "기본"], ["기본(245채널)", "기본"], ["기본(248채널)", "기본"], ["이코노미(102채널)", "이코노미"], ["이코노미(106채널)", "이코노미"], ["이코노미(109채널)", "이코노미"], ["프리미엄(218채널)", "프리미엄"], ["프리미엄(221채널)", "프리미엄"], ["프리미엄(242채널)", "프리미엄"], ["프리미엄(245채널)", "프리미엄"], ["프리미엄(246채널)", "프리미엄"]], "2": [["없음", "없음"], ["일반셋탑(HD셋톱)", "일반셋탑"], ["일반셋탑(IP STB셋탑)", "일반셋탑"], ["일반셋탑(UHD셋톱)", "일반셋탑"]], "3": [["없음", "없음"], ["OTT(디즈니+)", "OTT"], ["장비결합(헬로WiFi)", "장비결합"]]}, "KT": {"1": [["기본(218채널)", "기본"], ["기본(220채널)", "기본"], ["기본(221채널)", "기본"], ["기본(222채널)", "기본"], ["기본(229채널)", "기본"], ["기본(238채널)", "기본"], ["기본(240채널)", "기본"], ["이코노미(113~121채널)", "이코노미"], ["이코노미(89채널)", "이코노미"], ["프리미엄(250채널)", "프리미엄"], ["프리미엄(263채널)", "프리미엄"], ["프리미엄(266채널)", "프리미엄"], ["프리미엄(267채널)", "프리미엄"], ["프리미엄(269채널)", "프리미엄"]], "2": [["없음", "없음"], ["스마트셋탑(기가지니3A)", "스마트셋탑"], ["일반셋탑(일반셋톱)", "일반셋탑"]], "3": [["없음", "없음"], ["OTT(넷플릭스)", "OTT"], ["OTT(디즈니+)", "OTT"], ["OTT(티빙)", "OTT"], ["기타(홈스쿨)", "기타"]]}, "LG": {"1": [["기본(190채널)", "기본"], ["기본(212채널)", "기본"], ["기본(219채널)", "기본"], ["기본(222채널)", "기본"], ["기본(225채널)", "기본"], ["프리미엄(231채널)", "프리미엄"], ["프리미엄(253채널)", "프리미엄"], ["프리미엄(257채널)", "프리미엄"], ["프리미엄(258채널)", "프리미엄"], ["프리미엄(260채널)", "프리미엄"]], "2": [["일반셋탑(UHD4셋톱)", "일반셋탑"]], "3": [["없음", "없음"], ["OTT(넷플릭스)", "OTT"], ["OTT(디즈니+)", "OTT"], ["OTT(유플레이)", "OTT"], ["OTT(티빙)", "OTT"], ["VOD(방송패스)", "VOD"]]}, "SKB": {"1": [["기본(182채널)", "기본"], ["기본(186채널)", "기본"], ["기본(203채널)", "기본"], ["기본(224채널)", "기본"], ["기본(231채널)", "기본"], ["이코노미(103채널)", "이코노미"], ["이코노미(108채널)", "이코노미"], ["이코노미(109채널)", "이코노미"], ["이코노미(41채널)", "이코노미"], ["이코노미(60채널)", "이코노미"], ["이코노미(70채널)", "이코노미"], ["이코노미(84채널)", "이코노미"], ["프리미엄(235채널)", "프리미엄"], ["프리미엄(252채널)", "프리미엄"], ["프리미엄(254채널)", "프리미엄"], ["프리미엄(255채널)", "프리미엄"]], "2": [["스마트셋탑(AI스피커형)", "스마트셋탑"], ["일반셋탑(UHD)", "일반셋탑"], ["일반셋탑(스마트3)", "일반셋탑"]], "3": [["없음", "없음"], ["OTT(넷플릭스)", "OTT"], ["VOD(MAX)", "VOD"], ["VOD(지상파)", "VOD"], ["VOD(캐치온)", "VOD"], ["VOD(캐치온+지상파)", "VOD"]]}, "SKT": {"1": [["기본(182채널)", "기본"], ["이코노미(59채널)", "이코노미"], ["프리미엄(235채널)", "프리미엄"], ["프리미엄(252채널)", "프리미엄"], ["프리미엄(254채널)", "프리미엄"], ["프리미엄(255채널)", "프리미엄"]], "2": [["일반셋탑(스마트3)", "일반셋탑"]], "3": [["없음", "없음"], ["OTT(넷플릭스)", "OTT"], ["VOD(MAX)", "VOD"], ["VOD(지상파)", "VOD"], ["VOD(캐치온)", "VOD"], ["VOD(캐치온+지상파)", "VOD"]]}, "SkyLife": {"1": [["기본(196채널)", "기본"], ["기본(206채널)", "기본"], ["프리미엄(209채널)", "프리미엄"], ["프리미엄(239채널)", "프리미엄"], ["프리미엄(242채널)", "프리미엄"]], "2": [["없음", "없음"], ["일반셋탑(기가지니A)", "일반셋탑"], ["일반셋탑(안드로이드UHD)", "일반셋탑"]], "3": [["없음", "없음"], ["OTT(OTT묶음)", "OTT"], ["OTT(디즈니+)", "OTT"], ["OTT(유튜브)", "OTT"]]}}, "인터넷전화": {"딜라이브": {"1": [["표준(인터넷전화(일반))", "표준"]], "2": [["모뎀(CO-302)", "모뎀"]], "3": [["없음", "없음"]]}, "LG HelloVision": {"1": [["정액(인터넷전화(정액))", "정액"], ["표준(인터넷전화(일반))", "표준"]], "2": [["전화기(WPI-9900)", "전화기"]], "3": [["없음", "없음"]]}, "KT": {"1": [["정액(인터넷전화(정액))", "정액"], ["표준(인터넷전화(일반))", "표준"]], "2": [["전화기(AT05-704V)", "전화기"]], "3": [["없음", "없음"], ["기타", "기타"]]}, "LG": {"1": [["정액(인터넷전화(정액))", "정액"], ["표준(인터넷전화(기업))", "표준"], ["표준(인터넷전화(소호))", "표준"], ["표준(인터넷전화(일반))", "표준"], ["표준(인터넷전화(일반/소호))", "표준"], ["표준(인터넷전화(태블릿))", "표준"]], "2": [["모뎀(CPG 4020)", "모뎀"], ["전화기(IP450S)", "전화기"], ["전화기(IP520S)", "전화기"], ["태블릿(G패드3 8.0)", "태블릿"]], "3": [["없음", "없음"], ["기업", "기업"]]}, "SKB": {"1": [["정액(인터넷전화(정액))", "정액"], ["표준(인터넷전화(일반))", "표준"], ["표준(케이블전화)", "표준"]], "2": [["전화기(MWP-2500H)", "전화기"]], "3": [["없음", "없음"]]}, "SKT": {"1": [["정액(인터넷전화(정액))", "정액"], ["표준(인터넷전화(일반))", "표준"], ["표준(케이블전화)", "표준"]], "2": [["전화기(MWP-2500H)", "전화기"]], "3": [["없음", "없음"]]}}, "일반전화": {"딜라이브": {"1": [["정액(일반전화(정액))", "정액"]], "2": [["모뎀(CO-302)", "모뎀"]], "3": [["없음", "없음"]]}, "KT": {"1": [["정액(일반전화(정액))", "정액"], ["표준(일반전화(일반))", "표준"]], "2": [["없음", "없음"]], "3": [["없음", "없음"], ["기타", "기타"]]}, "SKB": {"1": [["정액(일반전화(정액))", "정액"], ["표준(일반전화(일반))", "표준"]], "2": [["없음", "없음"]], "3": [["없음", "없음"]]}, "SKT": {"1": [["정액(일반전화(정액))", "정액"], ["표준(일반전화(일반))", "표준"]], "2": [["없음", "없음"]], "3": [["없음", "없음"]]}}};
@@ -603,73 +862,133 @@ const OPT={"인터넷": {"1": {"name": "속도", "req": true, "attrs": [{"n": "1
 VENS.forEach(v => (D[v]||[]).filter(isNet).forEach(g => R.filter(r => r[1]===v && !r[3]).forEach(r => {
   const a = g.pair[r[2]] = g.pair[r[2]] || []; if (a.indexOf('') < 0) a.unshift('');
 })));
+
+/* ── V2 : 상품 태그 (인터넷도 상품에 태그를 지정) ── */
+const ATTR = {};   // ATTR[업체][자리][태그명] = 속성
+Object.keys(TAGO['인터넷']).forEach(v => { ATTR[v] = {}; ['1','2','3'].forEach(k => { ATTR[v][k] = {}; (TAGO['인터넷'][v][k]||[]).forEach(x => ATTR[v][k][x[0]] = x[1]); }); });
+const PT = {};     // PT[업체|그룹|열|상품명] = {s1,s3}(인터넷상품) / {s2}(기본WIFI)
+const ptk = (v, label, side, name) => v+'|'+label+'|'+side+'|'+name;
+R.forEach(r => {   // AS-IS 연결에서 상품 태그를 역산 (자리1·3 = 인터넷상품, 자리2 = 기본WIFI)
+  const k1 = ptk(r[1],'인터넷세트','row',r[2]); if (!PT[k1]) PT[k1] = { s1: r[7], s3: r[9] };
+  if (r[3]) { const k2 = ptk(r[1],'인터넷세트','col',r[3]); if (!PT[k2]) PT[k2] = { s2: r[8] }; }
+});
+/* 예시 — 태그가 아직 없는 인터넷상품 (KT 슬림플러스) */
+delete PT[ptk('KT','인터넷세트','row','슬림플러스')];
+for (let i = R.length - 1; i >= 0; i--) if (R[i][1]==='KT' && R[i][2]==='슬림플러스') R.splice(i, 1);
+/* 예시 — 초록선은 있지만 등록이 아직 없는 상품 조합 */
+[['에센스','기가 와이파이 홈ax'],['슈퍼프리미엄','기가 와이파이 웨이브2(2대)']].forEach(([p,st]) => {
+  for (let i = R.length - 1; i >= 0; i--) if (R[i][1]==='KT' && R[i][2]===p && R[i][3]===st) R.splice(i, 1);
+});
+/* 미적용 — 「없음」 태그. 예시로 KT만 아직 지정 안 된 상태 */
+Object.keys(TAGO['인터넷']).forEach(v => { if (v !== 'KT') PT[ptk(v,'인터넷세트','col','')] = { s2: '없음' }; });
+const pt = (g, side, name) => PT[ptk(V, g.label, side, name)] || {};
+function reindex(){
+  const cnt = {}; R.forEach(r => cnt[r[12]] = (cnt[r[12]]||0) + 1);
+  R.forEach(r => r[10] = cnt[r[12]]);
+  Object.keys(REP).forEach(k => { if (!cnt[k] || !R[REP[k]] || R[REP[k]][12] !== k) delete REP[k]; });
+  R.forEach((r, i) => { if (REP[r[12]] === undefined) REP[r[12]] = i; });
+}
+/* ── V2 : 기본값 (전 구분 — 상품을 직접 고르면 두 번째 칸에 미리 들어갈 세트상품 1개. 레벨 대체) ── */
+const AUTO = {};   // AUTO[업체|그룹|상품] = 세트상품
+const autoK = (label, p) => V+'|'+label+'|'+p;
+/* 예시 — KT TV 「에센스」는 셋탑박스 2개 중 기가지니3A가 기본값 */
+(D['KT'].find(g => g.label==='TV세트').pair['에센스'] = ['기가지니3A','일반셋톱']);
+/* 세트상품이 있는 상품은 반드시 1개가 기본값 — 해제 수단은 두지 않는다 */
+VENS.forEach(v => (D[v]||[]).filter(g => g.cols.length).forEach(g => Object.keys(g.pair).forEach(p => {   /* 10/07 — 인터넷도 기본값 */
+  if ((g.pair[p]||[]).length) AUTO[v+'|'+g.label+'|'+p] = g.pair[p][0];
+})));
+reindex();
 let REG = null, regMain = false, regForced = false;
+/* 상품 조합 등록 — 모달이 받는 값은 「대표 여부」 하나뿐이다.
+   속성 조합의 첫 상품 조합은 대표가 자명하므로 묻지 않고 바로 대표로 등록한다.
+   이미 등록된 상품 조합에서는 같은 메뉴가 관리 모드로 열려 대표 변경 · 등록 해제를 받는다. */
+function doReg(){
+  const g = grp(SEL.g);
+  const pr = pt(g,'row',SEL.p), ps = SEL.set ? pt(g,'col',SEL.set) : { s2:'없음' };
+  const t = [pr.s1 || '', ps.s2 || '', pr.s3 || (pr.s1 ? '없음' : '')];
+  const ok = t[0] && t[1];
+  const dupe = R.some(r => r[1]===V && r[2]===SEL.p && (r[3]||'')===(SEL.set||''));
+  if (ok && !dupe) {
+    const a = [ATTR[V]['1'][t[0]]||'', ATTR[V]['2'][t[1]]||'', ATTR[V]['3'][t[2]]||''];
+    const key = [V].concat(a).join('|');
+    if (!R.some(r => r[12]===key)) {
+      R.push(['인터넷', V, SEL.p, SEL.set||'', a[0], a[1], a[2], t[0], t[1], t[2], 0, 1, key, 1, 1]);
+      REP[key] = R.length - 1;
+      reindex(); paintSel();
+      toast('대표로 등록했습니다 — 이 속성 조합의 첫 상품 조합입니다', '#10A10E');
+      return;
+    }
+  }
+  openReg();
+}
 function openReg(){
   const g = grp(SEL.g);
-  REG = { svc: '인터넷', vd: V, prod: SEL.p, set: SEL.set || '', g: g };
+  const pr = pt(g, 'row', SEL.p), ps = SEL.set ? pt(g, 'col', SEL.set) : { s2: '없음' };
+  REG = { svc: '인터넷', vd: V, prod: SEL.p, set: SEL.set || '', g: g,
+          t: [pr.s1 || '', ps.s2 || '', pr.s3 || (pr.s1 ? '없음' : '')] };
+  REG.a = [ATTR[V]['1'][REG.t[0]] || '', ATTR[V]['2'][REG.t[1]] || '', ATTR[V]['3'][REG.t[2]] || ''];
   $('rVen').textContent = V + ' · 인터넷';
   $('rPk').textContent = g.rowName; $('rSk').textContent = g.colName;
   $('rProd').textContent = REG.prod;
   $('rSet').innerHTML = REG.set ? esc(REG.set) : '<span class="non">미적용</span>';
-  regMain = false; regForced = false; fillReg();
+  [0,1,2].forEach(i => $('rt'+(i+1)).innerHTML = REG.t[i] ? (REG.t[i]==='없음' ? '<span class="non">없음</span>' : esc(REG.t[i])) : '<span style="color:var(--error)">태그 없음</span>');
+  regMain = false; regForced = false;
+  previewReg();
   $('ovReg').hidden = false;
 }
-function fillReg(){
-  [1,2,3].forEach(s=>{
-    const nm=(OPT[REG.svc][String(s)]||{}).name||('자리'+s);
-    const list=((TAGO[REG.svc]||{})[REG.vd]||{})[String(s)]||[];
-    const el=$('r'+s);
-    $('rl'+s).innerHTML=nm+(s===1?' <span class="req">*</span>':'');
-    el.innerHTML=(s===1?'<option value="">선택</option>':'')
-      + list.map(x=>'<option value="'+esc(x[1])+'"'+(s>1&&x[1]==='없음'?' selected':'')+'>'+esc(x[0])+'</option>').join('');
-    el.onchange=previewReg;
-  });
-  previewReg();
-}
 function previewReg(){
-  const a1=$('r1').value, a2=$('r2').value, a3=$('r3').value;
-  $('rCombo').innerHTML = a1 ? [a1,a2,a3].map(v=>v==='없음'?'<span class="non">없음</span>':esc(v)).join(' · ')
-    : '<span style="color:var(--g300)">첫 자리를 먼저 고르세요</span>';
+  const [a1, a2, a3] = REG.a;
+  const miss = !REG.t[0] ? '「'+REG.prod+'」에 속도 태그가 없습니다.' : !REG.t[1] ? '「'+REG.set+'」에 구성제품 태그가 없습니다.' : '';
+  const ok0 = !miss;
+  $('rCombo').innerHTML = ok0 ? [a1,a2,a3].map(v=>v==='없음'?'<span class="non">없음</span>':esc(v)).join(' · ')
+    : '<span style="color:var(--g300)">태그가 모두 지정돼야 조합이 정해집니다</span>';
   const key=[REG.vd,a1,a2,a3].join('|');
   const same=R.filter(r=>r[1]===REG.vd && r[2]===REG.prod && (r[3]||'')===REG.set);
-  const inGrp=a1?R.filter(r=>r[12]===key):[];
+  const inGrp=ok0?R.filter(r=>r[12]===key):[];
   const n=$('rNotice'), msg=n.querySelector('span:last-child');
-  let ok=!!a1;
-  if(same.length){
+  let ok=ok0;
+  if (!ok0) {
+    n.hidden=false; n.className='notice err';
+    msg.innerHTML='<b>'+esc(miss)+'</b> 상품 카드를 우클릭해 먼저 「태그 지정」을 하세요.';
+  } else if(same.length){
     n.hidden=false; n.className='notice err'; ok=false;
-    msg.innerHTML='<b>이 상품과 세트상품에는 이미 연결이 있습니다.</b> 조합을 바꾸려면 기존 연결을 삭제하고 다시 등록해야 합니다.';
+    msg.innerHTML='<b>이 상품 조합은 이미 등록돼 있습니다.</b> 속성 조합을 바꾸려면 등록 해제하고 다시 등록해야 합니다.';
   } else { n.hidden=true; }
-  $('rOthN').textContent = a1 ? inGrp.length+'건' : '';
-  $('rOth').innerHTML = !a1
-    ? '<div class="othempty">첫 자리를 고르면 같은 조합의 연결이 나옵니다</div>'
+  $('rOthN').textContent = ok0 ? inGrp.length+'건' : '';
+  $('rOth').innerHTML = !ok0
+    ? '<div class="othempty">태그가 모두 지정되면 같은 속성 조합의 상품 조합이 나옵니다</div>'
     : inGrp.length
       ? inGrp.map(r=>{
+          /* 읽기 전용 — 대표 변경 · 등록 해제는 상품 조합 관리에서만 한다 */
           const isM = REP[r[12]]===R.indexOf(r);
           return '<div class="othrow"><span class="p">'+esc(r[2])
-            +(r[3]?'<span class="xs">×</span><span class="st">'+esc(r[3])+'</span>':'<span class="xs">×</span><span class="st non">미적용</span>')
-            +'</span>'+(isM?'<span class="m">현재 대표</span>':'')+'</div>';}).join('')
-      : '<div class="othempty">이 조합을 쓰는 연결이 아직 없습니다</div>';
-  const first = a1 && !inGrp.length;
+            +(r[3]?'<span class="xs">×</span><span class="st">'+esc(r[3])+'</span>'
+                  :'<span class="xs">×</span><span class="st non">미적용</span>')+'</span>'
+            +(isM?'<span class="m">현재 대표'+(regMain?'<span class="mx"> → 밀려남</span>':'')+'</span>':'')
+            +'</div>';}).join('')
+      : '<div class="othempty">같은 속성 조합을 쓰는 상품 조합이 아직 없습니다</div>';
+  const first = ok0 && !inGrp.length;
   if(first){ regMain=true; regForced=true; $('rMain').classList.add('on');
     $('rMain').style.opacity='.6'; $('rMain').style.pointerEvents='none'; }
   else { if(regForced){ regMain=false; regForced=false; }
     $('rMain').style.opacity='1'; $('rMain').style.pointerEvents='auto'; $('rMain').classList.toggle('on',regMain); }
+
   $('rSave').disabled=!ok;
 }
-$('rMain').onclick=()=>{ regMain=!regMain; $('rMain').classList.toggle('on',regMain); };
+$('rMain').onclick=()=>{ regMain=!regMain; $('rMain').classList.toggle('on',regMain); previewReg(); };
+
 const closeReg = () => { $('ovReg').hidden = true; };
 $('rX').onclick = $('rCancel').onclick = closeReg;
 $('rSave').onclick=()=>{
   if($('rSave').disabled) return;
-  const v=[1,2,3].map(s=>$('r'+s).value), t=[1,2,3].map(s=>{ const o=$('r'+s).selectedOptions[0]; return o?o.textContent:'없음'; });
-  const key=[REG.vd].concat(v).join('|');
-  const cnt=R.filter(r=>r[12]===key).length+1;
-  R.forEach(r=>{ if(r[12]===key) r[10]=cnt; });
-  R.push(['인터넷',REG.vd,REG.prod,REG.set,v[0],v[1],v[2],t[0],t[1],t[2],cnt,0,key,1,1]);
-  if(regMain || REP[key]===undefined) REP[key]=R.length-1;
-  { const pr=REG.g.pair; (pr[REG.prod]=pr[REG.prod]||[]).push(REG.set); }
+  const key=[REG.vd].concat(REG.a).join('|');
+  const prev = R[REP[key]];
+  R.push(['인터넷',REG.vd,REG.prod,REG.set,REG.a[0],REG.a[1],REG.a[2],REG.t[0],REG.t[1],REG.t[2],0,0,key,1,1]);
+  if(regMain) REP[key]=R.length-1;
+  reindex();   // V2 : 초록선(판매 가능 조합)은 건드리지 않는다
   closeReg();
-  toast('등록되었습니다 — '+REG.prod+' × '+(REG.set||'미적용'), '#10A10E');
+  toast('등록했습니다 — '+REG.prod+' × '+(REG.set||'미적용')
+    +(regMain ? ' · 대표로 지정'+(prev ? ' (기존 대표 「'+prev[2]+'」 밀려남)' : '') : ''), '#10A10E');
   paintSel();
 };
 
@@ -686,7 +1005,7 @@ const DISC = {"KT":[
 ]};
 let DSEL = null;
 function renderOther(){
-  $('pairbar').hidden = true;
+
   if (CAT !== '결합할인') {
     $('cnt').innerHTML = '';
     $('grid').innerHTML = '<div style="grid-column:1/-1;padding:60px 0;text-align:center;color:var(--g400);font-size:14px">이 시안은 메인상품 · 결합할인만 다룹니다</div>';
@@ -717,18 +1036,25 @@ function openDiscMenu(el, x, y){
   closeMenu();
   const i = +el.dataset.d, cls = el.dataset.k === 'cls';
   if (cls) { DSEL = i; document.querySelectorAll('.dit').forEach(d => d.classList.toggle('sel', d === el)); }
-  const L = ['상품 할인 설정','상품 이벤트 설정','금지 코드 설정'];
+  /* 디자인 시안 = AS-IS 순서 (10/07) — 분류 : 금지 코드 설정은 분류에만 · 설명 수정은 구분선 아래
+     항목 : 「설명 바꾸기」 이름만 「설명 수정」 — 모달은 AS-IS 설명 바꾸기 그대로 (분류의 설명 수정 모달과 다름) */
+  const many = !cls && DISC[V][i].items.length > 1;
+  const L = cls ? ['상품 할인 설정','상품 이벤트 설정','금지 코드 설정'] : ['상품 할인 설정','상품 이벤트 설정'];
   const m = document.createElement('div'); m.className = 'menu';
   m.innerHTML = L.map(l => '<div class="mi">'+l+'</div>').join('')
-    + (cls ? '<div class="mi act" id="miDesc">설명 수정<span class="newb">추가</span></div>'   // 결합할인 분류: 설명 바꾸기 대체
-           : '<div class="mi">설명 바꾸기</div>')
-    + '<div class="sep"></div><div class="mi">우선순위 변경 (기본)</div><div class="mi">사용중지</div>';
+    + '<div class="sep"></div>'
+    + (cls ? '<div class="mi act" id="miDesc">설명 수정<span class="newb">대체</span></div>'
+           : '<div class="mi act" id="miItem">설명 수정<span class="newb">이름</span></div>')
+    + (many ? '<div class="mi">위로</div><div class="mi">아래로</div>' : '')
+    + '<div class="mi">우선순위 변경 (기본)</div><div class="mi">사용중지</div>';
   document.body.appendChild(m);
   m.style.left = Math.min(x, innerWidth - 242) + 'px';
   m.style.top = Math.min(y, innerHeight - m.offsetHeight - 12) + 'px';
   MENU = m;
   const a = document.getElementById('miDesc');
   if (a) a.onclick = () => { closeMenu(); openDesc(i); };
+  const it = document.getElementById('miItem');
+  if (it) it.onclick = () => { closeMenu(); toast('AS-IS 「설명 바꾸기」 모달이 열립니다 — 메뉴 이름만 「설명 수정」', '#73767A'); };
 }
 let DS = null;
 function openDesc(i, preset){
@@ -770,35 +1096,66 @@ $('chips').querySelectorAll('button').forEach(b => b.onclick = () => {
 function setCat(c){ CAT = c; $('chips').querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.c === c)); }
 
 /* ── 모달 케이스 바로 열기 ── */
-function goKT(cat){ closeReg(); closeDesc(); $('ovTag').hidden = true; closeMenu(); V = 'KT'; setCat(cat); SEL = null; DSEL = null; render(); }
-function regWith(p, set, pickR1){
-  goKT('메인상품');
-  SEL = { g: '인터넷세트', s: 'col', n: set, p: p, set: set }; paintSel();
-  openReg();
-  if (pickR1) {
-    const opts = [...$('r1').options].map(o => o.value).filter(Boolean);
-    const v = opts.find(a => pickR1(R.filter(r => r[12] === ['KT',a,$('r2').value,$('r3').value].join('|')).length));
-    if (v) { $('r1').value = v; previewReg(); }
+function goKT(cat){ closeReg(); closeDesc(); $('ovTag').hidden = true; $('ovPlat').hidden = true; closeMenu(); V = 'KT'; setCat(cat); SEL = null; DSEL = null; render(); }
+function selPair(label, p, set){ SEL = { g: label, s: 'col', n: set, p: p, set: set }; paintSel(); }
+function findPair(test){                          // KT 인터넷에서 조건에 맞는 미등록 상품 조합 찾기
+  const g = grp('인터넷세트');
+  for (const r of g.rows) for (const c of [['','']].concat(g.cols)) {
+    const p = r[0], st = c[0], a = pt(g,'row',p), b = st ? pt(g,'col',st) : { s2: '없음' };
+    if (!isMate(g, p, st) || !a.s1 || !b.s2 || hasLink(p, st)) continue;
+    const key = ['KT', ATTR.KT['1'][a.s1], ATTR.KT['2'][b.s2], ATTR.KT['3'][a.s3||'없음']].join('|');
+    if (test(R.filter(x => x[12] === key).length)) return [p, st];
   }
 }
+function regWith(p, set){ goKT('메인상품'); selPair('인터넷세트', p, set); openReg(); }
+function regRun(p, set){ goKT('메인상품'); selPair('인터넷세트', p, set); doReg(); }
+function tagCase(label, side, name){ goKT('메인상품'); CUR = { g: grp(label), side: side, name: name }; openTag(); }
+function menuCase(btn, label, p, set){
+  goKT('메인상품'); selPair(label, p, set);
+  const el = document.querySelector('.cols[data-g="'+CSS.escape(label)+'"] .pit[data-s="col"][data-n="'+CSS.escape(set)+'"]');
+  setTimeout(() => { const r = btn.getBoundingClientRect(); openMenu(el, r.left - 240, r.top - 60); }, 0);
+}
 const CASE = {
-  'tag-new':  () => { goKT('메인상품'); CUR = { g: grp('TV세트'), side: 'row', name: 'NEW모든G' }; openTag(); },
-  'tag-edit': () => { goKT('메인상품'); CUR = { g: grp('TV세트'), side: 'row', name: 'Skylife 슬림' }; openTag(); },
-  'reg-empty': () => regWith('슬림', '기가 와이파이 홈ax'),
-  'reg-first': () => regWith('슬림', '기가 와이파이 홈ax', n => n === 0),
-  'reg-exist': () => regWith('슬림', '기가 와이파이 홈ax', n => n > 0),
+  'tg-row':   () => tagCase('인터넷세트', 'row', '안심 슬림 와이파이'),
+  'tg-empty': () => tagCase('인터넷세트', 'row', '슬림플러스'),
+  'tg-col':   () => tagCase('인터넷세트', 'col', 'KT와이파이7D'),
+  'tag-new':  () => tagCase('TV세트', 'row', 'NEW모든G'),
+  'tag-edit': () => tagCase('TV세트', 'row', 'Skylife 슬림'),
+  'reg-first': () => { const x = findPair(n => n === 0); regRun(x[0], x[1]); },
+  'reg-exist': () => { const x = findPair(n => n > 0);  regWith(x[0], x[1]); },
+  'reg-notag': () => regWith('슬림플러스', ''),
   'reg-dupe':  () => regWith('슬림 와이파이', 'KT와이파이7D'),
+  'm-view':     b => menuCase(b, '인터넷세트', '슬림 와이파이', 'KT와이파이7D'),
+  'm-auto-chg': b => { AUTO[autoK('TV세트','에센스')] = '기가지니3A'; menuCase(b, 'TV세트', '에센스', '일반셋톱'); },
+  'm-auto-net': b => { AUTO['KT|인터넷세트|슬림 와이파이'] = '기가 와이파이 홈ax'; menuCase(b, '인터넷세트', '슬림 와이파이', 'KT와이파이7D'); },
+  'm-auto-cur': b => { AUTO[autoK('TV세트','에센스')] = '기가지니3A'; menuCase(b, 'TV세트', '에센스', '기가지니3A'); },
+  'pl-net':  () => { goKT('메인상품'); CUR = { g: grp('인터넷세트'), side:'row', name:'슬림 와이파이' }; openPlat(); },
+  'pl-etc':  () => { goKT('메인상품'); CUR = { g: grp('TV세트'), side:'row', name:'Skylife 슬림' }; openPlat(); },
+  'pl-off':  () => { goKT('메인상품'); CUR = { g: grp('TV세트'), side:'row', name:'Skylife 베이직' }; openPlat();
+                     $('plApply').classList.remove('on'); $('plPlat').classList.remove('on'); platHint(); },
   'ds-off':   () => { goKT('결합할인'); openDesc(2); },
   'ds-on':    () => { goKT('결합할인'); openDesc(1); },
   'ds-empty': () => { goKT('결합할인'); openDesc(3, { ap: true, app: '' }); }
 };
+/* ── 카드 표시 규칙 [보기] — 상태를 만들고 카드 영역으로 이동 ── */
+const FLAG = {
+  'f-nt':       () => { goKT('메인상품'); },
+  'f-auto-net': () => { goKT('메인상품'); SEL = { g: '인터넷세트', s: 'row', n: '슬림 와이파이', p: '슬림 와이파이', set: null }; paintSel(); return '인터넷세트'; },
+  'f-auto-etc': () => { goKT('메인상품'); SEL = { g: 'TV세트', s: 'row', n: '에센스', p: '에센스', set: null }; paintSel(); return 'TV세트'; },
+  'f-col-only': () => { goKT('메인상품'); SEL = { g: '인터넷세트', s: 'col', n: 'KT와이파이7D' }; paintSel(); return '인터넷세트'; }
+};
+document.querySelectorAll('[data-flag]').forEach(b => b.onclick = () => {
+  const label = FLAG[b.dataset.flag]();
+  const t = label ? document.querySelector('.cols[data-g="'+CSS.escape(label)+'"]') : $('grid');
+  if (t) t.scrollIntoView({ block: 'start', behavior: 'smooth' });
+});
 // 케이스를 열어도 표 위치 그대로 — 위쪽 화면이 다시 그려져 높이가 바뀌어도 누른 버튼이 같은 자리에 오도록 보정
 document.querySelectorAll('[data-case]').forEach(b => b.onclick = () => {
   const y = b.getBoundingClientRect().top;
-  CASE[b.dataset.case]();
+  CASE[b.dataset.case](b);
   window.scrollBy({ top: b.getBoundingClientRect().top - y, behavior: 'instant' });
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeReg(); closeDesc(); $('ovTag').hidden = true; closeMenu(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeReg(); closeDesc(); $('ovTag').hidden = true; $('ovPlat').hidden = true; closeMenu(); } });
 
 render();
 </script>

@@ -203,7 +203,7 @@ table.lt{table-layout:fixed;border-collapse:collapse;width:100%}
 .ctx .k{font-size:12px;color:var(--g500);letter-spacing:-.2px}
 .ctx .v{font-size:15px;font-weight:700;color:var(--g900);letter-spacing:-.3px}
 
-/* 상품 조합 링크 */
+/* 태그 수 링크 */
 .lnk{color:var(--primary);font-weight:600;text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .lnk.zero{color:var(--g300);text-decoration:none;font-weight:400;cursor:default}
 
@@ -518,7 +518,8 @@ body.mk-on .mkrow:hover{color:var(--g700)}
   <div class="in">
     <span class="lb">변경 표시</span>
     <span class="tx"><b>디자인 시안(2026-09-22) 대비</b> 이번 라운드에서 바뀐 자리에 주황 번호를 두었습니다. <b>누르면</b> 무엇이 어떻게 바뀌었는지 뜹니다.</span>
-    <button class="mkmore" data-mk="4">그 밖의 변경 5건</button>
+    <button class="mkmore" data-mk="3">1차에서 뺀 것 2건</button>
+    <button class="mkmore" data-mk="4">그 밖의 변경 3건</button>
     <label class="cb on" id="mkToggle"><i></i>표시 켜기</label>
   </div>
 </div>
@@ -556,8 +557,8 @@ body.mk-on .mkrow:hover{color:var(--g700)}
 
   <div class="tcard">
     <table class="atbl">
-      <colgroup><col style="width:44px"><col style="width:220px"><col><col style="width:104px"><col style="width:104px"><col style="width:132px"></colgroup>
-      <thead><tr><th></th><th>속성</th><th>사용 업체</th><th class="c mk th" data-mk="1">태그</th><th class="c mk th" data-mk="2">상품 조합</th><th class="c mk th" data-mk="3">관리</th></tr></thead>
+      <colgroup><col style="width:44px"><col style="width:220px"><col><col style="width:104px"><col style="width:132px"></colgroup>
+      <thead><tr><th></th><th>속성</th><th>사용 업체</th><th class="c mk th" data-mk="1">태그</th><th class="c mk th" data-mk="2">관리</th></tr></thead>
       <tbody id="attrBody"></tbody>
     </table>
   </div>
@@ -579,7 +580,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
     <div class="dlist-h"><span class="t" id="dwTitle">태그</span><span class="c" id="dwCnt"></span></div>
     <div class="dlist" id="dwList"></div>
   </div>
-  <div class="df"><button class="btn-out" id="dwGo" style="width:100%;justify-content:center">상품 연결 관리에서 보기</button></div>
+  <div class="df"><button class="btn-out" id="dwGo" style="width:100%;justify-content:center">태그 관리에서 수정</button></div>
 </aside>
 
 <div id="ovAdd" hidden style="position:fixed;inset:0;background:rgba(19,19,20,.35);z-index:950;display:flex;align-items:center;justify-content:center">
@@ -614,21 +615,6 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       </div>
     </div>
     <div class="mf"><div class="sp"></div><button class="btn-out" id="renCancel">취소</button><button class="btn-solid" id="renOk">변경</button></div>
-  </div>
-</div>
-
-<div id="ovDel" hidden style="position:fixed;inset:0;background:rgba(19,19,20,.35);z-index:950;display:flex;align-items:center;justify-content:center">
-  <div class="modal" style="width:600px">
-    <div class="mh"><h3>속성 삭제</h3><button class="mx" id="dlX" type="button" aria-label="닫기">✕</button></div>
-    <div class="mb">
-      <div class="ctx" style="margin-bottom:14px">
-        <div><span class="k">구분 · 속성 타입</span><span class="v" id="dlScope"></span></div>
-        <div><span class="k">속성</span><span class="v" id="dlName"></span></div>
-      </div>
-      <div class="notice err" style="margin-bottom:0"><span class="i">!</span>
-        <span><b>삭제하면 바로 반영되며 되돌릴 수 없습니다.</b></span></div>
-    </div>
-    <div class="mf"><div class="sp"></div><button class="btn-out" id="dlCancel">취소</button><button class="btn-danger solid" id="dlOk">삭제</button></div>
   </div>
 </div>
 
@@ -688,22 +674,6 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">변경</button></div>
     </div>
     <div class="hint g3" style="margin-top:10px">인터넷 외는 태그명을 <b>직접 입력</b>하므로 속성 이름을 바꿔도 고객 노출 문구가 따라 바뀌지 않습니다. 그래도 모달은 뜹니다 — 즉시 저장이라 되돌리는 방법이 다시 고치는 것뿐입니다.</div>
-  </div>
-
-  <div>
-    <div class="spec-head"><span class="chip-n">4</span><span class="spec-t">삭제 확인</span><span class="spec-s">진입: 관리 컬럼 [삭제] · 사용 업체 0일 때만</span></div>
-    <div class="modal" style="width:600px">
-      <div class="mh"><h3>속성 삭제</h3><button class="mx" type="button" aria-label="닫기">✕</button></div>
-      <div class="mb">
-        <div class="ctx" style="margin-bottom:14px">
-          <div><span class="k">구분 · 속성 타입</span><span class="v">TV › 셋탑</span></div>
-          <div><span class="k">속성</span><span class="v">OTT기기</span></div>
-        </div>
-        <div class="notice err" style="margin-bottom:0"><span class="i">!</span>
-          <span><b>삭제하면 바로 반영되며 되돌릴 수 없습니다.</b></span></div>
-      </div>
-      <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-danger solid">삭제</button></div>
-    </div>
   </div>
 
   <div>
@@ -771,23 +741,15 @@ function renderAttrs(){
     var ren = a.none
       ? W('시스템에서 관리하는 값으로 이름을 바꿀 수 없습니다.','<button class="btn-out dis" style="'+S+'" disabled>변경</button>')
       : '<button class="btn-out" style="'+S+'" data-ren="'+i+'">변경</button>';
-    /* 삭제 가드 : 사용 업체가 아니라 「등록 태그 0」 기준. 태그가 속성을 참조하므로 */
+    /* 1차 스펙아웃 : 속성 삭제 기능은 1차 범위에서 제외. 관리 컬럼은 [변경] 1종 */
     var tn = tagCount(d,a);
-    var canDel = !a.none && tn===0;
-    var del = a.none
-      ? W('시스템에서 관리하는 값으로 삭제할 수 없습니다.','<button class="btn-danger dis" style="'+S+'" disabled>삭제</button>')
-      : canDel ? '<button class="btn-danger" style="'+S+'" data-del="'+i+'">삭제</button>'
-      : W('태그 '+tn+'개에서 사용 중이라 삭제할 수 없습니다. 태그 관리에서 먼저 정리해주세요.','<button class="btn-danger dis" style="'+S+'" disabled>삭제</button>');
-    var n = panelRows(d,a).length;
-    var lnk = n ? '<span class="lnk" data-open="'+i+'" data-tab="p">'+n+'</span>' : '<span class="lnk zero">0</span>';
-    var tlnk = tn ? '<span class="lnk" data-open="'+i+'" data-tab="t">'+tn+'</span>' : '<span class="lnk zero">0</span>';
+    var tlnk = tn ? '<span class="lnk" data-open="'+i+'">'+tn+'</span>' : '<span class="lnk zero">0</span>';
     return '<tr data-i="'+i+'"><td class="c">'+hd+'</td><td>'+nameCell+'</td>'
-      +'<td>'+vcell(a.v)+'</td><td class="c">'+tlnk+'</td><td class="c">'+lnk+'</td>'
-      +'<td class="c"><span class="mgc">'+ren+del+'</span></td></tr>';
+      +'<td>'+vcell(a.v)+'</td><td class="c">'+tlnk+'</td>'
+      +'<td class="c"><span class="mgc">'+ren+'</span></td></tr>';
   }).join('');
   $('attrBody').querySelectorAll('[data-ren]').forEach(b=>b.onclick=()=>openRename(+b.dataset.ren));
-  $('attrBody').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>openDel(+b.dataset.del));
-  $('attrBody').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openPanel(+b.dataset.open, b.dataset.tab));
+  $('attrBody').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openPanel(+b.dataset.open));
   bindDrag();
 }
 
@@ -840,58 +802,26 @@ function realTag(attr, raw){
     return raw.slice(attr.length+1, -1);
   return raw;
 }
-/* 자리(slot)별 실제 태그명. 인터넷 외는 「속성(입력값)」 형태로 저장돼 있어 앞을 벗긴다.
-   어느 속성의 태그인지는 그 자리의 속성 목록에서 접두어로 찾는다.                      */
-function realTagAt(slot, raw){
-  if(!raw) return '';
-  if(isNet()) return raw;
-  var ds=divs();
-  for(var i=0;i<ds.length;i++){
-    if(ds[i].slot!==slot) continue;
-    var at=ds[i].attrs;
-    for(var k=0;k<at.length;k++){
-      var n=at[k].n;
-      if(raw.indexOf(n+'(')===0 && raw.charAt(raw.length-1)===')') return raw.slice(n.length+1,-1);
-    }
-  }
-  return raw;
-}
 function tagCount(d,a){ var n=0; tagRows(d,a).forEach(function(g){n+=g[1].length;}); return n; }
 
-/* ── 사이드패널 행 계산 ─────────────────────────────────────────
-   한 줄 = 상품 조합 1건 (상품 × 단품). 구분 공통 규칙이다.
-   인터넷 외 : 한 줄 = 속성이 붙는 단품 1개. 태그는 그 자리 태그만.
-              자리1(라인·요금방식) → 상품,  자리2(셋탑·전화기기) → 셋탑/전화기기 단품
-   목록의 「상품 조합」 건수도 이 함수의 결과 수를 쓴다 — 숫자가 갈리지 않게.        */
-function panelRows(d,a){
-  var by={}; a.r.forEach(function(j){var x=L[j]; (by[x[0]]=by[x[0]]||[]).push(x);});
-  var out=[], seen={};
-  a.v.forEach(function(v){
-    (by[v]||[]).forEach(function(x){
-      if(isNet()){
-        out.push([v, x[1]+(x[2]?' <span class="non">×</span> '+x[2]:''),
-                  [x[3],x[4],x[5]].filter(function(t){return t!=='';})
-                    .map(function(t){return t==='없음'?'<span class="non">없음</span>':t;}).join(' · ')]);
-        return;
-      }
-      /* 구분 상관없이 조합 단위. 한 줄 = 상품 조합 1건.
-         태그명 컬럼은 두지 않는다 — 이 패널의 질문은 「이 속성이 어떤 상품에 붙어 있나」 하나다.
-         조합의 태그 구성은 태그 관리 사이드패널이 답한다.                              */
-      out.push([v, x[1]+(x[2]?' <span class="non">×</span> '+x[2]:''), '']);
-    });
-  });
-  return out;
+
+/* 상품 조합 건수 — 한 줄 = 상품 × 단품 1건. 목록에서는 뺐고,
+   이름 변경 모달의 「영향 범위」 문구에서만 쓴다.                       */
+function comboCount(d,a){
+  var vs={}; a.v.forEach(function(v){ vs[v]=1; });
+  var n=0; a.r.forEach(function(j){ if(vs[L[j][0]]) n++; });
+  return n;
 }
 
-/* ── 상품 조합 사이드패널 ── */
-var DW={d:null,a:null,tab:'t'};
+/* ── 태그 사이드패널 (이 화면의 유일한 패널) ── */
+var DW={d:null,a:null};
 
-function openPanel(i,tab){
+function openPanel(i){
   var d=cur(), a=d.attrs[i]; if(!a)return;
-  DW.d=d; DW.a=a; DW.tab=tab||'t';
+  DW.d=d; DW.a=a;
   $('dwName').textContent=a.n; $('dwSvc').textContent=SV; $('dwDiv').textContent=d.name;
   $('dwVend').textContent=a.v.length+'개';
-  if(DW.tab==='t') paintTags(d,a); else paintProducts(d,a);
+  paintTags(d,a);
   $('dw').hidden=false;
 }
 
@@ -919,29 +849,13 @@ function paintTags(d,a){
     ? '<table class="dtbl t2"><colgroup><col style="width:140px"><col><col style="width:92px"></colgroup>'
       +'<thead><tr><th>사용 업체명</th><th>태그명</th><th class="num">상품 조합</th></tr></thead><tbody>'+body+'</tbody></table>'
     : '<div class="dempty">등록된 태그가 없습니다</div>';
-  $('dwGo').textContent='태그 관리에서 수정'; $('dwGo').style.display='';
-}
-
-/* ── 상품 조합 ── */
-function paintProducts(d,a){
-  $('dwTitle').textContent='상품 조합';
-  var rows=panelRows(d,a);
-  $('dwCnt').textContent='총 '+rows.length+'건';
-  var body=rows.map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('');
-  $('dwList').innerHTML = rows.length
-    ? '<table class="dtbl t2"><colgroup><col style="width:150px"><col></colgroup>'
-      +'<thead><tr><th>사용 업체명</th><th>상품명</th></tr></thead><tbody>'+body+'</tbody></table>'
-    : '<div class="dempty">연결된 상품 조합이 없습니다</div>';
-  /* 상품 연결 관리는 인터넷 전용 화면이다. 인터넷 외는 이동할 곳이 없어 버튼을 숨긴다 */
-  $('dwGo').textContent='상품 연결 관리에서 보기';
-  $('dwGo').style.display = isNet() ? '' : 'none';
+  $('dwGo').textContent='태그 관리에서 수정';
 }
 
 $('dwx').onclick=()=>{$('dw').hidden=true;};
 /* 모달 ✕ = 취소와 동일 (디자인시스템 상 ✕ 유지) */
 $('adX').onclick=()=>$('adCancel').click();
 $('renX').onclick=()=>$('renCancel').click();
-$('dlX').onclick=()=>$('dlCancel').click();
 
 /* ── ① 속성 추가 ── */
 $('addOpen').onclick=function(){
@@ -973,7 +887,7 @@ function openRename(i){
   var net=isNet();
   $('renNetBox').hidden=!net;
   if(net){
-    $('renImpact').textContent='사용 업체 '+a.v.length+'개 · 상품 조합 '+panelRows(cur(),a).length+'건';
+    $('renImpact').textContent='사용 업체 '+a.v.length+'개 · 상품 조합 '+comboCount(cur(),a)+'건';
   }
   $('ovRen').hidden=false; setTimeout(()=>$('renInput').select(),30);
 }
@@ -992,23 +906,6 @@ $('renOk').onclick=function(){
   toast('「'+old+'」를 「'+nv+'」로 변경했습니다. 상품속성 캐시를 비웠습니다.');
 };
 
-/* ── ③ 삭제 ── */
-let delI=null;
-function openDel(i){
-  delI=i; var a=cur().attrs[i];
-  $('dlScope').textContent=SV+' › '+cur().name;
-  $('dlName').textContent=a.n;
-  $('ovDel').hidden=false;
-}
-function closeDel(){ $('ovDel').hidden=true; delI=null; }
-$('dlCancel').onclick=closeDel;
-$('dlOk').onclick=function(){
-  var d=cur(), nm=d.attrs[delI].n;
-  d.attrs.splice(delI,1);
-  closeDel(); renderAttrs();
-  toast('「'+nm+'」 속성을 삭제했습니다.');
-};
-
 /* ── 전환 · 키 ── */
 $('svcSel').onchange=function(){ SV=$('svcSel').value; DI=0; render(); };
 $('divSel').onchange=function(){ DI=+$('divSel').value; render(); };
@@ -1018,7 +915,6 @@ document.addEventListener('keydown',function(e){
   if(!$('dw').hidden){$('dw').hidden=true;return;}
   if(!$('ovAdd').hidden){closeAdd();return;}
   if(!$('ovRen').hidden){closeRename();return;}
-  if(!$('ovDel').hidden){closeDel();return;}
 });
 document.addEventListener('keydown',function(e){
   if(e.key!=='Enter')return;
@@ -1030,19 +926,18 @@ document.addEventListener('keydown',function(e){
 var MK={
  1:{t:'「태그」 컬럼 · 태그 사이드패널 — 신규',
     a:'<b>없음.</b> 업체마다 이 속성을 어떤 태그로 쓰는지 이 화면에서 볼 방법이 없었습니다.',
-    b:'<b>컬럼 신설.</b> 숫자를 누르면 <code>사용 업체명 · 태그명 · 상품 조합 건수</code> 3컬럼 패널이 열립니다. 업체 1곳에 태그가 여러 개 붙을 수 있습니다(실측 9개 속성에서 발생, 최대 <code>TV › 라인 › 기본</code> 47개).<br><br><b>조회 전용입니다.</b> 태그는 태그 관리 소관이고 여기서 고치지 않습니다. 하단 버튼이 태그 관리로 보냅니다.<br><br><b>인터넷 외의 태그명은 운영자가 직접 입력한 값</b>이라 속성 이름이 앞에 붙지 않습니다 — 예) <code>일반셋톱</code>, <code>인터넷전화(일반)</code>. 인터넷은 <code>속성(표기명)</code> 자동 조립이라 속성 부분을 흐리게 깔았습니다.'},
- 2:{t:'「연결 상품」 → 「상품 조합」',
-    a:'<b>연결 상품</b> — 구분마다 세는 대상이 달랐습니다(인터넷=조합 / 인터넷 외=상품).',
-    b:'<b>이름과 단위를 함께 바꿨습니다.</b> 전 구분 공통으로 <b>조합 수(상품 × 단품)</b>를 세고 단위는 「건」입니다. 이름이 상품을 센다고 읽혀서 바꿨습니다 — 실제로 <code>100Mbps</code>는 조합 59건이지만 고유 상품은 31개입니다.<br><br><b>패널은 <code>사용 업체명 · 상품명</code> 2컬럼</b>입니다. 시안에 있던 태그명 컬럼은 뺐습니다 — <b>패널마다 질문을 하나씩만</b> 두기 위해서입니다. 이 패널은 「이 속성이 어떤 상품에 붙어 있나」만 답하고, 조합의 태그 구성은 <b>태그 관리 사이드패널</b>이 답합니다.<br><br>세 숫자가 항상 일치합니다 : <b>목록의 상품 조합 = 태그 패널 건수 합계 = 패널 행 수.</b>'},
- 3:{t:'관리 컬럼 — 버튼명 · 삭제 가드',
-    a:'<b>[수정] · [삭제]</b> · 삭제 가드는 <b>사용 업체 0</b>.',
-    b:'<b>[변경] · [삭제]</b>로 바꿨습니다. 입력 필드가 1개(속성명 하나)라 문구 규칙상 「수정」이 아니라 「변경」입니다.<br><br><b>삭제 가드를 <code>태그 0</code>으로 바꿨습니다.</b> 태그가 속성을 참조하므로, 상품 조합이 0이어도 태그가 남아 있으면 지우면 고아 태그가 생깁니다. 태그 관리도 같은 모양의 가드를 씁니다(상품이 참조 중이면 태그 삭제 불가).'},
+    b:'<b>컬럼 신설.</b> 숫자를 누르면 <code>사용 업체명 · 태그명 · 상품 조합 건수</code> 3컬럼 패널이 열립니다. 업체 1곳에 태그가 여러 개 붙을 수 있습니다(실측 9개 속성에서 발생, 최대 <code>TV › 라인 › 기본</code> 47개).<br><br><b>이 화면의 유일한 사이드패널입니다.</b> 조회 전용이고, 태그는 태그 관리 소관이라 여기서 고치지 않습니다. 하단 버튼이 태그 관리로 보냅니다.<br><br><b>인터넷 외의 태그명은 운영자가 직접 입력한 값</b>이라 속성 이름이 앞에 붙지 않습니다 — 예) <code>일반셋톱</code>, <code>인터넷전화(일반)</code>. 인터넷은 <code>속성(표기명)</code> 자동 조립이라 속성 부분을 흐리게 깔았습니다.'},
+ 2:{t:'관리 컬럼 — [변경] 1종',
+    a:'<b>[수정] · [삭제]</b> 2종. 삭제 가드는 <b>사용 업체 0</b>.',
+    b:'<b>[변경] 1종만 둡니다.</b> 입력 필드가 1개(속성명 하나)라 문구 규칙상 「수정」이 아니라 「변경」입니다.<br><br><b>[삭제]는 1차 범위에서 뺐습니다.</b> 삭제 버튼 · 삭제 확인 모달 · 삭제 가드 툴팁이 모두 빠집니다. 이유는 상단 <b>「1차에서 뺀 것」</b>에 있습니다.'},
+ 3:{t:'1차에서 뺀 것', gx:1, list:[
+   '<b>「상품 조합」 컬럼 · 상품 조합 사이드패널 — 폐지.</b> 속성 하나에 패널을 둘 두는 구조를 접고 <b>태그 패널 하나</b>로 갑니다. 조합 건수는 태그 패널 안에서 <b>태그별로</b> 봅니다.<br><br><b>조합 내역을 보는 곳은 따로 있습니다</b> — <b>태그 관리 사이드패널</b>(상품명 · 태그 조합)과 <b>상품 조합 관리</b>입니다. 상품 조합 관리는 <b>인터넷 외에도 쓰기로</b> 해서, 이 패널이 없어도 TV · 전화의 조합을 볼 경로가 있습니다.',
+   '<b>상품속성 삭제 기능 — 1차 스펙아웃.</b> 태그는 삭제가 아니라 <b>미사용 처리</b>로 갑니다(태그를 지우면 안 되므로). 그러면 속성 삭제 가드도 「태그 유무」가 아니라 <b>「사용 중인 태그 유무」</b>를 판정해야 해서 상품속성 관리에 기능이 더 붙습니다. 그 비용 대비 <b>속성 삭제 빈도가 극히 낮아</b> 1차에서 뺐습니다. 2차 이후 과제로 <b>지라 백로그</b>에 올렸습니다.'
+ ]},
  4:{t:'그 밖의 변경', gx:1, list:[
-   '<b>「없음」 속성</b> — 시안에서 [수정]이 활성이었는데 <b>비활성</b>으로 바꿨습니다. 자동 생성 값이 아니라 <b>DB에서 주입하는 시스템 값</b>이라 변경·삭제가 모두 막힙니다. (태그 관리 정본 기준으로 「자동 등록」이라는 설명은 폐기했습니다.)',
+   '<b>「없음」 속성</b> — 시안에서 [수정]이 활성이었는데 <b>비활성</b>으로 바꿨습니다. 자동 생성 값이 아니라 <b>DB에서 주입하는 시스템 값</b>이라 이름을 바꿀 수 없습니다. (태그 관리 정본 기준으로 「자동 등록」이라는 설명은 폐기했습니다.)',
    '<b>비활성 버튼 사유</b> — HTML <code>title</code>은 <b>disabled 버튼에서 뜨지 않습니다</b>(마우스 이벤트가 전달되지 않음). 버튼을 래퍼로 감싸 <b>커스텀 툴팁</b>으로 띄웁니다. 구현 시 주의가 필요한 자리입니다.',
-   '<b>상품 조합 패널 하단 버튼</b> — <code>[상품 연결 관리에서 보기]</code>는 <b>인터넷에서만</b> 노출합니다. 그 화면이 인터넷 전용이라 인터넷 외는 갈 곳이 없습니다.',
-   '<b>인터넷 외 조합을 볼 수 있는 곳</b> — 상품 연결 관리가 인터넷 전용이므로, TV · 전화의 상품 조합은 <b>이 패널이 유일한 조회 화면</b>입니다.',
-   '<b>모달</b> — 제목 3종 고정(속성 추가 · 속성 이름 변경 · 속성 삭제), 주 버튼은 동작 그대로([추가] · [변경] · [삭제]), 우상단 ✕ 유지(디자인시스템). 영향 경고에서 <s>태그명이 속성(표기명)으로 조립되기 때문입니다</s> 문장은 삭제했습니다.'
+   '<b>모달</b> — 제목 2종 고정(속성 추가 · 속성 이름 변경), 주 버튼은 동작 그대로([추가] · [변경]), 우상단 ✕ 유지(디자인시스템). 이름 변경 영향 경고는 <code>사용 업체 n개 · 상품 조합 n건</code>으로 둡니다 — 목록에서 컬럼이 빠졌어도 <b>영향 범위를 재는 단위는 조합 수가 맞아서</b>입니다.'
  ]}
 };
 var mkPop=null, mkCurBtn=null;

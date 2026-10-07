@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>인터넷 상품 V2 용어집</title>
+<title>인터넷 상품 용어집</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
@@ -111,23 +111,41 @@
 <div class="container">
 
 <header>
-  <div class="doc-type">Term Sheet · V2</div>
-  <h1>인터넷 상품 V2 — 상담상세 노출 규칙과 용어 정리</h1>
+  <div class="doc-type">Term Sheet</div>
+  <h1>인터넷 상품 — 상담상세 노출 규칙과 용어 정리</h1>
   <div class="meta">
-    <span><strong>일자</strong>2026.10.01 (3차 개정)</span>
-    <span><strong>범위</strong>인터넷 상품 관리 V2 · 상품 조합 관리 V2</span>
+    <span><strong>일자</strong>2026.10.07 (4차 개정)</span>
+    <span><strong>범위</strong>인터넷 상품 관리 · 상품 조합 관리</span>
     <span><strong>작성</strong>김아라 (AI)</span>
   </div>
   <div class="topic">
     <div class="topic-label">주제</div>
-    <p>인터넷과 인터넷 외(TV · 인터넷전화 · 일반전화)의 동작을 하나로 맞춘 V2 안에서 쓰는 말을 한곳에 모았습니다. 01은 상담상세에 무엇이 어떻게 나가는지, 02~05는 화면과 문서에서 쓰는 용어입니다. <span class="tag-src spec">명세</span>는 기획 확정 내용, <span class="tag-src interp">해석</span>은 정리하며 덧붙인 설명, <span class="tag-src new">개정</span>은 10/01에 바뀐 항목입니다.</p>
+    <p>인터넷과 인터넷 외(TV · 인터넷전화 · 일반전화)의 동작을 하나로 맞추는 이번 개편에서 쓰는 말을 한곳에 모았습니다. 01은 상담상세에 무엇이 어떻게 나가는지, 02~05는 화면과 문서에서 쓰는 용어입니다. <span class="tag-src spec">명세</span>는 기획 확정 내용, <span class="tag-src interp">해석</span>은 정리하며 덧붙인 설명, <span class="tag-src new">개정</span>은 10/07에 바뀐 항목입니다.</p>
   </div>
 </header>
 
 <section>
   <span class="section-num">00</span>
-  <h2>10/01 개정 요약</h2>
-  <p class="section-desc">9/30판에서 바뀐 용어만 모았습니다. 이 표만 봐도 옛 문서를 읽을 수 있습니다. <span class="tag-src new">개정</span></p>
+  <h2>개정 요약</h2>
+  <p class="section-desc">이전 판에서 바뀐 것만 모았습니다. 이 표만 봐도 옛 문서를 읽을 수 있습니다. <span class="tag-src new">개정</span></p>
+
+  <h3>10/07 (4차)</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th style="width:30%">10/01판</th><th style="width:30%">10/07판</th><th>바꾼 이유</th></tr></thead>
+    <tbody>
+      <tr><td>기본값 = 인터넷 외만</td><td><strong>기본값 = 전 구분</strong> (인터넷 포함)</td><td>인터넷도 상품을 직접 고르면 두 번째 칸에 무엇을 넣을지 정해야 합니다. 지금까지 이 역할을 하던 레벨을 걷어냅니다</td></tr>
+      <tr><td>기본값은 운영자가 지정</td><td>첫 초록선이면 <strong>자동 지정</strong>, 빠지면 <strong>승계</strong></td><td>「반드시 1개가 기본값」을 운영자 손에 맡기면 빈 값이 생깁니다. 지정 메뉴는 그대로 두고, 빈 상태만 시스템이 막습니다</td></tr>
+      <tr><td>대표 = 인터넷만<br><span class="avoid">인터넷 외의 대표</span> 금지</td><td><strong>대표 = 전 구분</strong></td><td>인터넷 외도 통신사를 바꾸면 상품 · 세트상품이 둘 다 속성으로 이어집니다(AS-IS 실측). 레벨을 걷어내므로 같은 기준이 필요합니다</td></tr>
+      <tr><td>상품 조합 관리 = 인터넷</td><td><strong>상품 조합 관리 = 전 구분</strong></td><td>인터넷 외 대표를 고를 곳. 인터넷 외는 등록 없이 초록선 상품 조합이 전부 들어갑니다</td></tr>
+      <tr><td><span class="avoid">플랫폼 노출 관리</span></td><td><strong>플랫폼 노출 설정</strong></td><td>디자인 시안 메뉴명을 따릅니다</td></tr>
+      <tr><td>미적용 = 카드 위치만 정의</td><td>미적용 규칙 추가</td><td>태그는 「없음」만, 단독 우클릭은 미사용 · 사용만. 03 참고</td></tr>
+      <tr><td>인터넷 상품 V2 용어집</td><td><strong>인터넷 상품 용어집</strong></td><td>목업을 V1 · V2로 나눠 관리하지 않습니다</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>10/01 (3차까지)</h3>
 
   <div class="table-wrap">
   <table>
@@ -147,7 +165,7 @@
   </div>
 
   <div class="callout">
-    <strong>용어 체계는 두 축입니다</strong> — <strong>상품 조합</strong>(초록선이 있는 상품 × 세트상품)을 <strong>속성 조합</strong>(속도 · 구성제품 · 추가구성옵션)에 등록하고, 같은 속성 조합에 등록된 상품 조합 중 하나를 <strong>대표</strong>로 고릅니다. 한 문장으로 설명되면 맞게 쓰고 있는 것입니다.
+    <strong>용어 체계는 두 축입니다</strong> — <strong>상품 조합</strong>(초록선이 있는 상품 × 세트상품)을 <strong>속성 조합</strong>(속도 · 구성제품 · 추가구성옵션)에 등록하고, 같은 속성 조합의 상품 조합 중 하나를 <strong>대표</strong>로 고릅니다. 이와 별개로 상품마다 세트상품 하나를 <strong>기본값</strong>으로 둡니다. 한 문장으로 설명되면 맞게 쓰고 있는 것입니다.
   </div>
 </section>
 
@@ -166,20 +184,21 @@
       <tr><th>상품 보기</th>
         <td><strong>초록선</strong>이 있으면 나옵니다. 상품 조합 등록과는 무관합니다</td>
         <td><strong>초록선</strong>이 있으면 나옵니다. 상품에 태그가 지정돼 있으면 <code>상품명(태그명)</code>으로 붙습니다</td></tr>
-      <tr><th>두 번째 드롭다운 기본값</th>
-        <td>—</td>
-        <td><strong>기본값</strong>으로 지정된 세트상품. 세트상품이 있는 상품은 반드시 1개가 기본값입니다</td></tr>
-      <tr><th>여러 후보 중 고르는 기준</th>
-        <td><strong>대표</strong> — 업체 + 속성 조합마다 1개. 통신사를 A에서 B로 바꿨을 때 B에 같은 속성의 상품이 여러 개면, 태그 보기에서 상품 보기로 넘어갈 때 대표를 보여줍니다</td>
-        <td><strong>기본값</strong> — 상품 1개마다 세트상품 1개. 새로 지정하면 기존 값이 교체됩니다</td></tr>
+      <tr><th>상품을 직접 고를 때<br>(두 번째 드롭다운)</th>
+        <td colspan="2"><strong>기본값</strong>으로 지정된 세트상품이 미리 들어갑니다. 상품 1개마다 세트상품 1개이고, 세트상품이 있는 상품은 반드시 1개가 기본값입니다. 레벨을 대체합니다 <span class="tag-src new">개정</span></td></tr>
+      <tr><th>속성으로 찾을 때<br>(두 드롭다운 모두)</th>
+        <td colspan="2"><strong>대표</strong>가 선택됩니다 — 업체 + 속성 조합마다 1개. 다른 통신사에서 이 통신사로 바꿨을 때 같은 속성 조합의 상품 조합이 여러 개면 대표를 고릅니다. 인터넷은 태그 보기에서 상품 보기로 넘어갈 때도 같습니다 <span class="tag-src new">개정</span></td></tr>
+      <tr><th>속성 조합에 들어가는 방식</th>
+        <td><strong>상품 조합 등록</strong>을 한 것만</td>
+        <td>초록선이 있는 상품 조합 <strong>전부 자동</strong>. 등록이 없습니다 <span class="tag-src new">개정</span></td></tr>
       <tr><th>미사용 상품</th>
-        <td colspan="2">상담상세 · 플랫폼 모두 <strong>노출되지 않습니다.</strong> 태그가 붙어 있어도 겉으로 나가는 곳이 없습니다 <span class="tag-src new">개정</span></td></tr>
+        <td colspan="2">상담상세 · 플랫폼 모두 <strong>노출되지 않습니다.</strong> 태그가 붙어 있어도 겉으로 나가는 곳이 없습니다</td></tr>
     </tbody>
   </table>
   </div>
 
   <div class="callout">
-    <strong>AS-IS에서 바뀌는 점</strong> — 인터넷 외의 두 번째 드롭다운 기본값은 지금까지 인터넷 상품 관리에서 정할 수 없어 「태그 연결」(왼쪽 상품마다 1건)로 관리했습니다. V2는 이 역할을 <strong>기본값</strong>으로 옮기고, 상품 조합 등록은 인터넷 전용으로 남깁니다.
+    <strong>AS-IS에서 바뀌는 점</strong> — 지금은 두 번째 드롭다운의 기본 선택과 통신사 변경 시 이어받을 상품을 <strong>레벨</strong>로 정합니다. 이번 개편에서 레벨을 걷어내고, 상품을 직접 고를 때는 <strong>기본값</strong>, 속성으로 찾을 때는 <strong>대표</strong>로 나눕니다. 두 값 모두 전 구분에 있습니다. <span class="tag-src new">개정</span>
   </div>
 </section>
 
@@ -196,22 +215,22 @@
         <td>상품 카드 하나에 태그를 붙이는 일</td>
         <td>전 구분</td>
         <td><span class="menu">태그 지정</span> → 모달. 인터넷상품은 속도(필수) + 추가구성옵션(선택) 2칸, 기본WIFI · 인터넷 외는 1칸</td></tr>
-      <tr><th>상품 조합 등록 <span class="tag-src new">개정</span></th>
+      <tr><th>상품 조합 등록</th>
         <td>인터넷 상품 조합을 속성 조합에 올려 태그 보기에 나오게 만드는 일. 태그는 두 카드에 지정된 값을 그대로 씁니다</td>
         <td>인터넷</td>
         <td><span class="menu">상품 조합 등록</span> → 속성 조합에 처음 등록되는 상품 조합이면 모달 없이 즉시, 이미 등록된 상품 조합이 있으면 모달. 이미 등록돼 있으면 <span class="menu">상품 조합 관리로 이동</span></td></tr>
       <tr><th>대표</th>
-        <td>같은 업체 · 같은 속성 조합에 등록된 상품 조합 중 기준이 되는 1건</td>
-        <td>인터넷</td>
-        <td>등록 모달의 「이 상품 조합을 대표로」로 지정. <strong>변경은 상품 조합 관리에서만</strong>. 속성 조합에 처음 등록되는 상품 조합은 자동으로 대표 <span class="tag-src new">개정</span></td></tr>
-      <tr><th>기본값 <span class="tag-src new">개정</span></th>
+        <td>같은 업체 · 같은 속성 조합의 상품 조합 중 속성으로 찾을 때 선택되는 1건</td>
+        <td>전 구분 <span class="tag-src new">개정</span></td>
+        <td>속성 조합에 처음 들어가는 상품 조합은 자동으로 대표. <strong>변경은 상품 조합 관리에서만</strong>. 인터넷은 등록 모달에서 「이 상품 조합을 대표로」로도 지정 <span class="tag-src interp">확인 필요 — 디자인 시안은 라디오로 전체 중 선택</span></td></tr>
+      <tr><th>기본값</th>
         <td>상품을 고르면 상담상세 두 번째 드롭다운에 미리 들어갈 세트상품</td>
-        <td>인터넷 외</td>
-        <td><span class="menu">기본값 지정</span> → 모달 없이 즉시 · 토스트. <strong>해제 수단은 없습니다</strong> — 반드시 1개가 기본값이어야 합니다</td></tr>
-      <tr><th>플랫폼 노출 관리 <span class="tag-src new">개정</span></th>
+        <td>전 구분 <span class="tag-src new">개정</span></td>
+        <td><span class="menu">기본값 지정</span> → 모달 없이 즉시 · 토스트. <strong>해제 수단은 없습니다</strong> — 반드시 1개가 기본값이어야 합니다. 상품에 첫 초록선이 생기면 그 세트상품이 <strong>자동으로 기본값</strong>, 기본값의 초록선이 지워지거나 미사용이 되면 남은 상품 조합으로 <strong>승계</strong>(미사용은 건너뜀) <span class="tag-src new">개정</span></td></tr>
+      <tr><th>플랫폼 노출 설정</th>
         <td>상품 하나가 플랫폼 · 신청서에 어떻게 나갈지 정하는 일</td>
         <td>전 구분</td>
-        <td><span class="menu">플랫폼 노출 관리</span> → 모달. 추가 노출(신청서 · 플랫폼) 체크 + 월요금 · 플랫폼 노출용 설명(인터넷은 결합요금 추가)</td></tr>
+        <td><span class="menu">플랫폼 노출 설정</span> → 모달. 추가 노출(신청서 · 플랫폼) 체크 + 월요금 · 플랫폼 노출용 설명(인터넷은 결합요금 추가)</td></tr>
     </tbody>
   </table>
   </div>
@@ -222,12 +241,14 @@
 
   <h3>함께 정해진 규칙</h3>
   <ul>
-    <li><strong>초록선이 없는 조합</strong>은 판매하지 않는 조합이라 상품 조합이 아닙니다. 등록도 기본값 지정도 할 수 없고, 메뉴 항목 자체가 뜨지 않습니다. <span class="tag-src new">개정</span></li>
+    <li><strong>초록선이 없는 조합</strong>은 판매하지 않는 조합이라 상품 조합이 아닙니다. 등록도 기본값 지정도 할 수 없고, 메뉴 항목 자체가 뜨지 않습니다.</li>
+    <li>상품 조합 등록은 <strong>인터넷 전용</strong>입니다. 인터넷 외는 초록선을 잇고 지우는 것이 곧 속성 조합에 넣고 빼는 일입니다. <span class="tag-src new">개정</span></li>
     <li>상품 조합 등록 · 기본값 지정 메뉴는 <strong>상품 조합을 고른 뒤 세트상품 위</strong>에서 우클릭할 때만 뜹니다.</li>
     <li>세트상품에 붙는 태그는 <strong>1개가 원칙</strong>입니다. 2개면 운영 데이터 오류입니다.</li>
     <li>인터넷상품의 속도 태그가 없으면 상품 조합을 등록할 수 없습니다.</li>
-    <li><strong>이미 기본값인 세트상품</strong>에는 메뉴 항목이 뜨지 않습니다. 카드의 「기본값」 배지가 이미 그 사실을 보여주고, 해제 수단도 없기 때문입니다. <span class="tag-src new">개정</span></li>
-    <li><strong>대표 변경과 등록 해제는 인터넷 상품 관리에서 할 수 없습니다.</strong> 상품 조합 관리로 넘어가야 합니다. 05 참고 <span class="tag-src new">개정</span></li>
+    <li><strong>미사용 세트상품</strong>에는 「기본값 지정」이 뜨지 않습니다. 상담상세에 나가지 않아 기본값이 되면 빈 값이 들어갑니다. <span class="tag-src new">개정</span></li>
+    <li><strong>이미 기본값인 세트상품</strong>에는 메뉴 항목이 뜨지 않습니다. 카드의 「기본값」 배지가 이미 그 사실을 보여주고, 해제 수단도 없기 때문입니다.</li>
+    <li><strong>대표 변경과 등록 해제는 인터넷 상품 관리에서 할 수 없습니다.</strong> 상품 조합 관리로 넘어가야 합니다. 05 참고</li>
   </ul>
 
   <h3>쓰지 않는 말</h3>
@@ -235,13 +256,13 @@
   <table>
     <thead><tr><th style="width:30%">쓰지 않는 말</th><th>이유 · 대신 쓰는 말</th></tr></thead>
     <tbody>
-      <tr><td><span class="avoid">짝</span></td><td>구어체라 화면 문구로 쓸 수 없습니다. <strong>상품 조합</strong>으로 씁니다 <span class="tag-src new">개정</span></td></tr>
-      <tr><td><span class="avoid">자동 선택</span></td><td>시스템이 고른 값으로 읽힙니다. 운영자가 정하는 값이므로 <strong>기본값</strong>으로 씁니다 <span class="tag-src new">개정</span></td></tr>
-      <tr><td><span class="avoid">태그 연결 · 태그 연결 등록</span></td><td>「태그 지정」과 헷갈립니다. <strong>상품 조합 등록</strong>으로 씁니다 <span class="tag-src new">개정</span></td></tr>
-      <tr><td><span class="avoid">조합</span> (단독)</td><td>속성 조합인지 상품 조합인지 모호합니다. 수식어를 반드시 붙입니다 <span class="tag-src new">개정</span></td></tr>
-      <tr><td><span class="avoid">인터넷 외의 태그 연결</span></td><td>V1에서는 "인터넷 외 상품에 태그 붙이기"를 뜻했습니다. V2부터는 <strong>태그 지정</strong>입니다</td></tr>
+      <tr><td><span class="avoid">짝</span></td><td>구어체라 화면 문구로 쓸 수 없습니다. <strong>상품 조합</strong>으로 씁니다</td></tr>
+      <tr><td><span class="avoid">자동 선택</span></td><td>시스템이 고른 값으로 읽힙니다. 운영자가 정하는 값이므로 <strong>기본값</strong>으로 씁니다</td></tr>
+      <tr><td><span class="avoid">태그 연결 · 태그 연결 등록</span></td><td>「태그 지정」과 헷갈립니다. <strong>상품 조합 등록</strong>으로 씁니다</td></tr>
+      <tr><td><span class="avoid">조합</span> (단독)</td><td>속성 조합인지 상품 조합인지 모호합니다. 수식어를 반드시 붙입니다</td></tr>
+      <tr><td><span class="avoid">인터넷 외의 태그 연결</span></td><td>초안에서는 "인터넷 외 상품에 태그 붙이기"를 뜻했습니다. 지금은 <strong>태그 지정</strong>입니다</td></tr>
       <tr><td><span class="avoid">상품 연결 · 상품 연결 등록</span></td><td>연결이 아니라 속성 조합에 올리는 일입니다. <strong>상품 조합 등록</strong>으로 씁니다</td></tr>
-      <tr><td><span class="avoid">인터넷 외의 대표</span></td><td>인터넷 대표(속성 조합 기준)와 기준이 다릅니다. 인터넷 외는 <strong>기본값</strong>(상품 기준)입니다</td></tr>
+      <tr><td><span class="avoid">플랫폼 노출 관리</span></td><td>디자인 시안 메뉴명에 맞춰 <strong>플랫폼 노출 설정</strong>으로 씁니다 <span class="tag-src new">개정</span></td></tr>
     </tbody>
   </table>
   </div>
@@ -260,12 +281,12 @@
       <tr><th>상품</th><td>세트 그룹의 왼쪽 열 카드</td><td>인터넷상품 · TV채널 · 전화상품</td></tr>
       <tr><th>세트상품</th><td>세트 그룹의 오른쪽 열 카드</td><td>기본WIFI · 셋탑박스 · 전화기기</td></tr>
       <tr><th>카드</th><td>상품이나 세트상품 하나를 나타내는 네모 칸</td><td>—</td></tr>
-      <tr><th>상품 조합 <span class="tag-src new">개정</span></th><td><strong>초록선으로 연결된</strong> 상품 1개 + 세트상품 1개. 판매 가능한 것만 상품 조합이라 부릅니다. 등록 단위</td><td>에센스 × 기가지니3A</td></tr>
-      <tr><th>등록된 상품 조합 <span class="tag-src new">개정</span></th><td>상품 조합 중 속성 조합에 등록된 것. 태그 보기에 나오고, 상품 조합 관리 목록 한 줄이 1건</td><td>KT 39건</td></tr>
-      <tr><th>속성 조합 <span class="tag-src new">개정</span></th><td>속도 · 구성제품 · 추가구성옵션 3칸. 두 카드의 태그에서 <strong>자동으로 정해집니다</strong></td><td>1Gbps · 프리미엄WiFi · 없음</td></tr>
+      <tr><th>상품 조합</th><td><strong>초록선으로 연결된</strong> 상품 1개 + 세트상품 1개. 판매 가능한 것만 상품 조합이라 부릅니다. 등록 단위</td><td>에센스 × 기가지니3A</td></tr>
+      <tr><th>등록된 상품 조합</th><td>인터넷 상품 조합 중 속성 조합에 등록된 것. 태그 보기에 나오고, 상품 조합 관리 목록 한 줄이 1건. 인터넷 외는 등록이 없어 쓰지 않습니다 <span class="tag-src new">개정</span></td><td>KT 39건</td></tr>
+      <tr><th>속성 조합</th><td>인터넷은 속도 · 구성제품 · 추가구성옵션 3칸, 인터넷 외는 2칸(TV 라인 · 셋탑, 전화 요금방식 · 전화기기). 두 카드의 태그에서 <strong>자동으로 정해집니다</strong> <span class="tag-src new">개정</span></td><td>1Gbps · 프리미엄WiFi · 없음</td></tr>
       <tr><th>초록선</th><td>상품과 세트상품을 함께 팔 수 있다는 표시. 초록선이 있어야 상품 조합이고, 상품 보기 노출의 기준입니다</td><td>AS-IS 연결선 그대로</td></tr>
-      <tr><th>등록 해제 <span class="tag-src new">개정</span></th><td>등록된 상품 조합을 속성 조합에서 빼는 것. 초록선(판매 조합)은 그대로 남고, 다시 등록할 수 있습니다. 상품 조합 관리에서만 합니다</td><td>행 끝 ✕</td></tr>
-      <tr><th>미적용</th><td>세트상품 없이 파는 상품 조합의 오른쪽 자리. 인터넷세트 기본WIFI 칸 맨 위 카드</td><td>슬림 × 미적용</td></tr>
+      <tr><th>등록 해제</th><td>등록된 상품 조합을 속성 조합에서 빼는 것. 초록선(판매 조합)은 그대로 남고, 다시 등록할 수 있습니다. 상품 조합 관리에서만, 인터넷만 합니다</td><td>행 끝 ✕</td></tr>
+      <tr><th>미적용</th><td>세트상품 없이 파는 상품 조합의 오른쪽 자리. 인터넷세트 기본WIFI 칸 맨 위 카드. 태그는 「없음」만 지정, 금액 설정 없음, 단독 우클릭은 미사용 · 사용만. 기본값이 될 수 있습니다 <span class="tag-src new">개정</span><br><a href="/internet-product/products/#na-notes">미적용 특이사항 →</a></td><td>슬림 × 미적용</td></tr>
     </tbody>
   </table>
   </div>
@@ -276,14 +297,14 @@
 <section>
   <span class="section-num">04</span>
   <h2>화면 이름</h2>
-  <p class="section-desc">V2에서 이름이 바뀌는 화면과 헷갈리기 쉬운 이웃 화면. <span class="tag-src spec">명세</span></p>
+  <p class="section-desc">이번 개편에서 이름이 바뀌는 화면과 헷갈리기 쉬운 이웃 화면. <span class="tag-src spec">명세</span></p>
 
   <div class="table-wrap">
   <table>
     <thead><tr><th style="width:22%">화면</th><th style="width:22%">이전 이름</th><th>하는 일</th></tr></thead>
     <tbody>
-      <tr><th>인터넷 상품 관리</th><td>같음</td><td>태그 지정 · 상품 조합 등록 · 기본값 지정 · 플랫폼 노출 관리</td></tr>
-      <tr><th>상품 조합 관리 <span class="tag-src new">개정</span></th><td>V1 상품 연결 관리<br>9/30 태그 연결 관리</td><td><strong>속성 조합별로 묶어 본 등록된 상품 조합 목록</strong>입니다. 대표를 바꾸고, 등록을 해제합니다. 표에는 태그명 대신 속성이 보입니다 — 대표가 속성 조합 기준이기 때문이며, 속성 3칸 위에 <strong>「속성 조합」</strong> 머리글을 둡니다</td></tr>
+      <tr><th>인터넷 상품 관리</th><td>같음</td><td>태그 지정 · 상품 조합 등록 · 기본값 지정 · 플랫폼 노출 설정</td></tr>
+      <tr><th>상품 조합 관리</th><td>초안 상품 연결 관리<br>9/30 태그 연결 관리</td><td><strong>속성 조합별로 묶어 본 상품 조합 목록</strong>입니다. 전 구분 — 인터넷은 등록된 상품 조합, 인터넷 외는 초록선 상품 조합 전체. 대표를 바꾸고, 인터넷은 등록을 해제합니다. <span class="tag-src new">개정</span> 표에는 태그명 대신 속성이 보입니다 — 대표가 속성 조합 기준이기 때문이며, 속성 3칸 위에 <strong>「속성 조합」</strong> 머리글을 둡니다</td></tr>
       <tr><th>태그 관리</th><td>같음</td><td>업체별 태그(<code>1Gbps(에센스)</code>)를 등록 · 수정합니다</td></tr>
       <tr><th>상품속성 관리</th><td>같음</td><td>업체 공통 속성(<code>1Gbps</code>)을 관리합니다</td></tr>
     </tbody>
@@ -291,23 +312,24 @@
   </div>
 
   <div class="callout">
-    <strong>「상품 속성 연결」은 쓰지 않습니다</strong> — 상품속성 관리와 한 글자 차이라 같은 계열 화면으로 읽힙니다. V2에서 상품에 속성을 붙이는 일은 태그 지정이므로, 그 기능과도 혼동됩니다.
+    <strong>「상품 속성 연결」은 쓰지 않습니다</strong> — 상품속성 관리와 한 글자 차이라 같은 계열 화면으로 읽힙니다. 상품에 속성을 붙이는 일은 태그 지정이므로, 그 기능과도 혼동됩니다.
   </div>
 </section>
 
 <section>
   <span class="section-num">05</span>
   <h2>두 화면의 역할 분리</h2>
-  <p class="section-desc">같은 데이터를 다루는 두 화면이 무엇을 맡는지. <span class="tag-src new">개정</span></p>
+  <p class="section-desc">같은 데이터를 다루는 두 화면이 무엇을 맡는지.</p>
 
   <div class="table-wrap">
   <table>
     <thead><tr><th style="width:26%">동작</th><th style="width:28%">인터넷 상품 관리</th><th>상품 조합 관리</th></tr></thead>
     <tbody>
-      <tr><th>상품 조합 등록</th><td><strong>여기서</strong></td><td>안 함</td></tr>
+      <tr><th>상품 조합 등록 (인터넷)</th><td><strong>여기서</strong></td><td>안 함</td></tr>
+      <tr><th>인터넷 외 상품 조합 넣고 빼기</th><td><strong>여기서</strong> — 초록선 잇기 · 지우기</td><td>안 함</td></tr>
       <tr><th>등록 시점의 대표 지정</th><td><strong>여기서</strong></td><td>—</td></tr>
       <tr><th>대표 변경</th><td>안 함</td><td><strong>여기서</strong></td></tr>
-      <tr><th>등록 해제</th><td>안 함</td><td><strong>여기서</strong></td></tr>
+      <tr><th>등록 해제 (인터넷)</th><td>안 함</td><td><strong>여기서</strong></td></tr>
       <tr><th>태그 지정 · 기본값 · 플랫폼 노출</th><td><strong>여기서</strong></td><td>안 함</td></tr>
     </tbody>
   </table>
@@ -319,10 +341,10 @@
     <strong>왜 나눴나</strong> — 한 모달에 등록 · 대표 변경 · 등록 해제를 모두 넣으니 주 버튼이 여러 개가 되고, 그걸 감당하려고 해제 확인 · 되돌리기 · 임시 저장 같은 장치가 계속 붙었습니다. 장치가 늘어나는 것은 설계가 정교해지는 신호가 아니라 <strong>모달이 자기 일이 아닌 걸 하고 있다는 신호</strong>로 보고 역할을 잘랐습니다. 자른 뒤 그 장치는 전부 사라졌고, 등록 모달의 버튼은 [취소] [등록] 둘만 남았습니다. <span class="tag-src interp">해석</span>
   </div>
 
-  <h3>속성 조합별로 상품 조합을 보는 곳 <span class="tag-src new">개정</span></h3>
+  <h3>속성 조합별로 상품 조합을 보는 곳</h3>
   <ul>
     <li><strong>상품 조합 관리 목록</strong> — 같은 속성 조합의 등록된 상품 조합이 연달아 나오고 속성 3칸이 병합됩니다</li>
-    <li><strong>상품 조합 등록 모달</strong> — 「같은 속성 조합의 다른 상품 조합」 목록과 현재 대표</li>
+    <li><strong>상품 조합 등록 모달</strong> (인터넷) — 「같은 속성 조합의 다른 상품 조합」 목록과 현재 대표</li>
     <li>인터넷 상품 관리 화면에서는 보이지 않습니다. 카드와 초록선은 상품 조합 단위로만 그려집니다</li>
   </ul>
 
@@ -330,7 +352,7 @@
 </section>
 
 <footer>
-  인터넷 상품 관리 V2 · 상품 조합 관리 V2 목업 기준 · 기능정의서 용어 정리(1.3)에 반영
+  인터넷 상품 관리 · 상품 조합 관리 목업 기준 · 기능정의서 용어 정리(1.3)에 반영
 </footer>
 
 </div>
