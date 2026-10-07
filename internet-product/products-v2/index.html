@@ -100,6 +100,11 @@ svg.lane{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;ov
 .ctx div{display:flex;align-items:baseline;gap:10px}
 .ctx .k{font-size:12px;color:var(--g500)}
 .ctx .v{font-size:15px;font-weight:700;color:var(--g900);letter-spacing:-.3px}
+.ctx.col{flex-direction:column;gap:8px}
+.ctx.col div{gap:0}
+.ctx.col .k{flex:0 0 76px}
+.tgh{font-size:14px;font-weight:700;color:var(--g900);margin-top:4px}
+.tgh+.hint{margin:2px 0 12px}
 .fld{margin-bottom:14px}
 .fld>label{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;margin-bottom:6px}
 .fld>label .req{color:var(--error)}
@@ -232,6 +237,9 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 .cases td{vertical-align:middle}
 .cases .btn-out{height:30px;padding:0 10px;font-size:12.5px}
 .cases .sub{font-size:12px;color:var(--g500);font-weight:400}
+.mx .sub{font-size:12px;color:var(--g500);font-weight:400}
+.table-wrap{overflow-x:auto}
+#card-flags + .sheet .btn-out{white-space:nowrap}
 .cases tbody th{vertical-align:middle}
 
 /* ── V2 ── */
@@ -264,7 +272,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
     <span><i style="background:var(--g25);border:1px solid var(--g100)"></i>미사용</span>
     <span><i style="background:var(--blue50);border:1px solid var(--primary)"></i>선택</span>
     <span><i style="background:#F1FBF5;border:1px solid var(--link)"></i>상품 조합 (초록선)</span>
-    <span><i style="background:var(--hold)"></i>기본값 (TV · 전화)</span>
+    <span><i style="background:var(--hold)"></i>기본값 (상품을 고르면 표시)</span>
   </div>
 
   <div class="cnt" id="cnt"></div>
@@ -307,9 +315,10 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
       <tr><td>상품 태그 없음 (오류)</td><td class="sub">속도 태그가 없는 상품 → 「태그 지정」 먼저 안내 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-notag">열기</button></td></tr>
       <tr><td>이미 등록돼 있음 (오류)</td><td class="sub">평소엔 메뉴가 「상품 조합 관리」로 바뀌어 안 열림. 동시 편집 안전망 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-dupe">열기</button></td></tr>
       <tr><th>— (화면 이동)</th><td>「상품 조합 관리로 이동」<br><span class="sub">이미 등록된 상품 조합 · 기본WIFI 위</span></td><td>모달 없음</td><td class="sub">상품 조합 관리로 현재창 이동 · 필터 없이 기본 상태 (목업은 안내 토스트). <b>대표 변경 · 등록 해제는 그 화면에서만</b></td><td><button class="btn-out" data-case="m-view">메뉴 열기</button></td></tr>
-      <tr><th rowspan="2">인터넷 외</th><th rowspan="2">— (토스트)<br><span class="chg">추가</span></th><td rowspan="2">「기본값 지정」<br><span class="sub">상품 조합 선택 후 세트상품 위</span></td>
+      <tr><th rowspan="3">전 구분</th><th rowspan="3">— (토스트)<br><span class="chg">추가</span></th><td rowspan="3">「기본값 지정」<br><span class="sub">상품 조합 선택 후 두 번째 칸(기본WIFI · 세트상품) 위 · 초록선 있음</span></td>
         <td>변경</td><td class="sub">다른 세트상품이 기본값 → 「기본값 지정」 · 교체</td><td><button class="btn-out" data-case="m-auto-chg">메뉴 열기</button></td></tr>
       <tr><td>현재 기본값</td><td class="sub">이 세트상품이 기본값 → <b>메뉴 항목 없음</b>. 카드의 「기본값」 배지로 이미 보이고, 해제 수단도 두지 않습니다</td><td><button class="btn-out" data-case="m-auto-cur">메뉴 열기</button></td></tr>
+      <tr><td>인터넷 <span class="chg">10/07</span></td><td class="sub">기본WIFI 위 — 「상품 조합 등록」 또는 「상품 조합 관리로 이동」과 함께 뜸. <b>등록 여부와 무관</b>(대표는 속성으로 찾을 때, 기본값은 상품을 직접 고를 때)</td><td><button class="btn-out" data-case="m-auto-net">메뉴 열기</button></td></tr>
       <tr><th rowspan="3">전 구분</th><th rowspan="3">플랫폼 노출 관리<br><span class="chg">추가</span></th><td rowspan="3">「플랫폼 노출 관리」</td>
         <td>인터넷</td><td class="sub">추가 노출 2개 + 월요금 · <b>결합요금</b> · 플랫폼 노출용 설명</td><td><button class="btn-out" data-case="pl-net">열기</button></td></tr>
       <tr><td>인터넷 외</td><td class="sub">결합요금 칸이 빠진다 — 나머지는 동일</td><td><button class="btn-out" data-case="pl-etc">열기</button></td></tr>
@@ -324,6 +333,78 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 </div>
 
 
+<div class="doc-band" id="card-flags" style="margin-top:0;border-top:0;border-bottom:0;background:#fff"><div class="sheet">
+  <div class="doc-eyebrow">카드 표시 규칙</div>
+  <div class="doc-h">카드에 붙는 플래그 · 상태 표시 — 인터넷 / 인터넷 외</div>
+  <div class="doc-sub">[보기]를 누르면 위 화면이 그 상태로 바뀌고 카드 영역으로 이동합니다. 기능정의서 2.1 「카드 표시」를 이 표로 대체합니다.</div>
+</div></div>
+<div class="sheet" style="padding-top:8px">
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">1</span><span class="spec-t">플래그 (글자 배지)</span></div>
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:11%">플래그</th><th style="width:14%">붙는 카드</th><th style="width:19%">보이는 조건</th><th>인터넷</th><th style="width:17%">인터넷 외</th><th style="width:96px"></th></tr></thead>
+    <tbody>
+      <tr><th>태그 없음</th><td>첫 번째 · 두 번째 칸 모든 카드 (「미적용」 제외)</td><td><b>항상</b> — 선택과 무관</td><td>인터넷상품 : <b>속도</b> 태그 없음<br>기본WIFI : <b>구성제품</b> 태그 없음<br><span class="sub">추가구성옵션은 선택 항목이라 비어도 안 붙음</span></td><td>그 카드의 태그(1칸) 없음</td><td><button class="btn-out" data-flag="f-nt">보기</button></td></tr>
+      <tr><th rowspan="2">기본값</th><td rowspan="2">두 번째 칸 카드 (기본WIFI · 세트상품)</td><td><b>첫 번째 칸 상품을 선택했을 때만</b> — 그 상품의 기본값 카드 1개</td><td>동일 · 「미적용」도 기본값이 될 수 있음</td><td>동일</td><td><button class="btn-out" data-flag="f-auto-net">인터넷</button><br><button class="btn-out" data-flag="f-auto-etc" style="margin-top:6px">TV</button></td></tr>
+      <tr><td colspan="3"><b>안 보임</b> — 아무것도 선택 안 함 · 두 번째 칸 카드만 선택 · 선택한 상품에 초록선이 없음(기본값 자체가 없음)</td><td><button class="btn-out" data-flag="f-col-only">보기</button></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">상태 표시 (색)</span><span class="spec-s">전 구분 동일</span></div>
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:18%">표시</th><th>조건</th><th style="width:28%">비고</th></tr></thead>
+    <tbody>
+      <tr><th>선택 (파랑)</th><td>클릭한 카드. 상품 조합을 고르면 두 카드 모두</td><td></td></tr>
+      <tr><th>초록 + 초록선</th><td>선택한 카드와 판매 가능하게 연결된 반대쪽 카드</td><td class="sub">상품 선택 → 두 번째 칸 · 두 번째 칸만 선택 → 첫 번째 칸</td></tr>
+      <tr><th>흐리게</th><td>미사용 상품</td><td class="sub">AS-IS 동일</td></tr>
+      <tr><th>「미적용」 카드</th><td>인터넷 기본WIFI 칸 맨 위에 항상</td><td class="sub">인터넷만 · 태그 지정 · 플랫폼 노출 관리 메뉴 없음</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">카드에 표시하지 않는 것</span></div>
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:18%">항목</th><th style="width:36%">어디서 보이나</th><th>카드에 안 붙이는 이유</th></tr></thead>
+    <tbody>
+      <tr><th>등록 여부 (인터넷)</th><td>목록 위 안내 줄 — 「이미 등록돼 있습니다 / 아직 등록이 없습니다」</td><td>등록은 짝 단위라 카드 하나에 붙일 수 없음</td></tr>
+      <tr><th>대표</th><td>상품 조합 관리</td><td>짝 단위 · 속성 조합 기준이라 카드 화면에서 판단 불가</td></tr>
+      <tr><th>태그명</th><td>태그 지정 모달</td><td>카드 태그명 표시는 전부 삭제(9/30)</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">4</span><span class="spec-t">목록 위 안내 줄</span><span class="spec-s">상품 조합을 골랐을 때</span></div>
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:18%">상황</th><th>인터넷</th><th style="width:30%">인터넷 외</th></tr></thead>
+    <tbody>
+      <tr><th>두 번째 칸 미선택</th><td>「…를 고르면 등록 · 기본값 항목이 생깁니다」</td><td>「…를 고르면 기본값 항목이 생깁니다」</td></tr>
+      <tr><th>초록선 없음</th><td colspan="2">「판매할 수 없는 조합입니다 (초록선 없음)」</td></tr>
+      <tr><th>초록선 있음</th><td>「이미 등록돼 있습니다 / 아직 등록이 없습니다 · 현재 기본값 / 기본값 아님」</td><td>「현재 기본값 / 기본값 아님」</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<div class="spec">
+  <div class="spec-head"><span class="chip-n">5</span><span class="spec-t">기본값 자동 규칙</span><span class="spec-s">전 구분 동일 · 10/07</span></div>
+  <div class="table-wrap"><table class="mx">
+    <thead><tr><th style="width:24%">시점</th><th>동작</th></tr></thead>
+    <tbody>
+      <tr><th>상품에 첫 초록선이 생김</th><td>그 짝의 세트상품이 <b>자동으로 기본값</b>. 등록과 무관 — 대표는 속성 조합의 첫 등록, 기본값은 상품의 첫 초록선이 기준</td></tr>
+      <tr><th>바꾸고 싶을 때</th><td>두 번째 칸 카드 우클릭 「기본값 지정」 — 모달 없이 즉시 교체. 해제 수단 없음</td></tr>
+      <tr><th>기본값 짝의 초록선 삭제</th><td>남은 초록선 짝 중 하나로 승계. 남은 짝이 없으면 기본값도 없음</td></tr>
+      <tr><th>이관</th><td>레벨 1순위 세트상품을 초기 기본값으로 (목업은 첫 번째 짝)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p><b>상품 조합 등록과 기본값을 묶지 않습니다.</b> 등록은 짝 단위(상품 하나에 여러 개)이고 기본값은 상품 하나에 1개입니다. 묶으면 등록하지 않은 상품은 기본값이 비고, 첫 등록에도 모달이 생깁니다.</p>
+  </div>
+</div>
+</div>
+
 <footer>인터넷 상품 관리 V2 — 태그 지정 · 상품 조합 등록 · 기본값 지정 · 플랫폼 노출 관리 통일안 · 결합할인 설명 수정은 V1과 동일</footer>
 </div>
 
@@ -331,12 +412,14 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
   <div class="modal">
     <div class="mh"><h3>태그 지정</h3><span class="x" id="tgX">✕</span></div>
     <div class="mb">
-      <div class="ctx">
+      <div class="ctx col">
         <div><span class="k">업체</span><span class="v" id="tgVen"></span></div>
         <div><span class="k">구분</span><span class="v" id="tgSvc"></span></div>
-        <div><span class="k">열</span><span class="v" id="tgAxis"></span></div>
+        <div><span class="k">상품 유형</span><span class="v" id="tgAxis"></span></div>
+        <div><span class="k">상품</span><span class="v" id="tgProd"></span></div>
       </div>
-      <div class="fld"><label>상품</label><div class="inp ro" id="tgProd"></div></div>
+      <div class="tgh">지정할 태그</div>
+      <div class="hint">태그 관리에 등록된 태그 중에서 고릅니다.</div>
       <div id="tgFields"></div>
       <div class="fld" id="tgPrevBox" style="margin-bottom:0">
         <label>고객 노출 <span class="sp"></span><span class="ro">자동 계산</span></label>
@@ -550,7 +633,7 @@ function paintSel(){
   const mates = fromRow ? (g.pair[name] || [])
     : Object.keys(g.pair).filter(p => (g.pair[p]||[]).indexOf(name) >= 0);
   mates.forEach(m => { const t = q(fromRow ? 'col' : 'row', m); if (t) t.classList.add('lit'); });
-  if (SEL.p && !isNet(g)) { const a = AUTO[autoK(g.label, SEL.p)]; const t = a != null && q('col', a); if (t) t.classList.add('auto'); }
+  if (SEL.p) { const a = AUTO[autoK(g.label, SEL.p)]; const t = a != null && q('col', a); if (t) t.classList.add('auto'); }
   let cand = null;
   if (SEL.p && SEL.set != null) {
     const t = q('col', SEL.set);
@@ -568,10 +651,11 @@ function paintPair(){
   const picked = SEL.set != null;
   const net = isNet(g);
   let st;
-  if (!picked) st = '<span style="color:var(--g400)">오른쪽 '+esc(g.colName)+'를 고르면 '+(net ? '등록' : '기본값')+' 항목이 생깁니다</span>';
+  const dflt = () => AUTO[autoK(g.label, SEL.p)] === SEL.set ? '<span class="dup">현재 기본값</span>' : '<span class="ok">기본값 아님</span>';
+  if (!picked) st = '<span style="color:var(--g400)">오른쪽 '+esc(g.colName)+'를 고르면 '+(net ? '등록 · 기본값' : '기본값')+' 항목이 생깁니다</span>';
   else if (!isMate(g, SEL.p, SEL.set)) st = '<span style="color:var(--g400)">판매할 수 없는 조합입니다 (초록선 없음)</span>';
-  else if (net) st = hasLink(SEL.p, SEL.set) ? '<span class="dup">이미 연결이 있습니다</span>' : '<span class="ok">아직 연결이 없습니다</span>';
-  else st = AUTO[autoK(g.label, SEL.p)] === SEL.set ? '<span class="dup">현재 기본값</span>' : '<span class="ok">기본값 아님</span>';
+  else if (net) st = (hasLink(SEL.p, SEL.set) ? '<span class="dup">이미 등록돼 있습니다</span>' : '<span class="ok">아직 등록이 없습니다</span>') + ' · ' + dflt();
+  else st = dflt();
   bar.hidden = false;
   bar.innerHTML = '지금 선택 <b>'+esc(SEL.p)+' × '+(!picked ? '<span class="non">'+esc(g.colName)+' 미선택</span>' : SEL.set ? esc(SEL.set) : '미적용')+'</b> — ' + st;
 }
@@ -610,7 +694,7 @@ function openMenu(el, x, y){
   if (ready && net && isMate(g, SEL.p, SEL.set))   // 초록선(판매 가능 조합)에서만
     items += hasLink(SEL.p, SEL.set) ? '<div class="mi act" data-a="view">상품 조합 관리로 이동</div>'
                                      : '<div class="mi act" data-a="reg">상품 조합 등록<span class="newb">추가</span></div>';
-  if (ready && !net && isMate(g, SEL.p, SEL.set))
+  if (ready && isMate(g, SEL.p, SEL.set))            /* 기본값 — 전 구분 (10/07) */
     items += AUTO[autoK(g.label, SEL.p)] === SEL.set ? ''
                                                       : '<div class="mi act" data-a="auto">기본값 지정<span class="newb">추가</span></div>';
   const m = document.createElement('div');
@@ -636,8 +720,9 @@ function openMenu(el, x, y){
 function setAuto(g){
   const k = autoK(g.label, SEL.p), prev = AUTO[k];
   AUTO[k] = SEL.set;                       /* 교체만 가능 — 비우는 경로가 없다 */
-  toast(prev != null ? '기본값을 바꿨습니다 — '+SEL.p+' : '+prev+' → '+SEL.set
-                     : '기본값으로 지정했습니다 — '+SEL.p+' → '+SEL.set, '#10A10E');
+  const nm = x => x === '' ? '미적용' : x;
+  toast(prev != null ? '기본값을 바꿨습니다 — '+SEL.p+' : '+nm(prev)+' → '+nm(SEL.set)
+                     : '기본값으로 지정했습니다 — '+SEL.p+' → '+nm(SEL.set), '#10A10E');
   paintSel();
 }
 function closeMenu(){ if (MENU) { MENU.remove(); MENU = null; } }
@@ -666,7 +751,8 @@ function openTag(){
   } else {
     const arr = side === 'row' ? g.rows : g.cols;
     const opts = [...new Set(arr.map(x => x[1]).filter(Boolean))].sort();
-    $('tgFields').innerHTML = tagSelect('tgSel', '태그', opts, tagOf(g, side, name), true);
+    const AN = {'TV':['라인','셋탑'],'인터넷전화':['요금방식','전화기기'],'일반전화':['요금방식','전화기기']}[g.svc] || ['태그','태그'];
+    $('tgFields').innerHTML = tagSelect('tgSel', AN[side === 'row' ? 0 : 1], opts, tagOf(g, side, name), true);
     const upd = () => { const v = $('tgSel').value; $('tgPrev').textContent = v ? name + '(' + v + ')' : name; };
     $('tgSel').onchange = upd; upd();
   }
@@ -789,13 +875,13 @@ function reindex(){
   Object.keys(REP).forEach(k => { if (!cnt[k] || !R[REP[k]] || R[REP[k]][12] !== k) delete REP[k]; });
   R.forEach((r, i) => { if (REP[r[12]] === undefined) REP[r[12]] = i; });
 }
-/* ── V2 : 기본값 (인터넷 외 — 상품마다 세트상품 1개가 셀렉트 기본값) ── */
+/* ── V2 : 기본값 (전 구분 — 상품을 직접 고르면 두 번째 칸에 미리 들어갈 세트상품 1개. 레벨 대체) ── */
 const AUTO = {};   // AUTO[업체|그룹|상품] = 세트상품
 const autoK = (label, p) => V+'|'+label+'|'+p;
 /* 예시 — KT TV 「에센스」는 셋탑박스 2개 중 기가지니3A가 기본값 */
 (D['KT'].find(g => g.label==='TV세트').pair['에센스'] = ['기가지니3A','일반셋톱']);
 /* 세트상품이 있는 상품은 반드시 1개가 기본값 — 해제 수단은 두지 않는다 */
-VENS.forEach(v => (D[v]||[]).filter(g => !isNet(g) && g.cols.length).forEach(g => Object.keys(g.pair).forEach(p => {
+VENS.forEach(v => (D[v]||[]).filter(g => g.cols.length).forEach(g => Object.keys(g.pair).forEach(p => {   /* 10/07 — 인터넷도 기본값 */
   if ((g.pair[p]||[]).length) AUTO[v+'|'+g.label+'|'+p] = g.pair[p][0];
 })));
 reindex();
@@ -1021,6 +1107,7 @@ const CASE = {
   'reg-dupe':  () => regWith('슬림 와이파이', 'KT와이파이7D'),
   'm-view':     b => menuCase(b, '인터넷세트', '슬림 와이파이', 'KT와이파이7D'),
   'm-auto-chg': b => { AUTO[autoK('TV세트','에센스')] = '기가지니3A'; menuCase(b, 'TV세트', '에센스', '일반셋톱'); },
+  'm-auto-net': b => { AUTO['KT|인터넷세트|슬림 와이파이'] = '기가 와이파이 홈ax'; menuCase(b, '인터넷세트', '슬림 와이파이', 'KT와이파이7D'); },
   'm-auto-cur': b => { AUTO[autoK('TV세트','에센스')] = '기가지니3A'; menuCase(b, 'TV세트', '에센스', '기가지니3A'); },
   'pl-net':  () => { goKT('메인상품'); CUR = { g: grp('인터넷세트'), side:'row', name:'슬림 와이파이' }; openPlat(); },
   'pl-etc':  () => { goKT('메인상품'); CUR = { g: grp('TV세트'), side:'row', name:'Skylife 슬림' }; openPlat(); },
@@ -1030,6 +1117,18 @@ const CASE = {
   'ds-on':    () => { goKT('결합할인'); openDesc(1); },
   'ds-empty': () => { goKT('결합할인'); openDesc(3, { ap: true, app: '' }); }
 };
+/* ── 카드 표시 규칙 [보기] — 상태를 만들고 카드 영역으로 이동 ── */
+const FLAG = {
+  'f-nt':       () => { goKT('메인상품'); },
+  'f-auto-net': () => { goKT('메인상품'); SEL = { g: '인터넷세트', s: 'row', n: '슬림 와이파이', p: '슬림 와이파이', set: null }; paintSel(); return '인터넷세트'; },
+  'f-auto-etc': () => { goKT('메인상품'); SEL = { g: 'TV세트', s: 'row', n: '에센스', p: '에센스', set: null }; paintSel(); return 'TV세트'; },
+  'f-col-only': () => { goKT('메인상품'); SEL = { g: '인터넷세트', s: 'col', n: 'KT와이파이7D' }; paintSel(); return '인터넷세트'; }
+};
+document.querySelectorAll('[data-flag]').forEach(b => b.onclick = () => {
+  const label = FLAG[b.dataset.flag]();
+  const t = label ? document.querySelector('.cols[data-g="'+CSS.escape(label)+'"]') : $('grid');
+  if (t) t.scrollIntoView({ block: 'start', behavior: 'smooth' });
+});
 // 케이스를 열어도 표 위치 그대로 — 위쪽 화면이 다시 그려져 높이가 바뀌어도 누른 버튼이 같은 자리에 오도록 보정
 document.querySelectorAll('[data-case]').forEach(b => b.onclick = () => {
   const y = b.getBoundingClientRect().top;
