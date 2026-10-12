@@ -308,48 +308,9 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 
 <div class="doc-band" id="ctx-menus" style="margin-top:0;border-top:0;border-bottom:0;background:#fff"><div class="sheet">
   <div class="doc-eyebrow">우클릭 메뉴</div>
-  <div class="doc-h">단독 카드 우클릭 / 상품 조합 우클릭 — 뜨는 항목 ([메인상품] 탭)</div>
-  <div class="doc-sub">같은 카드라도 무엇을 먼저 골랐는지에 따라 메뉴가 다릅니다. [메뉴 열기]를 누르면 위 화면에서 그 상태 그대로 메뉴가 뜹니다. 케이스별 카드 예시와 펼친 메뉴는 <a href="/internet-product/menus/" target="_blank" style="color:var(--primary);font-weight:700">우클릭 메뉴 케이스 →</a></div>
+  <div class="doc-h">케이스별 우클릭 메뉴는 별도 페이지에서</div>
+  <div class="doc-sub">카드를 어떤 상태에서 우클릭하느냐에 따라 뜨는 메뉴를 카드 예시 · 펼친 메뉴 · 실제 동작과 함께 정리했습니다. → <a href="/internet-product/menus/" target="_blank" style="color:var(--primary);font-weight:700">우클릭 메뉴 케이스</a></div>
 </div></div>
-<div class="sheet" style="padding-top:32px">
-<div class="spec">
-  <div class="table-wrap"><table class="mx ctxm">
-    <thead><tr><th style="width:22%">메뉴 항목</th>
-      <th>상품 칸 단독<br><span class="sub">인터넷상품 · TV채널 · 전화상품</span></th>
-      <th>세트상품 칸 단독<br><span class="sub">기본WIFI · 셋탑박스 · 전화기기</span></th>
-      <th>상품 조합<br><span class="sub">상품 클릭 → 초록선 세트상품 우클릭</span></th>
-      <th>「미적용」<br><span class="sub">상품 미선택</span></th>
-      <th>「미적용」<br><span class="sub">상품 클릭 → 미적용 우클릭</span></th></tr></thead>
-    <tbody>
-      <tr><th>상품 요금 · 할인 · 이벤트 설정<br><span class="sub">기존</span></th><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
-      <tr><th>금지 코드 설정<br><span class="sub">기존</span></th><td><b class="ok">●</b> <span class="sub"><b>인터넷 외만</b> — 인터넷상품엔 없음</span></td><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
-      <tr><th>금지코드 설정(단일)<br><span class="sub">기존</span></th><td><span class="no">—</span></td><td><b class="ok">●</b></td><td><b class="ok">●</b> <span class="sub">그 상품 기준 금지된 세트상품이면 「금지코드 해제(단일)」</span></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
-      <tr><th>태그 지정 <span class="chg">추가</span></th><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><b class="ok">●</b> <span class="sub">우클릭한 세트상품</span></td><td><b class="ok">●</b> <span class="sub">「없음」만</span></td><td><b class="ok">●</b> <span class="sub">「없음」만</span></td></tr>
-      <tr><th>플랫폼 노출 설정 <span class="chg">추가</span></th><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><span class="no">—</span></td><td><span class="no">—</span> <span class="sub">금액 없음</span></td></tr>
-      <tr><th>기본값 지정 <span class="chg">추가</span><br><span class="sub">전 구분</span></th><td><span class="no">—</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">이미 기본값 · 미사용 세트상품이면 없음</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">초록선 있을 때만</span></td></tr>
-      <tr><th>상품 조합 등록 <span class="chg">추가</span><br>/ 상품 조합 관리로 이동<br><span class="sub">인터넷만</span></th><td><span class="no">—</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">미등록이면 등록, 등록돼 있으면 이동</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">초록선 있을 때만</span></td></tr>
-      <tr><th>설명 바꾸기 · 위로 · 아래로 · 우선순위 변경 · 사용중지<br><span class="sub">기존 · 구분선 아래</span></th><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
-      <tr><th>「사용」 / 「미사용」<br><span class="sub">기존 · 미적용 전용 · <b>초록선 연결 / 해제</b></span></th><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">「사용」 (AS-IS)</span></td><td><b class="ok">●</b> <span class="sub">초록선 없으면 「사용」, 있으면 「미사용」</span></td></tr>
-      <tr><th></th>
-        <td><button class="btn-out" data-case="mn-solo">메뉴 열기</button></td>
-        <td><button class="btn-out" data-case="mn-solo-col">메뉴 열기</button></td>
-        <td><button class="btn-out" data-case="mn-pair">메뉴 열기</button></td>
-        <td><button class="btn-out" data-case="mn-na-solo">메뉴 열기</button></td>
-        <td><button class="btn-out" data-case="mn-na-pair">메뉴 열기</button></td></tr>
-    </tbody>
-  </table></div>
-  <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <ul>
-      <li><b>단독</b> — 아무것도 고르지 않고 카드를 우클릭하거나, <b>첫 번째 칸(상품) 카드</b>를 우클릭. 상품 조합을 골라둔 상태에서도 상품 카드 우클릭은 단독입니다</li>
-      <li><b>상품 조합</b> — 첫 번째 칸 상품을 클릭한 뒤, 초록선으로 이어진 <b>두 번째 칸(세트상품) 카드</b>를 우클릭. 초록선이 없는 세트상품을 우클릭하면 단독과 같습니다(기본값 지정 · 등록 없음)</li>
-      <li>메뉴 순서 (디자인 시안) — 기존 메뉴(구분선 위) → 추가 항목(태그 지정 · 플랫폼 노출 설정 · 기본값 지정 · 상품 조합 등록/이동) → 구분선 → 기존 메뉴(구분선 아래)</li>
-      <li><b>기존 항목은 베타 AS-IS 실측 (10/12)</b> — 인터넷 / 인터넷 외 차이는 상품 칸의 「금지 코드 설정」 하나뿐. 「위로」는 첫 카드, 「아래로」는 마지막 카드에 없음. 「우선순위 변경 (추천)」처럼 현재 우선순위가 붙음</li>
-      <li><b>「미적용」의 「사용 / 미사용」은 사용 상태가 아니라 초록선 연결 · 해제</b>입니다 — 고른 상품과 「미적용」 사이에 초록선을 잇거나 끊습니다. 미적용에는 요금 · 할인 같은 기존 메뉴가 원래 없습니다</li>
-      <li>결합할인 칸은 상품 조합이 없어 이 표와 별개 — 분류 · 항목 메뉴는 기능정의서 8장</li>
-    </ul>
-  </div>
-</div>
-</div>
 
 <div class="doc-band" id="modal-cases" style="margin-top:0;border-top:0;border-bottom:0;background:#fff"><div class="sheet">
   <div class="doc-eyebrow">모달 케이스</div>
