@@ -24,9 +24,10 @@
   ------------------------------------------------------------ */
   var DATES = {
     '/internet-product/tags/':          '2026-10-07 19:53',  // 태그 관리
-    '/internet-product/products/':   '2026-10-07 20:52',  // 인터넷 상품 관리
+    '/internet-product/products/':   '2026-10-12 17:20',  // 인터넷 상품 관리
+    '/internet-product/menus/':      '2026-10-12 17:34',  // 우클릭 메뉴 케이스
     '/internet-product/product-links/':   '2026-10-07 21:04',  // 상품 조합 관리
-    '/internet-product/glossary/':   '2026-10-07 21:10',  // 용어집
+    '/internet-product/glossary/':   '2026-10-12 10:57',  // 용어집
     '/internet-product/attributes/':    '2026-09-28 13:59',  // 상품속성 관리
     '/internet-product/wbs/':           '2026-09-22 20:53'   // WBS
   };

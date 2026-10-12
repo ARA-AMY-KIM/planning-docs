@@ -194,6 +194,17 @@ footer{padding:40px 32px 60px;font-size:12px;color:var(--g400);text-align:center
   border-radius:5px;border:1px solid var(--primary);background:#fff;color:var(--primary);cursor:pointer}
 .golink{font-size:12.5px;font-weight:700;color:var(--primary);text-decoration:none;letter-spacing:-.2px}
 .golink:hover{text-decoration:underline}
+.rlh{font-size:13px;font-weight:700;color:var(--g900);letter-spacing:-.3px;margin-bottom:8px}
+.rlh span{font-weight:400;color:var(--g400);font-size:12px;margin-left:4px}
+.rlist{border-top:1px solid var(--g100)}
+.rlhd{display:flex;justify-content:space-between;padding:8px 12px;font-size:12px;color:var(--g500);border-bottom:1px solid var(--g100)}
+.rrow{display:flex;align-items:center;gap:6px;padding:12px;border-bottom:1px solid var(--g100);font-size:13.5px;letter-spacing:-.3px}
+.rrow .p{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rrow .p .xs{color:var(--g300);margin:0 5px}
+.rb{font-size:11px;font-weight:700;border-radius:4px;padding:2px 7px;flex:none}
+.rb.new{color:var(--primary);background:var(--blue50)}
+.rb.rep{color:var(--g600);background:var(--g50)}
+.rb.out{color:var(--g400);background:#fff;border:1px dashed var(--g200)}
 .othempty{padding:14px 12px;font-size:12.5px;color:var(--g300);text-align:center}
 .othrow .m .mx{color:var(--g500);font-weight:700}
 /* 시안 설명 블록 */
@@ -230,6 +241,7 @@ table.mx{border-collapse:collapse;width:100%;font-size:13px;letter-spacing:-.2px
 .dit.sel{border-color:var(--primary);border-width:2px;background:var(--blue50)}
 .dit .ap{font-size:11px;font-weight:700;color:var(--primary);background:var(--blue50);border-radius:4px;padding:3px 6px;flex:none}
 .dempty{font-size:12px;color:var(--g300);text-align:center;padding:9px 0}
+.warn-t{color:var(--warning);font-weight:700}
 .chg{font-size:10px;font-weight:700;background:var(--orange50);color:var(--warning);border-radius:3px;padding:1px 5px;margin-left:4px}
 textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 .fgrp.new{border-color:var(--blue100);background:#FAFCFF}
@@ -240,6 +252,8 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 .mx .sub{font-size:12px;color:var(--g500);font-weight:400}
 .table-wrap{overflow-x:auto}
 #card-flags + .sheet .btn-out{white-space:nowrap}
+.ctxm td{white-space:normal}.ctxm .ok{color:#0A8208}.ctxm .no{color:var(--g300)}.ctxm .btn-out{height:30px;padding:0 10px;font-size:12.5px;white-space:nowrap}
+#ctx-menus + .sheet .desc ul{margin:0;padding-left:18px;font-size:13px;line-height:1.7;color:var(--g700)}
 .cases tbody th{vertical-align:middle}
 
 /* ── V2 ── */
@@ -292,6 +306,51 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
   <div style="height:28px"></div>
 </div></div>
 
+<div class="doc-band" id="ctx-menus" style="margin-top:0;border-top:0;border-bottom:0;background:#fff"><div class="sheet">
+  <div class="doc-eyebrow">우클릭 메뉴</div>
+  <div class="doc-h">단독 카드 우클릭 / 상품 조합 우클릭 — 뜨는 항목 ([메인상품] 탭)</div>
+  <div class="doc-sub">같은 카드라도 무엇을 먼저 골랐는지에 따라 메뉴가 다릅니다. [메뉴 열기]를 누르면 위 화면에서 그 상태 그대로 메뉴가 뜹니다. 케이스별 카드 예시와 펼친 메뉴는 <a href="/internet-product/menus/" target="_blank" style="color:var(--primary);font-weight:700">우클릭 메뉴 케이스 →</a></div>
+</div></div>
+<div class="sheet" style="padding-top:32px">
+<div class="spec">
+  <div class="table-wrap"><table class="mx ctxm">
+    <thead><tr><th style="width:22%">메뉴 항목</th>
+      <th>상품 칸 단독<br><span class="sub">인터넷상품 · TV채널 · 전화상품</span></th>
+      <th>세트상품 칸 단독<br><span class="sub">기본WIFI · 셋탑박스 · 전화기기</span></th>
+      <th>상품 조합<br><span class="sub">상품 클릭 → 초록선 세트상품 우클릭</span></th>
+      <th>「미적용」<br><span class="sub">상품 미선택</span></th>
+      <th>「미적용」<br><span class="sub">상품 클릭 → 미적용 우클릭</span></th></tr></thead>
+    <tbody>
+      <tr><th>상품 요금 · 할인 · 이벤트 설정<br><span class="sub">기존</span></th><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
+      <tr><th>금지 코드 설정<br><span class="sub">기존</span></th><td><b class="ok">●</b> <span class="sub"><b>인터넷 외만</b> — 인터넷상품엔 없음</span></td><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
+      <tr><th>금지코드 설정(단일)<br><span class="sub">기존</span></th><td><span class="no">—</span></td><td><b class="ok">●</b></td><td><b class="ok">●</b> <span class="sub">그 상품 기준 금지된 세트상품이면 「금지코드 해제(단일)」</span></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
+      <tr><th>태그 지정 <span class="chg">추가</span></th><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><b class="ok">●</b> <span class="sub">우클릭한 세트상품</span></td><td><b class="ok">●</b> <span class="sub">「없음」만</span></td><td><b class="ok">●</b> <span class="sub">「없음」만</span></td></tr>
+      <tr><th>플랫폼 노출 설정 <span class="chg">추가</span></th><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><span class="no">—</span></td><td><span class="no">—</span> <span class="sub">금액 없음</span></td></tr>
+      <tr><th>기본값 지정 <span class="chg">추가</span><br><span class="sub">전 구분</span></th><td><span class="no">—</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">이미 기본값 · 미사용 세트상품이면 없음</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">초록선 있을 때만</span></td></tr>
+      <tr><th>상품 조합 등록 <span class="chg">추가</span><br>/ 상품 조합 관리로 이동<br><span class="sub">인터넷만</span></th><td><span class="no">—</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">미등록이면 등록, 등록돼 있으면 이동</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">초록선 있을 때만</span></td></tr>
+      <tr><th>설명 바꾸기 · 위로 · 아래로 · 우선순위 변경 · 사용중지<br><span class="sub">기존 · 구분선 아래</span></th><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><b class="ok">●</b></td><td><span class="no">—</span></td><td><span class="no">—</span></td></tr>
+      <tr><th>「사용」 / 「미사용」<br><span class="sub">기존 · 미적용 전용 · <b>초록선 연결 / 해제</b></span></th><td><span class="no">—</span></td><td><span class="no">—</span></td><td><span class="no">—</span></td><td><b class="ok">●</b> <span class="sub">「사용」 (AS-IS)</span></td><td><b class="ok">●</b> <span class="sub">초록선 없으면 「사용」, 있으면 「미사용」</span></td></tr>
+      <tr><th></th>
+        <td><button class="btn-out" data-case="mn-solo">메뉴 열기</button></td>
+        <td><button class="btn-out" data-case="mn-solo-col">메뉴 열기</button></td>
+        <td><button class="btn-out" data-case="mn-pair">메뉴 열기</button></td>
+        <td><button class="btn-out" data-case="mn-na-solo">메뉴 열기</button></td>
+        <td><button class="btn-out" data-case="mn-na-pair">메뉴 열기</button></td></tr>
+    </tbody>
+  </table></div>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <ul>
+      <li><b>단독</b> — 아무것도 고르지 않고 카드를 우클릭하거나, <b>첫 번째 칸(상품) 카드</b>를 우클릭. 상품 조합을 골라둔 상태에서도 상품 카드 우클릭은 단독입니다</li>
+      <li><b>상품 조합</b> — 첫 번째 칸 상품을 클릭한 뒤, 초록선으로 이어진 <b>두 번째 칸(세트상품) 카드</b>를 우클릭. 초록선이 없는 세트상품을 우클릭하면 단독과 같습니다(기본값 지정 · 등록 없음)</li>
+      <li>메뉴 순서 (디자인 시안) — 기존 메뉴(구분선 위) → 추가 항목(태그 지정 · 플랫폼 노출 설정 · 기본값 지정 · 상품 조합 등록/이동) → 구분선 → 기존 메뉴(구분선 아래)</li>
+      <li><b>기존 항목은 베타 AS-IS 실측 (10/12)</b> — 인터넷 / 인터넷 외 차이는 상품 칸의 「금지 코드 설정」 하나뿐. 「위로」는 첫 카드, 「아래로」는 마지막 카드에 없음. 「우선순위 변경 (추천)」처럼 현재 우선순위가 붙음</li>
+      <li><b>「미적용」의 「사용 / 미사용」은 사용 상태가 아니라 초록선 연결 · 해제</b>입니다 — 고른 상품과 「미적용」 사이에 초록선을 잇거나 끊습니다. 미적용에는 요금 · 할인 같은 기존 메뉴가 원래 없습니다</li>
+      <li>결합할인 칸은 상품 조합이 없어 이 표와 별개 — 분류 · 항목 메뉴는 기능정의서 8장</li>
+    </ul>
+  </div>
+</div>
+</div>
+
 <div class="doc-band" id="modal-cases" style="margin-top:0;border-top:0;border-bottom:0;background:#fff"><div class="sheet">
   <div class="doc-eyebrow">모달 케이스</div>
   <div class="doc-h">이 화면에서 새로 만들거나 바꾸는 모달 — 전부</div>
@@ -302,23 +361,23 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
   <table class="mx cases">
     <thead><tr><th style="width:9%">구분</th><th style="width:12%">모달</th><th style="width:15%">우클릭 버튼명</th><th style="width:18%">케이스</th><th>진입 · 이 상태가 되는 조건</th><th style="width:86px"></th></tr></thead>
     <tbody>
-      <tr><th rowspan="5">전 구분</th><th rowspan="5">태그 지정<br><span class="chg">추가</span></th><td rowspan="5">「태그 지정」<br><span class="sub">카드 어디든 · 「미적용」 제외</span></td>
+      <tr><th rowspan="5">전 구분</th><th rowspan="5">태그 지정<br><span class="chg">추가</span></th><td rowspan="5">「태그 지정」<br><span class="sub">단독 · 상품 조합 모두 · 「미적용」은 「없음」만</span></td>
         <td>인터넷상품</td><td class="sub">속도(필수) + 추가구성옵션(선택, 기본 「없음」) 2칸</td><td><button class="btn-out" data-case="tg-row">열기</button></td></tr>
       <tr><td>인터넷상품 · 태그 없음</td><td class="sub">「태그 없음」 카드 — 「선택하세요」로 열림</td><td><button class="btn-out" data-case="tg-empty">열기</button></td></tr>
       <tr><td>기본WIFI</td><td class="sub">구성제품 1칸</td><td><button class="btn-out" data-case="tg-col">열기</button></td></tr>
       <tr><td>인터넷 외 · 신규</td><td class="sub">「태그 없음」 카드 · 태그 1칸 + 고객 노출 미리보기</td><td><button class="btn-out" data-case="tag-new">열기</button></td></tr>
       <tr><td>인터넷 외 · 변경</td><td class="sub">현재 태그가 선택된 채로 열림</td><td><button class="btn-out" data-case="tag-edit">열기</button></td></tr>
-      <tr><th rowspan="5">인터넷</th><th rowspan="4">상품 조합 등록<br><span class="chg">추가</span></th><td rowspan="4">「상품 조합 등록」<br><span class="sub">상품 조합 선택 후 기본WIFI 위</span></td>
-        <td>속성 조합의 첫 등록</td><td class="sub"><b>모달 없음</b> — 대표로 즉시 등록 + 토스트</td><td><button class="btn-out" data-case="reg-first">실행</button></td></tr>
-      <tr><td>같은 속성 조합에 다른 상품 조합이 있음</td><td class="sub">모달 — 그 목록은 <b>읽기 전용</b> · 「이 상품 조합을 대표로」만 선택. 켜면 기존 대표는 밀려남</td><td><button class="btn-out" data-case="reg-exist">열기</button></td></tr>
+      <tr><th rowspan="5">인터넷</th><th rowspan="4">상품 조합 등록<br><span class="chg">추가</span></th><td rowspan="4">「상품 조합 등록」<br><span class="sub">상품 조합 우클릭만 · 기본WIFI 위</span></td>
+        <td>속성 조합의 첫 등록 <span class="chg">10/12</span></td><td class="sub">같은 모달 — 목록엔 <b>등록할 조합 1건</b>(「등록할 조합」 · 「대표」), 대표 체크는 없음. 토스트만 띄우던 방식에서 변경(자동으로 닫혀 내용 확인이 어려움)<br>[등록] 후 토스트 — 대표로 등록 : 「상품 조합 등록 및 대표 상품 조합으로 등록되었습니다.」 / 대표 아님 : 「상품 조합이 등록되었습니다.」</td><td><button class="btn-out" data-case="reg-first">열기</button></td></tr>
+      <tr><td>같은 속성 조합에 다른 상품 조합이 있음</td><td class="sub">같은 모달 — 위에 체크 「등록할 조합을 대표 상품 조합으로 설정」, 목록엔 <b>현재 대표 + 등록할 조합</b> 두 줄만(읽기 전용). 나머지는 「나머지 N건은 상품 조합 관리에서 조회 및 대표 설정이 가능합니다.」<br>체크를 켜면 등록할 조합에 「대표」, 현재 대표에 「대표 → 해제」</td><td><button class="btn-out" data-case="reg-exist">열기</button></td></tr>
       <tr><td>상품 태그 없음 (오류)</td><td class="sub">속도 태그가 없는 상품 → 「태그 지정」 먼저 안내 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-notag">열기</button></td></tr>
       <tr><td>이미 등록돼 있음 (오류)</td><td class="sub">평소엔 메뉴가 「상품 조합 관리」로 바뀌어 안 열림. 동시 편집 안전망 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-dupe">열기</button></td></tr>
       <tr><th>— (화면 이동)</th><td>「상품 조합 관리로 이동」<br><span class="sub">이미 등록된 상품 조합 · 기본WIFI 위</span></td><td>모달 없음</td><td class="sub">상품 조합 관리로 현재창 이동 · 필터 없이 기본 상태 (목업은 안내 토스트). <b>대표 변경 · 등록 해제는 그 화면에서만</b></td><td><button class="btn-out" data-case="m-view">메뉴 열기</button></td></tr>
-      <tr><th rowspan="3">전 구분</th><th rowspan="3">— (토스트)<br><span class="chg">추가</span></th><td rowspan="3">「기본값 지정」<br><span class="sub">상품 조합 선택 후 두 번째 칸(기본WIFI · 세트상품) 위 · 초록선 있음</span></td>
+      <tr><th rowspan="3">전 구분</th><th rowspan="3">— (토스트)<br><span class="chg">추가</span></th><td rowspan="3">「기본값 지정」<br><span class="sub">상품 조합 우클릭만 · 두 번째 칸(기본WIFI · 세트상품) 위 · 초록선 있음</span></td>
         <td>변경</td><td class="sub">다른 세트상품이 기본값 → 「기본값 지정」 · 교체</td><td><button class="btn-out" data-case="m-auto-chg">메뉴 열기</button></td></tr>
       <tr><td>현재 기본값</td><td class="sub">이 세트상품이 기본값 → <b>메뉴 항목 없음</b>. 카드의 「기본값」 배지로 이미 보이고, 해제 수단도 두지 않습니다</td><td><button class="btn-out" data-case="m-auto-cur">메뉴 열기</button></td></tr>
       <tr><td>인터넷 <span class="chg">10/07</span></td><td class="sub">기본WIFI 위 — 「상품 조합 등록」 또는 「상품 조합 관리로 이동」과 함께 뜸. <b>등록 여부와 무관</b>(대표는 속성으로 찾을 때, 기본값은 상품을 직접 고를 때)</td><td><button class="btn-out" data-case="m-auto-net">메뉴 열기</button></td></tr>
-      <tr><th rowspan="3">전 구분</th><th rowspan="3">플랫폼 노출 설정<br><span class="chg">추가</span></th><td rowspan="3">「플랫폼 노출 설정」</td>
+      <tr><th rowspan="3">전 구분</th><th rowspan="3">플랫폼 노출 설정<br><span class="chg">추가</span></th><td rowspan="3">「플랫폼 노출 설정」<br><span class="sub">단독 · 상품 조합 모두 · 「미적용」 없음</span></td>
         <td>인터넷</td><td class="sub">추가 노출 2개 + 월요금 · <b>결합요금</b> · 플랫폼 노출용 설명</td><td><button class="btn-out" data-case="pl-net">열기</button></td></tr>
       <tr><td>인터넷 외</td><td class="sub">결합요금 칸이 빠진다 — 나머지는 동일</td><td><button class="btn-out" data-case="pl-etc">열기</button></td></tr>
       <tr><td>노출 체크 해제</td><td class="sub">신청서 · 플랫폼을 꺼도 입력값은 저장된다는 안내가 뜸</td><td><button class="btn-out" data-case="pl-off">열기</button></td></tr>
@@ -368,8 +427,8 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
   <div class="table-wrap"><table class="mx">
     <thead><tr><th style="width:18%">항목</th><th style="width:36%">어디서 보이나</th><th>카드에 안 붙이는 이유</th></tr></thead>
     <tbody>
-      <tr><th>등록 여부 (인터넷)</th><td>기본WIFI 우클릭 메뉴 — 미등록이면 「상품 조합 등록」, 등록됐으면 「상품 조합 관리로 이동」</td><td>등록은 짝 단위라 카드 하나에 붙일 수 없음</td></tr>
-      <tr><th>대표</th><td>상품 조합 관리</td><td>짝 단위 · 속성 조합 기준이라 카드 화면에서 판단 불가</td></tr>
+      <tr><th>등록 여부 (인터넷)</th><td>기본WIFI 우클릭 메뉴 — 미등록이면 「상품 조합 등록」, 등록됐으면 「상품 조합 관리로 이동」</td><td>등록은 상품 조합 단위라 카드 하나에 붙일 수 없음</td></tr>
+      <tr><th>대표</th><td>상품 조합 관리</td><td>상품 조합 단위 · 속성 조합 기준이라 카드 화면에서 판단 불가</td></tr>
       <tr><th>태그명</th><td>태그 지정 모달</td><td>카드 태그명 표시는 전부 삭제(9/30)</td></tr>
     </tbody>
   </table></div>
@@ -380,15 +439,15 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
   <div class="table-wrap"><table class="mx">
     <thead><tr><th style="width:24%">시점</th><th>동작</th></tr></thead>
     <tbody>
-      <tr><th>상품에 첫 초록선이 생김</th><td>그 짝의 세트상품이 <b>자동으로 기본값</b>. 등록과 무관 — 대표는 속성 조합의 첫 등록, 기본값은 상품의 첫 초록선이 기준</td></tr>
+      <tr><th>상품에 첫 초록선이 생김</th><td>그 상품 조합의 세트상품이 <b>자동으로 기본값</b>. 등록과 무관 — 대표는 속성 조합의 첫 등록, 기본값은 상품의 첫 초록선이 기준</td></tr>
       <tr><th>바꾸고 싶을 때</th><td>두 번째 칸 카드 우클릭 「기본값 지정」 — 모달 없이 즉시 교체. 해제 수단 없음</td></tr>
-      <tr><th>미사용 세트상품</th><td><b>기본값 지정 불가</b> — 메뉴에 뜨지 않음. 미사용은 상담 상세에 노출되지 않아 기본값이 되면 빈 값이 들어감. 기본값인 세트상품을 사용중지하면 남은 짝으로 승계</td></tr>
-      <tr><th>기본값 짝의 초록선 삭제</th><td>남은 초록선 짝 중 하나로 승계(<b>미사용은 건너뜀</b>). 남은 짝이 없으면 기본값도 없음</td></tr>
-      <tr><th>이관</th><td>레벨 1순위 세트상품을 초기 기본값으로 (목업은 첫 번째 짝)</td></tr>
+      <tr><th>미사용 세트상품</th><td><b>기본값 지정 불가</b> — 메뉴에 뜨지 않음. 미사용은 상담 상세에 노출되지 않아 기본값이 되면 빈 값이 들어감. 기본값인 세트상품을 사용중지하면 남은 상품 조합으로 승계</td></tr>
+      <tr><th>기본값 상품 조합의 초록선 삭제</th><td>남은 상품 조합 중 하나로 승계(<b>미사용은 건너뜀</b>). 남은 상품 조합이 없으면 기본값도 없음</td></tr>
+      <tr><th>이관</th><td>레벨 1순위 세트상품을 초기 기본값으로 (목업은 첫 번째 상품 조합)</td></tr>
     </tbody>
   </table></div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>상품 조합 등록과 기본값을 묶지 않습니다.</b> 등록은 짝 단위(상품 하나에 여러 개)이고 기본값은 상품 하나에 1개입니다. 묶으면 등록하지 않은 상품은 기본값이 비고, 첫 등록에도 모달이 생깁니다.</p>
+    <p><b>상품 조합 등록과 기본값을 묶지 않습니다.</b> 등록은 상품 조합 단위(상품 하나에 여러 개)이고 기본값은 상품 하나에 1개입니다. 묶으면 등록하지 않은 상품은 기본값이 비게 됩니다.</p>
   </div>
 </div>
 </div>
@@ -401,21 +460,18 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 <div class="sheet" style="padding-top:8px">
 <div class="spec">
   <div class="table-wrap"><table class="mx">
-    <thead><tr><th style="width:20%">항목</th><th>규칙</th><th style="width:22%">일반 기본WIFI와 비교</th></tr></thead>
+    <thead><tr><th style="width:20%">항목</th><th>규칙</th></tr></thead>
     <tbody>
-      <tr><th>위치</th><td>인터넷 기본WIFI 칸 맨 위에 항상</td><td class="sub">—</td></tr>
-      <tr><th>단독 우클릭</th><td><b>「미사용 / 사용」 하나뿐</b> — 사용 중이면 「미사용」, 미사용이면 「사용」 (AS-IS)</td><td class="sub">다름 — 요금 · 할인 · 이벤트 · 태그 · 플랫폼 메뉴 없음</td></tr>
-      <tr><th>짝으로 고른 뒤 우클릭</th><td>기본WIFI 짝과 같은 메뉴. 단 <b>「플랫폼 노출 설정」 없음</b></td><td class="sub">거의 같음</td></tr>
-      <tr><th>태그 지정</th><td><b>「없음」 태그만</b> 고를 수 있음. 단독 우클릭에는 메뉴가 없어 <b>짝을 고른 뒤</b> 지정</td><td class="sub">다름 — 구성제품 목록 전체가 아님</td></tr>
-      <tr><th>「태그 없음」 배지</th><td>「없음」 태그가 아직 없으면 표시 (선택과 무관)</td><td class="sub">같음</td></tr>
-      <tr><th>플랫폼 노출 설정</th><td><b>없음</b> — 금액 · 설명을 두지 않음</td><td class="sub">다름</td></tr>
-      <tr><th>기본값</th><td>될 수 있음 — WIFI 없이 파는 상품의 기본값. 「기본값」 배지도 같은 규칙</td><td class="sub">같음</td></tr>
-      <tr><th>상품 조합 등록</th><td>같은 방식으로 등록. 속성 조합의 구성제품 = 「없음」</td><td class="sub">같음</td></tr>
-      <tr><th>태그가 없을 때</th><td>속성 조합을 계산할 수 없음 → 등록 모달 [등록] 비활성 · 통신사 변경 매칭에서 빠짐</td><td class="sub">같음</td></tr>
+      <tr><th>위치</th><td>인터넷 기본WIFI 칸 맨 위에 항상</td></tr>
+      <tr><th>우클릭 메뉴 · AS-IS</th><td><b>「사용 / 미사용」 하나뿐</b>. <b>초록선 연결 / 해제</b> 버튼이며, 카드의 사용중지와 다름<br><span class="sub">고른 상품과 「미적용」 사이에 초록선이 없으면 「사용」, 있으면 「미사용」. 요금 · 할인 · 이벤트 · 금지 코드 · 설명 바꾸기 등 기존 메뉴는 원래 없음</span></td></tr>
+      <tr><th>우클릭 메뉴 · 추가</th><td>상품 미선택 : <b>태그 지정</b><br>상품 고른 뒤 · 초록선 있음 : <b>태그 지정 · 기본값 지정 · 상품 조합 등록(이동)</b><br>상품 고른 뒤 · 초록선 없음 : <b>태그 지정</b><br><span class="sub">「플랫폼 노출 설정」은 없음 — 금액 · 설명을 두지 않음. 추가 항목 아래 구분선, 그 아래 AS-IS 「사용 / 미사용」</span></td></tr>
+      <tr><th>태그</th><td><b>「없음」 태그만</b> 지정 가능. 지정 전엔 「태그 없음」 배지(선택과 무관)<br><span class="sub">태그가 없으면 속성 조합 계산 불가 → 등록 모달 [등록] 비활성 · 통신사 변경 매칭에서 빠짐</span></td></tr>
+      <tr><th>기본값 · 상품 조합 등록</th><td>기본WIFI와 같음. WIFI 없이 파는 상품의 기본값이 될 수 있고, 같은 방식으로 등록. 속성 조합의 구성제품 = 「없음」</td></tr>
+      <tr><th>「미사용」(초록선 해제)의 영향</th><td>기본값이었으면 남은 짝으로 <b>승계</b>(초록선 삭제 규칙과 같음)<br><b class="warn-t">미결</b> — 등록된 상품 조합이었을 때 등록을 어떻게 할지 (자동 해제 / 해제 먼저 안내 / 등록 유지). 초록선 삭제 전반의 규칙</td></tr>
     </tbody>
   </table></div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p class="q">확인 필요 — AS-IS에는 TV · 인터넷전화 · 일반전화의 세트상품 칸에도 「미적용」이 있습니다(AS-IS 연결 데이터 · 디자인 시안). 이 목업은 인터넷만 「미적용」 카드를 그립니다. 같은 규칙을 인터넷 외에도 적용할지 정해야 합니다.</p>
+    <p class="q">확인 필요<br>① 상품을 고르지 않았을 때의 「사용」 — 이을 상대 상품이 없음. AS-IS에서 눌렀을 때 동작 미확인. TO-BE에 그대로 둘지, 상품을 고르기 전엔 숨길지<br>② 인터넷 외 「미적용」 — AS-IS에는 TV · 인터넷전화 · 일반전화의 세트상품 칸에도 「미적용」이 있습니다(베타 실측 · 메뉴도 「사용 / 미사용」 하나로 같음). 이 목업은 인터넷만 「미적용」 카드를 그립니다. 같은 규칙을 인터넷 외에도 적용할지 정해야 합니다</p>
   </div>
 </div>
 </div>
@@ -448,31 +504,20 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 </div>
 
 <div class="ov" id="ovReg" hidden>
-  <div class="modal" style="width:600px">
+  <div class="modal" style="width:560px">
     <div class="mh"><h3>상품 조합 등록</h3><span class="x" id="rX">✕</span></div>
     <div class="mb">
-      <div class="ctx dlctx" style="margin-bottom:16px">
+      <div class="ctx dlctx" style="margin-bottom:18px">
         <div><span class="k">업체 · 구분</span><span class="v" id="rVen"></span></div>
-        <div><span class="k" id="rPk"></span><span class="v" id="rProd"></span></div>
-        <div><span class="k" id="rSk"></span><span class="v" id="rSet"></span></div>
+        <div><span class="k">등록할 조합</span><span class="v" id="rCmb"></span></div>
+        <div><span class="k">속성 조합</span><span class="v" id="rCombo"></span></div>
       </div>
-      <div style="margin-bottom:14px">
-        <div class="tglab"><b>지정된 태그</b><em>바꾸려면 카드에서 「태그 지정」</em></div>
-        <div class="tgro">
-          <div class="r"><span class="k">속도</span><span class="v" id="rt1"></span><span class="s">상품</span></div>
-          <div class="r"><span class="k">구성제품</span><span class="v" id="rt2"></span><span class="s">세트상품</span></div>
-          <div class="r"><span class="k">추가구성옵션</span><span class="v" id="rt3"></span><span class="s">상품</span></div>
-        </div>
-      </div>
-      <div class="fgrp">
-        <div class="fgc"><b>대표 지정</b><em>속성 조합마다 하나를 정합니다</em></div>
-        <div class="cmbstrip"><span class="k">속성 조합</span><span class="v" id="rCombo"></span></div>
-        <div class="fld" style="margin:12px 0 0"><label>같은 속성 조합의 다른 상품 조합 <span class="sp"></span><span class="ro" id="rOthN"></span></label>
-          <div class="othbox ro" id="rOth"></div></div>
-        <div class="fld" style="margin:12px 0 0" id="rMainFld"><label>대표</label>
-          <span class="cb" id="rMain"><i></i>이 상품 조합을 대표로</span></div>
-      </div>
-      <div class="notice" id="rNotice" hidden style="margin-bottom:0"><span class="i">!</span><span></span></div>
+      <div id="rMainFld" style="margin:0 0 18px 2px"><span class="cb" id="rMain"><i></i>등록할 조합을 대표 상품 조합으로 설정</span>
+        <div class="hint" style="margin:4px 0 0 25px">CRM 상담상세에서 속성 조합이 같은 상품 중 자동 선택되는 상품을 설정합니다.</div></div>
+      <div class="rlh">같은 속성 조합의 상품 조합 목록 <span id="rOthN"></span></div>
+      <div class="rlist"><div class="rlhd"><span>상품 조합</span><span>상태</span></div><div id="rOth"></div></div>
+      <div class="hint" id="rRest" hidden style="margin-top:8px"></div>
+      <div class="notice" id="rNotice" hidden style="margin:14px 0 0"><span class="i">!</span><span></span></div>
     </div>
     <div class="mf"><div class="sp"></div><button class="btn-out" id="rCancel">취소</button><button class="btn-solid" id="rSave">등록</button></div>
   </div>
@@ -682,7 +727,9 @@ function drawLanes(box, el, mates, fromRow, cand){
 }
 
 /* 메뉴 순서 — 디자인 시안(10/07) */
+/* 기존 메뉴 — 베타 AS-IS 실측 (10/12). 인터넷상품에만 금지 코드 설정이 없고, 세트상품 칸에만 금지코드 설정(단일)이 있다 */
 const BASE = ['상품 요금 설정','상품 할인 설정','상품 이벤트 설정','금지 코드 설정'];
+const baseFor = (net, side) => (side === 'row' ? (net ? BASE.slice(0,3) : BASE) : BASE.concat(['금지코드 설정(단일)']));
 const TAIL = ['설명 바꾸기','위로','아래로','우선순위 변경 (기본)','사용중지'];
 
 function openMenu(el, x, y){
@@ -693,7 +740,7 @@ function openMenu(el, x, y){
   const ready = side === 'col' && SEL && SEL.g === g.label && SEL.p && SEL.set === name;
   const mate = ready && isMate(g, SEL.p, SEL.set);
   /* 순서는 디자인 시안 그대로 (10/07) : 태그 지정 · 플랫폼 노출 설정 · 기본값 지정 · 상품 조합 등록(이동) */
-  /* 「미적용」 짝 : 태그는 「없음」만 지정 가능 · 금액이 없어 플랫폼 노출 설정은 없음 */
+  /* 「미적용」 상품 조합 : 태그는 「없음」만 지정 가능 · 금액이 없어 플랫폼 노출 설정은 없음 */
   let items = '<div class="mi act" data-a="tag">태그 지정<span class="newb">추가</span></div>'
       + (na ? '' : '<div class="mi act" data-a="plat">플랫폼 노출 설정<span class="newb">추가</span></div>');
   if (mate && AUTO[autoK(g.label, SEL.p)] !== SEL.set)       /* 기본값 — 전 구분 */
@@ -701,12 +748,13 @@ function openMenu(el, x, y){
   if (mate && net)                                            /* 초록선(판매 가능 조합)에서만 */
     items += hasLink(SEL.p, SEL.set) ? '<div class="mi act" data-a="view">상품 조합 관리로 이동</div>'
                                      : '<div class="mi act" data-a="reg">상품 조합 등록<span class="newb">추가</span></div>';
-  /* 「미적용」 단독 우클릭은 사용 상태 전환 하나뿐 (AS-IS). 짝으로 고른 뒤 우클릭하면 기본WIFI와 같은 메뉴 */
-  const solo = na && !mate;
+  /* 「미적용」 : 기존 메뉴는 「사용 / 미사용」(= 초록선 연결 / 해제) 하나뿐 (AS-IS 10/12).
+     추가 항목 — 태그 지정(「없음」만) 항상, 초록선이 있으면 기본값 지정 · 상품 조합 등록(이동)도 */
+  const hasP = SEL && SEL.g === g.label && SEL.p;
   const m = document.createElement('div');
   m.className = 'menu';
-  m.innerHTML = solo ? '<div class="mi">미사용</div>'
-    : BASE.map(l => '<div class="mi">'+l+'</div>').join('')
+  m.innerHTML = na ? items + '<div class="sep"></div><div class="mi">' + (hasP && mate ? '미사용' : '사용') + '</div>'
+    : baseFor(net, side).map(l => '<div class="mi">'+l+'</div>').join('')
     + items + '<div class="sep"></div>' + TAIL.map(l => '<div class="mi">'+l+'</div>').join('');
   document.body.appendChild(m);
   const w = 230, h = m.offsetHeight;
@@ -911,13 +959,7 @@ function doReg(){
   if (ok && !dupe) {
     const a = [ATTR[V]['1'][t[0]]||'', ATTR[V]['2'][t[1]]||'', ATTR[V]['3'][t[2]]||''];
     const key = [V].concat(a).join('|');
-    if (!R.some(r => r[12]===key)) {
-      R.push(['인터넷', V, SEL.p, SEL.set||'', a[0], a[1], a[2], t[0], t[1], t[2], 0, 1, key, 1, 1]);
-      REP[key] = R.length - 1;
-      reindex(); paintSel();
-      toast('대표로 등록했습니다 — 이 속성 조합의 첫 상품 조합입니다', '#10A10E');
-      return;
-    }
+    /* 10/12 — 첫 등록도 모달로 확인한다 (토스트는 자동으로 닫혀 내용 확인이 어려움) */
   }
   openReg();
 }
@@ -928,20 +970,19 @@ function openReg(){
           t: [pr.s1 || '', ps.s2 || '', pr.s3 || (pr.s1 ? '없음' : '')] };
   REG.a = [ATTR[V]['1'][REG.t[0]] || '', ATTR[V]['2'][REG.t[1]] || '', ATTR[V]['3'][REG.t[2]] || ''];
   $('rVen').textContent = V + ' · 인터넷';
-  $('rPk').textContent = g.rowName; $('rSk').textContent = g.colName;
-  $('rProd').textContent = REG.prod;
-  $('rSet').innerHTML = REG.set ? esc(REG.set) : '<span class="non">미적용</span>';
-  [0,1,2].forEach(i => $('rt'+(i+1)).innerHTML = REG.t[i] ? (REG.t[i]==='없음' ? '<span class="non">없음</span>' : esc(REG.t[i])) : '<span style="color:var(--error)">태그 없음</span>');
+  $('rCmb').innerHTML = esc(REG.prod) + ' × ' + (REG.set ? esc(REG.set) : '<span class="non">미적용</span>');
   regMain = false; regForced = false;
   previewReg();
   $('ovReg').hidden = false;
 }
+/* 등록 모달 — 첫 등록 · 기존 상품 조합 있음 모두 같은 화면 (10/12 디자인 시안).
+   목록 = 같은 속성 조합의 상품 조합 + 지금 등록할 조합. 상태 칸에 「등록할 조합」 · 「대표」 */
 function previewReg(){
   const [a1, a2, a3] = REG.a;
-  const miss = !REG.t[0] ? '「'+REG.prod+'」에 속도 태그가 없습니다.' : !REG.t[1] ? '「'+REG.set+'」에 구성제품 태그가 없습니다.' : '';
+  const miss = !REG.t[0] ? '「'+REG.prod+'」에 속도 태그가 없습니다.' : !REG.t[1] ? '「'+(REG.set||'미적용')+'」에 구성제품 태그가 없습니다.' : '';
   const ok0 = !miss;
   $('rCombo').innerHTML = ok0 ? [a1,a2,a3].map(v=>v==='없음'?'<span class="non">없음</span>':esc(v)).join(' · ')
-    : '<span style="color:var(--g300)">태그가 모두 지정돼야 조합이 정해집니다</span>';
+    : '<span style="color:var(--g300)">태그가 모두 지정돼야 정해집니다</span>';
   const key=[REG.vd,a1,a2,a3].join('|');
   const same=R.filter(r=>r[1]===REG.vd && r[2]===REG.prod && (r[3]||'')===REG.set);
   const inGrp=ok0?R.filter(r=>r[12]===key):[];
@@ -954,28 +995,27 @@ function previewReg(){
     n.hidden=false; n.className='notice err'; ok=false;
     msg.innerHTML='<b>이 상품 조합은 이미 등록돼 있습니다.</b> 속성 조합을 바꾸려면 등록 해제하고 다시 등록해야 합니다.';
   } else { n.hidden=true; }
-  $('rOthN').textContent = ok0 ? inGrp.length+'건' : '';
+  const first = ok0 && !inGrp.length && !same.length;
+  REG.first = first;
+  if (first) { regMain = true; regForced = true; } else if (regForced) { regMain = false; regForced = false; }
+  $('rMainFld').hidden = first || !ok;          /* 첫 등록 — 대표가 자명해 묻지 않는다 */
+  $('rMain').classList.toggle('on', regMain);
+  const row = (p, st, badges) => '<div class="rrow"><span class="p">'+esc(p)+'<span class="xs">×</span>'
+    +(st ? esc(st) : '<span class="non">미적용</span>')+'</span>'+badges+'</div>';
+  const mine = ok && !same.length
+    ? row(REG.prod, REG.set, '<span class="rb new">등록할 조합</span>'+(regMain?'<span class="rb rep">대표</span>':'')) : '';
+  /* 10/12 시안 — 목록은 현재 대표 + 등록할 조합 두 줄만. 나머지는 건수만 알리고 상품 조합 관리로 */
+  const rep = inGrp.find(r => REP[r[12]] === R.indexOf(r));
+  const rest = inGrp.length - (rep ? 1 : 0);
+  $('rOthN').textContent = '';
   $('rOth').innerHTML = !ok0
     ? '<div class="othempty">태그가 모두 지정되면 같은 속성 조합의 상품 조합이 나옵니다</div>'
-    : inGrp.length
-      ? inGrp.map(r=>{
-          /* 읽기 전용 — 대표 변경 · 등록 해제는 상품 조합 관리에서만 한다 */
-          const isM = REP[r[12]]===R.indexOf(r);
-          return '<div class="othrow"><span class="p">'+esc(r[2])
-            +(r[3]?'<span class="xs">×</span><span class="st">'+esc(r[3])+'</span>'
-                  :'<span class="xs">×</span><span class="st non">미적용</span>')+'</span>'
-            +(isM?'<span class="m">현재 대표'+(regMain?'<span class="mx"> → 밀려남</span>':'')+'</span>':'')
-            +'</div>';}).join('')
-      : '<div class="othempty">같은 속성 조합을 쓰는 상품 조합이 아직 없습니다</div>';
-  const first = ok0 && !inGrp.length;
-  if(first){ regMain=true; regForced=true; $('rMain').classList.add('on');
-    $('rMain').style.opacity='.6'; $('rMain').style.pointerEvents='none'; }
-  else { if(regForced){ regMain=false; regForced=false; }
-    $('rMain').style.opacity='1'; $('rMain').style.pointerEvents='auto'; $('rMain').classList.toggle('on',regMain); }
-
+    : (rep ? row(rep[2], rep[3], regMain ? '<span class="rb out">대표 → 해제</span>' : '<span class="rb rep">대표</span>') : '') + mine;
+  $('rRest').hidden = !(ok0 && rest > 0);
+  $('rRest').textContent = '나머지 ' + rest + '건은 상품 조합 관리에서 조회 및 대표 설정이 가능합니다.';
   $('rSave').disabled=!ok;
 }
-$('rMain').onclick=()=>{ regMain=!regMain; $('rMain').classList.toggle('on',regMain); previewReg(); };
+$('rMain').onclick=()=>{ regMain=!regMain; previewReg(); };
 
 const closeReg = () => { $('ovReg').hidden = true; };
 $('rX').onclick = $('rCancel').onclick = closeReg;
@@ -987,8 +1027,7 @@ $('rSave').onclick=()=>{
   if(regMain) REP[key]=R.length-1;
   reindex();   // V2 : 초록선(판매 가능 조합)은 건드리지 않는다
   closeReg();
-  toast('등록했습니다 — '+REG.prod+' × '+(REG.set||'미적용')
-    +(regMain ? ' · 대표로 지정'+(prev ? ' (기존 대표 「'+prev[2]+'」 밀려남)' : '') : ''), '#10A10E');
+  toast(regMain ? '상품 조합 등록 및 대표 상품 조합으로 등록되었습니다.' : '상품 조합이 등록되었습니다.', '#10A10E');
   paintSel();
 };
 
@@ -1115,7 +1154,17 @@ function menuCase(btn, label, p, set){
   const el = document.querySelector('.cols[data-g="'+CSS.escape(label)+'"] .pit[data-s="col"][data-n="'+CSS.escape(set)+'"]');
   setTimeout(() => { const r = btn.getBoundingClientRect(); openMenu(el, r.left - 240, r.top - 60); }, 0);
 }
+function soloCase(btn, label, side, name){
+  goKT('메인상품'); SEL = null; paintSel();
+  const el = document.querySelector('.cols[data-g="'+CSS.escape(label)+'"] .pit[data-s="'+side+'"][data-n="'+CSS.escape(name)+'"]');
+  setTimeout(() => { const r = btn.getBoundingClientRect(); openMenu(el, r.left - 240, r.top - 60); }, 0);
+}
 const CASE = {
+  'mn-solo':    b => soloCase(b, '인터넷세트', 'row', '에센스'),
+  'mn-pair':    b => { AUTO['KT|인터넷세트|에센스'] = 'KT와이파이7D'; menuCase(b, '인터넷세트', '에센스', '기가 와이파이 홈ax'); },
+  'mn-na-solo': b => soloCase(b, '인터넷세트', 'col', ''),
+  'mn-solo-col': b => soloCase(b, '인터넷세트', 'col', 'KT와이파이7D'),
+  'mn-na-pair': b => menuCase(b, '인터넷세트', '슬림', ''),
   'tg-row':   () => tagCase('인터넷세트', 'row', '안심 슬림 와이파이'),
   'tg-empty': () => tagCase('인터넷세트', 'row', '슬림플러스'),
   'tg-col':   () => tagCase('인터넷세트', 'col', 'KT와이파이7D'),

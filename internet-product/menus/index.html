@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>인터넷 상품 관리 — 우클릭 메뉴 케이스</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+ --primary:#145CE6;--primary-strong:#073894;--success:#10A10E;--warning:#D75011;--negative:#C70C34;--hold:#5714E6;
+ --g25:#F5F6F7;--g50:#EFEFF1;--g100:#DEE0E3;--g200:#C3C5C9;--g300:#A9ABB0;--g400:#8D8F94;--g500:#73767A;
+ --g600:#5A5C61;--g700:#424447;--g900:#131314;--blue50:#ECF2FF;--blue100:#D9E6FF;--red50:#FEE6E6;--orange50:#FDEBE3;--link:#2F9E68;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{color-scheme:light}
+[hidden]{display:none!important}
+body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;
+ color:var(--g900);background:#fff;-webkit-font-smoothing:antialiased;min-width:1280px}
+.sheet{max-width:1400px;margin:0 auto;padding:0 32px}
+header.top{padding:40px 0 20px;border-bottom:1px solid var(--g100);margin-bottom:8px}
+.eyebrow{font-size:13px;color:var(--g500);margin-bottom:6px;letter-spacing:-.2px}
+h1{font-size:28px;font-weight:700;letter-spacing:-.5px;margin-bottom:10px}
+.lead{font-size:14px;color:var(--g600);line-height:1.7;letter-spacing:-.2px}
+.lead b{color:var(--g900)}
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:16px;font-size:12.5px;color:var(--g600);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:22px;height:14px;border-radius:4px;border:1px solid var(--g100);display:inline-block}
+.sw.sel{border:2px solid var(--primary);background:var(--blue50)}
+.sw.lit{border-color:var(--link);background:#F1FBF5}
+.sw.na{border-style:dashed}
+.sw.rc{border:2px solid var(--warning);background:#fff}
+.terms{margin-top:14px;font-size:12.5px;color:var(--g600);line-height:1.9;letter-spacing:-.2px}
+.terms b{color:var(--g900)}
+.terms span{display:inline-block;margin:0 4px 0 12px;font-size:11.5px;color:var(--g600);background:var(--g25);border:1px solid var(--g100);border-radius:4px;padding:0 7px}
+.rule{margin-top:20px;border:1px solid var(--blue100);background:#FAFCFF;border-radius:10px;padding:16px 20px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.rule h3{font-size:14.5px;font-weight:700;letter-spacing:-.3px;margin-bottom:6px}
+.rule p{font-size:13px;line-height:1.7;color:var(--g700);letter-spacing:-.2px}
+.rule p b{color:var(--g900)}
+.rule table{border-collapse:collapse;font-size:12.5px;letter-spacing:-.2px;background:#fff}
+.rule th,.rule td{border:1px solid var(--g100);padding:6px 12px;text-align:center;white-space:nowrap}
+.rule thead th{background:var(--g25);color:var(--g600);font-weight:700}
+.rule tbody th{text-align:left;font-weight:600}
+.rule .y{color:#0A8208;font-weight:700}.rule .n{color:var(--g300)}
+.toc{display:flex;gap:8px;margin:18px 0 0;flex-wrap:wrap}
+.toc a{font-size:13px;font-weight:600;color:var(--g700);text-decoration:none;border:1px solid var(--g200);border-radius:16px;padding:6px 12px}
+.toc a:hover{border-color:var(--primary);color:var(--primary)}
+
+h2{font-size:20px;font-weight:700;letter-spacing:-.4px;margin:40px 0 4px;display:flex;align-items:center;gap:10px}
+h2 .tagx{font-size:12px;font-weight:700;color:var(--primary);background:var(--blue50);border-radius:4px;padding:3px 8px}
+.h2sub{font-size:13.5px;color:var(--g500);margin-bottom:14px;letter-spacing:-.2px;line-height:1.6}
+
+.case{display:grid;grid-template-columns:230px 430px 236px 1fr;gap:24px;padding:22px 0;border-top:1px solid var(--g100);align-items:start}
+.case:last-of-type{border-bottom:1px solid var(--g100)}
+.c-no{font-size:11px;font-weight:700;color:#fff;background:var(--g900);border-radius:10px;padding:2px 8px;display:inline-block;margin-bottom:8px}
+.c-t{font-size:15px;font-weight:700;letter-spacing:-.3px;line-height:1.45;margin-bottom:8px}
+.cond{display:flex;flex-wrap:wrap;gap:5px}
+.cond span{font-size:11.5px;color:var(--g600);background:var(--g25);border:1px solid var(--g100);border-radius:4px;padding:2px 7px}
+.cond span.k{color:var(--primary);background:var(--blue50);border-color:var(--blue100);font-weight:700}
+
+/* 카드 예시 — 인터넷 상품 관리 목업과 같은 모양 */
+.gcard{border:1px solid var(--g100);border-radius:10px;background:#fff;overflow:hidden}
+.gh{height:34px;background:var(--g50);border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:center;
+ font-size:12.5px;font-weight:700;color:var(--g700)}
+.cols{display:grid;grid-template-columns:1fr 46px 1fr;padding:12px 12px 6px;position:relative}
+.ch{font-size:11.5px;font-weight:700;color:var(--g600);text-align:center;padding-bottom:8px}
+.pit{position:relative;display:flex;align-items:center;gap:6px;height:30px;padding:0 9px;margin-bottom:7px;
+ border:1px solid var(--g100);border-radius:6px;background:#fff;font-size:12px;letter-spacing:-.3px;white-space:nowrap}
+.pit .nm{flex:1;overflow:hidden;text-overflow:ellipsis}
+.pit.sel{border-color:var(--primary);border-width:2px;background:var(--blue50);font-weight:600}
+.pit.lit{border-color:var(--link);background:#F1FBF5}
+.pit.na{border-style:dashed;color:var(--g500);justify-content:center}
+.pit.na.lit{border-style:dashed}
+.pit .nt{font-size:10px;font-weight:700;color:var(--negative);background:var(--red50);border-radius:4px;padding:2px 5px;flex:none}
+.pit .ab{font-size:10px;font-weight:700;color:#fff;background:var(--hold);border-radius:4px;padding:2px 5px;flex:none}
+.pit.rc{outline:2px solid var(--warning);outline-offset:2px}
+.pit.rc::after{content:"";position:absolute;right:-9px;bottom:-11px;width:14px;height:18px;
+ background:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 18'%3E%3Cpath d='M1 1l0 14 4-4 3 6 2-1-3-6 5 0z' fill='%23131314' stroke='%23fff' stroke-width='1'/%3E%3C/svg%3E") no-repeat}
+.lane{position:relative}
+.lane svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ill-note{font-size:11.5px;color:var(--g400);margin-top:6px;letter-spacing:-.2px}
+
+/* 펼친 메뉴 */
+.menu{width:236px;background:#fff;border:1px solid var(--g100);border-radius:8px;padding:6px 0;box-shadow:0 8px 28px rgba(19,19,20,.12)}
+.mi{padding:6px 12px;font-size:12.5px;color:var(--g500);letter-spacing:-.3px;display:flex;align-items:center;gap:6px}
+.mi .lb{flex:1}
+.mi.act{color:var(--primary);font-weight:700;cursor:pointer}
+.mi.act:hover{background:var(--blue50)}
+.mi .newb{font-size:9.5px;font-weight:700;background:var(--primary);color:#fff;border-radius:3px;padding:1px 4px}
+.mi .how{font-size:10px;font-weight:700;color:var(--g500);background:var(--g50);border-radius:3px;padding:1px 5px}
+.mi.asis2{color:var(--g700)}
+.sep{height:1px;background:var(--g100);margin:5px 0}
+
+.notes{font-size:13px;line-height:1.7;color:var(--g700);letter-spacing:-.2px}
+.notes li{margin-left:16px;margin-bottom:3px}
+.notes b{color:var(--g900)}
+.notes .q{color:var(--warning);font-weight:700}
+.acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.acts button{height:30px;padding:0 11px;border:1px solid var(--g200);background:#fff;border-radius:7px;font-size:12.5px;font-weight:600;
+ font-family:inherit;color:var(--g900);cursor:pointer;letter-spacing:-.2px}
+.acts button:hover{border-color:var(--primary);color:var(--primary)}
+
+.foot{margin:36px 0 70px;font-size:13px;color:var(--g500);line-height:1.8}
+.foot b{color:var(--g900)}
+
+/* 실제 동작 — 인터넷 상품 관리 목업을 띄워 그 상태로 실행 */
+.stage{position:fixed;inset:0;z-index:90;background:rgba(19,19,20,.45);display:flex;align-items:center;justify-content:center}
+.stage-box{width:min(1480px,94vw);height:90vh;background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;
+ box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.stage-h{height:44px;flex:none;display:flex;align-items:center;gap:10px;padding:0 16px;border-bottom:1px solid var(--g100);font-size:13px;color:var(--g600)}
+.stage-h b{color:var(--g900)}
+.stage-h .sp{flex:1}
+.stage-h button{height:30px;padding:0 12px;border:1px solid var(--g200);background:#fff;border-radius:7px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.stage iframe{flex:1;border:0;width:100%}
+.loading{position:absolute;font-size:13px;color:var(--g500)}
+</style>
+</head>
+<body>
+<div class="sheet">
+<header class="top">
+  <div class="eyebrow">인터넷 상품 관리 · [메인상품] 탭 · 디자인 · 개발 참고용</div>
+  <h1>우클릭 메뉴 케이스</h1>
+  <p class="lead">카드를 어떤 상태에서 우클릭하느냐에 따라 뜨는 메뉴를 <b>전부 펼쳐</b> 정리했습니다. 회색은 AS-IS 그대로(베타 실측 10/12), <b style="color:var(--primary)">파란색</b>은 이번에 추가되는 항목입니다.<br>
+  파란 항목을 누르면 <b>인터넷 상품 관리 목업을 그 상태로 띄워 실제 모달 · 토스트</b>가 실행됩니다.</p>
+  <div class="legend">
+    <span><i class="sw sel"></i>선택한 상품</span>
+    <span><i class="sw lit"></i>초록선으로 이어진 세트상품</span>
+    <span><i class="sw rc"></i>우클릭한 카드</span>
+    <span><i class="sw na"></i>미적용</span>
+    <span><span class="pit" style="height:20px;margin:0;padding:0 4px;border:0"><span class="ab">기본값</span></span>그 상품의 기본값</span>
+  </div>
+  <div class="terms"><b>케이스 제목</b>은 무엇을 하는지(상품을 고르지 않고 / 고른 뒤 · 어느 카드를 우클릭), <b>회색 칩</b>은 그때의 데이터 상태입니다.
+    <span>초록선</span> 고른 상품과 우클릭한 카드 사이 판매 연결
+    <span>등록</span> 그 상품 조합이 속성 조합에 등록됐는지
+    <span>같은 속성 조합</span> 같은 속성 조합에 이미 등록된 다른 상품 조합이 있는지
+    <span>기본값</span> 우클릭한 카드가 고른 상품의 기본값인지</div>
+  <div class="rule">
+    <div>
+      <h3>「위로 / 아래로」는 카드 위치에 따라 빠집니다 (AS-IS)</h3>
+      <p>칸 안에서 <b>첫 카드엔 「위로」</b>, <b>마지막 카드엔 「아래로」</b>가 없습니다. 카드가 하나뿐이면 둘 다 없습니다. 상품 · 세트상품 · 결합할인 항목 모두 같은 규칙이고, 선택 상태와 무관합니다.<br>
+      아래 케이스의 메뉴는 모두 <b>칸 중간 카드</b> 기준이라 둘 다 표시했습니다. 카드 예시는 칸의 일부만 잘라 그린 것입니다.</p>
+    </div>
+    <table>
+      <thead><tr><th>카드 위치</th><th>위로</th><th>아래로</th></tr></thead>
+      <tbody>
+        <tr><th>첫 카드</th><td class="n">—</td><td class="y">●</td></tr>
+        <tr><th>중간 카드</th><td class="y">●</td><td class="y">●</td></tr>
+        <tr><th>마지막 카드</th><td class="y">●</td><td class="n">—</td></tr>
+        <tr><th>카드 1개뿐</th><td class="n">—</td><td class="n">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <nav class="toc">
+    <a href="#net">인터넷세트</a><a href="#na">인터넷세트 · 미적용</a><a href="#etc">인터넷 외 (TV · 전화)</a><a href="#disc">결합할인</a>
+  </nav>
+</header>
+
+<h2 id="net">인터넷세트 <span class="tagx">인터넷</span></h2>
+<p class="h2sub">상품 칸(인터넷상품)과 세트상품 칸(기본WIFI)의 기존 메뉴가 다릅니다 — 인터넷상품엔 「금지 코드 설정」이 없고, 기본WIFI엔 「금지코드 설정(단일)」이 있습니다.<br>
+<b>「미적용」은 메뉴가 달라 별도 케이스로 관리합니다</b> — 아래 <a href="#na" style="color:var(--primary);font-weight:700">인터넷세트 · 「미적용」</a> 참고.</p>
+<div id="secNet"></div>
+
+<h2 id="na">인터넷세트 · 「미적용」 <span class="tagx">인터넷</span></h2>
+<p class="h2sub">「미적용」의 기존 메뉴는 <b>「사용 / 미사용」 하나뿐</b>입니다 — 고른 상품과 미적용 사이의 <b>초록선 연결 / 해제</b> 버튼(카드 사용중지 아님). 요금 · 할인 같은 기존 메뉴와 「플랫폼 노출 설정」은 어느 경우에도 없습니다.</p>
+<div id="secNa"></div>
+
+<h2 id="etc">인터넷 외 <span class="tagx">TV · 인터넷전화 · 일반전화</span></h2>
+<p class="h2sub">TV세트로 예시를 들었습니다. 인터넷전화 · 일반전화도 같습니다. 인터넷과 달리 <b>상품 칸에도 「금지 코드 설정」</b>이 있고, <b>「상품 조합 등록」이 없습니다</b>(초록선 상품 조합이 자동으로 속성 조합에 들어감).</p>
+<div id="secEtc"></div>
+
+<h2 id="disc">결합할인 <span class="tagx">결합할인 탭</span></h2>
+<p class="h2sub">상품 조합이 없어 선택 상태와 무관합니다. 바뀌는 건 <b>「설명 바꾸기」 → 「설명 수정」</b> 하나 — 분류는 새 모달로 <b>대체</b>, 항목은 <b>이름만</b> 바꾸고 모달은 AS-IS 그대로입니다. 그 밖의 상품군(부가서비스 · 기타상품 등)은 「설명 바꾸기」 AS-IS 그대로.</p>
+<div id="secDisc"></div>
+
+<div class="foot">
+  <b>여기 없는 것</b><br>
+  · 인터넷 외 세트상품 칸의 「미적용」 — AS-IS에도 있고 메뉴는 「사용 / 미사용」 하나. 인터넷과 같은 추가 항목을 둘지 <span style="color:var(--warning);font-weight:700">확인 필요</span><br>
+  · 미사용 세트상품(「미사용 보기」를 켰을 때만 보임) — 상품 조합으로 우클릭해도 「기본값 지정」이 뜨지 않음<br>
+  · 「우선순위 변경 (기본)」 괄호 안은 현재 우선순위(AS-IS)
+</div>
+</div>
+
+<div class="stage" id="stage" hidden>
+  <div class="stage-box">
+    <div class="stage-h"><b id="stTitle">실제 동작</b><span id="stSub"></span><span class="sp"></span><span style="font-size:12px;color:var(--g400)">인터넷 상품 관리 목업 · ESC로 닫기</span><button id="stClose">닫기</button></div>
+    <iframe id="stFrame" title="인터넷 상품 관리 목업"></iframe>
+  </div>
+</div>
+
+<script>
+/* ───────── 메뉴 항목 ───────── */
+const A = l => ({ t: 'asis', l });                 // AS-IS 그대로
+const N = (l, act, how, badge) => ({ t: 'new', l, act, how, badge }); // 이번에 추가 — act : 실제 동작 키
+const SEP = { t: 'sep' };
+const UP_ROW_NET = [A('상품 요금 설정'), A('상품 할인 설정'), A('상품 이벤트 설정')];
+const UP_ROW_ETC = UP_ROW_NET.concat([A('금지 코드 설정')]);
+const UP_COL = UP_ROW_ETC.concat([A('금지코드 설정(단일)')]);
+const DOWN = [SEP, A('설명 바꾸기'), A('위로'), A('아래로'), A('우선순위 변경 (기본)'), A('사용중지')];
+
+/* ───────── 케이스 ─────────
+   ill : 카드 예시 { set, L:[상품 칸 이름, 카드…], R:[세트상품 칸 이름, 카드…], sel, lines:[R 인덱스], rc:['L'|'R', 인덱스], auto:R 인덱스 }
+   카드 이름 앞 '!' = 태그 없음 배지, '' = 미적용                                                          */
+const NET = { set: '인터넷세트', L: ['인터넷상품'], R: ['기본WIFI'] };
+const CASES = {
+ secNet: [
+  { t: '인터넷상품 우클릭', cond: ['상품을 골랐든 안 골랐든 같음'],
+    ill: { ...NET, L: ['인터넷상품', '슬림 와이파이', '에센스', '슈퍼프리미엄'], R: ['기본WIFI', '', '기가 와이파이 홈ax', 'KT와이파이7D'], rc: ['L', 1] },
+    menu: [...UP_ROW_NET, N('태그 지정', 'tag-row', '모달'), N('플랫폼 노출 설정', 'plat-row', '모달'), ...DOWN],
+    notes: ['기존 메뉴에 <b>「금지 코드 설정」이 없습니다</b> (인터넷상품만 — AS-IS)', '상품 조합을 골라둔 상태에서 상품 카드를 우클릭해도 이 메뉴', '태그 지정 — 속도(필수) + 추가구성옵션 2칸'] },
+  { t: '상품을 고르지 않고 기본WIFI 우클릭', cond: [],
+    ill: { ...NET, L: ['인터넷상품', '슬림 와이파이', '에센스', '슈퍼프리미엄'], R: ['기본WIFI', '', '기가 와이파이 홈ax', 'KT와이파이7D'], rc: ['R', 1] },
+    menu: [...UP_COL, N('태그 지정', 'tag-col', '모달'), N('플랫폼 노출 설정', 'plat-col', '모달'), ...DOWN],
+    notes: ['기존 메뉴에 「금지 코드 설정」 · 「금지코드 설정(단일)」 둘 다 있음', '태그 지정 — 구성제품 1칸', '기본값 지정 · 상품 조합 등록은 <b>상품을 먼저 골라야</b> 뜹니다'] },
+  { t: '상품을 고른 뒤 기본WIFI 우클릭', cond: ['초록선 있음', '미등록', '같은 속성 조합 <b>없음</b>', '기본값 아님'],
+    ill: { ...NET, L: ['인터넷상품', '슈퍼프리미엄'], R: ['기본WIFI', '', 'KT와이파이7D', '기가 와이파이 웨이브2(2대)'], sel: 0, lines: [1, 2], rc: ['R', 2], auto: 1 },
+    menu: [...UP_COL, N('태그 지정', 'tag-col', '모달'), N('플랫폼 노출 설정', 'plat-col', '모달'), N('기본값 지정', 'auto-3', '토스트'), N('상품 조합 등록', 'reg-3', '모달'), ...DOWN],
+    notes: ['<b>상품 조합 등록 → 모달</b> — 같은 속성 조합에 다른 상품 조합이 없어 목록엔 등록할 조합 1건(「등록할 조합」 · 「대표」)만, 대표 체크 없음', '[등록] → 토스트 「상품 조합 등록 및 대표 상품 조합으로 등록되었습니다.」', '<span style="color:var(--g400)">10/12 — 토스트만 띄우던 방식에서 변경. 토스트는 자동으로 닫혀 내용 확인이 어려움</span>', '기본값 지정 → 모달 없이 즉시 교체 + 토스트'] },
+  { t: '상품을 고른 뒤 기본WIFI 우클릭', cond: ['초록선 있음', '미등록', '같은 속성 조합 <b>있음</b>', '기본값 아님'],
+    ill: { ...NET, L: ['인터넷상품', '에센스'], R: ['기본WIFI', '', '기가 와이파이 홈ax', 'KT와이파이7D'], sel: 0, lines: [1, 2], rc: ['R', 1], auto: 2 },
+    menu: [...UP_COL, N('태그 지정', 'tag-col', '모달'), N('플랫폼 노출 설정', 'plat-col', '모달'), N('기본값 지정', 'auto-4', '토스트'), N('상품 조합 등록', 'reg-4', '모달'), ...DOWN],
+    notes: ['같은 모달에 <b>체크 「등록할 조합을 대표 상품 조합으로 설정」</b>이 생기고, 목록엔 <b>현재 대표 + 등록할 조합</b> 두 줄만', '나머지는 「나머지 N건은 상품 조합 관리에서 조회 및 대표 설정이 가능합니다.」', '체크를 켜면 등록할 조합에 「대표」, 현재 대표에 「대표 → 해제」', '[등록] 후 토스트 — 대표로 등록이면 「상품 조합 등록 및 대표 상품 조합으로 등록되었습니다.」, 아니면 「상품 조합이 등록되었습니다.」'] },
+  { t: '상품을 고른 뒤 기본WIFI 우클릭', cond: ['초록선 있음', '미등록', '<b>고른 상품의 기본값</b>'],
+    ill: { ...NET, L: ['인터넷상품', '에센스'], R: ['기본WIFI', '', '기가 와이파이 홈ax', 'KT와이파이7D'], sel: 0, lines: [1, 2], rc: ['R', 1], auto: 1 },
+    menu: [...UP_COL, N('태그 지정', 'tag-col', '모달'), N('플랫폼 노출 설정', 'plat-col', '모달'), N('상품 조합 등록', 'reg-4', '모달'), ...DOWN],
+    notes: ['<b>「기본값 지정」만 빠짐</b> — 카드의 「기본값」 배지가 이미 보여주고, 해제 수단이 없음'] },
+  { t: '상품을 고른 뒤 기본WIFI 우클릭', cond: ['초록선 있음', '<b>등록됨</b>', '기본값 아님'],
+    ill: { ...NET, L: ['인터넷상품', '슬림 와이파이'], R: ['기본WIFI', '', '기가 와이파이 홈ax', 'KT와이파이7D'], sel: 0, lines: [1, 2], rc: ['R', 2], auto: 1 },
+    menu: [...UP_COL, N('태그 지정', 'tag-col', '모달'), N('플랫폼 노출 설정', 'plat-col', '모달'), N('기본값 지정', 'auto-6', '토스트'), N('상품 조합 관리로 이동', 'view-6', '화면 이동'), ...DOWN],
+    notes: ['「상품 조합 등록」 자리가 <b>「상품 조합 관리로 이동」</b>으로 바뀜', '상품 조합 관리로 현재창 이동 · 필터 없이 기본 상태 (목업은 안내 토스트)', '대표 변경 · 등록 해제는 상품 조합 관리에서만'] },
+  { t: '상품을 고른 뒤 기본WIFI 우클릭', cond: ['<b>초록선 없음</b>'],
+    ill: { ...NET, L: ['인터넷상품', '에센스'], R: ['기본WIFI', '', '기가 와이파이 홈ax', '기가 와이파이 (홈ax+버디)'], sel: 0, lines: [1], rc: ['R', 2] },
+    menu: [...UP_COL, N('태그 지정', 'tag-col', '모달'), N('플랫폼 노출 설정', 'plat-col', '모달'), ...DOWN],
+    notes: ['판매하지 않는 조합이라 <b>단독 우클릭과 같음</b> — 기본값 지정 · 상품 조합 등록 없음', '그 상품 기준 금지된 WIFI면 기존 메뉴가 「금지코드 <b>해제</b>(단일)」로 바뀜 (AS-IS)'] }
+ ],
+ secNa: [
+  { t: '상품을 고르지 않고 「미적용」 우클릭', cond: [],
+    ill: { ...NET, L: ['인터넷상품', '슬림', '에센스'], R: ['기본WIFI', '!', '기가 와이파이 홈ax'], rc: ['R', 0] },
+    menu: [N('태그 지정', 'tag-na', '모달'), SEP, A('사용')],
+    notes: ['태그 지정 — 모달에서 고를 수 있는 값이 <b>「없음」 하나</b>', '「사용」은 AS-IS 그대로 노출. 이을 상대 상품이 없어 <span class="q">동작 확인 필요</span>'] },
+  { t: '상품을 고른 뒤 「미적용」 우클릭', cond: ['초록선 있음', '등록됨', '고른 상품의 기본값'],
+    ill: { ...NET, L: ['인터넷상품', '슬림'], R: ['기본WIFI', '', '기가 와이파이 홈ax'], sel: 0, lines: [0], rc: ['R', 0], auto: 0 },
+    menu: [N('태그 지정', 'tag-na', '모달'), N('상품 조합 관리로 이동', 'view-na', '화면 이동'), SEP, A('미사용')],
+    notes: ['WIFI 없이 파는 상품(슬림 · 베이직 등)의 실제 모습 — 미적용이 유일한 짝이라 자동으로 기본값', '「미사용」 = 이 상품과 미적용 사이 <b>초록선 해제</b>'] },
+  { t: '상품을 고른 뒤 「미적용」 우클릭', cond: ['초록선 있음', '미등록', '기본값 아님'],
+    ill: { ...NET, L: ['인터넷상품', '베이직 와이파이'], R: ['기본WIFI', '', '기가 와이파이 홈ax', 'KT와이파이7D'], sel: 0, lines: [0, 1, 2], rc: ['R', 0], auto: 2 },
+    menu: [N('태그 지정', 'tag-na', '모달'), N('기본값 지정', 'auto-na', '토스트'), N('상품 조합 등록', 'reg-na', '모달'), SEP, A('미사용')],
+    notes: ['추가 항목이 <b>모두</b> 뜨는 경우 — 기본값 지정 · 상품 조합 등록은 기본WIFI와 같은 조건', '「플랫폼 노출 설정」은 없음 — 미적용엔 금액 · 설명을 두지 않음', '<span style="color:var(--g400)">예시용 데이터 — 목업에서 이 짝에 초록선을 임시로 이어 실행합니다</span>'] },
+  { t: '상품을 고른 뒤 「미적용」 우클릭', cond: ['<b>초록선 없음</b>'],
+    ill: { ...NET, L: ['인터넷상품', '에센스'], R: ['기본WIFI', '', '기가 와이파이 홈ax', 'KT와이파이7D'], sel: 0, lines: [1, 2], rc: ['R', 0] },
+    menu: [N('태그 지정', 'tag-na', '모달'), SEP, A('사용')],
+    notes: ['「사용」 = 이 상품과 미적용 사이 <b>초록선 연결</b> (AS-IS)', '초록선이 없어 기본값 지정 · 상품 조합 등록 없음'] }
+ ],
+ secEtc: [
+  { t: 'TV채널 우클릭', cond: ['상품을 골랐든 안 골랐든 같음'],
+    ill: { set: 'TV세트', L: ['TV채널', '베이직', '에센스', '에센스 플러스'], R: ['셋탑박스', '일반셋톱', '기가지니3A'], rc: ['L', 1] },
+    menu: [...UP_ROW_ETC, N('태그 지정', 'tag-tv-row', '모달'), N('플랫폼 노출 설정', 'plat-tv-row', '모달'), ...DOWN],
+    notes: ['인터넷과 달리 <b>「금지 코드 설정」이 있음</b> (AS-IS)', '태그 지정 — 1칸 + 고객 노출 미리보기 <code>상품명(태그명)</code>', '플랫폼 노출 설정 — 결합요금 칸 없음'] },
+  { t: '상품을 고르지 않고 셋탑박스 우클릭', cond: [],
+    ill: { set: 'TV세트', L: ['TV채널', '베이직', '에센스', '에센스 플러스'], R: ['셋탑박스', '일반셋톱', '기가지니3A'], rc: ['R', 0] },
+    menu: [...UP_COL, N('태그 지정', 'tag-tv-col', '모달'), N('플랫폼 노출 설정', 'plat-tv-col', '모달'), ...DOWN],
+    notes: ['기존 메뉴는 기본WIFI와 같음 (「금지코드 설정(단일)」 포함)'] },
+  { t: '상품을 고른 뒤 셋탑박스 우클릭', cond: ['초록선 있음', '기본값 아님'],
+    ill: { set: 'TV세트', L: ['TV채널', '에센스'], R: ['셋탑박스', '일반셋톱', '기가지니3A'], sel: 0, lines: [0, 1], rc: ['R', 0], auto: 1 },
+    menu: [...UP_COL, N('태그 지정', 'tag-tv-col', '모달'), N('플랫폼 노출 설정', 'plat-tv-col', '모달'), N('기본값 지정', 'auto-tv', '토스트'), ...DOWN],
+    notes: ['<b>「상품 조합 등록」 없음</b> — 인터넷 외는 초록선 상품 조합이 자동으로 속성 조합에 들어감. 대표는 상품 조합 관리에서'] },
+  { t: '상품을 고른 뒤 셋탑박스 우클릭', cond: ['초록선 있음', '<b>고른 상품의 기본값</b>'],
+    ill: { set: 'TV세트', L: ['TV채널', '에센스'], R: ['셋탑박스', '일반셋톱', '기가지니3A'], sel: 0, lines: [0, 1], rc: ['R', 1], auto: 1 },
+    menu: [...UP_COL, N('태그 지정', 'tag-tv-col', '모달'), N('플랫폼 노출 설정', 'plat-tv-col', '모달'), ...DOWN],
+    notes: ['단독 우클릭과 같은 메뉴가 됨 — 추가로 뜰 항목이 없음'] }
+ ],
+ secDisc: [
+  { t: '분류 우클릭', cond: ['선택 상태와 무관'],
+    ill: { set: '총액 결합할인', L: ['분류', '총액 결합할인'], R: ['항목', '22,000원 미만', '64,900원 이상', '174,900원 이상'], rc: ['L', 0] },
+    menu: [A('상품 할인 설정'), A('상품 이벤트 설정'), A('금지 코드 설정'), SEP, N('설명 수정', 'ds-off', '모달', '대체'), A('우선순위 변경 (기본)'), A('사용중지')],
+    notes: ['AS-IS 「설명 바꾸기」 자리에 <b>「설명 수정」 — 새 모달</b> (할인명 · CRM 설명 · 신청서 노출 · 신청서 설명)', '기존 모달은 전 상품 공통 컴포넌트라 고치지 않고 대체 (FE)', '「금지 코드 설정」은 분류에만 있음 (AS-IS)'],
+    more: [['ds-on', '신청서 노출 켜짐'], ['ds-empty', '켜짐 + 신청서 설명 빈칸']] },
+  { t: '항목 우클릭', cond: ['선택 상태와 무관'],
+    ill: { set: '총액 결합할인', L: ['분류', '총액 결합할인'], R: ['항목', '22,000원 미만', '64,900원 이상', '174,900원 이상'], rc: ['R', 1] },
+    menu: [A('상품 할인 설정'), A('상품 이벤트 설정'), SEP, N('설명 수정', 'ds-item', 'AS-IS 모달', '이름'), A('위로'), A('아래로'), A('우선순위 변경 (기본)'), A('사용중지')],
+    notes: ['<b>이름만</b> 「설명 바꾸기」 → 「설명 수정」. 모달은 AS-IS 설명 바꾸기 그대로 — 분류의 설명 수정 모달과 다름'] }
+ ]
+};
+
+/* ───────── 그리기 ───────── */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function pit(name, cls){
+  const na = name === '' || name === '!';
+  return '<div class="pit' + (na ? ' na' : '') + cls + '"><span class="nm">' + (na ? '미적용' : esc(name)) + '</span>'
+    + (name === '!' ? '<span class="nt">태그 없음</span>' : '') + '</div>';
+}
+function ill(c){
+  const L = c.L.slice(1), R = c.R.slice(1);
+  const lc = L.map((n, i) => pit(n, (c.sel === i ? ' sel' : '') + (c.rc && c.rc[0] === 'L' && c.rc[1] === i ? ' rc' : ''))).join('');
+  const rc = R.map((n, i) => {
+    let k = '';
+    if (c.lines && c.lines.indexOf(i) >= 0) k += ' lit';
+    if (c.rc && c.rc[0] === 'R' && c.rc[1] === i) k += ' rc';
+    let h = pit(n, k);
+    if (c.auto === i && c.sel != null) h = h.replace('</span>', '</span><span class="ab">기본값</span>');
+    return h;
+  }).join('');
+  return '<div class="gcard"><div class="gh">' + esc(c.set) + '</div><div class="cols">'
+    + '<div class="col"><div class="ch">' + esc(c.L[0]) + '</div>' + lc + '</div>'
+    + '<div class="lane"><svg></svg></div>'
+    + '<div class="col"><div class="ch">' + esc(c.R[0]) + '</div>' + rc + '</div></div></div>';
+}
+function menu(items){
+  return '<div class="menu">' + items.map(m => m.t === 'sep' ? '<div class="sep"></div>'
+    : m.t === 'asis' ? '<div class="mi asis2"><span class="lb">' + esc(m.l) + '</span></div>'
+    : '<div class="mi act" data-act="' + m.act + '" data-l="' + esc(m.l) + '"><span class="lb">' + esc(m.l) + '</span><span class="how">' + m.how + '</span><span class="newb">' + (m.badge || '추가') + '</span></div>').join('') + '</div>';
+}
+let NO = 0;
+Object.keys(CASES).forEach(sec => {
+  document.getElementById(sec).innerHTML = CASES[sec].map(c => {
+    NO++;
+    const acts = c.menu.filter(m => m.t === 'new');
+    return '<div class="case" data-ill=\'' + JSON.stringify({ sel: c.ill.sel, lines: c.ill.lines || [] }) + '\'>'
+      + '<div><span class="c-no">' + NO + '</span><div class="c-t">' + c.t + '</div><div class="cond">'
+      + c.cond.map(x => '<span>' + x + '</span>').join('') + '</div></div>'
+      + '<div>' + ill(c.ill) + '</div>'
+      + '<div>' + menu(c.menu) + '</div>'
+      + '<div class="notes"><ul>' + c.notes.map(n => '<li>' + n + '</li>').join('') + '</ul>'
+      + '<div class="acts">' + acts.map(m => '<button data-act="' + m.act + '" data-l="' + esc(m.l) + '">' + esc(m.l) + ' 실행 · ' + m.how + '</button>').join('')
+      + (c.more || []).map(x => '<button data-act="' + x[0] + '" data-l="설명 수정 · ' + esc(x[1]) + '">설명 수정 · ' + esc(x[1]) + '</button>').join('') + '</div></div>'
+      + '</div>';
+  }).join('');
+});
+/* 초록선 — 선택한 상품에서 이어진 세트상품으로 */
+function drawLines(){
+  document.querySelectorAll('.case').forEach(el => {
+    const d = JSON.parse(el.dataset.ill); const svg = el.querySelector('.lane svg'); svg.innerHTML = '';
+    if (d.sel == null) return;
+    const lane = svg.parentElement.getBoundingClientRect();
+    const a = el.querySelectorAll('.col')[0].querySelectorAll('.pit')[d.sel].getBoundingClientRect();
+    const rs = el.querySelectorAll('.col')[1].querySelectorAll('.pit');
+    d.lines.forEach(i => {
+      const b = rs[i].getBoundingClientRect();
+      const y1 = a.top + a.height / 2 - lane.top, y2 = b.top + b.height / 2 - lane.top, w = lane.width;
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', 'M0 ' + y1 + ' C ' + w / 2 + ' ' + y1 + ', ' + w / 2 + ' ' + y2 + ', ' + w + ' ' + y2);
+      p.setAttribute('fill', 'none'); p.setAttribute('stroke', '#2F9E68'); p.setAttribute('stroke-width', '1.5');
+      svg.appendChild(p);
+    });
+  });
+}
+addEventListener('load', drawLines); addEventListener('resize', drawLines);
+if (document.fonts) document.fonts.ready.then(drawLines);
+
+/* ───────── 실제 동작 ─────────
+   인터넷 상품 관리 목업(/internet-product/products/)을 띄우고, 그 페이지의 함수로 같은 상태를 만든 뒤 메뉴 동작을 실행한다.
+   목업이 바뀌면 이 화면의 동작도 자동으로 따라간다.                                                                       */
+const PREP = `
+  (function(){ const st=document.createElement('style'); st.textContent='.updbar{display:none!important}'; document.head.appendChild(st); })();
+  window.__unreg = (p, s) => { for (let i = R.length - 1; i >= 0; i--) if (R[i][1] === 'KT' && R[i][2] === p && (R[i][3] || '') === s) R.splice(i, 1); reindex(); };
+  window.__line = (p, s) => { const a = grp('인터넷세트').pair[p]; if (a.indexOf(s) < 0) a.unshift(s); };
+  window.__focus = label => { const el = document.querySelector('.cols[data-g="' + label + '"]'); if (el) el.scrollIntoView({ block: 'center' }); };
+  window.__pair = (label, p, s) => { goKT('메인상품'); selPair(label, p, s); __focus(label); };
+  window.__plat = (label, side, name) => { goKT('메인상품'); __focus(label); CUR = { g: grp(label), side: side, name: name }; openPlat(); };
+  window.__tag = (label, side, name) => { tagCase(label, side, name); __focus(label); };
+`;
+const RUN = {
+  'tag-row':     "__tag('인터넷세트','row','에센스')",
+  'tag-col':     "__tag('인터넷세트','col','기가 와이파이 홈ax')",
+  'tag-na':      "__tag('인터넷세트','col','')",
+  'tag-tv-row':  "__tag('TV세트','row','에센스')",
+  'tag-tv-col':  "__tag('TV세트','col','일반셋톱')",
+  'plat-row':    "__plat('인터넷세트','row','에센스')",
+  'plat-col':    "__plat('인터넷세트','col','기가 와이파이 홈ax')",
+  'plat-tv-row': "__plat('TV세트','row','에센스')",
+  'plat-tv-col': "__plat('TV세트','col','일반셋톱')",
+  'auto-3':  "AUTO[autoK('인터넷세트','슈퍼프리미엄')]='KT와이파이7D'; __pair('인터넷세트','슈퍼프리미엄','기가 와이파이 웨이브2(2대)'); setAuto(grp('인터넷세트'))",
+  'reg-3':   "__unreg('슈퍼프리미엄','기가 와이파이 웨이브2(2대)'); __pair('인터넷세트','슈퍼프리미엄','기가 와이파이 웨이브2(2대)'); doReg()",
+  'auto-4':  "AUTO[autoK('인터넷세트','에센스')]='KT와이파이7D'; __pair('인터넷세트','에센스','기가 와이파이 홈ax'); setAuto(grp('인터넷세트'))",
+  'reg-4':   "__unreg('에센스','기가 와이파이 홈ax'); __pair('인터넷세트','에센스','기가 와이파이 홈ax'); doReg()",
+  'auto-6':  "AUTO[autoK('인터넷세트','슬림 와이파이')]='기가 와이파이 홈ax'; __pair('인터넷세트','슬림 와이파이','KT와이파이7D'); setAuto(grp('인터넷세트'))",
+  'view-6':  "__pair('인터넷세트','슬림 와이파이','KT와이파이7D'); toast('상품 조합 관리로 이동합니다.', '#73767A')",
+  'view-na': "__pair('인터넷세트','슬림',''); toast('상품 조합 관리로 이동합니다.', '#73767A')",
+  'auto-na': "__line('베이직 와이파이',''); AUTO[autoK('인터넷세트','베이직 와이파이')]='KT와이파이7D'; __pair('인터넷세트','베이직 와이파이',''); setAuto(grp('인터넷세트'))",
+  'reg-na':  "__line('베이직 와이파이',''); __unreg('베이직 와이파이',''); __pair('인터넷세트','베이직 와이파이',''); doReg()",
+  'auto-tv': "AUTO[autoK('TV세트','에센스')]='기가지니3A'; __pair('TV세트','에센스','일반셋톱'); setAuto(grp('TV세트'))",
+  'ds-off':   "CASE['ds-off']()",
+  'ds-on':    "CASE['ds-on']()",
+  'ds-empty': "CASE['ds-empty']()",
+  'ds-item':  "goKT('결합할인'); toast('AS-IS 「설명 바꾸기」 모달이 열립니다 — 메뉴 이름만 「설명 수정」', '#73767A')"
+};
+const MODAL = a => /^(tag|plat|reg-|ds-(off|on|empty))/.test(a);
+const stage = document.getElementById('stage'), frame = document.getElementById('stFrame');
+let ready = null, watch = null;
+function load(){
+  if (ready) return ready;
+  ready = new Promise(res => { frame.onload = () => { frame.contentWindow.eval(PREP); res(); }; frame.src = '/internet-product/products/'; });
+  return ready;
+}
+function closeStage(){
+  stage.hidden = true; clearInterval(watch);
+  try { const d = frame.contentDocument; d.querySelectorAll('.ov').forEach(o => o.hidden = true); } catch (e) {}
+}
+async function run(act, label){
+  document.getElementById('stTitle').textContent = label;
+  document.getElementById('stSub').textContent = MODAL(act) ? '· 모달을 닫으면 이 창도 닫힙니다' : '· 토스트는 아래쪽에 3초간 뜹니다';
+  stage.hidden = false;
+  await load();
+  frame.contentWindow.eval(RUN[act]);
+  clearInterval(watch);
+  if (MODAL(act)) {
+    let seen = false;
+    watch = setInterval(() => {
+      const open = [...frame.contentDocument.querySelectorAll('.ov')].some(o => !o.hidden);
+      const toastOn = frame.contentDocument.querySelector('.toast');
+      if (open) seen = true; else if (seen && !toastOn) closeStage();   /* 저장 후 뜬 토스트가 사라질 때까지 기다렸다 닫음 */
+    }, 250);
+  }
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-act]'); if (t) return run(t.dataset.act, t.dataset.l);
+  if (e.target === stage) closeStage();
+});
+document.getElementById('stClose').onclick = closeStage;
+addEventListener('keydown', e => { if (e.key === 'Escape' && !stage.hidden) closeStage(); });
+</script>
+<script src="/internet-product/assets/updated.js" defer></script>
+</body>
+</html>
