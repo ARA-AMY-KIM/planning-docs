@@ -334,7 +334,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
       <tr><td>상품 태그 없음 (오류)</td><td class="sub">속도 태그가 없는 상품 → 「태그 지정」 먼저 안내 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-notag">열기</button></td></tr>
       <tr><td>이미 등록돼 있음 (오류)</td><td class="sub">평소엔 메뉴가 「상품 조합 관리」로 바뀌어 안 열림. 동시 편집 안전망 · [등록] 비활성</td><td><button class="btn-out" data-case="reg-dupe">열기</button></td></tr>
       <tr><th>— (화면 이동)</th><td>「상품 조합 관리로 이동」<br><span class="sub">이미 등록된 상품 조합 · 기본WIFI 위</span></td><td>모달 없음</td><td class="sub">상품 조합 관리로 현재창 이동 · 필터 없이 기본 상태 (목업은 안내 토스트). <b>대표 변경 · 등록 해제는 그 화면에서만</b></td><td><button class="btn-out" data-case="m-view">메뉴 열기</button></td></tr>
-      <tr><th rowspan="3">전 구분</th><th rowspan="3">— (토스트)<br><span class="chg">추가</span></th><td rowspan="3">「기본값 지정」<br><span class="sub">상품 조합 우클릭만 · 두 번째 칸(기본WIFI · 세트상품) 위 · 초록선 있음</span></td>
+      <tr><th rowspan="3">전 구분</th><th rowspan="3">— (토스트)<br><span class="chg">추가</span></th><td rowspan="3">「기본값 지정」<br><span class="sub">상품 조합 우클릭만 · 오른쪽 열(기본WIFI · 셋탑박스 · 전화기기) 위 · 초록선 있음</span></td>
         <td>변경</td><td class="sub">다른 세트상품이 기본값 → 「기본값 지정」 · 교체</td><td><button class="btn-out" data-case="m-auto-chg">메뉴 열기</button></td></tr>
       <tr><td>현재 기본값</td><td class="sub">이 세트상품이 기본값 → <b>메뉴 항목 없음</b>. 카드의 「기본값」 배지로 이미 보이고, 해제 수단도 두지 않습니다</td><td><button class="btn-out" data-case="m-auto-cur">메뉴 열기</button></td></tr>
       <tr><td>인터넷 <span class="chg">10/07</span></td><td class="sub">기본WIFI 위 — 「상품 조합 등록」 또는 「상품 조합 관리로 이동」과 함께 뜸. <b>등록 여부와 무관</b>(대표는 속성으로 찾을 때, 기본값은 상품을 직접 고를 때)</td><td><button class="btn-out" data-case="m-auto-net">메뉴 열기</button></td></tr>
@@ -355,7 +355,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 <div class="doc-band" id="card-flags" style="margin-top:0;border-top:0;border-bottom:0;background:#fff"><div class="sheet">
   <div class="doc-eyebrow">카드 표시 규칙</div>
   <div class="doc-h">카드에 붙는 플래그 · 상태 표시 — 인터넷 / 인터넷 외</div>
-  <div class="doc-sub">[보기]를 누르면 위 화면이 그 상태로 바뀌고 카드 영역으로 이동합니다. 기능정의서 2.1 「카드 표시」를 이 표로 대체합니다.</div>
+  <div class="doc-sub">[보기]를 누르면 위 화면이 그 상태로 바뀌고 카드 영역으로 이동합니다. 기능정의서 2.1 「카드 표시」를 이 표로 대체합니다.<br>세트 안 <b>왼쪽 열</b> = 인터넷상품 · TV채널 · 전화상품, <b>오른쪽 열</b> = 기본WIFI · 셋탑박스 · 전화기기</div>
 </div></div>
 <div class="sheet" style="padding-top:8px">
 <div class="spec">
@@ -363,9 +363,9 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
   <div class="table-wrap"><table class="mx">
     <thead><tr><th style="width:11%">플래그</th><th style="width:14%">붙는 카드</th><th style="width:19%">보이는 조건</th><th>인터넷</th><th style="width:17%">인터넷 외</th><th style="width:96px"></th></tr></thead>
     <tbody>
-      <tr><th>태그 없음</th><td>첫 번째 · 두 번째 칸 모든 카드 (「미적용」 포함)</td><td><b>항상</b> — 선택과 무관</td><td>인터넷상품 : <b>속도</b> 태그 없음<br>기본WIFI : <b>구성제품</b> 태그 없음<br><span class="sub">추가구성옵션은 선택 항목이라 비어도 안 붙음</span></td><td>그 카드의 태그(1칸) 없음</td><td><button class="btn-out" data-flag="f-nt">보기</button></td></tr>
-      <tr><th rowspan="2">기본값</th><td rowspan="2">두 번째 칸 카드 (기본WIFI · 세트상품)</td><td><b>첫 번째 칸 상품을 선택했을 때만</b> — 그 상품의 기본값 카드 1개</td><td>동일 · 「미적용」도 기본값이 될 수 있음</td><td>동일</td><td><button class="btn-out" data-flag="f-auto-net">인터넷</button><br><button class="btn-out" data-flag="f-auto-etc" style="margin-top:6px">TV</button></td></tr>
-      <tr><td colspan="3"><b>안 보임</b> — 아무것도 선택 안 함 · 두 번째 칸 카드만 선택 · 선택한 상품에 초록선이 없음(기본값 자체가 없음)</td><td><button class="btn-out" data-flag="f-col-only">보기</button></td></tr>
+      <tr><th>태그 없음</th><td>왼쪽 · 오른쪽 열 모든 카드 (「미적용」 포함)</td><td><b>항상</b> — 선택과 무관</td><td>인터넷상품 : <b>속도</b> 태그 없음<br>기본WIFI : <b>구성제품</b> 태그 없음<br><span class="sub">추가구성옵션은 선택 항목이라 비어도 안 붙음</span></td><td>그 카드의 태그(1칸) 없음</td><td><button class="btn-out" data-flag="f-nt">보기</button></td></tr>
+      <tr><th rowspan="2">기본값</th><td rowspan="2">오른쪽 열 카드 (기본WIFI · 셋탑박스 · 전화기기)</td><td><b>왼쪽 열 카드를 선택했을 때만</b> — 그 상품의 기본값 카드 1개</td><td>동일 · 「미적용」도 기본값이 될 수 있음</td><td>동일</td><td><button class="btn-out" data-flag="f-auto-net">인터넷</button><br><button class="btn-out" data-flag="f-auto-etc" style="margin-top:6px">TV</button></td></tr>
+      <tr><td colspan="3"><b>안 보임</b> — 아무것도 선택 안 함 · 오른쪽 열 카드만 선택 · 선택한 상품에 초록선이 없음(기본값 자체가 없음)</td><td><button class="btn-out" data-flag="f-col-only">보기</button></td></tr>
     </tbody>
   </table></div>
 </div>
@@ -376,7 +376,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
     <thead><tr><th style="width:18%">표시</th><th>조건</th><th style="width:28%">비고</th></tr></thead>
     <tbody>
       <tr><th>선택 (파랑)</th><td>클릭한 카드. 상품 조합을 고르면 두 카드 모두</td><td></td></tr>
-      <tr><th>초록 + 초록선</th><td>선택한 카드와 판매 가능하게 연결된 반대쪽 카드</td><td class="sub">상품 선택 → 두 번째 칸 · 두 번째 칸만 선택 → 첫 번째 칸</td></tr>
+      <tr><th>초록 + 초록선</th><td>선택한 카드와 판매 가능하게 연결된 반대쪽 카드</td><td class="sub">왼쪽 열 선택 → 오른쪽 열 · 오른쪽 열만 선택 → 왼쪽 열</td></tr>
       <tr><th>흐리게</th><td>미사용 상품</td><td class="sub">AS-IS 동일</td></tr>
       <tr><th>「미적용」 카드</th><td>인터넷 기본WIFI 칸 맨 위에 항상</td><td class="sub">특이사항은 아래 「미적용」 영역</td></tr>
     </tbody>
@@ -401,7 +401,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
     <thead><tr><th style="width:24%">시점</th><th>동작</th></tr></thead>
     <tbody>
       <tr><th>상품에 첫 초록선이 생김</th><td>그 상품 조합의 세트상품이 <b>자동으로 기본값</b>. 등록과 무관 — 대표는 속성 조합의 첫 등록, 기본값은 상품의 첫 초록선이 기준</td></tr>
-      <tr><th>바꾸고 싶을 때</th><td>두 번째 칸 카드 우클릭 「기본값 지정」 — 모달 없이 즉시 교체. 해제 수단 없음</td></tr>
+      <tr><th>바꾸고 싶을 때</th><td>오른쪽 열 카드 우클릭 「기본값 지정」 — 모달 없이 즉시 교체. 해제 수단 없음</td></tr>
       <tr><th>미사용 세트상품</th><td><b>기본값 지정 불가</b> — 메뉴에 뜨지 않음. 미사용은 상담 상세에 노출되지 않아 기본값이 되면 빈 값이 들어감. 기본값인 세트상품을 사용중지하면 남은 상품 조합으로 승계</td></tr>
       <tr><th>기본값 상품 조합의 초록선 삭제</th><td>남은 상품 조합 중 하나로 승계(<b>미사용은 건너뜀</b>). 남은 상품 조합이 없으면 기본값도 없음</td></tr>
       <tr><th>이관</th><td>레벨 1순위 세트상품을 초기 기본값으로 (목업은 첫 번째 상품 조합)</td></tr>
@@ -432,7 +432,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
     </tbody>
   </table></div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p class="q">확인 필요<br>① 상품을 고르지 않았을 때의 「사용」 — 이을 상대 상품이 없음. AS-IS에서 눌렀을 때 동작 미확인. TO-BE에 그대로 둘지, 상품을 고르기 전엔 숨길지<br>② 인터넷 외 「미적용」 — AS-IS에는 TV · 인터넷전화 · 일반전화의 세트상품 칸에도 「미적용」이 있습니다(베타 실측 · 메뉴도 「사용 / 미사용」 하나로 같음). 이 목업은 인터넷만 「미적용」 카드를 그립니다. 같은 규칙을 인터넷 외에도 적용할지 정해야 합니다</p>
+    <p class="q">확인 필요<br>① 상품을 고르지 않았을 때의 「사용」 — 이을 상대 상품이 없음. AS-IS에서 눌렀을 때 동작 미확인. TO-BE에 그대로 둘지, 상품을 고르기 전엔 숨길지<br>② 인터넷 외 「미적용」 — AS-IS에는 TV · 인터넷전화 · 일반전화의 오른쪽 열에도 「미적용」이 있습니다(베타 실측 · 메뉴도 「사용 / 미사용」 하나로 같음). 이 목업은 인터넷만 「미적용」 카드를 그립니다. 같은 규칙을 인터넷 외에도 적용할지 정해야 합니다</p>
   </div>
 </div>
 </div>
@@ -688,7 +688,7 @@ function drawLanes(box, el, mates, fromRow, cand){
 }
 
 /* 메뉴 순서 — 디자인 시안(10/07) */
-/* 기존 메뉴 — 베타 AS-IS 실측 (10/12). 인터넷상품에만 금지 코드 설정이 없고, 세트상품 칸에만 금지코드 설정(단일)이 있다 */
+/* 기존 메뉴 — 베타 AS-IS 실측 (10/12). 인터넷상품에만 금지 코드 설정이 없고, 오른쪽 열에만 금지코드 설정(단일)이 있다 */
 const BASE = ['상품 요금 설정','상품 할인 설정','상품 이벤트 설정','금지 코드 설정'];
 const baseFor = (net, side) => (side === 'row' ? (net ? BASE.slice(0,3) : BASE) : BASE.concat(['금지코드 설정(단일)']));
 const TAIL = ['설명 바꾸기','위로','아래로','우선순위 변경 (기본)','사용중지'];
@@ -897,7 +897,7 @@ function reindex(){
   Object.keys(REP).forEach(k => { if (!cnt[k] || !R[REP[k]] || R[REP[k]][12] !== k) delete REP[k]; });
   R.forEach((r, i) => { if (REP[r[12]] === undefined) REP[r[12]] = i; });
 }
-/* ── V2 : 기본값 (전 구분 — 상품을 직접 고르면 두 번째 칸에 미리 들어갈 세트상품 1개. 레벨 대체) ── */
+/* ── V2 : 기본값 (전 구분 — 상품을 직접 고르면 상담상세 두 번째 드롭다운에 미리 들어갈 세트상품 1개. 레벨 대체) ── */
 const AUTO = {};   // AUTO[업체|그룹|상품] = 세트상품
 const autoK = (label, p) => V+'|'+label+'|'+p;
 /* 예시 — KT TV 「에센스」는 셋탑박스 2개 중 기가지니3A가 기본값 */
