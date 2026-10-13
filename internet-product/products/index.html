@@ -342,7 +342,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
         <td>인터넷</td><td class="sub">추가 노출 2개 + 월요금 · <b>결합요금</b> · 플랫폼 노출용 설명</td><td><button class="btn-out" data-case="pl-net">열기</button></td></tr>
       <tr><td>인터넷 외</td><td class="sub">결합요금 칸이 빠진다 — 나머지는 동일</td><td><button class="btn-out" data-case="pl-etc">열기</button></td></tr>
       <tr><td>노출 체크 해제</td><td class="sub">신청서 · 플랫폼을 꺼도 입력값은 저장된다는 안내가 뜸</td><td><button class="btn-out" data-case="pl-off">열기</button></td></tr>
-      <tr><th rowspan="3">결합할인</th><th rowspan="3">설명 수정<br><span class="chg">추가</span></th><td rowspan="3">「설명 수정」<br><span class="sub">분류 칸 · 구분선 아래. 항목 칸의 「설명 수정」은 AS-IS 설명 바꾸기 모달(이름만 변경)</span></td>
+      <tr><th rowspan="3">결합할인</th><th rowspan="3">설명 수정<br><span class="chg">추가</span></th><td rowspan="3">「설명 수정」<br><span class="sub">결합할인 분류 칸 · 구분선 아래. 그 밖의 모든 카드(결합할인 항목 포함)의 「설명 수정」은 AS-IS 설명 바꾸기 모달 — 이름만 변경(10/13)</span></td>
         <td>신청서 노출 꺼짐</td><td class="sub">신청서 설명은 선택 사항 · 신청서엔 안 나감</td><td><button class="btn-out" data-case="ds-off">열기</button></td></tr>
       <tr><td>신청서 노출 켜짐</td><td class="sub">「신청서에 노출」 체크 → 신청서 설명이 필수가 됨</td><td><button class="btn-out" data-case="ds-on">열기</button></td></tr>
       <tr><td>켜짐 + 신청서 설명 비어 있음</td><td class="sub">[수정] 비활성 + 사유 안내 (할인명이 비어도 같음)</td><td><button class="btn-out" data-case="ds-empty">열기</button></td></tr>
@@ -424,11 +424,11 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
     <thead><tr><th style="width:20%">항목</th><th>규칙</th></tr></thead>
     <tbody>
       <tr><th>위치</th><td>인터넷 기본WIFI 칸 맨 위에 항상</td></tr>
-      <tr><th>우클릭 메뉴 · AS-IS</th><td><b>「사용 / 미사용」 하나뿐</b>. <b>초록선 연결 / 해제</b> 버튼이며, 카드의 사용중지와 다름<br><span class="sub">고른 상품과 「미적용」 사이에 초록선이 없으면 「사용」, 있으면 「미사용」. 요금 · 할인 · 이벤트 · 금지 코드 · 설명 바꾸기 등 기존 메뉴는 원래 없음</span></td></tr>
+      <tr><th>우클릭 메뉴 · AS-IS</th><td><b>「사용 / 미사용」 하나뿐</b>. <b>초록선 연결 / 해제</b> 버튼이며, 카드의 사용중지와 다름<br><span class="sub">고른 상품과 「미적용」 사이에 초록선이 없으면 「사용」, 있으면 「미사용」. 요금 · 할인 · 이벤트 · 금지 코드 · 설명 수정 등 기존 메뉴는 원래 없음</span></td></tr>
       <tr><th>우클릭 메뉴 · 추가</th><td>상품 미선택 : <b>태그 지정</b><br>상품 고른 뒤 · 초록선 있음 : <b>태그 지정 · 기본값 지정 · 상품 조합 등록(이동)</b><br>상품 고른 뒤 · 초록선 없음 : <b>태그 지정</b><br><span class="sub">「플랫폼 노출 설정」은 없음 — 금액 · 설명을 두지 않음. 추가 항목 아래 구분선, 그 아래 AS-IS 「사용 / 미사용」</span></td></tr>
       <tr><th>태그</th><td><b>「없음」 태그만</b> 지정 가능. 지정 전엔 「태그 없음」 배지(선택과 무관)<br><span class="sub">태그가 없으면 속성 조합 계산 불가 → 등록 모달 [등록] 비활성 · 통신사 변경 매칭에서 빠짐</span></td></tr>
       <tr><th>기본값 · 상품 조합 등록</th><td>기본WIFI와 같음. WIFI 없이 파는 상품의 기본값이 될 수 있고, 같은 방식으로 등록. 속성 조합의 구성제품 = 「없음」</td></tr>
-      <tr><th>「미사용」(초록선 해제)의 영향</th><td>기본값이었으면 남은 짝으로 <b>승계</b>(초록선 삭제 규칙과 같음)<br><b class="warn-t">미결</b> — 등록된 상품 조합이었을 때 등록을 어떻게 할지 (자동 해제 / 해제 먼저 안내 / 등록 유지). 초록선 삭제 전반의 규칙</td></tr>
+      <tr><th>「미사용」(초록선 해제)의 영향</th><td>기본값이었으면 남은 상품 조합으로 <b>승계</b>(초록선 삭제 규칙과 같음)<br><b class="warn-t">미결</b> — 등록된 상품 조합이었을 때 등록을 어떻게 할지 (자동 해제 / 해제 먼저 안내 / 등록 유지). 초록선 삭제 전반의 규칙</td></tr>
     </tbody>
   </table></div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
@@ -691,7 +691,8 @@ function drawLanes(box, el, mates, fromRow, cand){
 /* 기존 메뉴 — 베타 AS-IS 실측 (10/12). 인터넷상품에만 금지 코드 설정이 없고, 오른쪽 열에만 금지코드 설정(단일)이 있다 */
 const BASE = ['상품 요금 설정','상품 할인 설정','상품 이벤트 설정','금지 코드 설정'];
 const baseFor = (net, side) => (side === 'row' ? (net ? BASE.slice(0,3) : BASE) : BASE.concat(['금지코드 설정(단일)']));
-const TAIL = ['설명 바꾸기','위로','아래로','우선순위 변경 (기본)','사용중지'];
+/* 10/13 — 「설명 바꾸기」 → 「설명 수정」 전 카드 공통 (이름만 · 모달은 AS-IS 설명 바꾸기 그대로) */
+const TAIL = ['설명 수정','위로','아래로','우선순위 변경 (기본)','사용중지'];
 
 function openMenu(el, x, y){
   closeMenu();
@@ -716,7 +717,7 @@ function openMenu(el, x, y){
   m.className = 'menu';
   m.innerHTML = na ? items + '<div class="sep"></div><div class="mi">' + (hasP && mate ? '미사용' : '사용') + '</div>'
     : baseFor(net, side).map(l => '<div class="mi">'+l+'</div>').join('')
-    + items + '<div class="sep"></div>' + TAIL.map(l => '<div class="mi">'+l+'</div>').join('');
+    + items + '<div class="sep"></div>' + TAIL.map(l => l === '설명 수정' ? '<div class="mi act" data-a="descname">설명 수정<span class="newb">이름</span></div>' : '<div class="mi">'+l+'</div>').join('');
   document.body.appendChild(m);
   const w = 230, h = m.offsetHeight;
   m.style.left = Math.max(12, Math.min(x, innerWidth - w - 12)) + 'px';
@@ -730,6 +731,7 @@ function openMenu(el, x, y){
     if (act === 'plat') return openPlat();
     if (act === 'reg') return doReg();
     if (act === 'view') return toast('상품 조합 관리로 이동합니다.', '#73767A');
+    if (act === 'descname') return toast('AS-IS 「설명 바꾸기」 모달이 열립니다 — 메뉴 이름만 「설명 수정」', '#73767A');
     if (act === 'auto') setAuto(g);
   });
 }
@@ -940,7 +942,9 @@ function openReg(){
    목록 = 같은 속성 조합의 상품 조합 + 지금 등록할 조합. 상태 칸에 「등록할 조합」 · 「대표」 */
 function previewReg(){
   const [a1, a2, a3] = REG.a;
+  /* 빠진 쪽에 따라 우클릭해야 할 카드가 다르다 (10/13) */
   const miss = !REG.t[0] ? '「'+REG.prod+'」에 속도 태그가 없습니다.' : !REG.t[1] ? '「'+(REG.set||'미적용')+'」에 구성제품 태그가 없습니다.' : '';
+  const missWho = !REG.t[0] ? '상품' : '세트상품';
   const ok0 = !miss;
   $('rCombo').innerHTML = ok0 ? [a1,a2,a3].map(v=>v==='없음'?'<span class="non">없음</span>':esc(v)).join(' · ')
     : '<span style="color:var(--g300)">태그가 모두 지정돼야 정해집니다</span>';
@@ -951,7 +955,7 @@ function previewReg(){
   let ok=ok0;
   if (!ok0) {
     n.hidden=false; n.className='notice err';
-    msg.innerHTML='<b>'+esc(miss)+'</b> 상품 카드를 우클릭해 먼저 「태그 지정」을 하세요.';
+    msg.innerHTML='<b>'+esc(miss)+'</b> '+missWho+' 카드를 우클릭해 먼저 「태그 지정」을 하세요.';
   } else if(same.length){
     n.hidden=false; n.className='notice err'; ok=false;
     msg.innerHTML='<b>이 상품 조합은 이미 등록돼 있습니다.</b> 속성 조합을 바꾸려면 등록 해제하고 다시 등록해야 합니다.';

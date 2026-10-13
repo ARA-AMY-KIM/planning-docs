@@ -267,8 +267,6 @@ select.inp:disabled{background-image:none}
 .imgset .ib-act{display:flex;gap:6px;flex:0 0 auto}
 .imgset .ib-act .btn-out{height:30px;padding:2px 12px;font-size:12px}
 .btn-out.dgr{color:var(--error);border-color:#F2C7C7}
-.imgchip{margin-left:6px;font-size:10.5px;font-weight:600;color:var(--primary);background:var(--blue50);
- border-radius:4px;padding:1px 5px;vertical-align:1px;letter-spacing:-.2px}
 .inp.sel{padding-right:34px;
  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%238D8F94'/%3E%3C/svg%3E");
  background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
@@ -351,7 +349,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
 <div class="sheet page">
   <div class="bc">상품 관리</div>
   <div class="ptitle"><h1>태그 관리</h1><span class="star off">☆</span></div>
-  <div class="pdesc">업체별 상품 태그를 등록 · 수정하고 상담 상세에 보이는 순서를 관리합니다.</div>
+  <div class="pdesc">업체별 상품 태그를 등록·관리합니다.</div>
 
   <div class="bar">
     <select class="sel" id="svcSel" style="min-width:140px">
@@ -413,19 +411,20 @@ body.mk-on .mkrow:hover{color:var(--g700)}
           <select class="inp" id="adAttr" disabled><option value="">속성 선택</option></select></div>
       </div>
       <div class="fld" id="adSubFld"><label id="adSubLb">표기명</label>
-        <input class="inp" id="adSub" maxlength="20" placeholder="예) 슬림 · 광랜 1년">
+        <input class="inp" id="adSub" maxlength="20" placeholder="예) 슬림, 광랜">
         <div class="hint g3"><span id="adCnt">0</span><span id="adSubHint"></span></div>
         <div class="inerr" id="adErr" hidden></div>
       </div>
-      <div class="fld" id="adTagFld"><label id="adTagLb">태그명 <span class="ro">자동 생성</span></label>
-        <div class="preview" id="adPrev"><span class="k">고객 노출</span><span class="v" id="adTag" style="color:var(--g300)">속성을 먼저 선택해주세요</span></div></div>
-      <div class="fld" id="adGradeRow" style="max-width:50%"><label>노출 등급 <span class="req">*</span></label>
+      <div class="fld" id="adTagFld"><label id="adTagLb">태그</label>
+        <div class="preview" id="adPrev"><span class="v" id="adTag" style="color:var(--g300)">속성을 먼저 선택해 주세요.</span></div>
+        <div class="hint" id="adTagHint"></div></div>
+      <div class="fld" id="adGradeRow" style="max-width:50%"><label>CRM 노출 등급 <span class="req">*</span></label>
         <select class="inp" id="adGrade"><option>기본</option><option>추천</option><option>비추천</option></select></div>
       <div class="fld" id="adImgFld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
         <div class="imgbox" id="adImgEmpty">
           <div class="ib-ico">🖼</div>
           <div class="ib-t">이미지를 끌어다 놓거나 <b>파일 선택</b></div>
-          <div class="ib-s">JPG · PNG · 최대 1MB · 권장 120×120</div>
+          <div class="ib-s">png, jpg, 2MB 이하만 첨부 가능합니다.</div>
           <button class="btn-out" id="adImgPick" style="margin-top:10px">파일 선택</button>
         </div>
         <div class="imgset" id="adImgSet" hidden>
@@ -457,15 +456,16 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         <div class="hint g3"><span id="edCnt">0</span><span id="edSubHint"></span></div>
         <div class="inerr" id="edErr" hidden></div>
       </div>
-      <div class="fld" id="edTagFld"><label id="edTagLb">태그명 <span class="ro">자동 생성</span></label>
-        <div class="preview" id="edPrev"><span class="k">고객 노출</span><span class="v" id="edTag"></span></div></div>
-      <div class="fld" id="edGradeRow" style="max-width:50%"><label>노출 등급 <span class="req">*</span></label>
+      <div class="fld" id="edTagFld"><label id="edTagLb">태그</label>
+        <div class="preview" id="edPrev"><span class="v" id="edTag"></span></div>
+        <div class="hint" id="edTagHint"></div></div>
+      <div class="fld" id="edGradeRow" style="max-width:50%"><label>CRM 노출 등급 <span class="req">*</span></label>
         <select class="inp" id="edGrade"><option>기본</option><option>추천</option><option>비추천</option></select></div>
       <div class="fld" id="edImgFld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
         <div class="imgbox" id="edImgEmpty">
           <div class="ib-ico">🖼</div>
           <div class="ib-t">이미지를 끌어다 놓거나 <b>파일 선택</b></div>
-          <div class="ib-s">JPG · PNG · 최대 1MB · 권장 120×120</div>
+          <div class="ib-s">png, jpg, 2MB 이하만 첨부 가능합니다.</div>
           <button class="btn-out" id="edImgPick" style="margin-top:10px">파일 선택</button>
         </div>
         <div class="imgset" id="edImgSet" hidden>
@@ -505,14 +505,15 @@ body.mk-on .mkrow:hover{color:var(--g700)}
           <div class="fld"><label>속성 <span class="req">*</span></label><div class="inp sel">1Gbps</div></div>
         </div>
         <div class="fld"><label>표기명 <span class="req">*</span></label><div class="inp">에센스</div><div class="hint g3">3 / 20</div></div>
-        <div class="fld"><label>태그명 <span class="ro">자동 생성</span></label>
-          <div class="preview"><span class="k">고객 노출</span><span class="v">1Gbps(에센스)</span></div></div>
-        <div class="fld" style="max-width:50%"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">추천</div>
+        <div class="fld"><label>태그</label>
+          <div class="preview"><span class="v">1Gbps(에센스)</span></div>
+          <div class="hint">CRM 내 태그 노출 형태를 미리 확인할 수 있습니다.</div></div>
+        <div class="fld" style="max-width:50%"><label>CRM 노출 등급 <span class="req">*</span></label><div class="inp sel">추천</div>
           <div class="hint g3">추천 · 기본 · 비추천 3종</div></div>
         <div class="fld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
           <div class="imgset">
             <div class="ib-thumb"></div>
-            <div class="ib-meta"><b>tag-1gbps.png</b><span>PNG · 48KB · 120×120</span></div>
+            <div class="ib-meta"><b>tag-1gbps.png</b><span>PNG · 10KB · 300×300</span></div>
             <div class="ib-act"><button class="btn-out">변경</button><button class="btn-out dgr">제거</button></div>
           </div></div>
       </div>
@@ -521,22 +522,25 @@ body.mk-on .mkrow:hover{color:var(--g700)}
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">태그 등록 — 「없음」 속성</span><span class="spec-s">입력 칸 없음 · 속성만 고르고 저장</span></div>
+    <div class="spec-head"><span class="chip-n">2</span><span class="spec-t">태그 등록 — 「없음」 속성</span><span class="spec-s">입력 칸 없음 · 속성만 고르고 저장 · 태그 미리보기는 남는다</span></div>
     <div class="modal">
       <div class="mh"><h3>태그 등록</h3><span class="x">✕</span></div>
       <div class="mb">
         <div class="ctx"><div><span class="k">업체</span><span class="v">KT</span></div><div><span class="k">구분</span><span class="v">인터넷</span></div></div>
         <div class="row2">
           <div class="fld"><label>속성 타입 <span class="req">*</span></label><div class="inp sel">구성제품</div></div>
-          <div class="fld" style="margin-bottom:0"><label>속성 <span class="req">*</span></label><div class="inp sel">없음</div></div>
+          <div class="fld"><label>속성 <span class="req">*</span></label><div class="inp sel">없음</div></div>
         </div>
+        <div class="fld" style="margin-bottom:0"><label>태그</label>
+          <div class="preview"><span class="v">없음</span></div>
+          <div class="hint">CRM 내 태그 노출 형태를 미리 확인할 수 있습니다.</div></div>
       </div>
       <div class="mf"><div class="sp"></div><button class="btn-out">취소</button><button class="btn-solid">등록</button></div>
     </div>
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">태그 등록 — 인터넷 외</span><span class="spec-s">표기명 없음 · 태그명 직접 입력</span></div>
+    <div class="spec-head"><span class="chip-n">3</span><span class="spec-t">태그 등록 — 인터넷 외</span><span class="spec-s">표기명 없음 · 태그명 직접 입력 · 미리보기는 상품명 포함</span></div>
     <div class="modal">
       <div class="mh"><h3>태그 등록</h3><span class="x">✕</span></div>
       <div class="mb">
@@ -547,11 +551,14 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         </div>
         <div class="fld"><label>태그명 <span class="req">*</span> <span class="ro">직접 입력</span></label><div class="inp">203채널</div>
           <div class="hint g3">4 / 20</div></div>
+        <div class="fld"><label>태그</label>
+          <div class="preview"><span class="v">{상품명}(203채널)</span></div>
+          <div class="hint">CRM에서는 상품명 뒤에 태그가 붙어 노출됩니다.</div></div>
         <div class="fld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
           <div class="imgbox">
             <div class="ib-ico">🖼</div>
             <div class="ib-t">이미지를 끌어다 놓거나 <b>파일 선택</b></div>
-            <div class="ib-s">JPG · PNG · 최대 1MB · 권장 120×120</div>
+            <div class="ib-s">png, jpg, 2MB 이하만 첨부 가능합니다.</div>
             <button class="btn-out" style="margin-top:10px">파일 선택</button>
           </div></div>
       </div>
@@ -570,14 +577,15 @@ body.mk-on .mkrow:hover{color:var(--g700)}
           <div class="fld"><label>속성</label><div class="inp ro">1Gbps</div></div>
         </div>
         <div class="fld"><label>표기명 <span class="req">*</span></label><div class="inp">에센스</div><div class="hint g3">3 / 20</div></div>
-        <div class="fld"><label>태그명 <span class="ro">자동 생성</span></label>
-          <div class="preview"><span class="k">고객 노출</span><span class="v">1Gbps(에센스)</span></div></div>
-        <div class="fld" style="max-width:50%"><label>노출 등급 <span class="req">*</span></label><div class="inp sel">추천</div>
+        <div class="fld"><label>태그</label>
+          <div class="preview"><span class="v">1Gbps(에센스)</span></div>
+          <div class="hint">CRM 내 태그 노출 형태를 미리 확인할 수 있습니다.</div></div>
+        <div class="fld" style="max-width:50%"><label>CRM 노출 등급 <span class="req">*</span></label><div class="inp sel">추천</div>
           <div class="hint g3">추천 · 기본 · 비추천 3종</div></div>
         <div class="fld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
           <div class="imgset">
             <div class="ib-thumb"></div>
-            <div class="ib-meta"><b>tag-1gbps.png</b><span>PNG · 48KB · 120×120</span></div>
+            <div class="ib-meta"><b>tag-1gbps.png</b><span>PNG · 10KB · 300×300</span></div>
             <div class="ib-act"><button class="btn-out">변경</button><button class="btn-out dgr">제거</button></div>
           </div></div>
       </div>
@@ -586,7 +594,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
   </div>
 
   <div>
-    <div class="spec-head"><span class="chip-n">5</span><span class="spec-t">태그 수정 — 인터넷 외</span><span class="spec-s">미리보기 없음 · 태그명 직접 입력</span></div>
+    <div class="spec-head"><span class="chip-n">5</span><span class="spec-t">태그 수정 — 인터넷 외</span><span class="spec-s">태그명 직접 입력 · 미리보기 {상품명}(태그명)</span></div>
     <div class="modal">
       <div class="mh"><h3>태그 수정</h3><span class="x">✕</span></div>
       <div class="mb">
@@ -597,11 +605,14 @@ body.mk-on .mkrow:hover{color:var(--g700)}
         </div>
         <div class="fld"><label>태그명 <span class="req">*</span> <span class="ro">직접 입력</span></label><div class="inp">203채널</div>
           <div class="hint g3">4 / 20</div></div>
+        <div class="fld"><label>태그</label>
+          <div class="preview"><span class="v">{상품명}(203채널)</span></div>
+          <div class="hint">CRM에서는 상품명 뒤에 태그가 붙어 노출됩니다.</div></div>
         <div class="fld" style="margin-bottom:0"><label>이미지 <span class="ro">선택 · 1개</span></label>
           <div class="imgbox">
             <div class="ib-ico">🖼</div>
             <div class="ib-t">이미지를 끌어다 놓거나 <b>파일 선택</b></div>
-            <div class="ib-s">JPG · PNG · 최대 1MB · 권장 120×120</div>
+            <div class="ib-s">png, jpg, 2MB 이하만 첨부 가능합니다.</div>
             <button class="btn-out" style="margin-top:10px">파일 선택</button>
           </div></div>
       </div>
@@ -621,7 +632,7 @@ body.mk-on .mkrow:hover{color:var(--g700)}
       <div style="background:#fff;border:1px solid var(--g100);border-radius:8px;padding:14px;margin-top:12px">
         <div style="font-size:12px;color:var(--g500);margin-bottom:6px">태그 등록 · 빈 태그명 (인터넷 외)</div>
         <div class="inp err"></div>
-        <div class="inerr">태그명을 입력해주세요.</div>
+        <div class="inerr">태그명을 입력해 주세요.</div>
       </div>
     </div>
   </div>
@@ -683,8 +694,8 @@ function renderHead(){
   $("cg").innerHTML='<col style="width:44px"><col style="width:120px"><col style="width:140px"><col>'
     +(net?'<col style="width:92px">':"")+'<col style="width:96px"><col style="width:130px">';
   $("thd").innerHTML='<tr><th></th><th>속성 타입</th><th>속성</th>'
-    +'<th>태그명</th>'
-    +(net?'<th>노출 등급</th>':"")
+    +'<th>태그</th>'
+    +(net?'<th>노출등급</th>':"")
     +'<th class="c mk th" data-mk="1">상품 조합</th><th class="c">관리</th></tr>';
 }
 
@@ -719,8 +730,7 @@ function renderList(){
       +'<td class="c">'+hd+"</td>"
       +"<td>"+esc(SLOTN[SV][r[0]])+"</td>"
       +"<td>"+esc(r[1])+"</td>"
-      +"<td>"+(isNone(r)?esc(tagName(r)):'<span class="nml" data-edit="'+i+'">'+esc(tagName(r))+"</span>")
-        +(r[8]?'<span class="imgchip" title="이미지 첨부됨">이미지</span>':"")+"</td>"
+      +"<td>"+(isNone(r)?esc(tagName(r)):'<span class="nml" data-edit="'+i+'">'+esc(tagName(r))+"</span>")+"</td>"
       +(net?'<td><span class="bdg '+(GB[g]||"base")+'">'+esc(g)+"</span></td>":"")
       +'<td class="c">'+lnk+"</td>"
       +'<td class="c mg">'+mgBtns(i, !isNone(r))+"</td></tr>";
@@ -787,7 +797,7 @@ function openDw(i){
   $("dwCnt").textContent="총 "+pr.length+"건";
   $("dwList").innerHTML = pr.length
     ? '<table class="dtbl"><colgroup><col><col style="width:210px"></colgroup>'
-      +'<thead><tr><th>상품명</th><th>태그 조합</th></tr></thead><tbody>'
+      +'<thead><tr><th>상품 조합명</th><th>태그 조합</th></tr></thead><tbody>'
       +pr.map(x=>"<tr><td>"+x[0]+"</td><td>"+x[1]+"</td></tr>").join("")+"</tbody></table>"
     : '<div class="dempty">연결된 상품 조합이 없습니다</div>';
   document.querySelectorAll("#tagBody tr.rowsel").forEach(t=>t.classList.remove("rowsel"));
@@ -816,19 +826,24 @@ function attrsOf(slot){
 function adNone(){ return $("adAttr").value==="없음"; }
 function adPaint(){
   $("adAttrRow").hidden=false;
-  $("adSub").maxLength=20; $("adSub").placeholder="예) 슬림 · 광랜 1년";
+  $("adSub").maxLength=20;
+  $("adSub").placeholder = isNet() ? "예) 슬림, 광랜" : "예) 100채널, 스마트셋탑";
   var net=isNet(), av=$("adAttr").value, sv=$("adSub").value.trim(), none=adNone();
   if(none){ $("adSub").value=""; sv=""; }
   $("adSubFld").hidden=none;
   $("adGradeRow").hidden=none||!net; $("adImgFld").hidden=none;
   $("adCnt").textContent=$("adSub").value.length;
   $("adSubHint").innerHTML = " / 20";
-  var t = !av ? "" : (net ? (sv?av+"("+sv+")":av) : (sv||av));
-  $("adTag").textContent = av ? t : "속성을 먼저 선택해주세요";
+  /* 시안 기준 — 미리보기는 전 구분 공통. 인터넷 외는 상품명 뒤에 태그가 붙는 형태로 보여준다 */
+  var t = !av ? "" : (net ? (sv?av+"("+sv+")":av) : "{상품명}("+(sv||av)+")");
+  $("adTag").textContent = av ? t : "속성을 먼저 선택해 주세요.";
   $("adTag").style.color = av ? "var(--g900)" : "var(--g300)";
+  $("adTagHint").textContent = net
+    ? "CRM 내 태그 노출 형태를 미리 확인할 수 있습니다."
+    : "CRM에서는 상품명 뒤에 태그가 붙어 노출됩니다.";
   /* 인터넷 : 표기명 / 인터넷 외 : 태그명 직접 입력 */
   $("adSubLb").innerHTML = net ? '표기명 <span class="req">*</span>' : '태그명 <span class="req">*</span> <span class="ro">직접 입력</span>';
-  $("adTagFld").hidden = !net;
+  $("adTagFld").hidden = false;
 }
 $("addOpen").onclick=function(){
   $("adVen").textContent=VD; $("adSvc").textContent=SV;
@@ -848,8 +863,9 @@ $("adAttr").onchange=adPaint;
 $("adSub").oninput=function(){ $("adErr").hidden=true; $("adSub").classList.remove("err"); adPaint(); };
 $("adOk").onclick=function(){
   var slot=+$("adType").value, av=$("adAttr").value, sv=$("adSub").value.trim(), net=isNet();
-  if(!slot||!av){ toast("속성 타입과 속성을 선택해주세요.","#D75011"); return; }
-  if(!sv && av!=="없음"){ $("adErr").textContent=net?"표기명을 입력해주세요.":"태그명을 입력해주세요."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
+  if(!slot){ toast("속성 타입을 선택해 주세요.","#D75011"); return; }
+  if(!av){ toast("속성을 선택해 주세요.","#D75011"); return; }
+  if(!sv && av!=="없음"){ $("adErr").textContent=net?"표기명을 입력해 주세요.":"태그명을 입력해 주세요."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
   var nr=[slot,av,sv,"",net?$("adGrade").value:"기본","","",1,IMG.ad];
   if(rows().some(r=>r[0]===slot&&r[1]===av&&tagName(r)===tagName(nr))){
     $("adErr").textContent="같은 속성에 이미 있는 태그명입니다."; $("adErr").hidden=false; $("adSub").classList.add("err"); return; }
@@ -886,9 +902,12 @@ function edPaint(){
   var r=rows()[edI]; if(!r)return;
   var net=isNet(), none=isNone(r), sv=$("edSub").value.trim();
   $("edCnt").textContent=$("edSub").value.length;
-  var t = net ? (sv?r[1]+"("+sv+")":r[1]) : (sv||r[1]);
+  var t = net ? (sv?r[1]+"("+sv+")":r[1]) : "{상품명}("+(sv||r[1])+")";
   $("edTag").textContent=t;
-  $("edTagFld").hidden = !net;
+  $("edTagHint").textContent = net
+    ? "CRM 내 태그 노출 형태를 미리 확인할 수 있습니다."
+    : "CRM에서는 상품명 뒤에 태그가 붙어 노출됩니다.";
+  $("edTagFld").hidden = false;
   $("edSubLb").innerHTML = none
     ? (net?'표기명 <span class="ro">입력 불가</span>':'태그명 <span class="ro">입력 불가</span>')
     : (net?'표기명 <span class="req">*</span>':'태그명 <span class="req">*</span> <span class="ro">직접 입력</span>');
@@ -900,7 +919,7 @@ function openEdit(i){
   var none=false, net=isNet();
   $("edAttrRow").hidden=false;
   $("edSub").maxLength=20;
-  $("edSubFld").hidden=false; $("edTagFld").hidden=false;
+  $("edSubFld").hidden=false; $("edTagFld").hidden=false;   /* 전 구분 공통 — 시안 10/13 */
   $("edGradeRow").hidden=!net; $("edImgFld").hidden=false;
   $("edType").textContent=SLOTN[SV][r[0]]; $("edAttr").textContent=r[1];
   $("edSub").value=r[2]||""; $("edSub").disabled=none;
@@ -913,7 +932,7 @@ $("edSub").oninput=function(){ $("edErr").hidden=true; $("edSub").classList.remo
 $("edOk").onclick=function(){
   var r=rows()[edI];
   var net=isNet(), none=isNone(r), sv=$("edSub").value.trim();
-  if(!none && !sv){ $("edErr").textContent=net?"표기명을 입력해주세요.":"태그명을 입력해주세요."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
+  if(!none && !sv){ $("edErr").textContent=net?"표기명을 입력해 주세요.":"태그명을 입력해 주세요."; $("edErr").hidden=false; $("edSub").classList.add("err"); return; }
   r[2]=none?"":sv; r[4]=net?$("edGrade").value:"기본"; r[8]=IMG.ed;
   $("ovEdit").hidden=true; renderList();
   toast("「"+tagName(r)+"」 태그를 수정했습니다.");

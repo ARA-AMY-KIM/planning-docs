@@ -536,6 +536,78 @@ input.srch::placeholder{color:var(--g300)}
 .svcsel{border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:700;color:var(--g900);cursor:pointer;padding:0 2px;outline:none}
 .lockfld .lktag{font-size:11px;font-weight:600;color:var(--g500);background:#fff;border:1px solid var(--g100);
  border-radius:3px;padding:1px 6px}
+/* ===== 10/13 개편 — rowspan 폐기 · 속성 조합 1행 · 통신사 컬럼 ===== */
+.bar2{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.srchwrap{display:flex;align-items:center;gap:6px}
+.srchwrap select{height:36px;padding:0 28px 0 10px;border:1px solid var(--g200);border-radius:8px;font-size:13px;background:#fff;
+  -webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238D8F94' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center}
+.srchwrap input{height:36px;width:260px;padding:8px 12px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-family:inherit;background:#fff;color:var(--g900)}
+.needrep{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--g700);cursor:pointer;user-select:none;margin-left:auto}
+.needrep input{width:16px;height:16px;accent-color:var(--primary);cursor:pointer}
+.needrep[hidden]{display:none}
+.needrep.dis{color:var(--g300);cursor:default}
+.needrep.dis input{cursor:default}
+.needrep b{font-weight:700}
+
+.tblscroll{overflow-x:auto;border:1px solid var(--g100);border-radius:10px}
+table.ctl2{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-size:13px;background:#fff}
+table.ctl2 th,table.ctl2 td{border-bottom:1px solid var(--g100);padding:10px 12px;text-align:left;vertical-align:top;background:#fff}
+table.ctl2 thead th{position:sticky;top:0;z-index:3;background:var(--g25);font-weight:600;color:var(--g600);font-size:12.5px;white-space:nowrap;border-bottom:1px solid var(--g200)}
+table.ctl2 tbody tr:hover td{background:var(--g25)}
+.fz{position:sticky;background:#fff;z-index:2}
+table.ctl2 thead th.fz{z-index:4}
+.fz-last{border-right:2px solid var(--g200)!important}
+table.ctl2 tbody tr:hover .fz{background:var(--g25)}
+.acell{white-space:nowrap;color:var(--g900)}
+.acell .non{color:var(--g900)}
+.vcell{display:table-cell;vertical-align:top;position:relative;min-width:190px;max-width:none;white-space:normal;cursor:default;gap:0}
+.vcell .l1{color:var(--g900);font-weight:400;line-height:1.45}
+.vcell .l2{color:var(--g900);line-height:1.45;margin-top:1px}
+.vcell.unused .l1,.vcell.unused .l2{color:var(--g400)}
+.vcell .warn-i{color:var(--error);font-weight:800;margin-right:4px}
+.vcell .meta{margin-top:4px;font-size:11.5px;color:var(--g900)}
+.vcell .meta.hit{color:var(--primary);font-weight:700}
+.vcell .l1.hit,.vcell .l2.hit{color:var(--primary)}
+.vcell .dash{color:var(--g900)}
+.editbtn{width:28px;height:28px;border:1px solid var(--g200);border-radius:6px;background:#fff;color:var(--g600);cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;font-size:13px;line-height:1}
+.editbtn:hover{border-color:var(--primary);color:var(--primary)}
+
+/* 사이드 패널 */
+#ovPanel{position:fixed;inset:0;z-index:940;display:flex;justify-content:flex-end}
+#ovPanel .scrim{position:absolute;inset:0;background:rgba(19,19,20,.28)}
+.panel{position:relative;width:560px;max-width:92vw;height:100%;background:#fff;box-shadow:-8px 0 28px rgba(0,0,0,.12);display:flex;flex-direction:column}
+.panel .ph{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--g100)}
+.panel .ph h3{font-size:17px;font-weight:700;letter-spacing:-.3px}
+.panel .pb{padding:20px 24px;overflow-y:auto;flex:1}
+.panel .pf{padding:14px 24px;border-top:1px solid var(--g100);display:flex;justify-content:flex-end}
+.pctx{background:var(--g25);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.pctx .ln{display:flex;gap:10px;font-size:13px;line-height:1.9}
+.pctx .k{width:88px;flex:none;color:var(--g500)}
+.pctx .v{color:var(--g900);font-weight:600}
+.vchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.vchips button{height:30px;padding:0 12px;border:1px solid var(--g200);border-radius:999px;background:#fff;font-size:12.5px;font-family:inherit;
+  color:var(--g600);cursor:pointer}
+.vchips button.on{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:700}
+.vchips button.hitchip{color:var(--primary);font-weight:700}
+.vchips button.on.hitchip{color:#fff}
+table.ptbl{width:100%;border-collapse:collapse;font-size:13px}
+table.ptbl th{background:var(--g25);color:var(--g600);font-weight:600;font-size:12px;padding:8px 10px;text-align:left;border-bottom:1px solid var(--g100)}
+table.ptbl td{padding:10px;border-bottom:1px solid var(--g100);vertical-align:middle}
+table.ptbl tr.unused td{color:var(--g400)}
+table.ptbl .nm{font-weight:400;color:var(--g900)}
+table.ptbl tr.unused .nm{color:var(--g400)}
+table.ptbl .nm.hit,table.ptbl .sb.hit{color:var(--primary)}
+table.ptbl .sb{color:var(--g900)}
+.badge-rep{font-size:12px;font-weight:700;color:var(--primary)}
+.badge-un{font-size:12px;font-weight:700;color:var(--error)}
+.pwarn{font-size:12px;color:var(--error);margin-top:10px;line-height:1.6}
+.pempty{padding:48px 0;text-align:center;font-size:13px;color:var(--g400);border-top:1px solid var(--g100)}
+table.ptbl .xbtn{background:none;border:none;color:var(--g400);font-size:13px}
+table.ptbl .xbtn:hover{background:none;color:var(--error)}
+.fz{box-shadow:-1px 0 0 0 #fff}
+table.ctl2 tbody tr:hover .fz{box-shadow:-1px 0 0 0 var(--g25)}
+
 </style>
 
 <div class="wrap">
@@ -551,41 +623,36 @@ input.srch::placeholder{color:var(--g300)}
   <div class="ptitle"><h1>상품 조합 관리</h1><span class="star off">☆</span></div>
   <div class="pdesc">상품 조합을 속성 조합별로 조회하고 대표를 지정합니다. 인터넷은 <a href="/internet-product/products/#modal-cases" style="color:var(--primary);font-weight:600">인터넷 상품 관리</a>에서 등록한 상품 조합, 인터넷 외는 초록선으로 연결된 상품 조합 전체가 대상입니다.</div>
 
-  <div class="bar">
+  <div class="bar2">
     <div class="lockfld"><span class="lk">구분</span><select id="svcSel" class="svcsel"><option>인터넷</option><option>TV</option><option>인터넷전화</option><option>일반전화</option></select></div>
-    <div class="chips" id="chips">
-      <button data-f="all" class="on">전체</button>
-      <button data-f="dup">상품 조합 2개 이상</button>
+    <div class="srchwrap">
+      <select id="qf"><option value="attr">속성</option><option value="prod">상품</option></select>
+      <input id="q" type="text" placeholder="속성값으로 검색">
     </div>
-    <span class="fchip warn" id="badChip" hidden><span class="l">필터</span><span class="t">대표 미사용</span><span class="x" id="badX">✕</span></span>
-    <span class="fchip" id="comboChip" hidden><span class="l">조합</span><span class="t" id="comboTx"></span><span class="x" id="comboX">✕</span></span>
+    <label class="needrep" id="needRepLbl"><input type="checkbox" id="needRep"><span>대표 재지정 필요 <b id="needRepN">0</b></span></label>
   </div>
-
-  <div class="tabs" id="vtabs"></div>
 
   <div class="cntline" id="cnt"></div>
 
-  <div class="laybar"><span class="lb">표 방식 미리보기 <em>목업 전용</em></span>
-    <div class="chips" id="layChips">
-      <button data-l="M" class="on">현재 · 병합</button>
-      <button data-l="B">B · 매 행 반복</button>
-    </div></div>
-
-  <table class="ctl" id="ctl">
-    <colgroup>
-      <col style="width:288px"><col style="width:206px">
-      <col><col><col><col style="width:92px"><col style="width:56px">
-    </colgroup>
-    <thead><tr>
-      <th rowspan="2">인터넷상품</th><th rowspan="2">기본WIFI</th>
-      <th colspan="3" class="c" style="height:26px;padding:4px 12px;border-bottom:0;font-weight:600;color:var(--g600)">속성 조합</th>
-      <th rowspan="2" class="c">대표</th><th rowspan="2" class="c">해제</th>
-    </tr><tr>
-      <th>속도</th><th>구성제품</th><th>추가구성옵션</th>
-    </tr></thead>
-    <tbody id="body"></tbody>
+  <div class="tblscroll">
+  <table class="ctl2" id="ctl2">
+    <thead id="thead2"></thead>
+    <tbody id="body2"></tbody>
   </table>
+  </div>
 
+</div>
+
+<div id="ovPanel" hidden>
+  <div class="scrim" id="pScrim"></div>
+  <div class="panel">
+    <div class="ph"><h3>상품 조합 수정</h3><button class="xclose" id="pClose" style="border:none;background:none;font-size:20px;color:var(--g500);cursor:pointer">✕</button></div>
+    <div class="pb">
+      <div class="pctx" id="pCtx"></div>
+      <div class="vchips" id="pChips"></div>
+      <div id="pList"></div>
+    </div>
+  </div>
 </div>
 
 <div id="ovDel" hidden style="position:fixed;inset:0;background:rgba(19,19,20,.35);z-index:950;display:flex;align-items:center;justify-content:center">
@@ -616,96 +683,200 @@ const ANAMES={'인터넷':['속도','구성제품','추가구성옵션'],'TV':['
 const $=id=>document.getElementById(id);
 const COLS={'인터넷':['인터넷상품','기본WIFI'],'TV':['TV채널','셋탑박스'],'인터넷전화':['전화상품','전화기기'],'일반전화':['전화상품','전화기기']};
 const VENDORS=["KT","LG","SKT","SKB","SkyLife","LG HelloVision","딜라이브","HCN"];
-let SV='인터넷';
-let LAY='M', VD='KT', F='all', Q='', COMBO=null, FOCUS=null, BADREP=false;
+let SV='인터넷', QF='attr', Q='', NEEDREP=false, PANEL=null, PV=null;
 const REP={}; R.forEach((r,i)=>{ if(r[11]) REP[r[12]]=i; });
 
-function rows(){
-  return R.map((r,i)=>({r,i})).filter(o=>o.r[0]===SV && o.r[1]===VD)
-    .filter(o=>!COMBO || o.r[12]===COMBO)
-    .filter(o=>!BADREP || (REP[o.r[12]]===o.i && !o.r[13]))
-    .filter(o=>{
-      if(F==='dup') return o.r[10]>1;
-      return true;})
-    .sort((a,b)=> a.r[12]<b.r[12]?-1: a.r[12]>b.r[12]?1: a.i-b.i);
+/* 속성 표시 순서 — 상품속성 관리의 행 순서. 인터넷은 실측값, 그 외는 데이터 등장 순서로 대체 */
+const AORD={'인터넷':[
+  ['100Mbps','160Mbps','200Mbps','320Mbps','500Mbps','1Gbps','2.5Gbps','5Gbps','10Gbps'],
+  ['없음','WiFi포함','프리미엄WiFi','WiFi+증폭기','프리미엄WiFi+증폭기'],
+  ['없음','안심','파워백신','원격케어']]};
+function ordOf(sv,slot){
+  if(AORD[sv]&&AORD[sv][slot]) return AORD[sv][slot];
+  const seen=[]; R.forEach(r=>{ if(r[0]===sv && seen.indexOf(r[4+slot])<0) seen.push(r[4+slot]); });
+  return seen;
 }
-function tag(v){ return v==='없음' ? '<span class="non">없음</span>' : v; }
+const akey=r=>ANAMES[r[0]].map((_,k)=>r[4+k]).join('|');
+const used=i=>!!R[i][13] && (!R[i][3] || !!R[i][14]);
+const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-function renderTabs(){
-  $('vtabs').innerHTML=VENDORS.map(v=>{
-    const n=R.filter(r=>r[0]===SV&&r[1]===v).length;
-    return '<div class="ti'+(v===VD?' on':'')+'" data-v="'+v+'">'+v+'</div>';}).join('');
-  $('vtabs').querySelectorAll('.ti').forEach(t=>t.onclick=()=>{VD=t.dataset.v;renderTabs();render();});
+let CURROWS=[];
+function buildRows(){
+  const n=ANAMES[SV].length, ords=[]; for(let k=0;k<n;k++) ords.push(ordOf(SV,k));
+  const map={};
+  R.forEach((r,i)=>{ if(r[0]!==SV) return; const k=akey(r); (map[k]=map[k]||[]).push(i); });
+  const keys=Object.keys(map);
+  keys.sort((x,y)=>{ const X=x.split('|'), Y=y.split('|');
+    for(let k=0;k<n;k++){
+      let ix=ords[k].indexOf(X[k]), iy=ords[k].indexOf(Y[k]);
+      if(ix<0) ix=999; if(iy<0) iy=999;
+      if(ix!==iy) return ix-iy;
+      if(X[k]!==Y[k]) return X[k]<Y[k]?-1:1; }
+    return 0; });
+  return keys.map(k=>({k, items:map[k]}));
 }
+const cellItems=(items,v)=>items.filter(i=>R[i][1]===v);
+function repOf(items,v){
+  const ii=cellItems(items,v); if(!ii.length) return null;
+  const ri=REP[R[ii[0]][12]];
+  return (ri!==undefined && ii.indexOf(ri)>=0) ? ri : ii[0];
+}
+function badVendors(row){
+  const out=[]; VENDORS.forEach(v=>{ const ri=repOf(row.items,v); if(ri!=null && !used(ri)) out.push(v); });
+  return out;
+}
+function hitsOf(row){
+  const q=Q.trim(); const h={}; if(!q||QF!=='prod') return h;
+  VENDORS.forEach(v=>{ const n=cellItems(row.items,v).filter(i=>(R[i][2]||'').indexOf(q)>=0||(R[i][3]||'').indexOf(q)>=0).length; if(n) h[v]=n; });
+  return h;
+}
+function showRow(row){
+  const q=Q.trim();
+  if(NEEDREP && !badVendors(row).length) return false;
+  if(!q) return true;
+  if(QF==='attr') return row.k.split('|').some(x=>x.indexOf(q)>=0);
+  return Object.keys(hitsOf(row)).length>0;
+}
+
+/* ===== 본 목록 ===== */
 function render(){
-  const all=R.filter(r=>r[0]===SV&&r[1]===VD);
-  const grp=new Set(all.map(r=>r[12])), dup=new Set(all.filter(r=>r[10]>1).map(r=>r[12]));
-  if(COMBO){
-    const inC=all.filter(r=>r[12]===COMBO);
-    $('cnt').innerHTML='<span class="dupn">속성 조합 필터</span> · 이 속성 조합에 등록된 상품 조합 <b>'+inC.length+'</b>건'
-      + (inC.length>1?' — 대표를 고를 수 있습니다':' — 상품 조합이 하나뿐이라 자동으로 대표입니다');
-  } else {
-    const bad=all.filter((r,x)=>REP[r[12]]===R.indexOf(r) && !r[13]).length;
-    const skip=XSKIP[SV+'|'+VD]||0;
-    $('cnt').innerHTML=(SV==='인터넷'?'등록된 상품 조합':'상품 조합(초록선)')+' <b>'+all.length+'</b>건 · 속성 조합 <b>'+grp.size+'</b>개'
-      + (dup.size?' · <span class="dupn">상품 조합이 2개 이상인 속성 조합 '+dup.size+'개</span>':' · <span style="color:var(--g400)">상품 조합이 2개 이상인 속성 조합 없음</span>')
-      + (bad?' · <span class="badlink" id="badLink">대표 미사용 '+bad+'건</span>':'')
-      + (skip?' · <span style="color:var(--g400)">태그 없는 카드가 있어 빠진 상품 조합 '+skip+'건</span>':'');
-  }
-  $('badChip').hidden=!BADREP;
-  $('comboChip').hidden=!COMBO;
-  if(COMBO) $('comboTx').textContent=COMBO.split('|').slice(1).join(' · ');
-  const page=rows();
-  /* 표 방식 미리보기 — M 병합(rowspan) · A 머리행 · B 매 행 반복 · C 속성 조합 한 칸 */
-  const NET = SV==='인터넷', AN = ANAMES[SV], CN = COLS[SV];
-  const COLG = '<col style="width:288px"><col style="width:206px">'+AN.map(()=>'<col>').join('')+'<col style="width:92px">'+(NET?'<col style="width:56px">':'');
-  const HEAD = '<tr><th rowspan="2">'+CN[0]+'</th><th rowspan="2">'+CN[1]+'</th><th colspan="'+AN.length+'" class="c" style="height:26px;padding:4px 12px;border-bottom:0;font-weight:600;color:var(--g600)">속성 조합</th><th rowspan="2" class="c">대표</th>'+(NET?'<th rowspan="2" class="c">해제</th>':'')+'</tr><tr>'+AN.map(x=>'<th>'+x+'</th>').join('')+'</tr>';
-  $('ctl').querySelector('colgroup').innerHTML=COLG;
-  $('ctl').querySelector('thead').innerHTML=HEAD;
-  const NC = 3+AN.length+(NET?1:0);
-  const span={};
-  page.forEach(o=>{ const k=o.r[12]; span[k]=(span[k]||0)+1; });
-  const seen={};
-  const tt=(v,tn)=>'<span title="이 업체의 태그명: '+tn+'">'+tag(v)+'</span>';
+  const AN=ANAMES[SV], n=AN.length;
+  CURROWS=buildRows();
+  const shown=CURROWS.filter(showRow);
+  const needN=CURROWS.filter(r=>badVendors(r).length).length;
+
+  $('needRepN').textContent=needN;
+  $('needRepLbl').hidden = (needN===0 && !NEEDREP);
+  $('q').placeholder = QF==='prod' ? '상품명으로 검색' : '속성값으로 검색';
+
+  const total=R.filter(r=>r[0]===SV).length;
+  $('cnt').innerHTML='총 <b>'+shown.length+'</b>건';
+
+  /* 고정 영역 좌표 — 속성 n칸(110px) + 수정(56px) */
+  const AW=110, EW=56;
+  let left=0; const lefts=[];
+  for(let k=0;k<n;k++){ lefts.push(left); left+=AW; }
+  const editLeft=left;
+
+  let th='<tr>';
+  AN.forEach((a,k)=>{ th+='<th class="fz" style="left:'+lefts[k]+'px;min-width:'+AW+'px">'+a+'</th>'; });
+  th+='<th class="fz fz-last" style="left:'+editLeft+'px;min-width:'+EW+'px;text-align:center">수정</th>';
+  VENDORS.forEach(v=>{ th+='<th>'+v+'</th>'; });
+  th+='</tr>';
+  $('thead2').innerHTML=th;
+
+  const q=Q.trim();
   let html='';
-  page.forEach((o,n)=>{
-    const r=o.r, isDup=r[10]>1, isRep=REP[r[12]]===o.i;
-    const first=!seen[r[12]]; if(first) seen[r[12]]=1;
-    const rs=span[r[12]];
-    const rep = isDup
-      ? '<span class="rep'+(isRep?' on':'')+'" data-rep="'+o.i+'" title="대표로 지정"></span>'
-      : '<span class="repauto" title="이 속성 조합의 상품 조합이 하나뿐이라 자동으로 대표입니다">자동</span>';
-    const badRep = isRep && !r[13];
-    const a3=[tt(r[4],r[7]),tt(r[5],r[8]),tt(r[6],r[9])].slice(0,AN.length);
-    let attrs;
-    if(LAY==='M') attrs = first ? a3.map(x=>'<td class="mg" rowspan="'+rs+'">'+x+'</td>').join('') : '';
-    else if(LAY==='A') attrs = (rs>1) ? '<td></td><td></td><td></td>' : a3.map(x=>'<td>'+x+'</td>').join('');
-    else if(LAY==='B') attrs = a3.map(x=>'<td'+(first?'':' class="rpt"')+'>'+x+'</td>').join('');
-    else attrs = '<td'+(first?'':' class="rpt"')+'>'+a3.join(' · ')+'</td>';
-    if(LAY==='A' && first && rs>1)
-      html += '<tr class="ghead"><td colspan="2" class="ghl">속성 조합</td>'+a3.map(x=>'<td>'+x+'</td>').join('')+'<td></td><td></td></tr>';
-    const top = LAY==='A' ? (first && rs===1) : first;
-    html += '<tr class="'+(top?'gtop':'ing')+(FOCUS===o.i?' focus':'')+(!r[13]?' off':'')+(badRep?' badrep':'')+'">'
-      +'<td title="'+r[2]+'">'+r[2]+(r[13]?'':' <span class="ub">미사용</span>')+'</td>'
-      +'<td title="'+(r[3]||'미적용')+'">'+(r[3]?r[3]+(r[14]?'':' <span class="ub">미사용</span>'):'<span class="non">미적용</span>')+'</td>'
-      +attrs
-      +'<td class="c">'+rep+(badRep?'<span class="repwarn" title="대표인데 미사용입니다 — 이 속성 조합은 상담 화면에 아무것도 노출되지 않습니다">!</span>':'')+'</td>'
-      +(NET?'<td class="c"><button class="xbtn" data-del="'+o.i+'" title="등록 해제">✕</button></td>':'')+'</tr>';
+  shown.forEach(row=>{
+    const A=row.k.split('|'), hits=hitsOf(row);
+    html+='<tr>';
+    A.forEach((x,k)=>{ html+='<td class="fz acell" style="left:'+lefts[k]+'px">'+(x==='없음'?'<span class="non">없음</span>':esc(x))+'</td>'; });
+    html+='<td class="fz fz-last" style="left:'+editLeft+'px;text-align:center"><button class="editbtn" data-k="'+esc(row.k)+'" title="대표 지정 · 등록 해제">✎</button></td>';
+    VENDORS.forEach(v=>{
+      const ii=cellItems(row.items,v);
+      if(!ii.length){ html+='<td class="vcell"><span class="dash">–</span></td>'; return; }
+      const ri=repOf(row.items,v), r=R[ri], un=!used(ri);
+      const l1hit = q && QF==='prod' && (r[2]||'').indexOf(q)>=0;
+      const l2hit = q && QF==='prod' && (r[3]||'').indexOf(q)>=0;
+      let meta='';
+      if(hits[v]) meta='<div class="meta hit">일치 '+hits[v]+'건</div>';
+      else if(ii.length>1) meta='<div class="meta">'+ii.length+'건</div>';
+      html+='<td class="vcell'+(un?' unused':'')+'"'
+        +(un?' title="대표 상품이 미사용이라 이 속성 조합은 상담상세 · 플랫폼에 나가지 않습니다. 다른 조합을 대표로 지정해주세요."':'')+'>'
+        +'<div class="l1'+(l1hit?' hit':'')+'">'+(un?'<span class="warn-i">⚠</span>':'')+esc(r[2])+'</div>'
+        +'<div class="l2'+(l2hit?' hit':'')+'">'+(r[3]?esc(r[3]):'미적용')+'</div>'
+        +meta+'</td>';
+    });
+    html+='</tr>';
   });
-  $('body').innerHTML = page.length ? html : '<tr><td colspan="'+NC+'" style="height:140px;text-align:center;color:var(--g400)">조건에 맞는 상품 조합이 없습니다</td></tr>';
+  $('body2').innerHTML = shown.length ? html
+    : '<tr><td colspan="'+(n+1+VENDORS.length)+'" style="height:140px;text-align:center;color:var(--g400)">조건에 맞는 속성 조합이 없습니다</td></tr>';
 
-  if($('badLink')) $('badLink').onclick=()=>{ BADREP=true; COMBO=null; FOCUS=null; render(); };
-  $('body').querySelectorAll('[data-rep]').forEach(el=>el.onclick=()=>{
-    const i=+el.dataset.rep; REP[R[i][12]]=i; render();});
-  $('body').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>openDel(+b.dataset.del));
-
+  $('body2').querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>openPanel(b.dataset.k));
 }
+
+/* ===== 사이드 패널 ===== */
+function openPanel(k){
+  PANEL=k;
+  const row=CURROWS.find(x=>x.k===k); if(!row) return;
+  const avail=VENDORS.filter(v=>cellItems(row.items,v).length);
+  const bad=badVendors(row);
+  const hit=Object.keys(hitsOf(row));                 /* 상품명 검색이 걸린 통신사 */
+  PV = hit.length ? hit[0] : (bad.length ? bad[0] : avail[0]);
+  $('ovPanel').hidden=false;
+  renderPanel();
+}
+function closePanel(){ $('ovPanel').hidden=true; PANEL=null; }
+function panelSorted(row,v){
+  const ii=cellItems(row.items,v), rep=repOf(row.items,v);
+  return ii.slice().sort((a,b)=>{
+    const ra=(a===rep)?0:1, rb=(b===rep)?0:1; if(ra!==rb) return ra-rb;          /* B-1 대표 */
+    const ua=used(a)?0:1, ub=used(b)?0:1; if(ua!==ub) return ua-ub;              /* B-1.5 사용 여부 */
+    if(a!==b) return a-b;                                                         /* B-2·B-3 우선순위 (목업: 데이터 순서) */
+    const na=R[a][2], nb=R[b][2]; if(na!==nb) return na<nb?-1:1;                  /* B-4 상품명 */
+    const sa=R[a][3]||'', sb=R[b][3]||''; return sa<sb?-1:sa>sb?1:0;              /* B-5 세트상품명 */
+  });
+}
+function renderPanel(){
+  const row=CURROWS.find(x=>x.k===PANEL); if(!row){ closePanel(); return; }
+  const AN=ANAMES[SV], A=row.k.split('|'), q=Q.trim();
+  $('pCtx').innerHTML='<div class="ln"><span class="k">구분</span><span class="v">'+SV+'</span></div>'
+    + AN.map((a,k)=>'<div class="ln"><span class="k">'+a+'</span><span class="v">'+esc(A[k])+'</span></div>').join('');
+
+  const PH=hitsOf(row);
+  $('pChips').innerHTML=VENDORS.map(v=>{
+    const nn=cellItems(row.items,v).length;
+    const ri=repOf(row.items,v), bad=(ri!=null && !used(ri));
+    const cl=(v===PV?'on':'')+(PH[v]?' hitchip':'');
+    const cl2=(cl+(nn?'':' zero')).trim();
+    return '<button data-v="'+v+'"'+(cl2?' class="'+cl2+'"':'')+'>'+v+' '+nn+(bad?' ⚠':'')+'</button>';
+  }).join('');
+  $('pChips').querySelectorAll('button').forEach(b=>{ b.onclick=()=>{ PV=b.dataset.v; renderPanel(); }; });
+
+  const ii=panelSorted(row,PV), rep=repOf(row.items,PV);
+  if(!ii.length){
+    $('pList').innerHTML='<div class="pempty">연결된 상품 조합이 없습니다.</div>';
+    return;
+  }
+  let h='<table class="ptbl"><thead><tr><th style="width:52px">대표</th><th>'+COLS[SV][0]+'</th><th>'+COLS[SV][1]+'</th><th style="width:84px">상태</th><th style="width:44px"></th></tr></thead><tbody>';
+  ii.forEach(i=>{
+    const r=R[i], un=!used(i), isRep=(i===rep);
+    const n1hit=q&&QF==='prod'&&(r[2]||'').indexOf(q)>=0, n2hit=q&&QF==='prod'&&(r[3]||'').indexOf(q)>=0;
+    h+='<tr class="'+(un?'unused':'')+'">'
+      +'<td style="text-align:center">'+(un
+          ? '<input type="radio" disabled'+(isRep?' checked':'')+' title="미사용 상품은 대표로 지정할 수 없습니다.">'
+          : '<input type="radio" name="rep" data-i="'+i+'"'+(isRep?' checked':'')+'>')+'</td>'
+      +'<td><span class="nm'+(n1hit?' hit':'')+'">'+(un?'<span class="warn-i" style="color:var(--error);font-weight:800;margin-right:4px">⚠</span>':'')+esc(r[2])+'</span></td>'
+      +'<td><span class="sb'+(n2hit?' hit':'')+'">'+(r[3]?esc(r[3]):'미적용')+'</span></td>'
+      +'<td>'+(isRep?'<span class="badge-rep">현재 대표</span>':'')+(isRep&&un?'<br>':'')+(un?'<span class="badge-un">미사용</span>':'')+'</td>'
+      +'<td style="text-align:center">'+(SV==='인터넷'?'<button class="xbtn" data-del="'+i+'" title="등록 해제">✕</button>':'')+'</td>'
+      +'</tr>';
+  });
+  h+='</tbody></table>';
+  if(rep!=null && !used(rep)) h+='<div class="pwarn">⚠ 현재 대표가 미사용입니다. 이 속성 조합은 상담상세 · 플랫폼에 나가지 않습니다 — 다른 조합을 대표로 지정해주세요.</div>';
+  if(SV!=='인터넷') h+='<div class="pwarn" style="color:var(--g400)">인터넷 외는 등록 개념이 없어 해제 컬럼이 없습니다. 초록선을 지우면 목록에서 빠집니다.</div>';
+  $('pList').innerHTML=h;
+
+  $('pList').querySelectorAll('input[name=rep]').forEach(el=>el.onchange=()=>{
+    const i=+el.dataset.i; REP[R[i][12]]=i;
+    toast('대표 상품 조합으로 지정했습니다 — '+R[i][2]+(R[i][3]?' · '+R[i][3]:''));
+    renderPanel(); render();
+  });
+  $('pList').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>openDel(+b.dataset.del));
+}
+function toast(t){
+  const n=document.createElement('div'); n.textContent=t;
+  n.style.cssText='position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#10A10E;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;z-index:980;box-shadow:0 6px 20px rgba(0,0,0,.18)';
+  document.body.appendChild(n); setTimeout(()=>n.remove(),2400);
+}
+
+/* ===== 등록 해제 확인 ===== */
 let delI=null;
 function openDel(i){
-  delI=i; const r=R[i];
+  delI=i; const r=R[i], row=CURROWS.find(x=>x.k===akey(r));
   $('dlProd').textContent = r[2] + (r[3] ? ' × '+r[3] : '');
-  $('dlCombo').textContent = [r[7],r[8],r[9]].join(' · ');
-  const isRep = REP[r[12]]===i, others = r[10]-1;
+  $('dlCombo').textContent = ANAMES[SV].map((_,k)=>r[4+k]).join(' · ');
+  const isRep = repOf(row.items,r[1])===i, others = cellItems(row.items,r[1]).length-1;
   $('dlNotice').querySelector('span:last-child').innerHTML = isRep && others>0
     ? '<b>이 상품 조합이 대표입니다.</b> 해제하면 같은 속성 조합의 남은 '+others+'건 중 첫 상품 조합이 대표가 됩니다.'
     : others>0
@@ -714,26 +885,19 @@ function openDel(i){
   $('ovDel').hidden=false;
 }
 $('dlCancel').onclick=()=>{$('ovDel').hidden=true;};
-$('dlOk').onclick=()=>{
-  const r=R[delI]; $('ovDel').hidden=true;
-  const n=document.createElement('div');
-  n.textContent='등록 해제되었습니다 — '+r[2]+(r[3]?' × '+r[3]:'');
-  n.style.cssText='position:fixed;left:50%;bottom:40px;transform:translateX(-50%);background:#10A10E;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;z-index:960;box-shadow:0 6px 20px rgba(0,0,0,.18)';
-  document.body.appendChild(n); setTimeout(()=>n.remove(),2400);
+$('dlOk').onclick=()=>{ const r=R[delI]; $('ovDel').hidden=true; toast('등록 해제되었습니다 — '+r[2]+(r[3]?' × '+r[3]:'')); };
+
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(!$('ovDel').hidden){$('ovDel').hidden=true;} else if(!$('ovPanel').hidden){closePanel();} } });
+$('pScrim').onclick=closePanel; $('pClose').onclick=closePanel;
+$('svcSel').onchange=()=>{ SV=$('svcSel').value; Q=''; $('q').value=''; NEEDREP=false; $('needRep').checked=false; closePanel(); render(); };
+$('qf').onchange=()=>{ QF=$('qf').value; render(); };
+$('q').oninput=()=>{ Q=$('q').value; if(Q.trim()&&NEEDREP){ NEEDREP=false; $('needRep').checked=false; } render(); };
+$('needRep').onchange=()=>{
+  NEEDREP=$('needRep').checked;
+  if(NEEDREP){ Q=''; $('q').value=''; }        /* 검색어는 풀고 재지정 필요만 본다 */
+  render();
 };
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ovDel').hidden=true; });
-$('svcSel').onchange=()=>{ SV=$('svcSel').value; F='all'; $('chips').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.f==='all')); renderTabs(); render(); };
-$('comboX').onclick=()=>{ COMBO=null; FOCUS=null; render(); };
-$('badX').onclick=()=>{ BADREP=false; render(); };
-$('chips').querySelectorAll('button').forEach(b=>b.onclick=()=>{
-  F=b.dataset.f;
-  $('chips').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
-  render();});
-$('layChips').querySelectorAll('button').forEach(b=>b.onclick=()=>{
-  LAY=b.dataset.l;
-  $('layChips').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
-  render();});
-renderTabs(); render();
+render();
 
 </script>
 <div class="doc-band"><div class="sheet">
@@ -803,6 +967,44 @@ renderTabs(); render();
 </div>
 
 <div class="spec">
+  <div class="spec-head"><span class="chip-v">정렬</span><span class="spec-t">고정 · 컬럼 클릭 정렬 없음</span></div>
+  <p class="sub" style="margin:0 0 10px">A. 속성 조합 블록끼리</p>
+  <div class="table-wrap">
+  <table class="mx">
+    <thead><tr><th style="width:8%"></th><th style="width:42%">기준</th><th>어느 쪽이 위인가</th></tr></thead>
+    <tbody>
+      <tr><th>A-1</th><td>속성 1 — 속도 / TV 라인 / 요금방식</td><td><b>상품속성 관리에서 위에 있는 속성</b>이 위</td></tr>
+      <tr><th>A-2</th><td>속성 2 — 구성제품 / 셋탑 / 전화기기</td><td>〃</td></tr>
+      <tr><th>A-3</th><td>속성 3 — 추가구성옵션 <span class="tok">인터넷만</span></td><td>〃</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub" style="margin:4px 0 10px">B. 블록 안의 행끼리</p>
+  <div class="table-wrap">
+  <table class="mx">
+    <thead><tr><th style="width:8%"></th><th style="width:34%">기준</th><th style="width:34%">어느 쪽이 위인가</th><th>동률</th></tr></thead>
+    <tbody>
+      <tr><th>B-1</th><td>대표 여부</td><td><b>대표가 맨 위</b></td><td class="sub">안 남 — 그룹당 1건</td></tr>
+      <tr><th>B-2</th><td>왼쪽 열 상품</td><td>인터넷 상품 관리에서 <b>위에 있는 카드</b>가 위</td><td class="sub">남</td></tr>
+      <tr><th>B-3</th><td>오른쪽 열 세트상품</td><td>〃</td><td class="sub">날 수 있음</td></tr>
+      <tr><th>B-4</th><td>왼쪽 열 상품명</td><td>글자순</td><td class="sub">날 수 있음</td></tr>
+      <tr><th>B-5</th><td>오른쪽 열 세트상품명</td><td>글자순</td><td class="sub"><b>절대 안 남</b></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p><b>「상품속성 관리에서 위에 있는 속성」</b> — 상품속성 관리 화면에서 속성 타입별로 행을 드래그해 정해 둔 순서입니다. 정렬에 쓰는 값은 속성 이름이 아니라 <b>그 행의 순번</b>입니다. 숫자 크기도 가나다도 아닙니다 — 「100Mbps」가 「1Gbps」보다 위인 것은 운영자가 그렇게 놓았기 때문이고, 가나다로 하면 <code>100Mbps · 10Gbps · 1Gbps</code> 순이 됩니다. 이 순번은 <b>상담 하향 대체 순서와 같은 값</b>이라(「같은 값이 없을 때 이 목록의 더 위쪽 값으로 대체됩니다」) 목록이 하향 대체 순서대로 깔립니다. 속성 타입 자체의 순서(속도 → 구성제품 → 추가구성옵션)도 같은 화면을 따릅니다.</p>
+    <p><b>A는 동률이 없습니다</b> — 세 칸이 모두 같으면 정의상 같은 그룹입니다. A-1~A-3을 먼저 정렬해야 같은 속성 조합이 붙어서 <code>rowspan</code> 병합이 성립합니다.</p>
+    <p><b>B-2 · B-3의 「위에 있는 카드」</b> — 인터넷 상품 관리 카드의 우선순위 값입니다. 우클릭 「위로 / 아래로 / 우선순위 변경」으로 정하는 그 순서이고, 그 화면에서 위에 있는 카드가 이 목록에서도 위입니다. <b>이 값을 바꾸면 이 화면의 순서도 따라 바뀝니다.</b></p>
+    <p><b>B-2 동률이 실제로 생깁니다</b> — 상품 A가 세트상품 X · Y 둘 다와 초록선이 있고 X · Y의 태그가 같으면 <code>A×X</code>와 <code>A×Y</code>가 한 그룹에 들어갑니다. 왼쪽 열이 같으니 B-3가 받습니다.</p>
+    <p><b>B-4 · B-5의 「글자순」</b> — 상품명에 한글 · 영문 · 숫자가 섞여 있어 「사전순」으로만 쓰면 구현마다 달라집니다. <b>DB 기본 문자열 정렬 오름차순</b>으로 둡니다. 여기까지 내려오는 것은 우선순위 값이 중복 저장된 예외 상황이라, 어떤 순서든 <b>매번 같기만 하면</b> 됩니다.</p>
+    <p><b>B-5에서 반드시 끝납니다</b> — 상품 조합은 (왼쪽 열 카드 × 오른쪽 열 카드) 쌍이고 같은 쌍이 한 속성 조합에 두 번 등록될 수 없으므로, 두 이름이 모두 같은 행은 존재하지 않습니다. 조합 ID 같은 숨은 값을 쓰지 않아도 순서가 확정됩니다.</p>
+    <p class="q">이 사슬이 없으면 동률 행의 순서를 <b>DB 반환 순서가 정합니다.</b> 조회할 때마다 두 행이 자리를 바꾸고, 운영자가 대표를 비교하다 엉뚱한 행에 라디오를 누릅니다.</p>
+    <p class="q">BE 확인 — 상품 · 세트상품 우선순위 값이 <b>칸 안에서 유일한지</b>. 중복 저장이 가능하면 B-4 · B-5가 실제로 쓰입니다.</p>
+  </div>
+</div>
+
+<div class="spec">
   <div class="spec-head"><span class="chip-v">대표</span><span class="spec-t">상품 조합이 2개 이상인 속성 조합에서만 고릅니다</span></div>
   <div class="table-wrap">
   <table class="mx">
@@ -815,7 +1017,7 @@ renderTabs(); render();
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
     <p>그룹 기준은 <b>(업체 · 속성 3개)</b> — v22 원문 <code>const grp=[v,p1.a,p2.a,p3.a]</code>과 같습니다. 태그명이 아니라 <b>속성</b>이 키입니다.</p>
-    <p class="q">확인 필요 — <b>이관 시 대표 자동 지정 기준.</b> 개발자는 <code>level</code>로 찍으려 했는데 그 값은 이번에 삭제합니다. 상품 우선순위 · 등록순 · 가나다 중에서 정해야 합니다. <b>23개 속성 조합에만 필요</b>합니다 (확인 필요 사항 C-3).</p>
+    <p><b>이관 시 대표 자동 지정 기준 — 정렬 1순위로 정합니다</b>(위 「정렬」). 개발자가 쓰려던 <code>level</code>은 이번에 삭제하고, 상품 우선순위는 AS-IS에 이미 있는 값이라 <b>이관용 추가 데이터가 필요 없습니다</b>. <b>23개 속성 조합에만 필요</b>합니다 (확인 필요 사항 C-3 닫음).</p>
     <p><b>대표가 미사용인 2건</b>(딜라이브 <code>ISP 스마트광랜</code> · LG <code>프리미엄 안심 200M</code>)은 <b>Phase 1에서 경고만 하고 막지 않습니다.</b> 이관 시 수동으로 대표만 옮기면 되고, 규칙 보강과 자동 이관은 Phase 2입니다.</p>
   </div>
 </div>

@@ -121,7 +121,7 @@ h2 .tagx{font-size:12px;font-weight:700;color:var(--primary);background:var(--bl
   <div class="eyebrow">인터넷 상품 관리 · [메인상품] 탭 · 디자인 · 개발 참고용<span id="updAt" style="margin-left:14px;color:var(--g400)"></span></div>
   <h1>우클릭 메뉴 케이스</h1>
   <p class="lead">카드를 어떤 상태에서 우클릭하느냐에 따라 뜨는 메뉴를 <b>전부 펼쳐</b> 정리했습니다. 회색은 AS-IS 그대로(베타 실측 10/12), <b style="color:var(--primary)">파란색</b>은 이번에 추가되는 항목입니다.<br>
-  파란 항목을 누르면 <b>인터넷 상품 관리 목업을 그 상태로 띄워 실제 모달 · 토스트</b>가 실행됩니다.</p>
+  파란 항목을 누르면 <b>인터넷 상품 관리 목업을 그 상태로 띄워 실제 모달 · 토스트</b>가 실행됩니다.<br>AS-IS 「설명 바꾸기」는 <b>모든 카드에서 「설명 수정」으로 이름만</b> 바뀝니다(10/13 · 모달은 AS-IS). 결합할인 분류만 새 모달입니다.</p>
   <div class="legend">
     <span><i class="sw sel"></i>고른 왼쪽 열 카드</span>
     <span><i class="sw lit"></i>초록선으로 이어진 오른쪽 열 카드</span>
@@ -169,7 +169,7 @@ h2 .tagx{font-size:12px;font-weight:700;color:var(--primary);background:var(--bl
 <div id="secEtc"></div>
 
 <h2 id="disc">결합할인 <span class="tagx">결합할인 탭</span></h2>
-<p class="h2sub">상품 조합이 없어 선택 상태와 무관합니다. 바뀌는 건 <b>「설명 바꾸기」 → 「설명 수정」</b> 하나 — 분류는 새 모달로 <b>대체</b>, 항목은 <b>이름만</b> 바꾸고 모달은 AS-IS 그대로입니다. 그 밖의 상품군(부가서비스 · 기타상품 등)은 「설명 바꾸기」 AS-IS 그대로.</p>
+<p class="h2sub">상품 조합이 없어 선택 상태와 무관합니다. 바뀌는 건 <b>「설명 바꾸기」 → 「설명 수정」</b> 하나 — 분류는 새 모달로 <b>대체</b>, 항목은 <b>이름만</b> 바꾸고 모달은 AS-IS 그대로입니다. 10/13부터 「설명 수정」 이름은 <b>모든 카드 공통</b> — 결합할인 분류만 새 모달, 나머지는 AS-IS 모달.</p>
 <div id="secDisc"></div>
 
 <div class="foot">
@@ -195,7 +195,7 @@ const SEP = { t: 'sep' };
 const UP_ROW_NET = [A('상품 요금 설정'), A('상품 할인 설정'), A('상품 이벤트 설정')];
 const UP_ROW_ETC = UP_ROW_NET.concat([A('금지 코드 설정')]);
 const UP_COL = UP_ROW_ETC.concat([A('금지코드 설정(단일)')]);
-const DOWN = [SEP, A('설명 바꾸기'), A('위로'), A('아래로'), A('우선순위 변경 (기본)'), A('사용중지')];
+const DOWN = [SEP, N('설명 수정', 'desc-name', 'AS-IS 모달', '이름'), A('위로'), A('아래로'), A('우선순위 변경 (기본)'), A('사용중지')];
 
 /* ───────── 케이스 ─────────
    ill : 카드 예시 { set, L:[상품 칸 이름, 카드…], R:[세트상품 칸 이름, 카드…], sel, lines:[R 인덱스], rc:['L'|'R', 인덱스], auto:R 인덱스 }
@@ -240,11 +240,11 @@ const CASES = {
   { t: '인터넷상품을 고른 뒤 「미적용」 우클릭', cond: ['초록선 있음', '등록됨', '고른 카드의 기본값'],
     ill: { ...NET, L: ['인터넷상품', '슬림'], R: ['기본WIFI', '', '기가 와이파이 홈ax'], sel: 0, lines: [0], rc: ['R', 0], auto: 0 },
     menu: [N('태그 지정', 'tag-na', '모달'), N('상품 조합 관리로 이동', 'view-na', '화면 이동'), SEP, A('미사용')],
-    notes: ['WIFI 없이 파는 상품(슬림 · 베이직 등)의 실제 모습 — 미적용이 유일한 짝이라 자동으로 기본값', '「미사용」 = 이 상품과 미적용 사이 <b>초록선 해제</b>'] },
+    notes: ['WIFI 없이 파는 상품(슬림 · 베이직 등)의 실제 모습 — 미적용이 유일한 상품 조합이라 자동으로 기본값', '「미사용」 = 이 상품과 미적용 사이 <b>초록선 해제</b>'] },
   { t: '인터넷상품을 고른 뒤 「미적용」 우클릭', cond: ['초록선 있음', '미등록', '기본값 아님'],
     ill: { ...NET, L: ['인터넷상품', '베이직 와이파이'], R: ['기본WIFI', '', '기가 와이파이 홈ax', 'KT와이파이7D'], sel: 0, lines: [0, 1, 2], rc: ['R', 0], auto: 2 },
     menu: [N('태그 지정', 'tag-na', '모달'), N('기본값 지정', 'auto-na', '토스트'), N('상품 조합 등록', 'reg-na', '모달'), SEP, A('미사용')],
-    notes: ['추가 항목이 <b>모두</b> 뜨는 경우 — 기본값 지정 · 상품 조합 등록은 기본WIFI와 같은 조건', '「플랫폼 노출 설정」은 없음 — 미적용엔 금액 · 설명을 두지 않음', '<span style="color:var(--g400)">예시용 데이터 — 목업에서 이 짝에 초록선을 임시로 이어 실행합니다</span>'] },
+    notes: ['추가 항목이 <b>모두</b> 뜨는 경우 — 기본값 지정 · 상품 조합 등록은 기본WIFI와 같은 조건', '「플랫폼 노출 설정」은 없음 — 미적용엔 금액 · 설명을 두지 않음', '<span style="color:var(--g400)">예시용 데이터 — 목업에서 이 카드 두 장에 초록선을 임시로 이어 실행합니다</span>'] },
   { t: '인터넷상품을 고른 뒤 「미적용」 우클릭', cond: ['<b>초록선 없음</b>'],
     ill: { ...NET, L: ['인터넷상품', '에센스'], R: ['기본WIFI', '', '기가 와이파이 홈ax', 'KT와이파이7D'], sel: 0, lines: [1, 2], rc: ['R', 0] },
     menu: [N('태그 지정', 'tag-na', '모달'), SEP, A('사용')],
@@ -313,7 +313,7 @@ let NO = 0;
 Object.keys(CASES).forEach(sec => {
   document.getElementById(sec).innerHTML = CASES[sec].map(c => {
     NO++;
-    const acts = c.menu.filter(m => m.t === 'new');
+    const acts = c.menu.filter(m => m.t === 'new' && m.act !== 'desc-name');
     return '<div class="case" data-ill=\'' + JSON.stringify({ sel: c.ill.sel, lines: c.ill.lines || [] }) + '\'>'
       + '<div><span class="c-no">' + NO + '</span><div class="c-t">' + c.t + '</div><div class="cond">'
       + c.cond.map(x => '<span>' + x + '</span>').join('') + '</div></div>'
@@ -381,6 +381,7 @@ const RUN = {
   'ds-off':   "CASE['ds-off']()",
   'ds-on':    "CASE['ds-on']()",
   'ds-empty': "CASE['ds-empty']()",
+  'desc-name': "goKT('메인상품'); toast('AS-IS 「설명 바꾸기」 모달이 열립니다 — 메뉴 이름만 「설명 수정」', '#73767A')",
   'ds-item':  "goKT('결합할인'); toast('AS-IS 「설명 바꾸기」 모달이 열립니다 — 메뉴 이름만 「설명 수정」', '#73767A')"
 };
 const MODAL = a => /^(tag|plat|reg-|ds-(off|on|empty))/.test(a);
