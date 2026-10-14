@@ -121,7 +121,7 @@ h2 .tagx{font-size:12px;font-weight:700;color:var(--primary);background:var(--bl
   <div class="eyebrow">인터넷 상품 관리 · [메인상품] 탭 · 디자인 · 개발 참고용<span id="updAt" style="margin-left:14px;color:var(--g400)"></span></div>
   <h1>우클릭 메뉴 케이스</h1>
   <p class="lead">카드를 어떤 상태에서 우클릭하느냐에 따라 뜨는 메뉴를 <b>전부 펼쳐</b> 정리했습니다. 회색은 AS-IS 그대로(베타 실측 10/12), <b style="color:var(--primary)">파란색</b>은 이번에 추가되는 항목입니다.<br>
-  파란 항목을 누르면 <b>인터넷 상품 관리 목업을 그 상태로 띄워 실제 모달 · 토스트</b>가 실행됩니다.<br>AS-IS 「설명 바꾸기」는 <b>모든 카드에서 「설명 수정」으로 이름만</b> 바뀝니다(10/13 · 모달은 AS-IS). 결합할인 분류만 새 모달입니다.</p>
+  파란 항목을 누르면 <b>인터넷 상품 관리 목업을 그 상태로 띄워 실제 모달 · 토스트</b>가 실행됩니다.<br>AS-IS 「설명 바꾸기」는 <b>모든 카드에서 「설명 수정」으로 이름만</b> 바뀝니다(10/13 · 모달은 AS-IS). 결합할인만 모달 안 필드 라벨이 바뀝니다 — 상품명 → 할인명, 상품 설명 → CRM 설명(10/14).</p>
   <div class="legend">
     <span><i class="sw sel"></i>고른 왼쪽 열 카드</span>
     <span><i class="sw lit"></i>초록선으로 이어진 오른쪽 열 카드</span>
@@ -169,7 +169,7 @@ h2 .tagx{font-size:12px;font-weight:700;color:var(--primary);background:var(--bl
 <div id="secEtc"></div>
 
 <h2 id="disc">결합할인 <span class="tagx">결합할인 탭</span></h2>
-<p class="h2sub">상품 조합이 없어 선택 상태와 무관합니다. 바뀌는 건 <b>「설명 바꾸기」 → 「설명 수정」</b> 하나 — 분류는 새 모달로 <b>대체</b>, 항목은 <b>이름만</b> 바꾸고 모달은 AS-IS 그대로입니다. 10/13부터 「설명 수정」 이름은 <b>모든 카드 공통</b> — 결합할인 분류만 새 모달, 나머지는 AS-IS 모달.</p>
+<p class="h2sub">상품 조합이 없어 선택 상태와 무관하고, <b>분류 · 항목 구분 없이 같은 규칙</b>입니다(10/14). 추가는 <b>「플랫폼 노출 설정」</b> 하나 — 다른 카드와 같은 이름 · 같은 모달 컴포넌트에서 할인명 · CRM 설명(보기만) · 노출 위치(신청서만, 플랫폼은 비활성 + 툴팁) · 설명(신청서 체크 시 필수). 월요금 · 결합요금 · JSON은 없습니다. 「설명 수정」은 AS-IS 설명 바꾸기 모달에서 <b>필드 라벨만</b> 바뀝니다 — 상품명 → 할인명, 상품 설명 → CRM 설명. <b>결합할인에만 해당</b>하고 다른 카드는 AS-IS 라벨 그대로입니다.</p>
 <div id="secDisc"></div>
 
 <div class="foot">
@@ -271,13 +271,13 @@ const CASES = {
  secDisc: [
   { t: '분류 우클릭', cond: ['선택 상태와 무관'],
     ill: { set: '총액 결합할인', L: ['분류', '총액 결합할인'], R: ['항목', '22,000원 미만', '64,900원 이상', '174,900원 이상'], rc: ['L', 0] },
-    menu: [A('상품 할인 설정'), A('상품 이벤트 설정'), A('금지 코드 설정'), SEP, N('설명 수정', 'ds-off', '모달', '대체'), A('우선순위 변경 (기본)'), A('사용중지')],
-    notes: ['AS-IS 「설명 바꾸기」 자리에 <b>「설명 수정」 — 새 모달</b> (할인명 · CRM 설명 · 신청서 노출 · 신청서 설명)', '기존 모달은 전 상품 공통 컴포넌트라 고치지 않고 대체 (FE)', '「금지 코드 설정」은 분류에만 있음 (AS-IS)'],
-    more: [['ds-on', '신청서 노출 켜짐'], ['ds-empty', '켜짐 + 신청서 설명 빈칸']] },
+    menu: [A('상품 할인 설정'), A('상품 이벤트 설정'), A('금지 코드 설정'), N('플랫폼 노출 설정', 'ds-on', '모달'), N('설명 수정', 'dn-cls', 'AS-IS 모달', '라벨'), A('우선순위 변경 (기본)'), A('사용중지')],
+    notes: ['「플랫폼 노출 설정」 — 할인명 · CRM 설명은 「설명 수정」에서 입력한 값을 <b>보기만</b>', '노출 위치 : 신청서만 선택 가능. 「플랫폼(ajd.co.kr)」은 해제 상태로 비활성 + 툴팁', '설명 : 신청서 체크 시 필수 — [저장]은 활성, 비어 있으면 인라인 오류 「설명을 입력해 주세요.」', '월요금 · 결합요금 · JSON 없음', '「설명 수정」 : AS-IS 모달에서 라벨만 변경 — 상품명 → 할인명, 상품 설명 → CRM 설명 (결합할인만)', '「금지 코드 설정」은 분류에만 있음 (AS-IS)'],
+    more: [['ds-off', '플랫폼 노출 설정 · 신청서 노출 꺼짐'], ['ds-empty', '플랫폼 노출 설정 · 설명 빈칸 오류'], ['ds-tip', '플랫폼 노출 설정 · 플랫폼 체크 불가 툴팁'], ['dn-empty', '설명 수정 · 할인명 빈칸 오류']] },
   { t: '항목 우클릭', cond: ['선택 상태와 무관'],
     ill: { set: '총액 결합할인', L: ['분류', '총액 결합할인'], R: ['항목', '22,000원 미만', '64,900원 이상', '174,900원 이상'], rc: ['R', 1] },
-    menu: [A('상품 할인 설정'), A('상품 이벤트 설정'), SEP, N('설명 수정', 'ds-item', 'AS-IS 모달', '이름'), A('위로'), A('아래로'), A('우선순위 변경 (기본)'), A('사용중지')],
-    notes: ['<b>이름만</b> 「설명 바꾸기」 → 「설명 수정」. 모달은 AS-IS 설명 바꾸기 그대로 — 분류의 설명 수정 모달과 다름'] }
+    menu: [A('상품 할인 설정'), A('상품 이벤트 설정'), N('플랫폼 노출 설정', 'ds-item', '모달'), N('설명 수정', 'dn-item', 'AS-IS 모달', '라벨'), A('위로'), A('아래로'), A('우선순위 변경 (기본)'), A('사용중지')],
+    notes: ['분류와 <b>같은 메뉴 · 같은 모달 · 같은 규칙</b> — 할인명 자리에 항목 이름', '항목의 신청서 노출 · 설명은 <b>저장만 되고 노출되는 곳이 없음</b> (BE 설계상 분류 · 항목 모두 필드를 둠)', '「설명 수정」 : 분류와 같이 라벨만 변경 (상품명 → 할인명, 상품 설명 → CRM 설명)'] }
  ]
 };
 
@@ -321,7 +321,7 @@ Object.keys(CASES).forEach(sec => {
       + '<div>' + menu(c.menu) + '</div>'
       + '<div class="notes"><ul>' + c.notes.map(n => '<li>' + n + '</li>').join('') + '</ul>'
       + '<div class="acts">' + acts.map(m => '<button data-act="' + m.act + '" data-l="' + esc(m.l) + '">' + esc(m.l) + ' 실행 · ' + m.how + '</button>').join('')
-      + (c.more || []).map(x => '<button data-act="' + x[0] + '" data-l="설명 수정 · ' + esc(x[1]) + '">설명 수정 · ' + esc(x[1]) + '</button>').join('') + '</div></div>'
+      + (c.more || []).map(x => '<button data-act="' + x[0] + '" data-l="' + esc(x[1]) + '">' + esc(x[1]) + '</button>').join('') + '</div></div>'
       + '</div>';
   }).join('');
 });
@@ -380,11 +380,15 @@ const RUN = {
   'auto-tv': "AUTO[autoK('TV세트','에센스')]='기가지니3A'; __pair('TV세트','에센스','일반셋톱'); setAuto(grp('TV세트'))",
   'ds-off':   "CASE['ds-off']()",
   'ds-on':    "CASE['ds-on']()",
+  'ds-tip':   "CASE['ds-tip']()",
+  'ds-item':  "CASE['ds-item']()",
   'ds-empty': "CASE['ds-empty']()",
-  'desc-name': "goKT('메인상품'); toast('AS-IS 「설명 바꾸기」 모달이 열립니다 — 메뉴 이름만 「설명 수정」', '#73767A')",
-  'ds-item':  "goKT('결합할인'); toast('AS-IS 「설명 바꾸기」 모달이 열립니다 — 메뉴 이름만 「설명 수정」', '#73767A')"
+  'dn-cls':   "CASE['dn-cls']()",
+  'dn-empty': "CASE['dn-empty']()",
+  'dn-item':  "goKT('결합할인'); openDn(1, '64,900원 이상')",
+  'desc-name': "goKT('메인상품'); toast('AS-IS 「설명 바꾸기」 모달이 열립니다 — 메뉴 이름만 「설명 수정」', '#73767A')"
 };
-const MODAL = a => /^(tag|plat|reg-|ds-(off|on|empty))/.test(a);
+const MODAL = a => /^(tag|plat|reg-|ds-|dn-)/.test(a);
 const stage = document.getElementById('stage'), frame = document.getElementById('stFrame');
 let ready = null, watch = null;
 function load(){

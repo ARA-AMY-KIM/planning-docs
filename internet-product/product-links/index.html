@@ -528,12 +528,12 @@ input.srch{font-family:inherit;outline:none;color:var(--g900);padding:8px 34px 8
  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' fill='%238D8F94'/%3E%3C/svg%3E");
  background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
 input.srch::placeholder{color:var(--g300)}
-/* 구분 고정 표기 (상품 조합은 인터넷 전용) */
-.lockfld{display:inline-flex;align-items:center;gap:8px;height:36px;padding:8px 12px;border:1px solid var(--g100);
- border-radius:8px;background:var(--g25);font-size:14px;letter-spacing:-.3px}
+/* 구분 선택 (잠금 필드 아님 — 검색·열 편집과 동일한 컨트롤) */
+.lockfld{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--g200);
+ border-radius:8px;background:#fff;font-size:14px;letter-spacing:-.3px}
 .lockfld .lk{font-size:12px;color:var(--g500)}
 .lockfld b{font-weight:700;color:var(--g900)}
-.svcsel{border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:700;color:var(--g900);cursor:pointer;padding:0 2px;outline:none}
+.svcsel{border:none;background:transparent;font-family:inherit;font-size:14px;font-weight:400;color:var(--g900);cursor:pointer;padding:0 2px;outline:none}
 .lockfld .lktag{font-size:11px;font-weight:600;color:var(--g500);background:#fff;border:1px solid var(--g100);
  border-radius:3px;padding:1px 6px}
 /* ===== 10/13 개편 — rowspan 폐기 · 속성 조합 1행 · 통신사 컬럼 ===== */
@@ -544,23 +544,38 @@ input.srch::placeholder{color:var(--g300)}
 .srchwrap input{height:36px;width:260px;padding:8px 12px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-family:inherit;background:#fff;color:var(--g900)}
 .needrep{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--g700);cursor:pointer;user-select:none;margin-left:auto}
 .needrep input{width:16px;height:16px;accent-color:var(--primary);cursor:pointer}
+.colwrap{position:relative}
+.colbtn{height:36px;padding:0 12px;border:1px solid var(--g100);border-radius:8px;background:#fff;font-family:inherit;font-size:14px;
+  letter-spacing:-.3px;color:var(--g700);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.colbtn b{font-weight:700;color:var(--g900)}
+.colbtn i{font-style:normal;font-size:11px;color:var(--g400)}
+.colpop{position:absolute;top:42px;left:0;z-index:60;min-width:200px;background:#fff;border:1px solid var(--g100);
+  border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.1);padding:8px}
+.colpop label{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;font-size:13px;color:var(--g900);cursor:pointer}
+.colpop label:hover{background:var(--g25)}
+.colpop input{width:16px;height:16px;accent-color:var(--primary)}
+.colpop label.lock{color:var(--g300);cursor:default}
+.colnoti{position:absolute;top:42px;left:0;z-index:50;white-space:nowrap;font-size:12px;color:var(--g700);
+  background:#fff;border:1px solid var(--g100);border-radius:8px;padding:8px 10px;box-shadow:0 4px 14px rgba(0,0,0,.07)}
+.colnoti a{color:var(--primary);font-weight:700;margin-left:8px;cursor:pointer}
+.colnoti[hidden],.colpop[hidden]{display:none}
 .needrep[hidden]{display:none}
 .needrep.dis{color:var(--g300);cursor:default}
 .needrep.dis input{cursor:default}
 .needrep b{font-weight:700}
 
 .tblscroll{overflow-x:auto;border:1px solid var(--g100);border-radius:10px}
-table.ctl2{border-collapse:separate;border-spacing:0;width:max-content;min-width:100%;font-size:13px;background:#fff}
+table.ctl2{border-collapse:separate;border-spacing:0;table-layout:fixed;font-size:13px;background:#fff}
 table.ctl2 th,table.ctl2 td{border-bottom:1px solid var(--g100);padding:10px 12px;text-align:left;vertical-align:top;background:#fff}
-table.ctl2 thead th{position:sticky;top:0;z-index:3;background:var(--g25);font-weight:600;color:var(--g600);font-size:12.5px;white-space:nowrap;border-bottom:1px solid var(--g200)}
+table.ctl2 thead th{position:sticky;top:0;z-index:3;background:var(--g25);font-weight:600;color:var(--g600);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid var(--g200)}
 table.ctl2 tbody tr:hover td{background:var(--g25)}
 .fz{position:sticky;background:#fff;z-index:2}
 table.ctl2 thead th.fz{z-index:4}
 .fz-last{border-right:2px solid var(--g200)!important}
 table.ctl2 tbody tr:hover .fz{background:var(--g25)}
-.acell{white-space:nowrap;color:var(--g900)}
+.acell{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--g900)}
 .acell .non{color:var(--g900)}
-.vcell{display:table-cell;vertical-align:top;position:relative;min-width:190px;max-width:none;white-space:normal;cursor:default;gap:0}
+.vcell{display:table-cell;vertical-align:top;position:relative;white-space:normal;word-break:break-all;cursor:default;gap:0}
 .vcell .l1{color:var(--g900);font-weight:400;line-height:1.45}
 .vcell .l2{color:var(--g900);line-height:1.45;margin-top:1px}
 .vcell.unused .l1,.vcell.unused .l2{color:var(--g400)}
@@ -626,8 +641,12 @@ table.ctl2 tbody tr:hover .fz{box-shadow:-1px 0 0 0 var(--g25)}
   <div class="bar2">
     <div class="lockfld"><span class="lk">구분</span><select id="svcSel" class="svcsel"><option>인터넷</option><option>TV</option><option>인터넷전화</option><option>일반전화</option></select></div>
     <div class="srchwrap">
-      <select id="qf"><option value="attr">속성</option><option value="prod">상품</option></select>
-      <input id="q" type="text" placeholder="속성값으로 검색">
+      <input id="q" type="text" placeholder="속성, 상품명으로 검색">
+    </div>
+    <div class="colwrap">
+      <button class="colbtn" id="colBtn">열 편집 <b id="colN"></b> <i>▾</i></button>
+      <div class="colpop" id="colPop" hidden></div>
+      <div class="colnoti" id="colNoti" hidden></div>
     </div>
     <label class="needrep" id="needRepLbl"><input type="checkbox" id="needRep"><span>대표 재지정 필요 <b id="needRepN">0</b></span></label>
   </div>
@@ -683,7 +702,8 @@ const ANAMES={'인터넷':['속도','구성제품','추가구성옵션'],'TV':['
 const $=id=>document.getElementById(id);
 const COLS={'인터넷':['인터넷상품','기본WIFI'],'TV':['TV채널','셋탑박스'],'인터넷전화':['전화상품','전화기기'],'일반전화':['전화상품','전화기기']};
 const VENDORS=["KT","LG","SKT","SKB","SkyLife","LG HelloVision","딜라이브","HCN"];
-let SV='인터넷', QF='attr', Q='', NEEDREP=false, PANEL=null, PV=null;
+let VISV=VENDORS.slice(0,4);          /* 기본 노출 통신사 4개 */
+let SV='인터넷', Q='', NEEDREP=false, PANEL=null, PV=null;
 const REP={}; R.forEach((r,i)=>{ if(r[11]) REP[r[12]]=i; });
 
 /* 속성 표시 순서 — 상품속성 관리의 행 순서. 인터넷은 실측값, 그 외는 데이터 등장 순서로 대체 */
@@ -726,7 +746,7 @@ function badVendors(row){
   return out;
 }
 function hitsOf(row){
-  const q=Q.trim(); const h={}; if(!q||QF!=='prod') return h;
+  const q=Q.trim(); const h={}; if(!q) return h;
   VENDORS.forEach(v=>{ const n=cellItems(row.items,v).filter(i=>(R[i][2]||'').indexOf(q)>=0||(R[i][3]||'').indexOf(q)>=0).length; if(n) h[v]=n; });
   return h;
 }
@@ -734,8 +754,22 @@ function showRow(row){
   const q=Q.trim();
   if(NEEDREP && !badVendors(row).length) return false;
   if(!q) return true;
-  if(QF==='attr') return row.k.split('|').some(x=>x.indexOf(q)>=0);
-  return Object.keys(hitsOf(row)).length>0;
+  if(row.k.split('|').some(x=>x.indexOf(q)>=0)) return true;      /* 속성값 일치 */
+  return Object.keys(hitsOf(row)).length>0;                        /* 상품명·세트상품명 일치 */
+}
+
+/* 속성 열 폭 — 헤더와 값 중 가장 긴 문자열 기준. 열 편집과 무관하게 고정 */
+const MCTX=document.createElement('canvas').getContext('2d');
+function attrWidths(AN){
+  const fam=getComputedStyle(document.body).fontFamily;
+  const out=[];
+  AN.forEach((a,k)=>{
+    MCTX.font='600 12.5px '+fam; let w=MCTX.measureText(a).width;
+    MCTX.font='400 13px '+fam;
+    ordOf(SV,k).forEach(v=>{ const t=MCTX.measureText(v).width; if(t>w) w=t; });
+    out.push(Math.min(180, Math.max(96, Math.ceil(w)+26)));
+  });
+  return out;
 }
 
 /* ===== 본 목록 ===== */
@@ -747,23 +781,35 @@ function render(){
 
   $('needRepN').textContent=needN;
   $('needRepLbl').hidden = (needN===0 && !NEEDREP);
-  $('q').placeholder = QF==='prod' ? '상품명으로 검색' : '속성값으로 검색';
 
   const total=R.filter(r=>r[0]===SV).length;
   $('cnt').innerHTML='총 <b>'+shown.length+'</b>건';
 
-  /* 고정 영역 좌표 — 속성 n칸(110px) + 수정(56px) */
-  const AW=110, EW=56;
+  /* 고정 영역 좌표 — 속성 n칸(110px) + 수정(56px). 이 폭은 열 편집과 무관하게 고정 */
+  const EW=56, VMIN=190;
+  const AWS=attrWidths(AN);                 /* 속성 열은 값 길이에 맞춘 고정폭 */
   let left=0; const lefts=[];
-  for(let k=0;k<n;k++){ lefts.push(left); left+=AW; }
+  for(let k=0;k<n;k++){ lefts.push(left); left+=AWS[k]; }
   const editLeft=left;
+  const FIX=editLeft+EW;
+  /* 남는 가로폭은 통신사 열이 나눠 갖는다 (최소 190px) */
+  const avail=$('ctl2').parentNode.clientWidth;
+  const VW=Math.max(VMIN, Math.floor((avail-FIX-1)/Math.max(1,VISV.length)));
+  $('ctl2').style.width=(FIX+VW*VISV.length)+'px';
 
-  let th='<tr>';
-  AN.forEach((a,k)=>{ th+='<th class="fz" style="left:'+lefts[k]+'px;min-width:'+AW+'px">'+a+'</th>'; });
-  th+='<th class="fz fz-last" style="left:'+editLeft+'px;min-width:'+EW+'px;text-align:center">수정</th>';
-  VENDORS.forEach(v=>{ th+='<th>'+v+'</th>'; });
+  let th='<colgroup>';
+  for(let k=0;k<n;k++) th+='<col style="width:'+AWS[k]+'px">';
+  th+='<col style="width:'+EW+'px">';
+  VISV.forEach(()=>{ th+='<col style="width:'+VW+'px">'; });
+  th+='</colgroup><tr>';
+  AN.forEach((a,k)=>{ th+='<th class="fz" style="left:'+lefts[k]+'px">'+a+'</th>'; });
+  th+='<th class="fz fz-last" style="left:'+editLeft+'px;text-align:center">수정</th>';
+  VISV.forEach(v=>{ th+='<th>'+v+'</th>'; });
   th+='</tr>';
-  $('thead2').innerHTML=th;
+  const ci=th.indexOf('</colgroup>')+11;
+  $('ctl2').querySelectorAll('colgroup').forEach(c=>c.remove());
+  $('ctl2').insertAdjacentHTML('afterbegin', th.slice(0,ci));
+  $('thead2').innerHTML=th.slice(ci);
 
   const q=Q.trim();
   let html='';
@@ -772,12 +818,12 @@ function render(){
     html+='<tr>';
     A.forEach((x,k)=>{ html+='<td class="fz acell" style="left:'+lefts[k]+'px">'+(x==='없음'?'<span class="non">없음</span>':esc(x))+'</td>'; });
     html+='<td class="fz fz-last" style="left:'+editLeft+'px;text-align:center"><button class="editbtn" data-k="'+esc(row.k)+'" title="대표 지정 · 등록 해제">✎</button></td>';
-    VENDORS.forEach(v=>{
+    VISV.forEach(v=>{
       const ii=cellItems(row.items,v);
       if(!ii.length){ html+='<td class="vcell"><span class="dash">–</span></td>'; return; }
       const ri=repOf(row.items,v), r=R[ri], un=!used(ri);
-      const l1hit = q && QF==='prod' && (r[2]||'').indexOf(q)>=0;
-      const l2hit = q && QF==='prod' && (r[3]||'').indexOf(q)>=0;
+      const l1hit = q && (r[2]||'').indexOf(q)>=0;
+      const l2hit = q && (r[3]||'').indexOf(q)>=0;
       let meta='';
       if(hits[v]) meta='<div class="meta hit">일치 '+hits[v]+'건</div>';
       else if(ii.length>1) meta='<div class="meta">'+ii.length+'건</div>';
@@ -790,9 +836,34 @@ function render(){
     html+='</tr>';
   });
   $('body2').innerHTML = shown.length ? html
-    : '<tr><td colspan="'+(n+1+VENDORS.length)+'" style="height:140px;text-align:center;color:var(--g400)">조건에 맞는 속성 조합이 없습니다</td></tr>';
+    : '<tr><td colspan="'+(n+1+VISV.length)+'" style="height:140px;text-align:center;color:var(--g400)">조건에 맞는 속성 조합이 없습니다</td></tr>';
 
   $('body2').querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>openPanel(b.dataset.k));
+  renderCols(shown);
+}
+
+/* ===== 열 편집 ===== */
+function renderCols(shown){
+  $('colN').textContent = VISV.length+'/'+VENDORS.length;
+  $('colPop').innerHTML = VENDORS.map(v=>{
+    const on=VISV.indexOf(v)>=0, lock=on&&VISV.length===1;
+    return '<label class="'+(lock?'lock':'')+'"><input type="checkbox" data-v="'+v+'"'+(on?' checked':'')+(lock?' disabled':'')+'>'+v+'</label>';
+  }).join('');
+  $('colPop').querySelectorAll('input').forEach(el=>el.onchange=()=>{
+    const v=el.dataset.v;
+    VISV = el.checked ? VENDORS.filter(x=>VISV.indexOf(x)>=0||x===v) : VISV.filter(x=>x!==v);
+    render();
+  });
+  const q=Q.trim(), hid={};
+  if(q) shown.forEach(row=>{ const h=hitsOf(row); Object.keys(h).forEach(v=>{ if(VISV.indexOf(v)<0) hid[v]=(hid[v]||0)+h[v]; }); });
+  const hv=Object.keys(hid);
+  if(hv.length){
+    $('colNoti').hidden=false;
+    $('colNoti').innerHTML='숨긴 통신사에 일치 '+hv.map(v=>v+' '+hid[v]+'건').join(' · ')+'<a id="colAdd">열에 추가</a>';
+    $('colNoti').querySelector('#colAdd').onclick=()=>{
+      VISV = VENDORS.filter(x=>VISV.indexOf(x)>=0||hv.indexOf(x)>=0); render();
+    };
+  } else { $('colNoti').hidden=true; $('colNoti').innerHTML=''; }
 }
 
 /* ===== 사이드 패널 ===== */
@@ -841,7 +912,7 @@ function renderPanel(){
   let h='<table class="ptbl"><thead><tr><th style="width:52px">대표</th><th>'+COLS[SV][0]+'</th><th>'+COLS[SV][1]+'</th><th style="width:84px">상태</th><th style="width:44px"></th></tr></thead><tbody>';
   ii.forEach(i=>{
     const r=R[i], un=!used(i), isRep=(i===rep);
-    const n1hit=q&&QF==='prod'&&(r[2]||'').indexOf(q)>=0, n2hit=q&&QF==='prod'&&(r[3]||'').indexOf(q)>=0;
+    const n1hit=q&&(r[2]||'').indexOf(q)>=0, n2hit=q&&(r[3]||'').indexOf(q)>=0;
     h+='<tr class="'+(un?'unused':'')+'">'
       +'<td style="text-align:center">'+(un
           ? '<input type="radio" disabled'+(isRep?' checked':'')+' title="미사용 상품은 대표로 지정할 수 없습니다.">'
@@ -890,8 +961,10 @@ $('dlOk').onclick=()=>{ const r=R[delI]; $('ovDel').hidden=true; toast('등록 �
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(!$('ovDel').hidden){$('ovDel').hidden=true;} else if(!$('ovPanel').hidden){closePanel();} } });
 $('pScrim').onclick=closePanel; $('pClose').onclick=closePanel;
 $('svcSel').onchange=()=>{ SV=$('svcSel').value; Q=''; $('q').value=''; NEEDREP=false; $('needRep').checked=false; closePanel(); render(); };
-$('qf').onchange=()=>{ QF=$('qf').value; render(); };
 $('q').oninput=()=>{ Q=$('q').value; if(Q.trim()&&NEEDREP){ NEEDREP=false; $('needRep').checked=false; } render(); };
+let RSZ; window.addEventListener('resize',()=>{ clearTimeout(RSZ); RSZ=setTimeout(render,120); });
+$('colBtn').onclick=e=>{ e.stopPropagation(); $('colPop').hidden=!$('colPop').hidden; };
+document.addEventListener('click',e=>{ if(!e.target.closest('.colwrap')) $('colPop').hidden=true; });
 $('needRep').onchange=()=>{
   NEEDREP=$('needRep').checked;
   if(NEEDREP){ Q=''; $('q').value=''; }        /* 검색어는 풀고 재지정 필요만 본다 */
@@ -909,19 +982,19 @@ render();
 <div class="sheet" style="padding-top:32px">
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">범위</span><span class="spec-t">인터넷 전용 · 조회 · 대표 지정 · 등록 해제</span></div>
+  <div class="spec-head"><span class="chip-v">범위</span><span class="spec-t">전 구분 · 조회 · 대표 지정 · 등록 해제</span></div>
   <div class="desc" style="margin:0 0 12px"><div class="desc-l">DESCRIPTION</div>
-    <p><b>10/07 — 인터넷 외(TV · 인터넷전화 · 일반전화)까지 다룹니다.</b> 인터넷 외는 태그 VIEW가 없지만, 통신사를 바꾸면 상품과 세트상품이 <b>둘 다 속성으로 이어집니다</b>(AS-IS 실측 · 지금은 레벨로 정함). 레벨을 걷어내므로 대표가 필요합니다.</p>
-    <p><b>인터넷 외는 등록이 없습니다.</b> 초록선이 있는 상품 조합은 두 카드의 태그로 속성 조합이 자동으로 정해져 전부 목록에 들어갑니다. 운영자는 상품 조합이 2개 이상인 속성 조합에서 대표만 고릅니다. 상품 조합을 빼려면 인터넷 상품 관리에서 초록선을 지웁니다.</p></div>
+    <p><b>인터넷 외(TV · 인터넷전화 · 일반전화)까지 다룹니다.</b> 인터넷 외는 태그 VIEW가 없지만, 통신사를 바꾸면 상품과 세트상품이 <b>둘 다 속성으로 이어집니다</b>(AS-IS 실측 · 지금은 레벨로 정함). 레벨을 걷어내므로 대표가 필요합니다.</p>
+    <p><b>인터넷 외는 등록이 없습니다.</b> 초록선이 있는 상품 조합은 두 카드의 태그로 속성 조합이 자동으로 정해져 전부 목록에 들어갑니다. 상품 조합을 빼려면 인터넷 상품 관리에서 초록선을 지웁니다.</p></div>
   <div class="table-wrap">
   <table class="mx">
     <thead><tr><th style="width:22%">동작</th><th style="width:16%">여기서</th><th>비고</th></tr></thead>
     <tbody>
-      <tr><th>조회</th><td>합니다</td><td>구분 셀렉트(인터넷 · TV · 인터넷전화 · 일반전화) + 업체 탭 · 검색 없음 — 행 단위 검색은 속성 조합을 쪼개 대표 비교를 막습니다</td></tr>
-      <tr><th>대표 지정</th><td>합니다</td><td>목록 라디오 한 번 · 해제 왼쪽 컬럼</td></tr>
-      <tr><th>등록 해제</th><td>인터넷만</td><td>행 끝 ✕ → 확인 모달 · <b>이 화면의 유일한 모달</b>. 인터넷 외는 해제 컬럼이 없습니다 — 초록선을 지우면 빠집니다</td></tr>
+      <tr><th>조회</th><td>합니다</td><td>구분 셀렉트 + 통합 검색 + 열 편집 + 「대표 재지정 필요」</td></tr>
+      <tr><th>대표 지정</th><td>합니다</td><td>행 수정 버튼 → 사이드 패널 → 라디오 한 번에 즉시 저장</td></tr>
+      <tr><th>등록 해제</th><td>인터넷만</td><td>사이드 패널 행 끝 ✕ → 확인 모달 · <b>이 화면의 유일한 모달</b>. 인터넷 외는 해제 컬럼이 없습니다</td></tr>
       <tr><th>새 상품 조합 등록</th><td class="bad">안 합니다</td><td>인터넷 상품 관리에서 상품 조합을 고른 뒤 기본WIFI 우클릭 → 「상품 조합 등록」 — 모달 시안은 <a href="/internet-product/products/#modal-cases">인터넷 상품 관리</a> 하단</td></tr>
-      <tr><th>속성 조합 수정</th><td class="bad">불가</td><td>규칙 9 — 해제 후 재등록</td></tr>
+      <tr><th>속성 조합 수정</th><td class="bad">불가</td><td>해제 후 재등록</td></tr>
       <tr><th>사용여부 변경</th><td class="bad">안 합니다</td><td>인터넷 상품 관리의 상품 패널에서만. 여기선 결과만 표시</td></tr>
     </tbody>
   </table>
@@ -929,46 +1002,72 @@ render();
 </div>
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">컬럼</span><span class="spec-t">구분별</span></div>
+  <div class="spec-head"><span class="chip-v">구조</span><span class="spec-t">행 = 속성 조합 · 열 = 통신사</span></div>
+  <div class="desc" style="margin:0 0 12px"><div class="desc-l">DESCRIPTION</div>
+    <p><b>10/13 — <code>rowspan</code>을 폐기했습니다.</b> 1행 = 속성 조합 1건이고 통신사가 컬럼으로 들어갑니다. 인터넷 71행(통신사 무관 속성 조합 수) × 8열이며, 셀마다 <b>그 통신사의 대표 1건</b>만 보여줍니다. 나머지 조합은 사이드 패널에서 봅니다.</p>
+    <p>왼쪽 <b>속성 n칸 + 수정 버튼</b>은 횡스크롤 고정 영역입니다. 속성 열 폭은 구분별 속성값 길이로 정해지고 <b>열 편집과 무관하게 고정</b>이며, 남는 가로폭은 통신사 열이 나눠 갖습니다(최소 190px).</p></div>
   <div class="table-wrap">
   <table class="mx">
-    <thead><tr><th style="width:16%">구분</th><th style="width:17%">좌</th><th style="width:17%">우</th><th>자리 1 · 2 · 3</th></tr></thead>
+    <thead><tr><th style="width:16%">구분</th><th style="width:30%">속성 칸</th><th style="width:17%">셀 1줄</th><th>셀 2줄</th></tr></thead>
     <tbody>
-      <tr><th>인터넷</th><td>인터넷상품</td><td>기본WIFI</td><td>속도 · 구성제품 · 추가구성옵션</td></tr>
-      <tr><th>TV</th><td>TV채널</td><td>셋탑박스</td><td>라인 · 셋탑</td></tr>
-      <tr><th>인터넷전화</th><td>전화상품</td><td>전화기기</td><td>요금방식 · 전화기기</td></tr>
-      <tr><th>일반전화</th><td>전화상품</td><td>전화기기</td><td>요금방식 · 전화기기</td></tr>
+      <tr><th>인터넷</th><td>속도 · 구성제품 · 추가구성옵션</td><td>인터넷상품</td><td>기본WIFI</td></tr>
+      <tr><th>TV</th><td>라인 · 셋탑</td><td>TV채널</td><td>셋탑박스</td></tr>
+      <tr><th>인터넷전화</th><td>요금방식 · 전화기기</td><td>전화상품</td><td>전화기기</td></tr>
+      <tr><th>일반전화</th><td>요금방식 · 전화기기</td><td>전화상품</td><td>전화기기</td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p>인터넷 상품 관리의 컬럼명을 그대로 씁니다. 구분을 바꾸면 컬럼명과 속성 칸 수가 바뀝니다(인터넷 3칸 · 그 외 2칸). 카드에 태그가 없는 상품 조합은 속성 조합을 계산할 수 없어 목록에서 빠지고, 개수 줄에 「빠진 상품 조합 N건」으로 표시합니다.</p>
-    <p class="q">해소됨 — 「결합할인을 별도 탭으로 뺄지」는 <b>결합할인이 Phase 2 ⑥으로 이동</b>하면서 이 화면의 논점이 아니게 됐습니다.</p>
+    <p>셀 안에서 상품과 세트상품을 <code>×</code>로 잇지 않고 <b>두 줄</b>로 둡니다. 컬럼명은 인터넷 상품 관리를 그대로 씁니다. 카드에 태그가 없는 상품 조합은 속성 조합을 계산할 수 없어 목록에서 빠집니다.</p>
   </div>
-</div>
 </div>
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">표시</span><span class="spec-t">셀 병합 · 값 표기</span></div>
+  <div class="spec-head"><span class="chip-v">표시</span><span class="spec-t">폰트 컬러만 · 셀 배경 금지</span></div>
   <div class="table-wrap">
   <table class="mx">
-    <thead><tr><th style="width:24%">대상</th><th>표시</th></tr></thead>
+    <thead><tr><th style="width:26%">대상</th><th>표시</th></tr></thead>
     <tbody>
-      <tr><th>같은 속성 조합</th><td>자리 3칸을 <code>rowspan</code>으로 <b>병합</b> · 속성 조합이 바뀌는 행에 진한 가로선(gray-200)</td></tr>
-      <tr><th>속성 「없음」</th><td>회색</td></tr>
-      <tr><th>세트상품 단품 행</th><td>AS-IS 목록에는 <b>세트상품 자체에 태그를 붙인 행</b>이 섞여 있습니다(<code>KT와이파이7D | – | 프리미엄WiFi</code> · KT 9건). <b>이관하지 않고 폐기</b>합니다 — 현재 노출되는 곳이 없습니다 (확인 필요 사항 C-7)</td></tr>
-      <tr><th>세트상품 빈 값</th><td>회색 <b>「미적용」</b> — 인터넷 217건 중 20건(9%)이 정상적으로 비어 있습니다(WiFi 없이 파는 상품)</td></tr>
-      <tr><th>자리 칸 마우스 호버</th><td>그 업체의 <b>태그명</b> — <code>100Mbps(광랜 1년)</code>. 클릭 동작은 없습니다</td></tr>
-      <tr><th>미사용 상품</th><td>행 흐리게 + 이름 옆 <span class="tag hold">미사용</span></td></tr>
-      <tr><th>대표인데 미사용</th><td class="bad">행 배경 빨강 + 대표 칸에 <b>!</b> · 카운트 줄에 <b>대표 미사용 N건</b>(클릭 시 필터)</td></tr>
+      <tr><th>조합 없는 셀</th><td><code>–</code></td></tr>
+      <tr><th>세트상품 빈 값</th><td><b>「미적용」</b> — 인터넷 217건 중 20건(9%)이 정상적으로 비어 있습니다(WiFi 없이 파는 상품)</td></tr>
+      <tr><th>그 셀에 조합이 2개 이상</th><td>3번째 줄에 <b>「N건」</b></td></tr>
+      <tr><th>대표가 미사용</th><td>상품명 앞에 <b>⚠</b>(error) + 두 줄 모두 gray-400 · 셀 호버 시 툴팁</td></tr>
+      <tr><th>검색 일치</th><td>일치한 줄과 <b>「일치 N건」</b>을 primary 폰트 컬러</td></tr>
+      <tr><th>속성 「없음」 · 「미적용」 · 건수</th><td>gray-900 — <b>항상 보이는 값에는 컬러를 넣지 않습니다</b></td></tr>
+      <tr><th>세트상품 단품 행</th><td>AS-IS에 <b>세트상품 자체에 태그를 붙인 행</b>이 섞여 있습니다(<code>KT와이파이7D | – | 프리미엄WiFi</code> · KT 9건). <b>이관하지 않고 폐기</b>합니다 (확인 필요 사항 C-7)</td></tr>
     </tbody>
   </table>
+  </div>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p><b>디자인시스템 제약</b> — 표 셀에 배경·테두리 컬러를 넣지 않고 폰트 컬러로만 표현합니다. 그 폰트 컬러도 <b>상태를 알리는 값</b>(⚠ 미사용 · 현재 대표 · 검색 일치)에만 씁니다. 상품명 · 속성값 · 「없음」 · 「미적용」 · 건수처럼 항상 보이는 데이터는 전부 gray-900이고, 상품명 볼드도 쓰지 않습니다.</p>
+    <p>미사용 툴팁 — <span class="tok">대표 상품이 미사용이라 이 속성 조합은 상담상세 · 플랫폼에 나가지 않습니다. 다른 조합을 대표로 지정해주세요.</span></p>
+  </div>
+</div>
+
+<div class="spec">
+  <div class="spec-head"><span class="chip-v">검색 · 필터</span><span class="spec-t">구분 · 통합 검색 · 열 편집 · 대표 재지정 필요</span></div>
+  <div class="table-wrap">
+  <table class="mx">
+    <thead><tr><th style="width:22%">컨트롤</th><th style="width:30%">동작</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><th>구분</th><td>셀렉트 1개</td><td>전환 시 검색어 · 필터 · 패널 모두 초기화. 속성 칸 수가 바뀜</td></tr>
+      <tr><th>통합 검색</th><td>속성값 · 상품명 · 세트상품명 부분일치</td><td>검색 옵션 셀렉트 없음 · placeholder 「속성, 상품명으로 검색」. <b>그 값이 어떤 조합으로든 들어 있는 속성 조합 행</b>을 남김</td></tr>
+      <tr><th>열 편집</th><td>통신사 체크박스 · 기본 4개(KT · LG · SKT · SKB)</td><td>최소 1개 유지. 검색 결과가 <b>숨긴 통신사</b>에 있으면 버튼 아래에 「숨긴 통신사에 일치 N건 · 열에 추가」</td></tr>
+      <tr><th>대표 재지정 필요</th><td>체크박스 · 대표가 미사용인 셀이 있는 행만</td><td><b>0건이면 비노출.</b> 현재 인터넷 2건</td></tr>
+      <tr><th>건수</th><td>「총 N건」</td><td>보이는 행 수만. 전체 건수 · 상품 조합 건수는 표기하지 않음</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p><b>검색과 「대표 재지정 필요」는 서로 해제합니다.</b> 검색 중 체크하면 검색어가 지워지고, 체크 상태에서 검색어를 입력하면 체크가 풀립니다 — 두 조건을 AND로 걸면 「재지정 필요 2건 중 검색어도 맞는 행」이라는 결과가 나와, 왜 0건인지 읽히지 않습니다.</p>
+    <p><b>「상품 조합 2개 이상」 필터는 폐기했습니다.</b> <code>rowspan</code> 구조에서는 행 하나가 (업체 · 속성 조합)이라 행 단위 속성이었지만, 지금은 셀마다 건수가 다릅니다. 셀 3번째 줄의 「N건」이 그 자리를 대신합니다.</p>
+    <p class="q">미결 — 백로그 <b>PNB-1898</b>의 헤더 속성 필터가 들어오면 이 셋과의 관계(AND인지 서로 해제인지)를 정해야 합니다.</p>
   </div>
 </div>
 
 <div class="spec">
   <div class="spec-head"><span class="chip-v">정렬</span><span class="spec-t">고정 · 컬럼 클릭 정렬 없음</span></div>
-  <p class="sub" style="margin:0 0 10px">A. 속성 조합 블록끼리</p>
+  <p class="sub" style="margin:0 0 10px">A. 행끼리 (속성 조합)</p>
   <div class="table-wrap">
   <table class="mx">
     <thead><tr><th style="width:8%"></th><th style="width:42%">기준</th><th>어느 쪽이 위인가</th></tr></thead>
@@ -979,46 +1078,73 @@ render();
     </tbody>
   </table>
   </div>
-  <p class="sub" style="margin:4px 0 10px">B. 블록 안의 행끼리</p>
+  <p class="sub" style="margin:4px 0 10px">B. 사이드 패널 안의 행끼리</p>
   <div class="table-wrap">
   <table class="mx">
-    <thead><tr><th style="width:8%"></th><th style="width:34%">기준</th><th style="width:34%">어느 쪽이 위인가</th><th>동률</th></tr></thead>
+    <thead><tr><th style="width:8%"></th><th style="width:30%">기준</th><th style="width:34%">어느 쪽이 위인가</th><th>동률</th></tr></thead>
     <tbody>
-      <tr><th>B-1</th><td>대표 여부</td><td><b>대표가 맨 위</b></td><td class="sub">안 남 — 그룹당 1건</td></tr>
-      <tr><th>B-2</th><td>왼쪽 열 상품</td><td>인터넷 상품 관리에서 <b>위에 있는 카드</b>가 위</td><td class="sub">남</td></tr>
-      <tr><th>B-3</th><td>오른쪽 열 세트상품</td><td>〃</td><td class="sub">날 수 있음</td></tr>
-      <tr><th>B-4</th><td>왼쪽 열 상품명</td><td>글자순</td><td class="sub">날 수 있음</td></tr>
-      <tr><th>B-5</th><td>오른쪽 열 세트상품명</td><td>글자순</td><td class="sub"><b>절대 안 남</b></td></tr>
+      <tr><th>B-1</th><td>대표 여부</td><td><b>대표가 맨 위</b></td><td class="sub">안 남 — 통신사당 1건</td></tr>
+      <tr><th>B-1.5</th><td>사용 여부</td><td>사용 중인 조합이 위</td><td class="sub">남</td></tr>
+      <tr><th>B-2</th><td>상품(1줄) 우선순위</td><td>인터넷 상품 관리에서 <b>위에 있는 카드</b>가 위</td><td class="sub">남</td></tr>
+      <tr><th>B-3</th><td>세트상품(2줄) 우선순위</td><td>〃</td><td class="sub">날 수 있음</td></tr>
+      <tr><th>B-4</th><td>상품명</td><td>글자순</td><td class="sub">날 수 있음</td></tr>
+      <tr><th>B-5</th><td>세트상품명</td><td>글자순</td><td class="sub"><b>절대 안 남</b></td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>「상품속성 관리에서 위에 있는 속성」</b> — 상품속성 관리 화면에서 속성 타입별로 행을 드래그해 정해 둔 순서입니다. 정렬에 쓰는 값은 속성 이름이 아니라 <b>그 행의 순번</b>입니다. 숫자 크기도 가나다도 아닙니다 — 「100Mbps」가 「1Gbps」보다 위인 것은 운영자가 그렇게 놓았기 때문이고, 가나다로 하면 <code>100Mbps · 10Gbps · 1Gbps</code> 순이 됩니다. 이 순번은 <b>상담 하향 대체 순서와 같은 값</b>이라(「같은 값이 없을 때 이 목록의 더 위쪽 값으로 대체됩니다」) 목록이 하향 대체 순서대로 깔립니다. 속성 타입 자체의 순서(속도 → 구성제품 → 추가구성옵션)도 같은 화면을 따릅니다.</p>
-    <p><b>A는 동률이 없습니다</b> — 세 칸이 모두 같으면 정의상 같은 그룹입니다. A-1~A-3을 먼저 정렬해야 같은 속성 조합이 붙어서 <code>rowspan</code> 병합이 성립합니다.</p>
-    <p><b>B-2 · B-3의 「위에 있는 카드」</b> — 인터넷 상품 관리 카드의 우선순위 값입니다. 우클릭 「위로 / 아래로 / 우선순위 변경」으로 정하는 그 순서이고, 그 화면에서 위에 있는 카드가 이 목록에서도 위입니다. <b>이 값을 바꾸면 이 화면의 순서도 따라 바뀝니다.</b></p>
-    <p><b>B-2 동률이 실제로 생깁니다</b> — 상품 A가 세트상품 X · Y 둘 다와 초록선이 있고 X · Y의 태그가 같으면 <code>A×X</code>와 <code>A×Y</code>가 한 그룹에 들어갑니다. 왼쪽 열이 같으니 B-3가 받습니다.</p>
+    <p><b>「상품속성 관리에서 위에 있는 속성」</b> — 상품속성 관리 화면에서 속성 타입별로 행을 드래그해 정해 둔 순서입니다. 정렬에 쓰는 값은 속성 이름이 아니라 <b>그 행의 순번</b>입니다. 숫자 크기도 가나다도 아닙니다 — 「100Mbps」가 「1Gbps」보다 위인 것은 운영자가 그렇게 놓았기 때문이고, 가나다로 하면 <code>100Mbps · 10Gbps · 1Gbps</code> 순이 됩니다. 이 순번은 <b>상담 하향 대체 순서와 같은 값</b>이라 목록이 하향 대체 순서대로 깔립니다. 속성 타입 자체의 순서도 같은 화면을 따릅니다.</p>
+    <p><b>A는 동률이 없습니다</b> — 세 칸이 모두 같으면 정의상 같은 행입니다.</p>
+    <p><b>B-1.5 사용 여부</b> — 미사용 조합도 목록과 패널에서 지우지 않습니다. 대표를 옮기는 것이 유일한 해결책인데 숨기면 그 조건 자체를 발견할 수 없기 때문입니다. 대신 사용 중인 조합을 위로 올립니다. 미사용 조합은 대표로 지정할 수 없어 라디오가 비활성입니다.</p>
+    <p><b>B-2 · B-3의 「위에 있는 카드」</b> — 인터넷 상품 관리 카드의 우선순위 값입니다. <b>이 값을 바꾸면 이 화면의 순서도 따라 바뀝니다.</b></p>
+    <p><b>B-2 동률이 실제로 생깁니다</b> — 상품 A가 세트상품 X · Y 둘 다와 초록선이 있고 X · Y의 태그가 같으면 <code>A×X</code>와 <code>A×Y</code>가 한 칸에 들어갑니다. 1줄이 같으니 B-3가 받습니다.</p>
     <p><b>B-4 · B-5의 「글자순」</b> — 상품명에 한글 · 영문 · 숫자가 섞여 있어 「사전순」으로만 쓰면 구현마다 달라집니다. <b>DB 기본 문자열 정렬 오름차순</b>으로 둡니다. 여기까지 내려오는 것은 우선순위 값이 중복 저장된 예외 상황이라, 어떤 순서든 <b>매번 같기만 하면</b> 됩니다.</p>
-    <p><b>B-5에서 반드시 끝납니다</b> — 상품 조합은 (왼쪽 열 카드 × 오른쪽 열 카드) 쌍이고 같은 쌍이 한 속성 조합에 두 번 등록될 수 없으므로, 두 이름이 모두 같은 행은 존재하지 않습니다. 조합 ID 같은 숨은 값을 쓰지 않아도 순서가 확정됩니다.</p>
-    <p class="q">이 사슬이 없으면 동률 행의 순서를 <b>DB 반환 순서가 정합니다.</b> 조회할 때마다 두 행이 자리를 바꾸고, 운영자가 대표를 비교하다 엉뚱한 행에 라디오를 누릅니다.</p>
+    <p><b>B-5에서 반드시 끝납니다</b> — 상품 조합은 (1줄 카드 × 2줄 카드) 쌍이고 같은 쌍이 한 속성 조합에 두 번 등록될 수 없으므로, 두 이름이 모두 같은 행은 존재하지 않습니다. 조합 ID 같은 숨은 값을 쓰지 않아도 순서가 확정됩니다.</p>
     <p class="q">BE 확인 — 상품 · 세트상품 우선순위 값이 <b>칸 안에서 유일한지</b>. 중복 저장이 가능하면 B-4 · B-5가 실제로 쓰입니다.</p>
   </div>
 </div>
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">대표</span><span class="spec-t">상품 조합이 2개 이상인 속성 조합에서만 고릅니다</span></div>
+  <div class="spec-head"><span class="chip-v">수정</span><span class="spec-t">사이드 패널 · 저장 버튼 없음</span></div>
   <div class="table-wrap">
   <table class="mx">
-    <thead><tr><th style="width:26%">상태</th><th style="width:18%">건수</th><th>UI</th></tr></thead>
+    <thead><tr><th style="width:22%">요소</th><th>내용</th></tr></thead>
     <tbody>
-      <tr><th>속성 조합에 상품 조합 1개</th><td><b>142</b> / 165 (86%)</td><td>라디오 대신 회색 <code>자동</code></td></tr>
-      <tr><th>속성 조합에 상품 조합 2개 이상</th><td class="hl"><b>23</b> (14%) · 최대 8</td><td>라디오 활성화 · 「상품 조합 2개 이상」 필터가 진입점</td></tr>
+      <tr><th>진입</th><td><b>행마다 수정 버튼 1개</b> — 셀마다 두면 8×71개가 되어 읽히지 않습니다</td></tr>
+      <tr><th>상단 카드</th><td>구분 · 속성 n칸 (읽기 전용)</td></tr>
+      <tr><th>통신사 칩</th><td>전 통신사 · <b>건수 항상 표기(0 포함)</b> · 0건도 클릭 가능. 대표 미사용 칩에 ⚠</td></tr>
+      <tr><th>선택된 칩</th><td>검색 일치 통신사 → 대표 미사용 통신사 → 첫 통신사 순</td></tr>
+      <tr><th>표</th><td>대표(라디오) · 1줄 · 2줄 · 상태 · 해제(✕)</td></tr>
+      <tr><th>0건 통신사</th><td>표 대신 <span class="tok">연결된 상품 조합이 없습니다.</span></td></tr>
+      <tr><th>대표 변경</th><td>라디오 클릭 <b>즉시 저장</b> · 토스트</td></tr>
+      <tr><th>등록 해제</th><td>✕ → 확인 모달 → 저장. 인터넷만</td></tr>
+      <tr><th>닫기</th><td>우상단 ✕ · ESC · 스크림 클릭. <b>하단 저장/닫기 버튼 없음</b></td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p>그룹 기준은 <b>(업체 · 속성 3개)</b> — v22 원문 <code>const grp=[v,p1.a,p2.a,p3.a]</code>과 같습니다. 태그명이 아니라 <b>속성</b>이 키입니다.</p>
+    <p><b>단건 저장이라 저장 버튼이 없습니다.</b> 대표는 누르는 순간, 해제는 확인창을 거쳐 저장됩니다. 저장되지 않은 상태가 존재하지 않으므로 이탈 확인도 걸지 않습니다.</p>
+    <p><b>통신사 선택은 패널 안에 있습니다</b> — 목록에서 통신사를 고르고 들어오는 것이 아니라, 속성 조합을 열고 나서 통신사를 옮겨 다닙니다. 같은 속성 조합에서 여러 통신사의 대표를 연달아 고치는 것이 실제 동선입니다.</p>
+    <p>대표가 미사용인 칩을 열면 패널 하단에 경고가 붙습니다 — <span class="tok">⚠ 현재 대표가 미사용입니다. 이 속성 조합은 상담상세 · 플랫폼에 나가지 않습니다 — 다른 조합을 대표로 지정해주세요.</span></p>
+  </div>
+</div>
+
+<div class="spec">
+  <div class="spec-head"><span class="chip-v">대표</span><span class="spec-t">(업체 · 속성 조합)마다 1건</span></div>
+  <div class="table-wrap">
+  <table class="mx">
+    <thead><tr><th style="width:30%">상태</th><th style="width:20%">건수</th><th>UI</th></tr></thead>
+    <tbody>
+      <tr><th>셀에 상품 조합 1개</th><td><b>142</b> / 165 (86%)</td><td>패널 라디오 1개 — 고를 것이 없음</td></tr>
+      <tr><th>셀에 상품 조합 2개 이상</th><td class="hl"><b>23</b> (14%) · 최대 8</td><td>셀에 「N건」 · 패널에서 라디오 선택</td></tr>
+      <tr><th>대표가 미사용</th><td class="hl"><b>2</b></td><td>⚠ + 「대표 재지정 필요」 필터</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="desc"><div class="desc-l">DESCRIPTION</div>
+    <p>그룹 기준은 <b>(업체 · 속성 조합)</b>입니다. 태그명이 아니라 <b>속성</b>이 키입니다. 행은 통신사 무관 속성 조합이라 인터넷 71행이고, (업체 · 속성 조합)은 165건입니다.</p>
     <p><b>이관 시 대표 자동 지정 기준 — 정렬 1순위로 정합니다</b>(위 「정렬」). 개발자가 쓰려던 <code>level</code>은 이번에 삭제하고, 상품 우선순위는 AS-IS에 이미 있는 값이라 <b>이관용 추가 데이터가 필요 없습니다</b>. <b>23개 속성 조합에만 필요</b>합니다 (확인 필요 사항 C-3 닫음).</p>
-    <p><b>대표가 미사용인 2건</b>(딜라이브 <code>ISP 스마트광랜</code> · LG <code>프리미엄 안심 200M</code>)은 <b>Phase 1에서 경고만 하고 막지 않습니다.</b> 이관 시 수동으로 대표만 옮기면 되고, 규칙 보강과 자동 이관은 Phase 2입니다.</p>
+    <p><b>대표가 미사용인 2건</b>(딜라이브 <code>ISP 스마트광랜</code> · LG <code>프리미엄 안심 200M</code>)은 <b>Phase 1에서 경고만 하고 막지 않습니다.</b> 조합도 대표도 그대로 남기고, 화면에서 빼는 것은 등록 해제뿐입니다. 자동 재지정은 하지 않습니다.</p>
   </div>
 </div>
 
@@ -1028,14 +1154,16 @@ render();
   <table class="mx">
     <thead><tr><th style="width:24%">항목</th><th>값</th></tr></thead>
     <tbody>
-      <tr><th>페이징</th><td><b>없음 — 전체 렌더.</b> 업체당 최대 <b>55건</b>(SKB) · 인터넷 상품 조합 217건</td></tr>
+      <tr><th>페이징</th><td><b>없음 — 전체 렌더.</b> 인터넷 71행 · 상품 조합 217건</td></tr>
       <tr><th>요청</th><td><code>limit=200</code> 고정 + 응답에 <code>total</code></td></tr>
+      <tr><th>응답 단위</th><td>속성 조합 1건 + 통신사별 (대표 1건 · 그 셀의 조합 건수). 나머지 조합은 패널 조회</td></tr>
+      <tr><th>사용 여부</th><td><b>상품 사용여부 · 세트상품 사용여부 2개 플래그</b> 필요 — 둘 중 하나라도 미사용이면 그 조합은 미사용</td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p>페이징을 두면 <b>속성 조합이 페이지 경계에 걸립니다.</b> 대표가 앞 페이지에 있으면 라디오가 아무것도 안 켜진 채로 보여서, 뭐가 대표인지 모르는 상태에서 새 대표를 지정하게 됩니다.</p>
-    <p class="q">BE와 정할 것 — 구분 · 업체를 바꿀 때마다 재조회할지, 전체를 한 번에 받아 클라이언트에서 거를지. <b>재조회를 권합니다.</b></p>
+    <p>페이징을 두면 <b>속성 조합이 페이지 경계에 걸립니다.</b></p>
+    <p class="q">BE와 정할 것 — 구분을 바꿀 때마다 재조회할지, 전체를 한 번에 받아 클라이언트에서 거를지. <b>재조회를 권합니다.</b></p>
   </div>
 </div>
 
@@ -1056,8 +1184,20 @@ render();
   </div>
 </div>
 
+<div class="spec">
+  <div class="spec-head"><span class="chip-v">백로그</span><span class="spec-t">PNB-1898 — 이번 범위 아님</span></div>
+  <div class="table-wrap">
+  <table class="mx">
+    <thead><tr><th style="width:34%">항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><th>테이블 헤더 속성 필터</th><td>속성 컬럼 헤더에 체크박스 필터. 같은 속성 내 OR · 속성 간 AND · 0개 선택 = 그 속성 조건 없음</td></tr>
+      <tr><th>전체 상품 조합 엑셀 다운로드</th><td>1행 = 상품 조합 1건. 구분 · 통신사 · 속성 1~3 · 상품 · 세트상품 + 다운로드 일시</td></tr>
+    </tbody>
+  </table>
+  </div>
 </div>
 
+</div>
 <footer>엑셀 실데이터 인터넷 217건 · 베타 어드민 AS-IS 대조 · 정본은 [CRM Admin] 상품 조합 관리 - 기능 정의서</footer>
 </div>
 <script src="/internet-product/assets/updated.js" defer></script>

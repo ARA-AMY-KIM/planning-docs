@@ -256,6 +256,18 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 #ctx-menus + .sheet .desc ul{margin:0;padding-left:18px;font-size:13px;line-height:1.7;color:var(--g700)}
 .cases tbody th{vertical-align:middle}
 
+/* ── 결합할인 · 플랫폼 노출 설정 (10/14) ── */
+.cb.dis{cursor:not-allowed;color:var(--g400)}
+.cb.dis i{background:var(--g50);border-color:var(--g200)}
+.tipi{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;
+ border:1.5px solid var(--g400);color:var(--g500);font-size:10px;font-weight:700;font-style:normal;cursor:help;margin-left:-14px}
+.tipi::after{content:attr(data-tip);position:absolute;left:50%;bottom:24px;transform:translateX(-50%);white-space:nowrap;
+ background:var(--g900);color:#fff;font-size:12px;font-weight:500;padding:7px 10px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .12s;z-index:5}
+.tipi:hover::after,.tipi.show::after{opacity:1}
+.ctx.dlctx .v.non{color:var(--g400);font-weight:400}
+.ferr{font-size:12px;color:var(--error);margin-top:6px}
+.inp.bad{border-color:var(--error)}
+
 /* ── V2 ── */
 .pit.auto::after{content:"기본값";font-size:10.5px;font-weight:700;color:#fff;background:var(--hold);border-radius:4px;padding:2px 6px;flex:none}
 </style>
@@ -338,14 +350,19 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
         <td>변경</td><td class="sub">다른 세트상품이 기본값 → 「기본값 지정」 · 교체</td><td><button class="btn-out" data-case="m-auto-chg">메뉴 열기</button></td></tr>
       <tr><td>현재 기본값</td><td class="sub">이 세트상품이 기본값 → <b>메뉴 항목 없음</b>. 카드의 「기본값」 배지로 이미 보이고, 해제 수단도 두지 않습니다</td><td><button class="btn-out" data-case="m-auto-cur">메뉴 열기</button></td></tr>
       <tr><td>인터넷 <span class="chg">10/07</span></td><td class="sub">기본WIFI 위 — 「상품 조합 등록」 또는 「상품 조합 관리로 이동」과 함께 뜸. <b>등록 여부와 무관</b>(대표는 속성으로 찾을 때, 기본값은 상품을 직접 고를 때)</td><td><button class="btn-out" data-case="m-auto-net">메뉴 열기</button></td></tr>
-      <tr><th rowspan="3">전 구분</th><th rowspan="3">플랫폼 노출 설정<br><span class="chg">추가</span></th><td rowspan="3">「플랫폼 노출 설정」<br><span class="sub">단독 · 상품 조합 모두 · 「미적용」 없음</span></td>
+      <tr><th rowspan="3">전 구분</th><th rowspan="3">플랫폼 노출 설정<br><span class="chg">추가</span></th><td rowspan="3">「플랫폼 노출 설정」<br><span class="sub">단독 · 상품 조합 모두 · 「미적용」 없음 · 결합할인은 아래 별도</span></td>
         <td>인터넷</td><td class="sub">추가 노출 2개 + 월요금 · <b>결합요금</b> · 플랫폼 노출용 설명</td><td><button class="btn-out" data-case="pl-net">열기</button></td></tr>
       <tr><td>인터넷 외</td><td class="sub">결합요금 칸이 빠진다 — 나머지는 동일</td><td><button class="btn-out" data-case="pl-etc">열기</button></td></tr>
       <tr><td>노출 체크 해제</td><td class="sub">신청서 · 플랫폼을 꺼도 입력값은 저장된다는 안내가 뜸</td><td><button class="btn-out" data-case="pl-off">열기</button></td></tr>
-      <tr><th rowspan="3">결합할인</th><th rowspan="3">설명 수정<br><span class="chg">추가</span></th><td rowspan="3">「설명 수정」<br><span class="sub">결합할인 분류 칸 · 구분선 아래. 그 밖의 모든 카드(결합할인 항목 포함)의 「설명 수정」은 AS-IS 설명 바꾸기 모달 — 이름만 변경(10/13)</span></td>
-        <td>신청서 노출 꺼짐</td><td class="sub">신청서 설명은 선택 사항 · 신청서엔 안 나감</td><td><button class="btn-out" data-case="ds-off">열기</button></td></tr>
-      <tr><td>신청서 노출 켜짐</td><td class="sub">「신청서에 노출」 체크 → 신청서 설명이 필수가 됨</td><td><button class="btn-out" data-case="ds-on">열기</button></td></tr>
-      <tr><td>켜짐 + 신청서 설명 비어 있음</td><td class="sub">[수정] 비활성 + 사유 안내 (할인명이 비어도 같음)</td><td><button class="btn-out" data-case="ds-empty">열기</button></td></tr>
+      <tr><th rowspan="7">결합할인</th><th rowspan="5">플랫폼 노출 설정<br><span class="chg">10/14</span></th><td rowspan="5">「플랫폼 노출 설정」<br><span class="sub">결합할인 분류 · 항목 모두 · 「설명 수정」 위. 다른 카드와 같은 메뉴 이름 · 같은 모달 컴포넌트</span></td>
+        <td>분류 · 신청서 노출 켜짐</td><td class="sub">할인명 · CRM 설명은 보기만(설명 수정에서 입력한 값) · 노출 위치 · 설명. <b>월요금 · 결합요금 · JSON 없음</b></td><td><button class="btn-out" data-case="ds-on">열기</button></td></tr>
+      <tr><td>분류 · 신청서 노출 꺼짐</td><td class="sub">설명은 선택 · 입력해 두면 저장됨 (플레이스홀더 안내)</td><td><button class="btn-out" data-case="ds-off">열기</button></td></tr>
+      <tr><td>켜짐 + 설명 비어 있음 (오류)</td><td class="sub">신청서 체크 시 설명 필수(*) · [저장]은 활성, 누르면 인라인 오류 「설명을 입력해 주세요.」</td><td><button class="btn-out" data-case="ds-empty">열기</button></td></tr>
+      <tr><td>항목</td><td class="sub">분류와 같은 모달 · 같은 규칙. <b>입력값은 저장만 되고 노출되는 곳 없음</b>(BE 설계상 분류 · 항목 모두 필드를 둠) · 카드에 신청서 배지 없음</td><td><button class="btn-out" data-case="ds-item">열기</button></td></tr>
+      <tr><td>플랫폼 체크 불가</td><td class="sub">「플랫폼(ajd.co.kr)」은 해제 상태로 비활성 · 옆 툴팁 「결합할인은 신청서에만 노출가능합니다.」</td><td><button class="btn-out" data-case="ds-tip">열기</button></td></tr>
+      <tr><th rowspan="2">설명 수정<br><span class="chg">라벨</span></th><td rowspan="2">「설명 수정」<br><span class="sub">AS-IS 설명 바꾸기 모달 · <b>결합할인만</b> 필드 라벨 변경 : 상품명 → 할인명, 상품 설명 → CRM 설명 (분류 · 항목 동일). 다른 카드는 AS-IS 라벨 그대로</span></td>
+        <td>수정</td><td class="sub">할인명 * · CRM 설명 · json(AS-IS) · 신청서 관련 필드 없음 → 토스트 「설명이 수정되었습니다.」</td><td><button class="btn-out" data-case="dn-cls">열기</button></td></tr>
+      <tr><td>할인명 비어 있음 (오류)</td><td class="sub">[수정]은 활성, 누르면 인라인 오류 「할인명을 입력해 주세요.」</td><td><button class="btn-out" data-case="dn-empty">열기</button></td></tr>
     </tbody>
   </table>
 </div>
@@ -437,7 +454,7 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
 </div>
 </div>
 
-<footer>인터넷 상품 관리 — 태그 지정 · 상품 조합 등록 · 기본값 지정 · 플랫폼 노출 설정 · 결합할인 설명 수정</footer>
+<footer>인터넷 상품 관리 — 태그 지정 · 상품 조합 등록 · 기본값 지정 · 플랫폼 노출 설정 (결합할인 포함)</footer>
 </div>
 
 <div class="ov" id="ovTag" hidden>
@@ -523,25 +540,42 @@ textarea.inp{height:72px;resize:vertical;line-height:1.5;font-family:inherit}
   </div>
 </div>
 
+<div class="ov" id="ovDn" hidden>
+  <div class="modal" style="width:560px">
+    <div class="mh"><h3>설명 수정</h3><span class="x" id="dnX">✕</span></div>
+    <div class="mb">
+      <div class="fld"><label>할인명 <span class="req">*</span><span class="sp"></span><span class="ro">결합할인만 라벨 변경 · AS-IS 「상품명」</span></label>
+        <input class="inp" id="dnName"><div class="ferr" id="dnErr" hidden>할인명을 입력해 주세요.</div></div>
+      <div class="fld"><label>CRM 설명 <span class="sp"></span><span class="ro">결합할인만 라벨 변경 · AS-IS 「상품 설명」</span></label>
+        <textarea class="inp" id="dnCrm"></textarea></div>
+      <div class="fld" style="margin-bottom:0"><label>json <span class="sp"></span><span class="ro">AS-IS 그대로</span></label>
+        <pre id="dnPre" style="margin:0;background:var(--g25);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.5;color:var(--g500);white-space:pre-wrap"></pre></div>
+    </div>
+    <div class="mf"><div class="sp"></div><button class="btn-out" id="dnCancel">취소</button><button class="btn-solid" id="dnSave">수정</button></div>
+  </div>
+</div>
+
 <div class="ov" id="ovDesc" hidden>
   <div class="modal" style="width:560px">
-    <div class="mh"><h3>설명 수정</h3><span class="x" id="dsX">✕</span></div>
+    <div class="mh"><h3>플랫폼 노출 설정</h3><span class="x" id="dsX">✕</span></div>
     <div class="mb">
-      <div class="fld"><label>할인명 <span class="req">*</span><span class="sp"></span><span class="ro">AS-IS 상품명 · CRM · 신청서 공통</span></label>
-        <input class="inp" id="dsName"></div>
-      <div class="fld"><label>CRM 설명 <span class="sp"></span><span class="ro">AS-IS 상품 설명 · 상담사 참고용(할인 조건 등)</span></label>
-        <textarea class="inp" id="dsCrm"></textarea></div>
-      <div class="fgrp new" style="margin-bottom:0">
-        <div class="fgc"><b>신청서</b><span class="chg">추가</span><em>고객이 보는 신청서에 할인명과 함께 나갑니다</em></div>
-        <span class="cb" id="dsApply"><i></i>신청서에 노출</span>
-        <div class="fld" style="margin:12px 0 0"><label>신청서 설명 <span class="req" id="dsReq">*</span><span class="sp"></span><span class="ro" id="dsCnt"></span></label>
-          <textarea class="inp" id="dsApp" placeholder="고객에게 보여줄 짧은 설명을 입력하세요"></textarea>
-          <div class="hint">체크를 꺼도 입력한 내용은 저장되고, 신청서에만 나가지 않습니다.</div></div>
+      <div class="ctx dlctx">
+        <div><span class="k">업체 · 구분</span><span class="v" id="dsVen"></span></div>
+        <div><span class="k">할인명</span><span class="v" id="dsName"></span></div>
+        <div><span class="k">CRM 설명</span><span class="v" id="dsCrm"></span></div>
       </div>
-      <div class="notice warn" id="dsWarn" hidden style="margin:14px 0 0"><span class="i">!</span><span></span></div>
-      <pre id="dsPre" style="margin-top:14px;background:var(--g25);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.5;color:var(--g500);white-space:pre-wrap"></pre>
+      <div class="hint" style="margin:-8px 0 16px">할인명 · CRM 설명은 「설명 수정」(AS-IS 설명 바꾸기)에서 바꿉니다. 여기선 보기만 합니다.</div>
+      <div class="fld"><label>노출 위치</label>
+        <div style="display:flex;gap:22px;align-items:center;margin-top:4px">
+          <span class="cb" id="dsApply"><i></i>신청서</span>
+          <span class="cb dis" id="dsPlat"><i></i>플랫폼(ajd.co.kr)</span>
+          <span class="tipi" id="dsTip" data-tip="결합할인은 신청서에만 노출가능합니다.">i</span>
+        </div></div>
+      <div class="fld" style="margin-bottom:0"><label>설명 <span class="req" id="dsReq">*</span><span class="sp"></span><span class="ro" id="dsCnt"></span></label>
+        <textarea class="inp" id="dsApp" placeholder="신청서에서 할인명과 함께 보여줄 짧은 설명을 입력해 주세요. (노출 체크 해제시에도 입력한 내용은 저장됩니다)"></textarea>
+        <div class="ferr" id="dsErr" hidden>설명을 입력해 주세요.</div></div>
     </div>
-    <div class="mf"><div class="sp"></div><button class="btn-out" id="dsCancel">취소</button><button class="btn-solid" id="dsSave">수정</button></div>
+    <div class="mf"><div class="sp"></div><button class="btn-out" id="dsCancel">취소</button><button class="btn-solid" id="dsSave">저장</button></div>
   </div>
 </div>
 
@@ -996,7 +1030,7 @@ $('rSave').onclick=()=>{
   paintSel();
 };
 
-/* ── 결합할인 (KT 실데이터 — 할인명 · CRM 설명은 AS-IS 실측, 신청서 설명만 예시) ── */
+/* ── 결합할인 (KT 실데이터 — 할인명 · CRM 설명은 AS-IS 실측, 신청서 노출 설명만 예시) ── */
 const DISC = {"KT":[
  {n:'패밀리', items:[], crm:'인터넷+인터넷 결합', ap:false, app:'', fam:true, ct:'preCombine'},
  {n:'총액 결합할인', items:['22,000원 미만','22,000원 이상','64,900원 이상','108,900원 이상','141,900원 이상','174,900원 이상'],
@@ -1022,14 +1056,14 @@ function renderOther(){
     return;
   }
   const on = list.filter(x => x.ap).length;
-  $('cnt').innerHTML = '결합할인 <b>'+list.length+'</b>개 · 신청서 노출 <b>'+on+'</b>개'
-    + ' <span style="color:var(--g400);margin-left:8px">분류 칸을 우클릭 → 「설명 수정」</span>';
+  $('cnt').innerHTML = '결합할인 <b>'+list.length+'</b>개'
+    + ' <span style="color:var(--g400);margin-left:8px">분류 · 항목 우클릭 → 「플랫폼 노출 설정」</span>';
   $('grid').innerHTML = list.map((x, i) =>
     '<div class="gcard"><div class="gh">'+esc(x.n)+'</div><div class="dcols">'
     + '<div class="col"><div class="ch">분류</div>'
-    +   '<div class="dit cls'+(DSEL===i?' sel':'')+'" data-d="'+i+'" data-k="cls"><span class="nm">'+esc(x.n)+'</span>'+(x.ap?'<span class="ap">신청서</span>':'')+'</div></div>'
+    +   '<div class="dit cls'+(DSEL===i?' sel':'')+'" data-d="'+i+'" data-k="cls"><span class="nm">'+esc(x.n)+'</span></div></div>'
     + '<div class="col"><div class="ch">항목</div>'
-    +   (x.items.length ? x.items.map(t => '<div class="dit" data-d="'+i+'" data-k="item"><span class="nm">'+esc(t)+'</span></div>').join('')
+    +   (x.items.length ? x.items.map(t => '<div class="dit" data-d="'+i+'" data-k="item"><span class="nm">'+esc(t)+'</span>'+'</div>').join('')
                         : '<div class="dempty">항목 없음</div>')
     + '</div></div></div>').join('');
   document.querySelectorAll('.dit').forEach(el => {
@@ -1040,15 +1074,14 @@ function openDiscMenu(el, x, y){
   closeMenu();
   const i = +el.dataset.d, cls = el.dataset.k === 'cls';
   if (cls) { DSEL = i; document.querySelectorAll('.dit').forEach(d => d.classList.toggle('sel', d === el)); }
-  /* 디자인 시안 = AS-IS 순서 (10/07) — 분류 : 금지 코드 설정은 분류에만 · 설명 수정은 구분선 아래
-     항목 : 「설명 바꾸기」 이름만 「설명 수정」 — 모달은 AS-IS 설명 바꾸기 그대로 (분류의 설명 수정 모달과 다름) */
+  /* 10/14 — 분류 · 항목 구분 없이 같은 규칙. 순서는 디자인 시안 그대로
+     AS-IS 위쪽 메뉴(금지 코드 설정은 분류에만) → 「플랫폼 노출 설정」(추가) → 「설명 수정」(AS-IS 설명 바꾸기 · 이름만) → 아래쪽 AS-IS */
   const many = !cls && DISC[V][i].items.length > 1;
   const L = cls ? ['상품 할인 설정','상품 이벤트 설정','금지 코드 설정'] : ['상품 할인 설정','상품 이벤트 설정'];
   const m = document.createElement('div'); m.className = 'menu';
   m.innerHTML = L.map(l => '<div class="mi">'+l+'</div>').join('')
-    + '<div class="sep"></div>'
-    + (cls ? '<div class="mi act" id="miDesc">설명 수정<span class="newb">대체</span></div>'
-           : '<div class="mi act" id="miItem">설명 수정<span class="newb">이름</span></div>')
+    + '<div class="mi act" id="miDesc">플랫폼 노출 설정<span class="newb">추가</span></div>'
+    + '<div class="mi act" id="miItem">설명 수정<span class="newb">이름</span></div>'
     + (many ? '<div class="mi">위로</div><div class="mi">아래로</div>' : '')
     + '<div class="mi">우선순위 변경 (기본)</div><div class="mi">사용중지</div>';
   document.body.appendChild(m);
@@ -1056,41 +1089,65 @@ function openDiscMenu(el, x, y){
   m.style.top = Math.min(y, innerHeight - m.offsetHeight - 12) + 'px';
   MENU = m;
   const a = document.getElementById('miDesc');
-  if (a) a.onclick = () => { closeMenu(); openDesc(i); };
+  if (a) a.onclick = () => { closeMenu(); openDesc(i, cls ? null : el.querySelector('.nm').textContent); };
   const it = document.getElementById('miItem');
-  if (it) it.onclick = () => { closeMenu(); toast('AS-IS 「설명 바꾸기」 모달이 열립니다 — 메뉴 이름만 「설명 수정」', '#73767A'); };
+  if (it) it.onclick = () => { closeMenu(); openDn(i, cls ? null : el.querySelector('.nm').textContent); };
 }
 let DS = null;
-function openDesc(i, preset){
-  const x = DISC[V][i]; DS = { i: i, ap: x.ap };
-  $('dsName').value = x.n; $('dsCrm').value = x.crm; $('dsApp').value = x.app;
-  const meta = { rightOptions: ['discount','event','order','priority','display','use'] };
-  if (x.fam) meta.isFamily = true;
-  meta.combineType = ['sys:regist:productCombine:' + (x.ct || 'postCombine')];
-  $('dsPre').textContent = JSON.stringify(meta, null, 4);
+/* 결합할인 플랫폼 노출 설정 — 분류 · 항목 모두 같은 모달.
+   항목 값은 BE 설계상 분류와 같이 저장만 하고 노출되는 곳이 없음 (10/14) */
+var DITEM = {};
+function openDesc(i, item, preset){
+  const x = DISC[V][i], d = item ? (DITEM[i+'|'+item] || { ap:false, app:'' }) : x;
+  DS = { i: i, item: item || null, ap: d.ap };
+  $('dsVen').textContent = V + ' · 결합할인';
+  $('dsName').textContent = item || x.n;
+  const crm = item ? '' : x.crm;
+  $('dsCrm').textContent = crm || '등록된 설명이 없습니다.';
+  $('dsCrm').classList.toggle('non', !crm);
+  $('dsApp').value = d.app;
   if (preset) { if ('ap' in preset) DS.ap = preset.ap; if ('app' in preset) $('dsApp').value = preset.app; }
-  paintDesc();
+  dsErr(false); paintDesc();
   $('ovDesc').hidden = false;
 }
 function paintDesc(){
   $('dsApply').classList.toggle('on', DS.ap);
-  $('dsReq').hidden = !DS.ap;   // 입력은 체크와 무관 — 필수는 체크했을 때만
-  const nm = $('dsName').value.trim(), app = $('dsApp').value.trim();
-  $('dsCnt').textContent = app.length + '자';
-  const why = !nm ? '할인명을 입력해야 수정할 수 있습니다.'
-            : DS.ap && !app ? '신청서에 노출하려면 신청서 설명을 입력해야 합니다.' : '';
-  $('dsWarn').hidden = !why; $('dsWarn').querySelector('span:last-child').textContent = why;
-  $('dsSave').disabled = !!why;
+  $('dsReq').hidden = !DS.ap;                    // 신청서에 노출할 때만 필수
+  $('dsCnt').textContent = $('dsApp').value.trim().length + '자';
+  if (!DS.ap || $('dsApp').value.trim()) dsErr(false);
 }
-$('dsApply').onclick = () => { DS.ap = !DS.ap; paintDesc(); if (DS.ap) $('dsApp').focus(); };
-$('dsName').oninput = $('dsApp').oninput = paintDesc;
+function dsErr(on){ $('dsErr').hidden = !on; $('dsApp').classList.toggle('bad', on); }
+$('dsApply').onclick = () => { DS.ap = !DS.ap; paintDesc(); };
+$('dsPlat').onclick = $('dsTip').onclick = () => { $('dsTip').classList.add('show'); setTimeout(() => $('dsTip').classList.remove('show'), 1800); };
+$('dsApp').oninput = paintDesc;
 const closeDesc = () => { $('ovDesc').hidden = true; };
 $('dsX').onclick = $('dsCancel').onclick = closeDesc;
 $('dsSave').onclick = () => {
-  if ($('dsSave').disabled) return;
-  const x = DISC[V][DS.i];
-  x.n = $('dsName').value.trim(); x.crm = $('dsCrm').value; x.ap = DS.ap; x.app = $('dsApp').value;
-  closeDesc(); toast('수정되었습니다 — '+x.n+(x.ap?' · 신청서 노출':''), '#10A10E'); render();
+  if (DS.ap && !$('dsApp').value.trim()) { dsErr(true); $('dsApp').focus(); return; }   // [저장]은 비활성하지 않음 — 누르면 인라인 오류
+  const v = { ap: DS.ap, app: $('dsApp').value };
+  if (DS.item) DITEM[DS.i+'|'+DS.item] = v; else Object.assign(DISC[V][DS.i], v);
+  closeDesc(); toast('플랫폼 노출 설정을 저장했습니다.', '#10A10E'); render();
+};
+/* 설명 수정 — AS-IS 설명 바꾸기 모달. 결합할인만 필드 라벨 변경 : 상품명 → 할인명, 상품 설명 → CRM 설명 (분류 · 항목 동일). 다른 카드는 AS-IS 라벨 */
+let DN = null;
+function openDn(i, item){
+  const x = DISC[V][i]; DN = { i: i, item: item || null };
+  $('dnName').value = item || x.n; $('dnCrm').value = item ? '' : x.crm;
+  const meta = { rightOptions: ['discount','event','order','priority','display','use'] };
+  if (x.fam) meta.isFamily = true;
+  meta.combineType = ['sys:regist:productCombine:' + (x.ct || 'postCombine')];
+  $('dnPre').textContent = JSON.stringify(meta, null, 4);
+  dnErr(false); $('ovDn').hidden = false;
+}
+function dnErr(on){ $('dnErr').hidden = !on; $('dnName').classList.toggle('bad', on); }
+$('dnName').oninput = () => { if ($('dnName').value.trim()) dnErr(false); };
+const closeDn = () => { $('ovDn').hidden = true; };
+$('dnX').onclick = $('dnCancel').onclick = closeDn;
+$('dnSave').onclick = () => {
+  const nm = $('dnName').value.trim();
+  if (!nm) { dnErr(true); $('dnName').focus(); return; }
+  if (!DN.item) { const x = DISC[V][DN.i]; x.n = nm; x.crm = $('dnCrm').value; }
+  closeDn(); toast('설명이 수정되었습니다.', '#10A10E'); render();
 };
 $('chips').querySelectorAll('button').forEach(b => b.onclick = () => {
   CAT = b.dataset.c; SEL = null; DSEL = null;
@@ -1100,7 +1157,7 @@ $('chips').querySelectorAll('button').forEach(b => b.onclick = () => {
 function setCat(c){ CAT = c; $('chips').querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.c === c)); }
 
 /* ── 모달 케이스 바로 열기 ── */
-function goKT(cat){ closeReg(); closeDesc(); $('ovTag').hidden = true; $('ovPlat').hidden = true; closeMenu(); V = 'KT'; setCat(cat); SEL = null; DSEL = null; render(); }
+function goKT(cat){ closeReg(); closeDesc(); closeDn(); $('ovTag').hidden = true; $('ovPlat').hidden = true; closeMenu(); V = 'KT'; setCat(cat); SEL = null; DSEL = null; render(); }
 function selPair(label, p, set){ SEL = { g: label, s: 'col', n: set, p: p, set: set }; paintSel(); }
 function findPair(test){                          // KT 인터넷에서 조건에 맞는 미등록 상품 조합 찾기
   const g = grp('인터넷세트');
@@ -1147,9 +1204,13 @@ const CASE = {
   'pl-etc':  () => { goKT('메인상품'); CUR = { g: grp('TV세트'), side:'row', name:'Skylife 슬림' }; openPlat(); },
   'pl-off':  () => { goKT('메인상품'); CUR = { g: grp('TV세트'), side:'row', name:'Skylife 베이직' }; openPlat();
                      $('plApply').classList.remove('on'); $('plPlat').classList.remove('on'); platHint(); },
-  'ds-off':   () => { goKT('결합할인'); openDesc(2); },
   'ds-on':    () => { goKT('결합할인'); openDesc(1); },
-  'ds-empty': () => { goKT('결합할인'); openDesc(3, { ap: true, app: '' }); }
+  'ds-off':   () => { goKT('결합할인'); openDesc(2); },
+  'ds-item':  () => { goKT('결합할인'); openDesc(1, '64,900원 이상'); },
+  'ds-empty': () => { goKT('결합할인'); openDesc(3, null, { ap: true, app: '' }); $('dsSave').click(); },
+  'dn-cls':   () => { goKT('결합할인'); openDn(2); },
+  'dn-empty': () => { goKT('결합할인'); openDn(2); $('dnName').value = ''; $('dnSave').click(); },
+  'ds-tip':   () => { goKT('결합할인'); openDesc(1); $('dsTip').classList.add('show'); setTimeout(() => $('dsTip').classList.remove('show'), 2400); }
 };
 /* ── 카드 표시 규칙 [보기] — 상태를 만들고 카드 영역으로 이동 ── */
 const FLAG = {
@@ -1169,7 +1230,7 @@ document.querySelectorAll('[data-case]').forEach(b => b.onclick = () => {
   CASE[b.dataset.case](b);
   window.scrollBy({ top: b.getBoundingClientRect().top - y, behavior: 'instant' });
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeReg(); closeDesc(); $('ovTag').hidden = true; $('ovPlat').hidden = true; closeMenu(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeReg(); closeDesc(); closeDn(); $('ovTag').hidden = true; $('ovPlat').hidden = true; closeMenu(); } });
 
 render();
 </script>

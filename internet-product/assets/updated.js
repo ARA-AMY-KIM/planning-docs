@@ -24,8 +24,8 @@
   ------------------------------------------------------------ */
   var DATES = {
     '/internet-product/tags/':          '2026-10-13 11:35',  // 태그 관리
-    '/internet-product/products/':   '2026-10-13 11:10',  // 인터넷 상품 관리
-    '/internet-product/menus/':      '2026-10-13 11:10',  // 우클릭 메뉴 케이스
+    '/internet-product/products/':   '2026-10-14 17:30',  // 인터넷 상품 관리
+    '/internet-product/menus/':      '2026-10-14 16:40',  // 우클릭 메뉴 케이스
     '/internet-product/product-links/':   '2026-10-07 21:04',  // 상품 조합 관리
     '/internet-product/glossary/':   '2026-10-12 10:57',  // 용어집
     '/internet-product/attributes/':    '2026-09-28 13:59',  // 상품속성 관리
