@@ -529,7 +529,7 @@ input.srch{font-family:inherit;outline:none;color:var(--g900);padding:8px 34px 8
  background-repeat:no-repeat;background-position:right 12px center;background-size:16px 16px}
 input.srch::placeholder{color:var(--g300)}
 /* 구분 선택 (잠금 필드 아님 — 검색·열 편집과 동일한 컨트롤) */
-.lockfld{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--g200);
+.lockfld{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 10px;border:1px solid var(--g200);
  border-radius:8px;background:#fff;font-size:14px;letter-spacing:-.3px}
 .lockfld .lk{font-size:12px;color:var(--g500)}
 .lockfld b{font-weight:700;color:var(--g900)}
@@ -549,16 +549,22 @@ input.srch::placeholder{color:var(--g300)}
   letter-spacing:-.3px;color:var(--g700);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .colbtn b{font-weight:700;color:var(--g900)}
 .colbtn i{font-style:normal;font-size:11px;color:var(--g400)}
-.colpop{position:absolute;top:42px;left:0;z-index:60;min-width:200px;background:#fff;border:1px solid var(--g100);
+.colpop{position:absolute;top:42px;right:0;z-index:60;min-width:220px;background:#fff;border:1px solid var(--g100);
   border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.1);padding:8px}
-.colpop label{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;font-size:13px;color:var(--g900);cursor:pointer}
+.colpop label{display:flex;align-items:center;gap:8px;white-space:nowrap;padding:7px 8px;border-radius:6px;font-size:13px;color:var(--g900);cursor:pointer}
 .colpop label:hover{background:var(--g25)}
 .colpop input{width:16px;height:16px;accent-color:var(--primary)}
 .colpop label.lock{color:var(--g300);cursor:default}
-.colnoti{position:absolute;top:42px;left:0;z-index:50;white-space:nowrap;font-size:12px;color:var(--g700);
-  background:#fff;border:1px solid var(--g100);border-radius:8px;padding:8px 10px;box-shadow:0 4px 14px rgba(0,0,0,.07)}
-.colnoti a{color:var(--primary);font-weight:700;margin-left:8px;cursor:pointer}
-.colnoti[hidden],.colpop[hidden]{display:none}
+.colpop[hidden]{display:none}
+.rightgrp{display:flex;align-items:center;gap:8px;margin-left:auto}
+.hidchip{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 6px 0 11px;border-radius:8px;
+  background:var(--blue50);font-size:12.5px;letter-spacing:-.3px;color:var(--g900);white-space:nowrap}
+.hidchip .i{width:17px;height:17px;flex:none;border-radius:50%;background:var(--primary);color:#fff;
+  font-size:10.5px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.hidbtn{height:26px;padding:0 10px;border:1px solid var(--primary);border-radius:6px;background:#fff;
+  font-family:inherit;font-size:12px;font-weight:700;color:var(--primary);cursor:pointer;white-space:nowrap}
+.hidchip[hidden]{display:none}
+.colpop label .cn{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--primary)}
 .needrep[hidden]{display:none}
 .needrep.dis{color:var(--g300);cursor:default}
 .needrep.dis input{cursor:default}
@@ -578,7 +584,6 @@ table.ctl2 tbody tr:hover .fz{background:var(--g25)}
 .vcell{display:table-cell;vertical-align:top;position:relative;white-space:normal;word-break:break-all;cursor:default;gap:0}
 .vcell .l1{color:var(--g900);font-weight:400;line-height:1.45}
 .vcell .l2{color:var(--g900);line-height:1.45;margin-top:1px}
-.vcell.unused .l1,.vcell.unused .l2{color:var(--g400)}
 .vcell .warn-i{color:var(--error);font-weight:800;margin-right:4px}
 .vcell .meta{margin-top:4px;font-size:11.5px;color:var(--g900)}
 .vcell .meta.hit{color:var(--primary);font-weight:700}
@@ -609,15 +614,17 @@ table.ctl2 tbody tr:hover .fz{background:var(--g25)}
 table.ptbl{width:100%;border-collapse:collapse;font-size:13px}
 table.ptbl th{background:var(--g25);color:var(--g600);font-weight:600;font-size:12px;padding:8px 10px;text-align:left;border-bottom:1px solid var(--g100)}
 table.ptbl td{padding:10px;border-bottom:1px solid var(--g100);vertical-align:middle}
-table.ptbl tr.unused td{color:var(--g400)}
 table.ptbl .nm{font-weight:400;color:var(--g900)}
-table.ptbl tr.unused .nm{color:var(--g400)}
 table.ptbl .nm.hit,table.ptbl .sb.hit{color:var(--primary)}
 table.ptbl .sb{color:var(--g900)}
 .badge-rep{font-size:12px;font-weight:700;color:var(--primary)}
 .badge-un{font-size:12px;font-weight:700;color:var(--error)}
 .pwarn{font-size:12px;color:var(--error);margin-top:10px;line-height:1.6}
 .pempty{padding:48px 0;text-align:center;font-size:13px;color:var(--g400);border-top:1px solid var(--g100)}
+.casebtn{height:30px;padding:0 12px;border:1px solid var(--g200);border-radius:6px;background:#fff;font-family:inherit;font-size:12.5px;
+  color:var(--g900);cursor:pointer;white-space:nowrap}
+.casebtn:hover{border-color:var(--primary);color:var(--primary)}
+.casebtn:disabled{color:var(--g300);border-color:var(--g100);cursor:not-allowed}
 table.ptbl .xbtn{background:none;border:none;color:var(--g400);font-size:13px}
 table.ptbl .xbtn:hover{background:none;color:var(--error)}
 .fz{box-shadow:-1px 0 0 0 #fff}
@@ -639,16 +646,18 @@ table.ctl2 tbody tr:hover .fz{box-shadow:-1px 0 0 0 var(--g25)}
   <div class="pdesc">상품 조합을 속성 조합별로 조회하고 대표를 지정합니다. 인터넷은 <a href="/internet-product/products/#modal-cases" style="color:var(--primary);font-weight:600">인터넷 상품 관리</a>에서 등록한 상품 조합, 인터넷 외는 초록선으로 연결된 상품 조합 전체가 대상입니다.</div>
 
   <div class="bar2">
-    <div class="lockfld"><span class="lk">구분</span><select id="svcSel" class="svcsel"><option>인터넷</option><option>TV</option><option>인터넷전화</option><option>일반전화</option></select></div>
+    <div class="lockfld"><select id="svcSel" class="svcsel"><option>인터넷</option><option>TV</option><option>인터넷전화</option><option>일반전화</option></select></div>
+    <div class="lockfld"><select id="useSel" class="svcsel"><option value="all">사용 여부 전체</option><option value="unused">미사용만</option></select></div>
     <div class="srchwrap">
       <input id="q" type="text" placeholder="속성, 상품명으로 검색">
     </div>
-    <div class="colwrap">
-      <button class="colbtn" id="colBtn">열 편집 <b id="colN"></b> <i>▾</i></button>
-      <div class="colpop" id="colPop" hidden></div>
-      <div class="colnoti" id="colNoti" hidden></div>
+    <div class="rightgrp">
+      <div class="hidchip" id="hidBar" hidden><span class="i">i</span><span id="hidTxt"></span><button class="hidbtn" id="hidAdd">전체 보기</button></div>
+      <div class="colwrap">
+        <button class="colbtn" id="colBtn"><b id="colN"></b> <i>▾</i></button>
+        <div class="colpop" id="colPop" hidden></div>
+      </div>
     </div>
-    <label class="needrep" id="needRepLbl"><input type="checkbox" id="needRep"><span>대표 재지정 필요 <b id="needRepN">0</b></span></label>
   </div>
 
   <div class="cntline" id="cnt"></div>
@@ -702,8 +711,9 @@ const ANAMES={'인터넷':['속도','구성제품','추가구성옵션'],'TV':['
 const $=id=>document.getElementById(id);
 const COLS={'인터넷':['인터넷상품','기본WIFI'],'TV':['TV채널','셋탑박스'],'인터넷전화':['전화상품','전화기기'],'일반전화':['전화상품','전화기기']};
 const VENDORS=["KT","LG","SKT","SKB","SkyLife","LG HelloVision","딜라이브","HCN"];
-let VISV=VENDORS.slice(0,4);          /* 기본 노출 통신사 4개 */
-let SV='인터넷', Q='', NEEDREP=false, PANEL=null, PV=null;
+const VDEF=VENDORS.slice(0,4);        /* 기본 노출 통신사 4개 */
+let VISV=VDEF.slice();
+let SV='인터넷', USEF='all', Q='', PANEL=null, PV=null;
 const REP={}; R.forEach((r,i)=>{ if(r[11]) REP[r[12]]=i; });
 
 /* 속성 표시 순서 — 상품속성 관리의 행 순서. 인터넷은 실측값, 그 외는 데이터 등장 순서로 대체 */
@@ -741,9 +751,12 @@ function repOf(items,v){
   const ri=REP[R[ii[0]][12]];
   return (ri!==undefined && ii.indexOf(ri)>=0) ? ri : ii[0];
 }
-function badVendors(row){
+function badVendors(row){   /* 대표가 미사용인 통신사 — 셀 ⚠ 표시용 */
   const out=[]; VENDORS.forEach(v=>{ const ri=repOf(row.items,v); if(ri!=null && !used(ri)) out.push(v); });
   return out;
+}
+function unusedVendors(row){ /* 미사용 조합이 1건이라도 있는 통신사 — 사용 여부 필터용 */
+  return VENDORS.filter(v=>cellItems(row.items,v).some(i=>!used(i)));
 }
 function hitsOf(row){
   const q=Q.trim(); const h={}; if(!q) return h;
@@ -751,11 +764,19 @@ function hitsOf(row){
   return h;
 }
 function showRow(row){
-  const q=Q.trim();
-  if(NEEDREP && !badVendors(row).length) return false;
-  if(!q) return true;
-  if(row.k.split('|').some(x=>x.indexOf(q)>=0)) return true;      /* 속성값 일치 */
+  /* 상위 → 하위 AND. 구분은 buildRows에서 이미 걸러짐 */
+  if(USEF==='unused' && !unusedVendors(row).length) return false;  /* ② 사용 여부 */
+  const q=Q.trim(); if(!q) return true;                            /* ③ 검색 */
+  if(row.k.split('|').some(x=>x.indexOf(q)>=0)) return true;       /* 속성값 일치 */
   return Object.keys(hitsOf(row)).length>0;                        /* 상품명·세트상품명 일치 */
+}
+/* 현재 조건에 해당하는 셀의 통신사 — 미노출 열 안내에 쓴다 */
+function matchVendors(row){
+  const q=Q.trim(), h=hitsOf(row);
+  let vs=VENDORS.filter(v=>cellItems(row.items,v).length);
+  if(USEF==='unused') vs=vs.filter(v=>cellItems(row.items,v).some(i=>!used(i)));
+  if(q) vs=vs.filter(v=>h[v] || row.k.split('|').some(x=>x.indexOf(q)>=0));
+  return vs;
 }
 
 /* 속성 열 폭 — 헤더와 값 중 가장 긴 문자열 기준. 열 편집과 무관하게 고정 */
@@ -777,10 +798,7 @@ function render(){
   const AN=ANAMES[SV], n=AN.length;
   CURROWS=buildRows();
   const shown=CURROWS.filter(showRow);
-  const needN=CURROWS.filter(r=>badVendors(r).length).length;
 
-  $('needRepN').textContent=needN;
-  $('needRepLbl').hidden = (needN===0 && !NEEDREP);
 
   const total=R.filter(r=>r[0]===SV).length;
   $('cnt').innerHTML='총 <b>'+shown.length+'</b>건';
@@ -828,14 +846,17 @@ function render(){
       if(hits[v]) meta='<div class="meta hit">일치 '+hits[v]+'건</div>';
       else if(ii.length>1) meta='<div class="meta">'+ii.length+'건</div>';
       html+='<td class="vcell'+(un?' unused':'')+'"'
-        +(un?' title="대표 상품이 미사용이라 이 속성 조합은 상담상세 · 플랫폼에 나가지 않습니다. 다른 조합을 대표로 지정해주세요."':'')+'>'
+        +(un?' title="대표 상품이 미사용이라 이 속성 조합은 상담상세에 나가지 않습니다. 다른 조합을 대표로 지정해주세요."':'')+'>'
         +'<div class="l1'+(l1hit?' hit':'')+'">'+(un?'<span class="warn-i">⚠</span>':'')+esc(r[2])+'</div>'
         +'<div class="l2'+(l2hit?' hit':'')+'">'+(r[3]?esc(r[3]):'미적용')+'</div>'
         +meta+'</td>';
     });
     html+='</tr>';
   });
-  $('body2').innerHTML = shown.length ? html
+  if(!VISV.length) html='';
+  $('body2').innerHTML = !VISV.length
+    ? '<tr><td colspan="'+(n+1)+'" style="height:140px;text-align:center;color:var(--g400)">통신사를 1개 이상 선택해주세요</td></tr>'
+    : shown.length ? html
     : '<tr><td colspan="'+(n+1+VISV.length)+'" style="height:140px;text-align:center;color:var(--g400)">조건에 맞는 속성 조합이 없습니다</td></tr>';
 
   $('body2').querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>openPanel(b.dataset.k));
@@ -843,27 +864,29 @@ function render(){
 }
 
 /* ===== 열 편집 ===== */
+let CNTV={};
 function renderCols(shown){
-  $('colN').textContent = VISV.length+'/'+VENDORS.length;
+  $('colN').textContent = !VISV.length ? '통신사 선택'
+    : VISV.length===1 ? VISV[0] : VISV[0]+' 외 '+(VISV.length-1)+'개';
+  /* 미노출 열에 현재 조건의 결과가 있는지 — 검색 · 미사용 동일하게 처리 */
+  const on = (Q.trim()!=='') || USEF!=='all';
+  const hid={};
+  if(on) shown.forEach(row=>{ matchVendors(row).forEach(v=>{ if(VISV.indexOf(v)<0) hid[v]=(hid[v]||0)+1; }); });
+  const hv=Object.keys(hid);
+  if(hv.length){
+    $('hidBar').hidden=false;
+    $('hidTxt').textContent='미노출 통신사에 결과가 있습니다';
+    $('hidAdd').onclick=()=>{ VISV = VENDORS.filter(x=>VISV.indexOf(x)>=0||hv.indexOf(x)>=0); render(); };
+  } else $('hidBar').hidden=true;
   $('colPop').innerHTML = VENDORS.map(v=>{
-    const on=VISV.indexOf(v)>=0, lock=on&&VISV.length===1;
-    return '<label class="'+(lock?'lock':'')+'"><input type="checkbox" data-v="'+v+'"'+(on?' checked':'')+(lock?' disabled':'')+'>'+v+'</label>';
+    const chk=VISV.indexOf(v)>=0;
+    return '<label><input type="checkbox" data-v="'+v+'"'+(chk?' checked':'')+'>'+v+'</label>';
   }).join('');
   $('colPop').querySelectorAll('input').forEach(el=>el.onchange=()=>{
     const v=el.dataset.v;
     VISV = el.checked ? VENDORS.filter(x=>VISV.indexOf(x)>=0||x===v) : VISV.filter(x=>x!==v);
     render();
   });
-  const q=Q.trim(), hid={};
-  if(q) shown.forEach(row=>{ const h=hitsOf(row); Object.keys(h).forEach(v=>{ if(VISV.indexOf(v)<0) hid[v]=(hid[v]||0)+h[v]; }); });
-  const hv=Object.keys(hid);
-  if(hv.length){
-    $('colNoti').hidden=false;
-    $('colNoti').innerHTML='숨긴 통신사에 일치 '+hv.map(v=>v+' '+hid[v]+'건').join(' · ')+'<a id="colAdd">열에 추가</a>';
-    $('colNoti').querySelector('#colAdd').onclick=()=>{
-      VISV = VENDORS.filter(x=>VISV.indexOf(x)>=0||hv.indexOf(x)>=0); render();
-    };
-  } else { $('colNoti').hidden=true; $('colNoti').innerHTML=''; }
 }
 
 /* ===== 사이드 패널 ===== */
@@ -919,12 +942,12 @@ function renderPanel(){
           : '<input type="radio" name="rep" data-i="'+i+'"'+(isRep?' checked':'')+'>')+'</td>'
       +'<td><span class="nm'+(n1hit?' hit':'')+'">'+(un?'<span class="warn-i" style="color:var(--error);font-weight:800;margin-right:4px">⚠</span>':'')+esc(r[2])+'</span></td>'
       +'<td><span class="sb'+(n2hit?' hit':'')+'">'+(r[3]?esc(r[3]):'미적용')+'</span></td>'
-      +'<td>'+(isRep?'<span class="badge-rep">현재 대표</span>':'')+(isRep&&un?'<br>':'')+(un?'<span class="badge-un">미사용</span>':'')+'</td>'
+      +'<td>'+(isRep?'<span class="badge-rep">현재 대표</span>':'')+'</td>'
       +'<td style="text-align:center">'+(SV==='인터넷'?'<button class="xbtn" data-del="'+i+'" title="등록 해제">✕</button>':'')+'</td>'
       +'</tr>';
   });
   h+='</tbody></table>';
-  if(rep!=null && !used(rep)) h+='<div class="pwarn">⚠ 현재 대표가 미사용입니다. 이 속성 조합은 상담상세 · 플랫폼에 나가지 않습니다 — 다른 조합을 대표로 지정해주세요.</div>';
+  if(rep!=null && !used(rep)) h+='<div class="pwarn">⚠ 현재 대표가 미사용입니다. 이 속성 조합은 상담상세에 나가지 않습니다 — 다른 조합을 대표로 지정해주세요.</div>';
   if(SV!=='인터넷') h+='<div class="pwarn" style="color:var(--g400)">인터넷 외는 등록 개념이 없어 해제 컬럼이 없습니다. 초록선을 지우면 목록에서 빠집니다.</div>';
   $('pList').innerHTML=h;
 
@@ -947,12 +970,22 @@ function openDel(i){
   delI=i; const r=R[i], row=CURROWS.find(x=>x.k===akey(r));
   $('dlProd').textContent = r[2] + (r[3] ? ' × '+r[3] : '');
   $('dlCombo').textContent = ANAMES[SV].map((_,k)=>r[4+k]).join(' · ');
-  const isRep = repOf(row.items,r[1])===i, others = cellItems(row.items,r[1]).length-1;
-  $('dlNotice').querySelector('span:last-child').innerHTML = isRep && others>0
-    ? '<b>이 상품 조합이 대표입니다.</b> 해제하면 같은 속성 조합의 남은 '+others+'건 중 첫 상품 조합이 대표가 됩니다.'
-    : others>0
-      ? '같은 속성 조합에 '+others+'건이 더 있습니다. 대표는 바뀌지 않습니다.'
-      : '<b>이 속성 조합의 유일한 상품 조합입니다.</b> 해제하면 상담 상세에서 이 속성 조합으로는 아무 상품도 나오지 않습니다.';
+  const isRep = repOf(row.items,r[1])===i;
+  const rest = panelSorted(row,r[1]).filter(x=>x!==i);      /* 정렬 순서 그대로 */
+  const heir = rest.filter(used)[0];                        /* 새 대표 = 정렬 1순위의 사용 중 조합 */
+  const nb=$('dlNotice'), ns=nb.querySelector('span:last-child');
+  if(!rest.length){                                          /* ① 유일한 조합 */
+    nb.hidden=false;
+    ns.innerHTML='<b>이 속성 조합에 등록된 유일한 상품 조합입니다.</b> 등록을 해제하면 이 속성 조합으로는 상담상세에 어떤 상품도 노출되지 않습니다.';
+  } else if(isRep && heir===undefined){                      /* ①\u2032 남은 조합이 전부 미사용 */
+    nb.hidden=false;
+    ns.innerHTML='<b>남은 상품 조합이 모두 미사용입니다.</b> 등록을 해제하면 이 속성 조합으로는 상담상세에 어떤 상품도 노출되지 않습니다.';
+  } else if(isRep){                                          /* ② 새 대표 승계 */
+    nb.hidden=false;
+    ns.innerHTML='<b>대표로 지정된 상품 조합입니다.</b> 등록을 해제하면 <b>'+esc(R[heir][2])+(R[heir][3]?' · '+esc(R[heir][3]):'')+'</b>이(가) 새 대표로 지정됩니다.';
+  } else {                                                   /* ③ 일반 조합 — 안내 없음 */
+    nb.hidden=true;
+  }
   $('ovDel').hidden=false;
 }
 $('dlCancel').onclick=()=>{$('ovDel').hidden=true;};
@@ -960,17 +993,80 @@ $('dlOk').onclick=()=>{ const r=R[delI]; $('ovDel').hidden=true; toast('등록 �
 
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(!$('ovDel').hidden){$('ovDel').hidden=true;} else if(!$('ovPanel').hidden){closePanel();} } });
 $('pScrim').onclick=closePanel; $('pClose').onclick=closePanel;
-$('svcSel').onchange=()=>{ SV=$('svcSel').value; Q=''; $('q').value=''; NEEDREP=false; $('needRep').checked=false; closePanel(); render(); };
-$('q').oninput=()=>{ Q=$('q').value; if(Q.trim()&&NEEDREP){ NEEDREP=false; $('needRep').checked=false; } render(); };
+$('svcSel').onchange=()=>{ SV=$('svcSel').value; USEF='all'; $('useSel').value='all'; Q=''; $('q').value=''; VISV=VDEF.slice(); closePanel(); render(); };
+$('useSel').onchange=()=>{ USEF=$('useSel').value; closePanel(); render(); };
+$('q').oninput=()=>{ Q=$('q').value; render(); };   /* 앞 조건(구분 · 사용 여부) 안에서 검색 */
 let RSZ; window.addEventListener('resize',()=>{ clearTimeout(RSZ); RSZ=setTimeout(render,120); });
 $('colBtn').onclick=e=>{ e.stopPropagation(); $('colPop').hidden=!$('colPop').hidden; };
 document.addEventListener('click',e=>{ if(!e.target.closest('.colwrap')) $('colPop').hidden=true; });
-$('needRep').onchange=()=>{
-  NEEDREP=$('needRep').checked;
-  if(NEEDREP){ Q=''; $('q').value=''; }        /* 검색어는 풀고 재지정 필요만 본다 */
-  render();
-};
+
 render();
+
+/* ===== 케이스 재현 ===== */
+function resetAll(){ SV='인터넷'; $('svcSel').value='인터넷'; USEF='all'; $('useSel').value='all';
+  Q=''; $('q').value=''; VISV=VDEF.slice(); closePanel(); $('ovDel').hidden=true; render(); }
+function setUse(v){ USEF=v; $('useSel').value=v; render(); }
+function setQ(t){ Q=t; $('q').value=t; render(); }
+function goTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+/* 미노출 열에만 걸리는 검색어 찾기 */
+function hiddenOnlyTerm(){
+  const cand=['Mesh','100메가','프리미엄기가WiFi','플래티넘'];
+  for(const t of cand){
+    const hv={}; R.forEach(r=>{ if(r[0]!=='인터넷') return;
+      if((r[2]||'').indexOf(t)>=0||(r[3]||'').indexOf(t)>=0) hv[r[1]]=1; });
+    const ks=Object.keys(hv);
+    if(ks.length && ks.every(v=>VDEF.indexOf(v)<0)) return t;
+  }
+  return null;
+}
+function findCell(test){
+  for(const row of buildRows()) for(const v of VENDORS){
+    const ii=cellItems(row.items,v); if(!ii.length) continue;
+    const got=test(ii,repOf(row.items,v),row,v);
+    if(got!==undefined && got!==null && got!==false) return {row:row,v:v,i:got};
+  }
+  return null;
+}
+function openPanelAt(k,v){ openPanel(k); PV=v; renderPanel(); }
+
+const HT=hiddenOnlyTerm();
+const C_only  = findCell(ii=> ii.length===1 ? ii[0] : null);
+const C_allun = findCell((ii,rp)=> ii.length>1 && ii.filter(x=>x!==rp).every(x=>!used(x)) ? rp : null);
+const C_heir  = findCell((ii,rp)=> ii.length>1 && ii.some(x=>x!==rp&&used(x)) ? rp : null);
+const C_plain = findCell((ii,rp)=> ii.length>1 ? ii.filter(x=>x!==rp)[0] : null);
+const C_zero  = (function(){ for(const row of buildRows()){
+  const z=VENDORS.find(v=>!cellItems(row.items,v).length); if(z) return {row:row,v:z}; } return null; })();
+/* 미사용 조합은 있지만 대표는 사용 중인 셀 — 테이블에 ⚠가 안 뜨는 케이스 */
+const C_hidun = findCell((ii,rp)=> used(rp) && ii.some(x=>x!==rp&&!used(x)) ? rp : null);
+
+const CASES=[
+ ['5장','기본 상태','인터넷 71행 · 전체 · 기본 4개 열(KT · LG · SKT · SKB)',()=>{resetAll();}],
+ ['5장','사용 여부 = 미사용','미사용 조합이 있는 행만 (2건) · <b>미노출 열(딜라이브)에 결과 안내 바</b> + [미노출 열 전체 보기]',()=>{resetAll();setUse('unused');}],
+ ['5장','미사용 → 미노출 열 전체 보기','안내 바 버튼을 누르면 해당 열이 붙고 ⚠가 보임',()=>{resetAll();setUse('unused');setTimeout(()=>$('hidAdd').click(),350);}],
+ ['5.1','검색 — 보이는 열에 결과','일치한 셀에 건수 · 수정 버튼을 누르면 그 통신사 칩이 선택된 채로 열림',()=>{resetAll();setQ('기가WiFi7');}],
+ ['5.2','검색 — 미노출 열에만 결과',HT?('「'+HT+'」 검색 · 안내 바 + [미노출 열 전체 보기]'):'해당 검색어가 데이터에 없습니다',HT?()=>{resetAll();setQ(HT);}:null],
+ ['5장','미사용 + 검색 중첩','앞 조건(미사용) 안에서만 검색됨',()=>{resetAll();setUse('unused');setQ('프리미엄');}],
+ ['10장','통신사 열 0개','열 편집에서 전부 해제 → 빈 상태 안내',()=>{resetAll();VISV=[];render();}],
+ ['9장','검색 결과 없음','조건에 맞는 속성 조합이 없다는 빈 상태',()=>{resetAll();setQ('존재하지않는상품명');}],
+ ['4.1','대표가 미사용','상품명 앞 ⚠ 아이콘만 · 셀 호버 시 툴팁 · 행을 흐리게 하지 않음',()=>{resetAll();setUse('unused');setTimeout(()=>$('hidAdd').click(),350);}],
+ ['5장','미사용인데 셀에 ⚠가 없는 행',C_hidun?'대표는 사용 중이고 다른 조합만 미사용 — 패널을 열어야 보임':'<b>데이터에 없음</b> — 현재 미사용 3건이 모두 대표가 미사용인 셀에 있습니다',C_hidun?()=>{resetAll();setUse('unused');openPanelAt(C_hidun.row.k,C_hidun.v);}:null],
+ ['7장','사이드패널 — 0건 통신사',C_zero?'칩 건수 0 · 클릭 가능 · 표 대신 빈 상태':'해당 조합이 없습니다',C_zero?()=>{resetAll();openPanelAt(C_zero.row.k,C_zero.v);}:null],
+ ['7.3 ①','등록 해제 — 유일한 조합',C_only?'해제하면 이 속성 조합으로는 상담상세에 어떤 상품도 노출되지 않음':'해당 조합이 없습니다',C_only?()=>{resetAll();openPanelAt(C_only.row.k,C_only.v);openDel(C_only.i);}:null],
+ ['7.3 ①′','등록 해제 — 남은 조합이 전부 미사용',C_allun?'대표를 해제해도 승계할 사용 중 조합이 없음':'<b>데이터에 없음</b>',C_allun?()=>{resetAll();openPanelAt(C_allun.row.k,C_allun.v);openDel(C_allun.i);}:null],
+ ['7.3 ②','등록 해제 — 대표 해제 · 승계',C_heir?'새 대표가 될 조합을 <b>이름으로</b> 안내':'해당 조합이 없습니다',C_heir?()=>{resetAll();openPanelAt(C_heir.row.k,C_heir.v);openDel(C_heir.i);}:null],
+ ['7.3 ③','등록 해제 — 일반 조합',C_plain?'추가 안내 없음 (경고 박스 자체가 안 뜸)':'해당 조합이 없습니다',C_plain?()=>{resetAll();openPanelAt(C_plain.row.k,C_plain.v);openDel(C_plain.i);}:null],
+ ['3.3','구분 전환 — TV','속성 2칸 · 컬럼명 라인 · 셋탑 / TV채널 · 셋탑박스 · 조건 모두 초기화',()=>{resetAll();SV='TV';$('svcSel').value='TV';render();}],
+];
+window.addEventListener('DOMContentLoaded',function(){
+  let h='';
+  CASES.forEach((c,idx)=>{
+    h+='<tr><th>'+c[0]+'</th><td>'+c[1]+'</td><td class="sub">'+c[2]+'</td>'
+      +'<td style="text-align:right"><button class="casebtn" data-c="'+idx+'"'+(c[3]?'':' disabled')+'>열기</button></td></tr>';
+  });
+  $('caseRows').innerHTML=h;
+  $('caseRows').querySelectorAll('[data-c]').forEach(b=>{ if(!b.disabled) b.onclick=()=>{ CASES[+b.dataset.c][3](); goTop(); }; });
+});
 
 </script>
 <div class="doc-band"><div class="sheet">
@@ -980,6 +1076,18 @@ render();
 </div></div>
 
 <div class="sheet" style="padding-top:32px">
+
+<div class="spec" id="caseblk">
+  <div class="spec-head"><span class="chip-v">케이스</span><span class="spec-t">정의서의 분기를 화면에서 직접 재현합니다</span></div>
+  <div class="desc" style="margin:0 0 12px"><div class="desc-l">DESCRIPTION</div>
+    <p>버튼을 누르면 위 화면이 그 상태로 바뀌고 화면 맨 위로 이동합니다. 데이터로 만들 수 없는 케이스는 버튼이 비활성입니다.</p></div>
+  <div class="table-wrap">
+  <table class="mx">
+    <thead><tr><th style="width:17%">정의서</th><th style="width:40%">케이스</th><th>확인할 것</th><th style="width:88px"></th></tr></thead>
+    <tbody id="caseRows"></tbody>
+  </table>
+  </div>
+</div>
 
 <div class="spec">
   <div class="spec-head"><span class="chip-v">범위</span><span class="spec-t">전 구분 · 조회 · 대표 지정 · 등록 해제</span></div>
@@ -1023,7 +1131,7 @@ render();
 </div>
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">표시</span><span class="spec-t">폰트 컬러만 · 셀 배경 금지</span></div>
+  <div class="spec-head"><span class="chip-v">표시</span><span class="spec-t">셀 표기 규칙</span></div>
   <div class="table-wrap">
   <table class="mx">
     <thead><tr><th style="width:26%">대상</th><th>표시</th></tr></thead>
@@ -1040,28 +1148,33 @@ render();
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
     <p><b>디자인시스템 제약</b> — 표 셀에 배경·테두리 컬러를 넣지 않고 폰트 컬러로만 표현합니다. 그 폰트 컬러도 <b>상태를 알리는 값</b>(⚠ 미사용 · 현재 대표 · 검색 일치)에만 씁니다. 상품명 · 속성값 · 「없음」 · 「미적용」 · 건수처럼 항상 보이는 데이터는 전부 gray-900이고, 상품명 볼드도 쓰지 않습니다.</p>
-    <p>미사용 툴팁 — <span class="tok">대표 상품이 미사용이라 이 속성 조합은 상담상세 · 플랫폼에 나가지 않습니다. 다른 조합을 대표로 지정해주세요.</span></p>
+    <p>미사용 툴팁 — <span class="tok">대표 상품이 미사용이라 이 속성 조합은 상담상세에 나가지 않습니다. 다른 조합을 대표로 지정해주세요.</span></p>
   </div>
 </div>
 
 <div class="spec">
-  <div class="spec-head"><span class="chip-v">검색 · 필터</span><span class="spec-t">구분 · 통합 검색 · 열 편집 · 대표 재지정 필요</span></div>
+  <div class="spec-head"><span class="chip-v">검색 · 필터</span><span class="spec-t">구분 → 사용 여부 → 검색 (AND)</span></div>
+  <div class="desc" style="margin:0 0 12px"><div class="desc-l">DESCRIPTION</div>
+    <p><b>세 조건이 왼쪽에서 오른쪽으로 좁힙니다.</b> 검색은 앞의 두 드롭다운이 고른 범위 안에서만 돕니다 — 「인터넷 · 미사용」을 고르고 검색하면 그 2건 안에서 찾습니다. 서로 해제하는 규칙은 폐기했습니다.</p></div>
   <div class="table-wrap">
   <table class="mx">
-    <thead><tr><th style="width:22%">컨트롤</th><th style="width:30%">동작</th><th>비고</th></tr></thead>
+    <thead><tr><th style="width:18%">컨트롤</th><th style="width:30%">동작</th><th>비고</th></tr></thead>
     <tbody>
-      <tr><th>구분</th><td>셀렉트 1개</td><td>전환 시 검색어 · 필터 · 패널 모두 초기화. 속성 칸 수가 바뀜</td></tr>
-      <tr><th>통합 검색</th><td>속성값 · 상품명 · 세트상품명 부분일치</td><td>검색 옵션 셀렉트 없음 · placeholder 「속성, 상품명으로 검색」. <b>그 값이 어떤 조합으로든 들어 있는 속성 조합 행</b>을 남김</td></tr>
-      <tr><th>열 편집</th><td>통신사 체크박스 · 기본 4개(KT · LG · SKT · SKB)</td><td>최소 1개 유지. 검색 결과가 <b>숨긴 통신사</b>에 있으면 버튼 아래에 「숨긴 통신사에 일치 N건 · 열에 추가」</td></tr>
-      <tr><th>대표 재지정 필요</th><td>체크박스 · 대표가 미사용인 셀이 있는 행만</td><td><b>0건이면 비노출.</b> 현재 인터넷 2건</td></tr>
+      <tr><th>① 구분</th><td>인터넷 · TV · 인터넷전화 · 일반전화</td><td>전환 시 사용 여부 · 검색어 · 열 · 패널 모두 초기화. 속성 칸 수가 바뀜</td></tr>
+      <tr><th>② 사용 여부</th><td>전체 · 미사용</td><td><b>미사용 = 그 행에 미사용 조합이 1건이라도 있는 경우.</b> 대표가 아닌 조합의 미사용도 포함</td></tr>
+      <tr><th>③ 통합 검색</th><td>속성값 · 상품명 · 세트상품명 부분일치</td><td>①② 범위 안에서 검색. 그 값이 어떤 조합으로든 들어 있는 속성 조합 행을 남김</td></tr>
+      <tr><th>열 편집</th><td>통신사 체크박스 · 기본 4개(KT · LG · SKT · SKB)</td><td>0개까지 해제 가능 · 새로고침하면 기본 4개</td></tr>
       <tr><th>건수</th><td>「총 N건」</td><td>보이는 행 수만. 전체 건수 · 상품 조합 건수는 표기하지 않음</td></tr>
     </tbody>
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>검색과 「대표 재지정 필요」는 서로 해제합니다.</b> 검색 중 체크하면 검색어가 지워지고, 체크 상태에서 검색어를 입력하면 체크가 풀립니다 — 두 조건을 AND로 걸면 「재지정 필요 2건 중 검색어도 맞는 행」이라는 결과가 나와, 왜 0건인지 읽히지 않습니다.</p>
-    <p><b>「상품 조합 2개 이상」 필터는 폐기했습니다.</b> <code>rowspan</code> 구조에서는 행 하나가 (업체 · 속성 조합)이라 행 단위 속성이었지만, 지금은 셀마다 건수가 다릅니다. 셀 3번째 줄의 「N건」이 그 자리를 대신합니다.</p>
-    <p class="q">미결 — 백로그 <b>PNB-1898</b>의 헤더 속성 필터가 들어오면 이 셋과의 관계(AND인지 서로 해제인지)를 정해야 합니다.</p>
+    <p><b>미노출 열 안내 — 검색과 사용 여부를 같은 방식으로 처리합니다.</b> 조건에 맞는 셀이 꺼놓은 통신사 열에 있으면 리스트 위에 안내 바가 뜨고 <b>[미노출 열 전체 보기]</b> 버튼으로 그 열들을 한 번에 켭니다. 열을 자동으로 켜거나 기본값으로 되돌리는 동작은 하지 않습니다 — 검색과 필터가 다르게 움직이면 규칙이 두 벌이 됩니다.</p>
+    <p><b>② 미사용은 행 단위라 셀에 ⚠가 없을 수 있습니다.</b> 대표는 사용 중이고 다른 조합만 미사용인 셀은 패널을 열어야 보입니다. <b>실측상 인터넷 미사용 조합 3건이 전부 「대표가 미사용인 셀」 안에 있어 현재는 이 케이스가 없습니다</b> — 케이스 표의 해당 버튼이 비활성인 이유입니다.</p>
+    <p><b>「대표 재지정 필요」 체크박스는 폐기했습니다.</b> ② 사용 여부가 그 역할을 포함하면서 대표가 아닌 조합까지 덮습니다.</p>
+    <p><b>「상품 조합 2개 이상」 필터도 폐기했습니다.</b> <code>rowspan</code> 구조에서는 행 하나가 (업체 · 속성 조합)이라 행 단위 속성이었지만, 지금은 셀마다 건수가 다릅니다. 셀의 건수 표기가 그 자리를 대신합니다.</p>
+    <p class="q">실측 — 미사용 조합은 인터넷 3건(217 중)뿐이고 <b>TV · 인터넷전화 · 일반전화는 0건</b>입니다. 그 세 구분에서 「미사용」을 고르면 항상 빈 결과입니다.</p>
+    <p class="q">미결 — 백로그 <b>PNB-1898</b>의 헤더 속성 필터가 들어오면 ①②③ 뒤 어디에 붙일지 정해야 합니다(④로 보는 것이 자연스럽습니다).</p>
   </div>
 </div>
 
@@ -1125,7 +1238,7 @@ render();
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
     <p><b>단건 저장이라 저장 버튼이 없습니다.</b> 대표는 누르는 순간, 해제는 확인창을 거쳐 저장됩니다. 저장되지 않은 상태가 존재하지 않으므로 이탈 확인도 걸지 않습니다.</p>
     <p><b>통신사 선택은 패널 안에 있습니다</b> — 목록에서 통신사를 고르고 들어오는 것이 아니라, 속성 조합을 열고 나서 통신사를 옮겨 다닙니다. 같은 속성 조합에서 여러 통신사의 대표를 연달아 고치는 것이 실제 동선입니다.</p>
-    <p>대표가 미사용인 칩을 열면 패널 하단에 경고가 붙습니다 — <span class="tok">⚠ 현재 대표가 미사용입니다. 이 속성 조합은 상담상세 · 플랫폼에 나가지 않습니다 — 다른 조합을 대표로 지정해주세요.</span></p>
+    <p>대표가 미사용인 칩을 열면 패널 하단에 경고가 붙습니다 — <span class="tok">⚠ 현재 대표가 미사용입니다. 이 속성 조합은 상담상세에 나가지 않습니다 — 다른 조합을 대표로 지정해주세요.</span></p>
   </div>
 </div>
 
