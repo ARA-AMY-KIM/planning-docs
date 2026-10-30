@@ -821,7 +821,7 @@ function render(){
   VISV.forEach(()=>{ th+='<col style="width:'+VW+'px">'; });
   th+='</colgroup><tr>';
   AN.forEach((a,k)=>{ th+='<th class="fz" style="left:'+lefts[k]+'px">'+a+'</th>'; });
-  th+='<th class="fz fz-last" style="left:'+editLeft+'px;text-align:center">수정</th>';
+  th+='<th class="fz fz-last" style="left:'+editLeft+'px;text-align:center">관리</th>';
   VISV.forEach(v=>{ th+='<th>'+v+'</th>'; });
   th+='</tr>';
   const ci=th.indexOf('</colgroup>')+11;
@@ -867,7 +867,7 @@ function render(){
 let CNTV={};
 function renderCols(shown){
   $('colN').textContent = !VISV.length ? '통신사 선택'
-    : VISV.length===1 ? VISV[0] : VISV[0]+' 외 '+(VISV.length-1)+'개';
+    : VISV.length===1 ? VISV[0] : VISV[0]+' 외 '+(VISV.length-1)+'건';
   /* 미노출 열에 현재 조건의 결과가 있는지 — 검색 · 미사용 동일하게 처리 */
   const on = (Q.trim()!=='') || USEF!=='all';
   const hid={};
@@ -876,7 +876,18 @@ function renderCols(shown){
   if(hv.length){
     $('hidBar').hidden=false;
     $('hidTxt').textContent='미노출 통신사에 결과가 있습니다';
-    $('hidAdd').onclick=()=>{ VISV = VENDORS.filter(x=>VISV.indexOf(x)>=0||hv.indexOf(x)>=0); render(); };
+    $('hidAdd').onclick=()=>{
+      VISV = VENDORS.slice();   /* 결과가 있는 열만이 아니라 통신사 전체를 켭니다 */
+      render();
+      /* 결과가 있던 첫 미노출 열이 보이도록 가로 스크롤 */
+      const first=VENDORS.filter(v=>hv.indexOf(v)>=0)[0], ci=VISV.indexOf(first);
+      if(ci>=0){
+        const ths=$('thead2').querySelectorAll('th'), n=ANAMES[SV].length;
+        const th=ths[n+1+ci], sc=$('ctl2').parentNode;
+        if(th){ const fix=ths[n].offsetLeft+ths[n].offsetWidth;
+          sc.scrollLeft = Math.max(0, th.offsetLeft - fix - 8); }
+      }
+    };
   } else $('hidBar').hidden=true;
   $('colPop').innerHTML = VENDORS.map(v=>{
     const chk=VISV.indexOf(v)>=0;
@@ -907,8 +918,9 @@ function panelSorted(row,v){
     const ra=(a===rep)?0:1, rb=(b===rep)?0:1; if(ra!==rb) return ra-rb;          /* B-1 대표 */
     const ua=used(a)?0:1, ub=used(b)?0:1; if(ua!==ub) return ua-ub;              /* B-1.5 사용 여부 */
     if(a!==b) return a-b;                                                         /* B-2·B-3 우선순위 (목업: 데이터 순서) */
-    const na=R[a][2], nb=R[b][2]; if(na!==nb) return na<nb?-1:1;                  /* B-4 상품명 */
-    const sa=R[a][3]||'', sb=R[b][3]||''; return sa<sb?-1:sa>sb?1:0;              /* B-5 세트상품명 */
+    /* 아래 두 줄은 명세가 아니라 목업 안정화용 — 우선순위가 겹쳤을 때 순서가 흔들리지 않게 둔다 */
+    const na=R[a][2], nb=R[b][2]; if(na!==nb) return na<nb?-1:1;
+    const sa=R[a][3]||'', sb=R[b][3]||''; return sa<sb?-1:sa>sb?1:0;
   });
 }
 function renderPanel(){
@@ -929,10 +941,12 @@ function renderPanel(){
 
   const ii=panelSorted(row,PV), rep=repOf(row.items,PV);
   if(!ii.length){
-    $('pList').innerHTML='<div class="pempty">연결된 상품 조합이 없습니다.</div>';
+    $('pList').innerHTML='<div class="pempty">등록된 상품 조합이 없습니다.</div>';
     return;
   }
-  let h='<table class="ptbl"><thead><tr><th style="width:52px">대표</th><th>'+COLS[SV][0]+'</th><th>'+COLS[SV][1]+'</th><th style="width:84px">상태</th><th style="width:44px"></th></tr></thead><tbody>';
+  let h = (rep!=null && !used(rep))
+    ? '<div class="pwarn">⚠ 대표 상품 조합이 미사용이라서 상담상세에 노출되지 않습니다. 사용 중인 상품 조합을 대표로 지정해 주세요.</div>' : '';
+  h+='<table class="ptbl"><thead><tr><th style="width:52px">대표</th><th style="width:72px">상태</th><th>'+COLS[SV][0]+'</th><th>'+COLS[SV][1]+'</th><th style="width:56px">관리</th></tr></thead><tbody>';
   ii.forEach(i=>{
     const r=R[i], un=!used(i), isRep=(i===rep);
     const n1hit=q&&(r[2]||'').indexOf(q)>=0, n2hit=q&&(r[3]||'').indexOf(q)>=0;
@@ -940,14 +954,13 @@ function renderPanel(){
       +'<td style="text-align:center">'+(un
           ? '<input type="radio" disabled'+(isRep?' checked':'')+' title="미사용 상품은 대표로 지정할 수 없습니다.">'
           : '<input type="radio" name="rep" data-i="'+i+'"'+(isRep?' checked':'')+'>')+'</td>'
+      +'<td>'+(isRep?'<span class="badge-rep">대표</span>':'')+'</td>'
       +'<td><span class="nm'+(n1hit?' hit':'')+'">'+(un?'<span class="warn-i" style="color:var(--error);font-weight:800;margin-right:4px">⚠</span>':'')+esc(r[2])+'</span></td>'
       +'<td><span class="sb'+(n2hit?' hit':'')+'">'+(r[3]?esc(r[3]):'미적용')+'</span></td>'
-      +'<td>'+(isRep?'<span class="badge-rep">현재 대표</span>':'')+'</td>'
       +'<td style="text-align:center">'+(SV==='인터넷'?'<button class="xbtn" data-del="'+i+'" title="등록 해제">✕</button>':'')+'</td>'
       +'</tr>';
   });
   h+='</tbody></table>';
-  if(rep!=null && !used(rep)) h+='<div class="pwarn">⚠ 현재 대표가 미사용입니다. 이 속성 조합은 상담상세에 나가지 않습니다 — 다른 조합을 대표로 지정해주세요.</div>';
   if(SV!=='인터넷') h+='<div class="pwarn" style="color:var(--g400)">인터넷 외는 등록 개념이 없어 해제 컬럼이 없습니다. 초록선을 지우면 목록에서 빠집니다.</div>';
   $('pList').innerHTML=h;
 
@@ -974,12 +987,10 @@ function openDel(i){
   const rest = panelSorted(row,r[1]).filter(x=>x!==i);      /* 정렬 순서 그대로 */
   const heir = rest.filter(used)[0];                        /* 새 대표 = 정렬 1순위의 사용 중 조합 */
   const nb=$('dlNotice'), ns=nb.querySelector('span:last-child');
-  if(!rest.length){                                          /* ① 유일한 조합 */
+  /* ① 노출이 끊기는 경우 — 남는 조합이 없을 때와 남은 게 전부 미사용일 때, 같은 안내를 쓴다 */
+  if(!rest.length || (isRep && heir===undefined)){
     nb.hidden=false;
     ns.innerHTML='<b>이 속성 조합에 등록된 유일한 상품 조합입니다.</b> 등록을 해제하면 이 속성 조합으로는 상담상세에 어떤 상품도 노출되지 않습니다.';
-  } else if(isRep && heir===undefined){                      /* ①\u2032 남은 조합이 전부 미사용 */
-    nb.hidden=false;
-    ns.innerHTML='<b>남은 상품 조합이 모두 미사용입니다.</b> 등록을 해제하면 이 속성 조합으로는 상담상세에 어떤 상품도 노출되지 않습니다.';
   } else if(isRep){                                          /* ② 새 대표 승계 */
     nb.hidden=false;
     ns.innerHTML='<b>대표로 지정된 상품 조합입니다.</b> 등록을 해제하면 <b>'+esc(R[heir][2])+(R[heir][3]?' · '+esc(R[heir][3]):'')+'</b>이(가) 새 대표로 지정됩니다.';
@@ -1042,10 +1053,10 @@ const C_hidun = findCell((ii,rp)=> used(rp) && ii.some(x=>x!==rp&&!used(x)) ? rp
 
 const CASES=[
  ['5장','기본 상태','인터넷 71행 · 전체 · 기본 4개 열(KT · LG · SKT · SKB)',()=>{resetAll();}],
- ['5장','사용 여부 = 미사용','미사용 조합이 있는 행만 (2건) · <b>미노출 열(딜라이브)에 결과 안내 바</b> + [미노출 열 전체 보기]',()=>{resetAll();setUse('unused');}],
- ['5장','미사용 → 미노출 열 전체 보기','안내 바 버튼을 누르면 해당 열이 붙고 ⚠가 보임',()=>{resetAll();setUse('unused');setTimeout(()=>$('hidAdd').click(),350);}],
+ ['5장','사용 여부 = 미사용','미사용 조합이 있는 행만 (2건) · <b>미노출 열(딜라이브)에 결과 안내 바</b> + [전체 보기]',()=>{resetAll();setUse('unused');}],
+ ['5장','미사용 → [전체 보기]','버튼을 누르면 <b>통신사 8개가 모두 켜지고</b> 결과가 있던 첫 열까지 가로 스크롤',()=>{resetAll();setUse('unused');setTimeout(()=>$('hidAdd').click(),350);}],
  ['5.1','검색 — 보이는 열에 결과','일치한 셀에 건수 · 수정 버튼을 누르면 그 통신사 칩이 선택된 채로 열림',()=>{resetAll();setQ('기가WiFi7');}],
- ['5.2','검색 — 미노출 열에만 결과',HT?('「'+HT+'」 검색 · 안내 바 + [미노출 열 전체 보기]'):'해당 검색어가 데이터에 없습니다',HT?()=>{resetAll();setQ(HT);}:null],
+ ['5.2','검색 — 미노출 열에만 결과',HT?('「'+HT+'」 검색 · 안내 바 + [전체 보기] → 8개 전부 켜짐'):'해당 검색어가 데이터에 없습니다',HT?()=>{resetAll();setQ(HT);}:null],
  ['5장','미사용 + 검색 중첩','앞 조건(미사용) 안에서만 검색됨',()=>{resetAll();setUse('unused');setQ('프리미엄');}],
  ['10장','통신사 열 0개','열 편집에서 전부 해제 → 빈 상태 안내',()=>{resetAll();VISV=[];render();}],
  ['9장','검색 결과 없음','조건에 맞는 속성 조합이 없다는 빈 상태',()=>{resetAll();setQ('존재하지않는상품명');}],
@@ -1053,7 +1064,7 @@ const CASES=[
  ['5장','미사용인데 셀에 ⚠가 없는 행',C_hidun?'대표는 사용 중이고 다른 조합만 미사용 — 패널을 열어야 보임':'<b>데이터에 없음</b> — 현재 미사용 3건이 모두 대표가 미사용인 셀에 있습니다',C_hidun?()=>{resetAll();setUse('unused');openPanelAt(C_hidun.row.k,C_hidun.v);}:null],
  ['7장','사이드패널 — 0건 통신사',C_zero?'칩 건수 0 · 클릭 가능 · 표 대신 빈 상태':'해당 조합이 없습니다',C_zero?()=>{resetAll();openPanelAt(C_zero.row.k,C_zero.v);}:null],
  ['7.3 ①','등록 해제 — 유일한 조합',C_only?'해제하면 이 속성 조합으로는 상담상세에 어떤 상품도 노출되지 않음':'해당 조합이 없습니다',C_only?()=>{resetAll();openPanelAt(C_only.row.k,C_only.v);openDel(C_only.i);}:null],
- ['7.3 ①′','등록 해제 — 남은 조합이 전부 미사용',C_allun?'대표를 해제해도 승계할 사용 중 조합이 없음':'<b>데이터에 없음</b>',C_allun?()=>{resetAll();openPanelAt(C_allun.row.k,C_allun.v);openDel(C_allun.i);}:null],
+ ['7.3 ①','등록 해제 — 남은 조합이 전부 미사용',C_allun?'<b>유일한 조합과 같은 안내</b>를 쓴다 — 분기하지 않음':'<b>데이터에 없음</b>',C_allun?()=>{resetAll();openPanelAt(C_allun.row.k,C_allun.v);openDel(C_allun.i);}:null],
  ['7.3 ②','등록 해제 — 대표 해제 · 승계',C_heir?'새 대표가 될 조합을 <b>이름으로</b> 안내':'해당 조합이 없습니다',C_heir?()=>{resetAll();openPanelAt(C_heir.row.k,C_heir.v);openDel(C_heir.i);}:null],
  ['7.3 ③','등록 해제 — 일반 조합',C_plain?'추가 안내 없음 (경고 박스 자체가 안 뜸)':'해당 조합이 없습니다',C_plain?()=>{resetAll();openPanelAt(C_plain.row.k,C_plain.v);openDel(C_plain.i);}:null],
  ['3.3','구분 전환 — TV','속성 2칸 · 컬럼명 라인 · 셋탑 / TV채널 · 셋탑박스 · 조건 모두 초기화',()=>{resetAll();SV='TV';$('svcSel').value='TV';render();}],
@@ -1100,7 +1111,7 @@ window.addEventListener('DOMContentLoaded',function(){
     <tbody>
       <tr><th>조회</th><td>합니다</td><td>구분 셀렉트 + 통합 검색 + 열 편집 + 「대표 재지정 필요」</td></tr>
       <tr><th>대표 지정</th><td>합니다</td><td>행 수정 버튼 → 사이드 패널 → 라디오 한 번에 즉시 저장</td></tr>
-      <tr><th>등록 해제</th><td>인터넷만</td><td>사이드 패널 행 끝 ✕ → 확인 모달 · <b>이 화면의 유일한 모달</b>. 인터넷 외는 해제 컬럼이 없습니다</td></tr>
+      <tr><th>등록 해제</th><td>인터넷만</td><td>사이드 패널 행 끝 [해제] → 확인 모달 · <b>이 화면의 유일한 모달</b>. 인터넷 외는 해제 컬럼이 없습니다</td></tr>
       <tr><th>새 상품 조합 등록</th><td class="bad">안 합니다</td><td>인터넷 상품 관리에서 상품 조합을 고른 뒤 기본WIFI 우클릭 → 「상품 조합 등록」 — 모달 시안은 <a href="/internet-product/products/#modal-cases">인터넷 상품 관리</a> 하단</td></tr>
       <tr><th>속성 조합 수정</th><td class="bad">불가</td><td>해제 후 재등록</td></tr>
       <tr><th>사용여부 변경</th><td class="bad">안 합니다</td><td>인터넷 상품 관리의 상품 패널에서만. 여기선 결과만 표시</td></tr>
@@ -1169,7 +1180,9 @@ window.addEventListener('DOMContentLoaded',function(){
   </table>
   </div>
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
-    <p><b>미노출 열 안내 — 검색과 사용 여부를 같은 방식으로 처리합니다.</b> 조건에 맞는 셀이 꺼놓은 통신사 열에 있으면 리스트 위에 안내 바가 뜨고 <b>[미노출 열 전체 보기]</b> 버튼으로 그 열들을 한 번에 켭니다. 열을 자동으로 켜거나 기본값으로 되돌리는 동작은 하지 않습니다 — 검색과 필터가 다르게 움직이면 규칙이 두 벌이 됩니다.</p>
+    <p><b>미노출 열 안내 — 검색과 사용 여부를 같은 방식으로 처리합니다.</b> 조건에 맞는 셀이 꺼놓은 통신사 열에 있으면 리스트 위에 안내 바가 뜨고 <b>[전체 보기]</b> 버튼을 줍니다. 열을 자동으로 켜거나 기본값으로 되돌리는 동작은 하지 않습니다 — 검색과 필터가 다르게 움직이면 규칙이 두 벌이 됩니다.</p>
+    <p><b>[전체 보기]는 통신사 8개를 전부 켭니다</b> — 결과가 있는 열만 골라 켜지 않습니다. 결과가 있는 열만 켜면 그 뒤에 통신사 목록이 <b>조건에 따라 달라진 채로 남아</b>, 다음 검색에서 「지금 몇 개를 보고 있는지」가 매번 바뀝니다. 전부 켜면 버튼을 누른 뒤 상태가 항상 같습니다.</p>
+    <p><b>안내에 통신사 이름과 건수를 적지 않습니다.</b> 버튼이 전부 켜는 동작이라 어느 통신사인지 알아도 운영자가 할 일이 같습니다. 대신 누르면 <b>결과가 있던 첫 열까지 가로 스크롤</b>해 그 자리를 짚어줍니다. 토스트는 두지 않습니다.</p>
     <p><b>② 미사용은 행 단위라 셀에 ⚠가 없을 수 있습니다.</b> 대표는 사용 중이고 다른 조합만 미사용인 셀은 패널을 열어야 보입니다. <b>실측상 인터넷 미사용 조합 3건이 전부 「대표가 미사용인 셀」 안에 있어 현재는 이 케이스가 없습니다</b> — 케이스 표의 해당 버튼이 비활성인 이유입니다.</p>
     <p><b>「대표 재지정 필요」 체크박스는 폐기했습니다.</b> ② 사용 여부가 그 역할을 포함하면서 대표가 아닌 조합까지 덮습니다.</p>
     <p><b>「상품 조합 2개 이상」 필터도 폐기했습니다.</b> <code>rowspan</code> 구조에서는 행 하나가 (업체 · 속성 조합)이라 행 단위 속성이었지만, 지금은 셀마다 건수가 다릅니다. 셀의 건수 표기가 그 자리를 대신합니다.</p>
@@ -1199,9 +1212,7 @@ window.addEventListener('DOMContentLoaded',function(){
       <tr><th>B-1</th><td>대표 여부</td><td><b>대표가 맨 위</b></td><td class="sub">안 남 — 통신사당 1건</td></tr>
       <tr><th>B-1.5</th><td>사용 여부</td><td>사용 중인 조합이 위</td><td class="sub">남</td></tr>
       <tr><th>B-2</th><td>상품(1줄) 우선순위</td><td>인터넷 상품 관리에서 <b>위에 있는 카드</b>가 위</td><td class="sub">남</td></tr>
-      <tr><th>B-3</th><td>세트상품(2줄) 우선순위</td><td>〃</td><td class="sub">날 수 있음</td></tr>
-      <tr><th>B-4</th><td>상품명</td><td>글자순</td><td class="sub">날 수 있음</td></tr>
-      <tr><th>B-5</th><td>세트상품명</td><td>글자순</td><td class="sub"><b>절대 안 남</b></td></tr>
+      <tr><th>B-3</th><td>세트상품(2줄) 우선순위</td><td>〃</td><td class="sub">안 남 — 아래 전제</td></tr>
     </tbody>
   </table>
   </div>
@@ -1211,9 +1222,9 @@ window.addEventListener('DOMContentLoaded',function(){
     <p><b>B-1.5 사용 여부</b> — 미사용 조합도 목록과 패널에서 지우지 않습니다. 대표를 옮기는 것이 유일한 해결책인데 숨기면 그 조건 자체를 발견할 수 없기 때문입니다. 대신 사용 중인 조합을 위로 올립니다. 미사용 조합은 대표로 지정할 수 없어 라디오가 비활성입니다.</p>
     <p><b>B-2 · B-3의 「위에 있는 카드」</b> — 인터넷 상품 관리 카드의 우선순위 값입니다. <b>이 값을 바꾸면 이 화면의 순서도 따라 바뀝니다.</b></p>
     <p><b>B-2 동률이 실제로 생깁니다</b> — 상품 A가 세트상품 X · Y 둘 다와 초록선이 있고 X · Y의 태그가 같으면 <code>A×X</code>와 <code>A×Y</code>가 한 칸에 들어갑니다. 1줄이 같으니 B-3가 받습니다.</p>
-    <p><b>B-4 · B-5의 「글자순」</b> — 상품명에 한글 · 영문 · 숫자가 섞여 있어 「사전순」으로만 쓰면 구현마다 달라집니다. <b>DB 기본 문자열 정렬 오름차순</b>으로 둡니다. 여기까지 내려오는 것은 우선순위 값이 중복 저장된 예외 상황이라, 어떤 순서든 <b>매번 같기만 하면</b> 됩니다.</p>
-    <p><b>B-5에서 반드시 끝납니다</b> — 상품 조합은 (1줄 카드 × 2줄 카드) 쌍이고 같은 쌍이 한 속성 조합에 두 번 등록될 수 없으므로, 두 이름이 모두 같은 행은 존재하지 않습니다. 조합 ID 같은 숨은 값을 쓰지 않아도 순서가 확정됩니다.</p>
-    <p class="q">BE 확인 — 상품 · 세트상품 우선순위 값이 <b>칸 안에서 유일한지</b>. 중복 저장이 가능하면 B-4 · B-5가 실제로 쓰입니다.</p>
+    <p><b>전제 — 우선순위는 한 칸 안에서 유일합니다.</b> 인터넷 상품 관리가 드래그 정렬 때 그룹 전체를 <code>1..n</code>으로 재채번하므로 같은 그룹 안에서 값이 겹치지 않습니다. 그래서 B-3에서 사슬이 끝납니다.</p>
+    <p class="q">이 전제가 깨지면(다른 그룹의 카드가 한 칸에 섞여 값이 겹치면) 그 두 행의 순서는 <b>DB 반환 순서가 정합니다</b> — 조회할 때마다 자리가 바뀔 수 있습니다. BE 확인(D-1).</p>
+    <p class="q">글자순 보조 기준(구 B-4 상품명 · B-5 세트상품명)은 <b>생기지 않는 케이스로 보고 삭제했습니다</b> (10/16).</p>
   </div>
 </div>
 
@@ -1227,8 +1238,8 @@ window.addEventListener('DOMContentLoaded',function(){
       <tr><th>상단 카드</th><td>구분 · 속성 n칸 (읽기 전용)</td></tr>
       <tr><th>통신사 칩</th><td>전 통신사 · <b>건수 항상 표기(0 포함)</b> · 0건도 클릭 가능. 대표 미사용 칩에 ⚠</td></tr>
       <tr><th>선택된 칩</th><td>검색 일치 통신사 → 대표 미사용 통신사 → 첫 통신사 순</td></tr>
-      <tr><th>표</th><td>대표(라디오) · 1줄 · 2줄 · 상태 · 해제(✕)</td></tr>
-      <tr><th>0건 통신사</th><td>표 대신 <span class="tok">연결된 상품 조합이 없습니다.</span></td></tr>
+      <tr><th>표</th><td>대표(라디오) · <b>상태</b> · 1줄 · 2줄 · 관리(해제)</td></tr>
+      <tr><th>0건 통신사</th><td>표 대신 <span class="tok">등록된 상품 조합이 없습니다.</span></td></tr>
       <tr><th>대표 변경</th><td>라디오 클릭 <b>즉시 저장</b> · 토스트</td></tr>
       <tr><th>등록 해제</th><td>✕ → 확인 모달 → 저장. 인터넷만</td></tr>
       <tr><th>닫기</th><td>우상단 ✕ · ESC · 스크림 클릭. <b>하단 저장/닫기 버튼 없음</b></td></tr>
@@ -1238,7 +1249,7 @@ window.addEventListener('DOMContentLoaded',function(){
   <div class="desc"><div class="desc-l">DESCRIPTION</div>
     <p><b>단건 저장이라 저장 버튼이 없습니다.</b> 대표는 누르는 순간, 해제는 확인창을 거쳐 저장됩니다. 저장되지 않은 상태가 존재하지 않으므로 이탈 확인도 걸지 않습니다.</p>
     <p><b>통신사 선택은 패널 안에 있습니다</b> — 목록에서 통신사를 고르고 들어오는 것이 아니라, 속성 조합을 열고 나서 통신사를 옮겨 다닙니다. 같은 속성 조합에서 여러 통신사의 대표를 연달아 고치는 것이 실제 동선입니다.</p>
-    <p>대표가 미사용인 칩을 열면 패널 하단에 경고가 붙습니다 — <span class="tok">⚠ 현재 대표가 미사용입니다. 이 속성 조합은 상담상세에 나가지 않습니다 — 다른 조합을 대표로 지정해주세요.</span></p>
+    <p>대표가 미사용인 칩을 열면 <b>칩과 표 사이</b>에 경고가 붙습니다 — <span class="tok">⚠ 대표 상품 조합이 미사용이라서 상담상세에 노출되지 않습니다. 사용 중인 상품 조합을 대표로 지정해 주세요.</span></p>
   </div>
 </div>
 
