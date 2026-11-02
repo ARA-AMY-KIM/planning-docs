@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>상부점 관리 화면기획서</title>
+<style>
+:root{
+  --blue-50:#ECF2FF;--blue-500:#145CE6;--blue-700:#073894;
+  --red-500:#C31518;--green-600:#0A8208;
+  --g25:#F5F6F7;--g50:#EFEFF1;--g100:#DEE0E3;--g200:#C3C5C9;--g300:#A9ABB0;--g500:#73767A;--g700:#424447;--g900:#131314;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;background:#fff;color:var(--g900);font-size:14px;line-height:20px;letter-spacing:-.3px;min-width:1440px}
+button,input,select{font:inherit;letter-spacing:inherit;color:inherit}
+button{cursor:pointer;background:none;border:none}
+:focus-visible{outline:2px solid var(--blue-500);outline-offset:2px}
+
+.gnb{height:56px;border-bottom:1px solid var(--g100);display:flex;align-items:center;gap:20px;padding:12px 264px}
+.logo{width:215px;flex-shrink:0;display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;line-height:24px;color:var(--g700)}
+.logo-mark{width:57px;height:24px;border-radius:4px;background:var(--blue-500);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;letter-spacing:0}
+.menu{flex:1;display:flex;gap:20px}
+.menu span{padding:6px 12px;border-radius:8px;font-weight:600}
+
+.page{padding:28px 264px 80px}
+.crumb{color:var(--g300)}
+h1{font-size:32px;line-height:42px;letter-spacing:-.5px;font-weight:700;color:#000;margin-top:4px}
+.desc{margin-top:16px;color:var(--g500);line-height:22px}
+.divider{border-top:1px solid var(--g100);margin:28px -264px}
+
+.actions{display:flex;justify-content:space-between;align-items:center}
+.row{display:flex;gap:8px;align-items:center}
+.vbar{width:1px;height:20px;background:var(--g100)}
+.inp,.dd-btn{height:36px;border:1px solid var(--g200);border-radius:8px;padding:8px 12px;background:#fff}
+.inp{width:164px;padding-right:32px}
+.srch{position:relative}.srch-ic{position:absolute;right:12px;top:8px;color:var(--g500)}
+.inp::placeholder{color:var(--g300)}
+.inp:focus{outline:none;border-color:var(--blue-500)}
+.dd{position:relative}
+.dd-btn{min-width:104px;display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left}
+.dd-btn.placeholder{color:var(--g300)}
+.dd-btn::after{content:"▾";color:var(--g500);font-size:11px}
+.dd-btn.new{border-color:var(--blue-500)}
+.dd-menu{position:absolute;top:40px;left:0;min-width:100%;background:#fff;border:1px solid var(--g100);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.08);padding:4px 0;z-index:20;display:none}
+.dd.open .dd-menu{display:block}
+.dd-menu button{display:block;width:100%;text-align:left;padding:8px 12px;white-space:nowrap}
+.dd-menu button:hover{background:var(--g25)}
+.dd-menu button.on{color:var(--blue-700);font-weight:600;background:var(--blue-50)}
+
+.btn{height:36px;padding:8px 16px;border-radius:8px;font-weight:600;border:1px solid transparent}
+.btn-sm{height:32px;padding:6px 12px}
+.btn-primary{background:var(--blue-500);color:#fff}
+.btn-primary:hover{background:var(--blue-700)}
+.btn-primary:disabled{background:var(--g300);cursor:not-allowed}
+.btn-outline{background:#fff;border-color:var(--g200)}
+.btn-outline:hover{background:var(--g50)}
+.btn-text{white-space:nowrap;flex-shrink:0;color:var(--blue-500);border:1px solid var(--blue-500);background:#fff;height:32px;padding:6px 10px;border-radius:8px;font-weight:600;font-size:13px}
+
+.count{margin:20px 0 8px;color:var(--g500)}
+.count b{color:var(--g900)}
+table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--g100);border-radius:12px;overflow:hidden}
+th{height:32px;padding:8px 16px;font-size:12px;line-height:16px;letter-spacing:-.2px;color:var(--g500);font-weight:400;text-align:left;border-bottom:1px solid var(--g100)}
+td{height:52px;padding:12px 16px;border-bottom:1px solid var(--g100);text-align:left;vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+.col-new{background:var(--blue-50)}
+th.col-new{color:var(--blue-700);font-weight:600}
+.muted{color:var(--g300)}
+.edit{width:28px;height:28px;border-radius:6px;background:var(--blue-50);color:var(--blue-500)}
+.edit:hover{background:#D9E6FF}
+.empty td{text-align:center;color:var(--g500);height:120px}
+.flash td{animation:flash 1.2s ease}
+@keyframes flash{from{background:#FFF6D6}to{background:transparent}}
+@media (prefers-reduced-motion:reduce){.flash td{animation:none}}
+
+/* modal */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:50}
+.overlay.open{display:flex}
+.modal{width:420px;max-height:88vh;display:flex;flex-direction:column;background:#fff;border:1px solid var(--g100);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+.modal.wide{width:720px}
+.m-head{display:flex;justify-content:space-between;align-items:center;padding:16px 24px;border-bottom:1px solid var(--g100)}
+.m-head b{font-size:16px;line-height:24px}
+.x{font-size:18px;color:var(--g500);width:24px;height:24px}
+.m-body{padding:20px 24px;display:flex;flex-direction:column;gap:20px;overflow:auto}
+.m-foot{display:flex;justify-content:flex-end;gap:8px;padding:16px 24px;background:var(--g25);border-top:1px solid var(--g100);border-radius:0 0 12px 12px}
+.flabel{display:block;font-weight:600;margin-bottom:8px}
+.req{color:var(--red-500);margin-left:2px}
+.f-inp{width:100%;height:36px;border:1px solid var(--g200);border-radius:8px;padding:8px 12px;background:#fff}
+.f-inp:focus{outline:none;border-color:var(--blue-500)}
+.f-inp[readonly],.f-inp:disabled{background:var(--g25);color:var(--g700)}
+.inline{display:flex;gap:8px}
+.collapsed{border:1px dashed var(--g200);border-radius:8px;padding:10px 12px;color:var(--g500);font-size:12px;line-height:16px}
+.newblock{position:relative;border:2px solid var(--blue-500);border-radius:10px;padding:16px}
+.newtag{position:absolute;top:-10px;left:12px;background:var(--blue-500);color:#fff;font-size:11px;line-height:16px;padding:1px 6px;border-radius:4px;letter-spacing:0}
+.ck{display:flex;align-items:center;gap:8px;cursor:pointer;width:fit-content}
+.ck input{width:18px;height:18px;accent-color:var(--blue-500);cursor:pointer}
+.checks{display:flex;flex-direction:column;gap:10px}
+.sub{margin-left:26px;padding:12px;border-radius:8px;background:var(--g25)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{height:28px;padding:4px 10px;border-radius:14px;border:1px solid var(--g200);background:#fff;font-size:13px}
+.chip[aria-pressed="true"]{border-color:var(--blue-500);background:var(--blue-50);color:var(--blue-700);font-weight:600}
+.helper{margin-left:26px;color:var(--g500);font-size:12px;line-height:16px}
+.lock-note{margin-top:8px;padding:8px 10px;border-radius:8px;background:#ECF2FF;color:#424447;font-size:12px;line-height:16px}
+.ck input:disabled{cursor:not-allowed}.ck:has(input:disabled){color:var(--g500);cursor:not-allowed}
+.chip:disabled{cursor:not-allowed;opacity:.6}
+.hint-err{margin-top:8px;color:var(--red-500);font-size:12px;line-height:16px}
+
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:80;display:none}
+.toast.ok{background:var(--green-600)}
+.toast.err{background:var(--red-500)}
+.toast.show{display:block}
+
+/* spec */
+.spec{border-top:2px dashed var(--g100);padding:48px 264px 96px;background:var(--g25)}
+.spec h2{font-size:24px;line-height:34px;letter-spacing:-.4px;font-weight:700}
+.spec h3{font-size:16px;line-height:24px;font-weight:700;margin:32px 0 12px}
+.spec p{color:var(--g500);margin-top:6px;line-height:22px}
+.spec table{background:#fff}
+.spec td{height:auto;padding:10px 16px;vertical-align:top;line-height:20px}
+.spec td:first-child{width:200px;font-weight:600}
+.spec ol{margin-left:20px;display:flex;flex-direction:column;gap:6px}
+.tbd{display:inline-block;padding:2px 6px;border-radius:4px;background:#FDEBE3;color:#8A2F06;font-size:12px;line-height:16px}
+code{font-size:12px;background:var(--g50);padding:1px 4px;border-radius:3px}
+/* tabs */
+.tabbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:4px;height:44px;padding:0 24px;background:#131314;color:#fff}
+.tb-title{font-size:12px;color:#A9ABB0;margin-right:16px;letter-spacing:-.2px}
+.tab{height:30px;padding:0 14px;border-radius:6px;color:#C3C5C9;font-weight:600;font-size:13px}
+.tab.on{background:#fff;color:#131314}
+.tab:hover:not(.on){background:#2A2C2E}
+[hidden]{display:none!important}
+/* spec doc */
+.sp{max-width:1392px;margin:0 auto;padding:48px 24px 120px}
+.sp-sec{padding:40px 0;border-top:1px solid var(--g100)}
+.sp-sec:first-child{border-top:none;padding-top:0}
+.sp-num{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.15em;color:var(--blue-500);background:var(--blue-50);padding:3px 8px;border-radius:3px;margin-bottom:10px}
+.sp h2{font-size:24px;line-height:34px;letter-spacing:-.4px;font-weight:700}
+.sp-h3{font-size:16px;line-height:24px;font-weight:700;margin:36px 0 14px}
+.sp-desc{margin:8px 0 16px;color:var(--g500);line-height:22px;max-width:900px}
+.sp-t{margin-top:12px}
+.sp-t td{height:auto;padding:10px 16px;vertical-align:top;line-height:20px}
+.sp-t td:first-child{font-weight:600;white-space:nowrap}
+.sp-t.note td:first-child{width:44px}
+.sp-t.note td:nth-child(2){width:120px;font-weight:600}
+.sp-callout{margin-top:16px;padding:12px 16px;border-left:3px solid #D75011;background:#FDEBE3;border-radius:0 6px 6px 0;color:var(--g700)}
+.sp-callout b{color:#8A2F06}
+.sp-grid{display:grid;grid-template-columns:minmax(0,1fr) 480px;gap:32px;align-items:start;margin-top:16px}
+.frame-cap{font-size:12px;line-height:16px;color:var(--g500);margin-bottom:8px;letter-spacing:-.2px}
+.fbox{position:relative;background:#fff;border:1px solid var(--g100);border-radius:12px;padding:24px;background-image:radial-gradient(var(--g100) 1px,transparent 1px);background-size:16px 16px}
+.fbox.center{display:flex;justify-content:center}
+.fbox.sm{padding:16px;background-image:none}
+.rel{position:relative}
+.pin{position:absolute;width:22px;height:22px;border-radius:50%;background:#D75011;color:#fff;font-size:12px;font-weight:700;line-height:22px;text-align:center;letter-spacing:0;box-shadow:0 0 0 2px #fff;z-index:2}
+.pin.s{position:static;display:inline-block}
+.s-sel,.s-inp{height:36px;border:1px solid var(--g200);border-radius:8px;padding:8px 12px;background:#fff;min-width:96px;white-space:nowrap}
+.s-sel.ph,.s-inp{color:var(--g300)}
+.s-inp{width:160px}
+.s-sel.focus{border-color:var(--blue-500);color:var(--g900);min-width:120px}
+.s-menu{position:absolute;top:40px;left:0;width:160px;background:#fff;border:1px solid var(--g100);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.08);padding:4px 0}
+.s-menu div{padding:8px 12px}
+.s-menu .on{background:var(--blue-50);color:var(--blue-700);font-weight:600}
+.cnt{margin:16px 0 8px;color:var(--g500)}.cnt b{color:var(--g900)}
+.s-tbl td{background:#fff}
+.s-modal{width:400px;background:#fff;border:1px solid var(--g100);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12);overflow:visible}
+.s-mh{display:flex;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--g100)}.s-mh b{font-size:16px;line-height:24px}
+.s-mb{padding:20px 24px;display:flex;flex-direction:column;gap:20px}
+.s-mf{display:flex;justify-content:flex-end;gap:8px;padding:16px 24px;background:var(--g25);border-top:1px solid var(--g100);border-radius:0 0 12px 12px}
+.s-skip{color:var(--g300);font-size:12px;line-height:16px;border-left:2px solid var(--g100);padding-left:8px}
+.s-lb{font-weight:600;margin-bottom:8px}
+.s-in{height:36px;border:1px solid var(--g200);border-radius:8px;padding:8px 12px}
+.s-ck{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.s-ck::before{content:"";width:18px;height:18px;border-radius:4px;border:1px solid var(--g200);background:#fff;flex-shrink:0;box-sizing:border-box}
+.s-ck.on::before{content:"✓";background:var(--blue-500);border-color:var(--blue-500);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center}
+.s-ck.dis{color:var(--g500)}
+.s-ck.dis::before{background:var(--g100);border-color:var(--g200)}
+.s-ck.on.dis::before{background:var(--g300);border-color:var(--g300)}
+.s-sub{margin:0 0 10px 26px;padding:12px;border-radius:8px;background:var(--g25)}
+.s-chips{display:flex;flex-wrap:wrap;gap:8px}
+.s-chips .c{height:28px;padding:4px 10px;border-radius:14px;border:1px solid var(--g200);background:#fff;font-size:13px}
+.s-chips .c.on{border-color:var(--blue-500);background:var(--blue-50);color:var(--blue-700);font-weight:600}
+.s-chips .c.dis{opacity:.6}
+.s-help{margin:-4px 0 10px 26px;color:var(--g500);font-size:12px;line-height:16px}
+.s-help.err,.s-err{color:var(--red-500)}
+.s-err{font-size:12px;line-height:16px;margin-top:8px}
+.s-lock{margin-top:4px;padding:8px 10px;border-radius:8px;background:var(--blue-50);color:var(--g700);font-size:12px;line-height:16px}
+.s-btn{height:32px;padding:6px 12px;border-radius:8px;font-weight:600;display:inline-flex;align-items:center}
+.s-btn.o{border:1px solid var(--g200);background:#fff}.s-btn.p{background:var(--blue-500);color:#fff}
+.states{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.st-d{margin-top:8px;font-size:12px;line-height:18px;color:var(--g500)}
+.toasts{display:flex;gap:24px;flex-wrap:wrap;margin-top:16px}
+.s-toast{color:#fff;padding:12px 18px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.15);max-width:560px}
+.s-toast.ok{background:var(--green-600)}.s-toast.err{background:var(--red-500)}
+
+.picker{position:relative}
+.pick-list{position:absolute;top:40px;left:0;right:0;background:#fff;border:1px solid var(--g100);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.08);padding:4px 0;z-index:5;max-height:200px;overflow:auto}
+.pick-list button{display:block;width:100%;text-align:left;padding:8px 12px}
+.pick-list button:hover{background:var(--g25)}
+.sub-t{color:var(--g500);font-size:12px;margin-left:4px}
+.helper0{margin-top:8px;color:var(--g500);font-size:12px;line-height:16px}
+.empty-box{padding:10px 12px;border-radius:8px;background:var(--blue-50);color:var(--g700);font-size:13px;line-height:18px}
+.radios{display:flex;gap:20px}
+.ck input[type=radio]{width:18px;height:18px;accent-color:var(--blue-500)}
+textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
+.counter{text-align:right;font-size:12px;color:var(--g300);margin-top:4px}
+.s-drop{margin-top:4px;border:1px solid var(--g100);border-radius:8px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.08);padding:4px 0}
+.s-drop div{padding:8px 12px}.s-drop .on{background:var(--g25)}
+.s-in.ro{background:var(--g25);color:var(--g700)}
+.s-ck.rd::before{border-radius:50%}
+.s-ck.rd.on::before{content:"";background:#fff;border:5px solid var(--blue-500)}
+</style>
+</head>
+<body>
+<div class="tabbar" role="tablist" aria-label="보기 전환">
+  <span class="tb-title">상부점 관리</span>
+  <button role="tab" class="tab on" aria-selected="true" data-t="mockup">목업</button>
+  <button role="tab" class="tab" aria-selected="false" data-t="spec">화면기획서</button>
+</div>
+
+<div id="tab-mockup">
+<div style="min-height:100vh">
+  <header class="gnb">
+    <div class="logo"><span class="logo-mark">OXC</span>CRM Admin</div>
+    <nav class="menu"><span>업체 관리</span><span>상품 관리</span><span>정책 관리</span><span>운영 관리</span><span>개발 설정</span><span>어드민 운영</span><span>비즈터널 운영</span></nav>
+  </header>
+  <main class="page">
+    <div class="crumb">업체 관리</div>
+    <h1>상부점 관리</h1>
+    <p class="desc">정책과 접수에 사용할 상부점을 지정·관리합니다.</p>
+    <div class="divider"></div>
+    <div class="actions">
+      <div class="row">
+        <div class="dd" data-key="field"></div>
+        <div class="srch"><input class="inp" id="q" placeholder="검색어 입력" aria-label="검색어 입력"><span class="srch-ic" aria-hidden="true">⌕</span></div>
+        <span class="vbar"></span>
+        <div class="dd" data-key="prod"></div>
+        <div class="dd" data-key="state"></div>
+        <span class="vbar"></span>
+        <div class="dd" data-key="size"></div>
+      </div>
+      <div class="row">
+        <button class="btn btn-outline" id="logBtn">변경 내역</button>
+        <button class="btn btn-primary" id="addBtn">상부점 지정</button>
+      </div>
+    </div>
+    <div class="count">총 <b id="cnt">0</b>건</div>
+    <table>
+      <thead><tr><th>상호</th><th>고유번호</th><th>접수 상품군</th><th>상부점 상태</th><th>거래 시작일</th><th>최종 수정일시</th><th>수정</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </main>
+</div>
+
+<!-- 지정/수정 모달 -->
+<div class="overlay" id="ov" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal">
+    <div class="m-head"><b id="mTitle">상부점 지정</b><button class="x" id="mClose" aria-label="닫기">✕</button></div>
+    <div class="m-body">
+      <div id="pickWrap">
+        <span class="flabel">업체<span class="req">*</span></span>
+        <div class="picker" id="picker">
+          <input class="f-inp" id="pickQ" placeholder="상호 또는 고유번호 검색" autocomplete="off">
+          <div class="pick-list" id="pickList" hidden></div>
+        </div>
+        <div class="helper0" id="pickHelp">업체 용도가 '상부점'인 승인 업체 중 아직 지정되지 않은 업체만 검색됩니다.</div>
+        <div class="empty-box" id="pickEmpty" hidden>지정할 수 있는 업체가 없습니다. 전체 업체에서 업체 용도 '상부점'을 먼저 지정해주세요.</div>
+      </div>
+      <div id="roWrap" hidden>
+        <span class="flabel">업체</span>
+        <input class="f-inp" id="roName" readonly>
+      </div>
+      <div id="stateWrap" hidden>
+        <span class="flabel">상부점 상태<span class="req">*</span></span>
+        <div class="radios">
+          <label class="ck"><input type="radio" name="st" value="거래 중">거래 중</label>
+          <label class="ck"><input type="radio" name="st" value="거래 중지">거래 중지</label>
+        </div>
+        <div class="helper0" id="stopHelp" hidden>거래 중지 시 신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.</div>
+      </div>
+      <div>
+        <span class="flabel">접수 상품군<span class="req">*</span></span>
+        <div class="chips" id="chips"></div>
+        <div class="hint-err" id="prodErr" hidden>접수 상품군을 1개 이상 선택해주세요.</div>
+        <div class="hint-err" id="prodLock" hidden></div>
+      </div>
+      <div>
+        <span class="flabel">비고</span>
+        <textarea class="f-inp ta" id="memo" maxlength="200" placeholder="비고 입력"></textarea>
+        <div class="counter"><span id="memoCnt">0</span> / 200</div>
+      </div>
+      <div id="dateWrap" hidden><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div><span class="flabel">거래 시작일</span><input class="f-inp" id="roDate" readonly></div><div><span class="flabel">최종 수정일시</span><input class="f-inp" id="roUpd" readonly></div></div></div>
+      <div class="helper0" id="autoState">지정 시 상부점 상태는 '거래 중', 거래 시작일은 지정일로 등록됩니다.</div>
+    </div>
+    <div class="m-foot">
+      <button class="btn btn-outline btn-sm" id="mCancel">취소</button>
+      <button class="btn btn-primary btn-sm" id="mSave" disabled>저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- 거래 중지 확인 -->
+<div class="overlay" id="cfOv" role="alertdialog" aria-modal="true" aria-labelledby="cfTitle">
+  <div class="modal" style="width:380px">
+    <div class="m-head"><b id="cfTitle">거래 중지</b></div>
+    <div class="m-body"><p id="cfMsg" style="line-height:22px"></p></div>
+    <div class="m-foot"><button class="btn btn-outline btn-sm" id="cfNo">취소</button><button class="btn btn-primary btn-sm" id="cfYes">거래 중지</button></div>
+  </div>
+</div>
+
+<!-- 변경 내역 -->
+<div class="overlay" id="logOv" role="dialog" aria-modal="true" aria-labelledby="logTitle">
+  <div class="modal wide">
+    <div class="m-head"><b id="logTitle">변경 내역</b><button class="x" id="logClose" aria-label="닫기">✕</button></div>
+    <div class="m-body"><table><thead><tr><th>변경 일시</th><th>상호</th><th>항목</th><th>변경 전</th><th>변경 후</th></tr></thead><tbody id="logTb"></tbody></table></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<section class="spec">
+  <h2>확인 시나리오</h2>
+  <p>위 화면은 클릭해서 확인할 수 있다. 데이터는 설명용 예시이며 새로고침하면 초기화된다. 각 케이스는 아래 업체로 확인한다. 항목 정의는 [화면기획서] 탭 참고.</p>
+  <ol style="margin-top:12px">
+    <li>[상부점 지정] → 업체 검색(라이언렌탈, 콘통신) → 접수 상품군 선택 → 저장 → 목록에 '거래 중'으로 추가</li>
+    <li>라이언렌탈·콘통신을 모두 지정한 뒤 [상부점 지정] → '지정할 수 있는 업체가 없습니다' 안내 확인</li>
+    <li>현대렌탈케어 수정 → 렌탈 칩이 잠겨 있고 정책 안내 문구 확인 (렌탈 정책 등록됨 가정)</li>
+    <li>죠르디통신 수정 → 거래 중지 선택 → 안내 문구 확인 → 저장 → 확인 팝업 → 거래 중지 반영</li>
+    <li>예스렌탈(거래 중지) 수정 → 거래 중으로 변경 → 확인 팝업 없이 저장</li>
+    <li>접수 상품군 필터 '인터넷', 상부점 상태 필터 '거래 중지'로 조회</li>
+    <li>저장 후 [변경 내역]에서 접수 상품군·상부점 상태·비고 변경 기록 확인</li>
+  </ol>
+</section>
+</div>
+<div id="tab-spec" hidden>
+<div class="sp">
+  <section class="sp-sec">
+    <div class="sp-num">00</div>
+    <h2>개요</h2>
+    <p class="sp-desc">CRM Admin &gt; 업체 관리 &gt; 상부점 관리(신규). 전체 업체에서 업체 용도가 '상부점'인 업체를 Admin 상부점으로 지정하고, 접수 상품군과 상부점 상태를 관리한다. 이 탭은 Figma 작업용 화면기획서이며, 실제 동작은 [목업] 탭에서 확인한다.</p>
+    <table class="sp-t">
+      <thead><tr><th>화면</th><th>구성</th></tr></thead>
+      <tbody>
+        <tr><td>목록</td><td>필터(검색 기준·검색어 / 접수 상품군 / 상부점 상태 / 줄 수), [변경 내역] [상부점 지정], 목록 테이블</td></tr>
+        <tr><td>상부점 지정 모달</td><td>업체 선택, 접수 상품군, 비고. 상태 '거래 중', 거래 시작일은 지정일로 자동</td></tr>
+        <tr><td>상부점 수정 모달</td><td>업체(읽기 전용), 상부점 상태, 접수 상품군, 비고, 거래 시작일·최종 수정일시(읽기 전용)</td></tr>
+        <tr><td>거래 중지 확인 팝업</td><td>거래 중 → 거래 중지로 저장할 때</td></tr>
+        <tr><td>변경 내역 모달</td><td>전체 업체와 같은 형식</td></tr>
+      </tbody>
+    </table>
+    <div class="sp-callout"><b>확장 자리</b> — CRM BE 미팅에서 하부점 관리가 필요하다고 정해지면 메뉴명이 '상/하부점 관리'로 바뀌고 '구분(상부점/하부점)'이 추가된다. 추가 위치는 목록 첫 컬럼, 필터 첫 자리(검색 다음), 지정 모달 첫 필드로 비워둔다.</div>
+  </section>
+
+  <section class="sp-sec">
+    <div class="sp-num">01</div>
+    <h2>목록</h2>
+    <div class="sp-grid">
+      <div class="frame">
+        <div class="frame-cap">Frame · 목록 상단 + 테이블</div>
+        <div class="fbox">
+          <div class="row" style="flex-wrap:wrap">
+            <div class="s-sel">상호 ▾</div><div class="s-inp">검색어 입력</div><span class="vbar"></span>
+            <div class="s-sel ph rel">접수 상품군 ▾<span class="pin" style="top:-11px;right:-11px">1</span></div>
+            <div class="s-sel ph rel">상부점 상태 ▾<span class="pin" style="top:-11px;right:-11px">2</span></div>
+            <span class="vbar"></span><div class="s-sel">30줄 표시 ▾</div>
+            <div style="margin-left:auto" class="row"><span class="s-btn o">변경 내역</span><span class="s-btn p rel">상부점 지정<span class="pin" style="top:-11px;right:-11px">3</span></span></div>
+          </div>
+          <div class="cnt">총 <b>6</b>건</div>
+          <div class="rel">
+            <span class="pin" style="top:-11px;left:30%">4</span>
+            <span class="pin" style="top:-11px;left:52%">5</span>
+            <span class="pin" style="top:-11px;left:58%">6</span>
+            <table class="s-tbl">
+              <thead><tr><th>상호</th><th>고유번호</th><th>접수 상품군</th><th>상부점 상태</th><th>거래 시작일</th><th>최종 수정일시</th><th>수정</th></tr></thead>
+              <tbody>
+                <tr><td>어피치통신</td><td>apech</td><td>인터넷, 모바일</td><td>거래 중</td><td>2024-04-02</td><td>2026-10-28 17:30</td><td>✎</td></tr>
+                <tr><td>현대렌탈케어</td><td>hdren</td><td>렌탈</td><td>거래 중</td><td>2024-05-11</td><td>2026-10-20 15:42</td><td>✎</td></tr>
+                <tr><td>예스렌탈</td><td>yesrt</td><td>렌탈</td><td>거래 중지</td><td>2023-04-28</td><td>2026-09-30 10:05</td><td>✎</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <table class="sp-t note">
+        <thead><tr><th>No</th><th>항목</th><th>정의</th></tr></thead>
+        <tbody>
+          <tr><td><span class="pin s">1</span></td><td>접수 상품군 필터</td><td>전체(기본) / 인터넷 / 렌탈 / 알뜰 요금제 / 유심만 / 모바일. 단일 선택. 선택한 상품군을 포함하는 상부점 조회</td></tr>
+          <tr><td><span class="pin s">2</span></td><td>상부점 상태 필터</td><td>전체(기본) / 거래 중 / 거래 중지. 단일 선택</td></tr>
+          <tr><td><span class="pin s">3</span></td><td>[상부점 지정]</td><td>상부점 지정 모달 열기</td></tr>
+          <tr><td><span class="pin s">4</span></td><td>접수 상품군</td><td>쉼표로 나열. 순서는 인터넷 · 렌탈 · 알뜰 요금제 · 유심만 · 모바일 고정</td></tr>
+          <tr><td><span class="pin s">5</span></td><td>상부점 상태</td><td>거래 중 / 거래 중지 텍스트 표시</td></tr>
+          <tr><td><span class="pin s">6</span></td><td>거래 시작일</td><td>YYYY-MM-DD. 신규 지정 건은 지정일, 이관 건은 기존 거래 시작일(07 참고). 수정 불가. 거래 중지 후 재개해도 바뀌지 않음</td></tr>
+          <tr><td>-</td><td>최종 수정일시</td><td>YYYY-MM-DD HH:mm. 지정 시 지정 일시, 이후 변경 내역이 남는 저장(상태·접수 상품군·비고 변경) 시 갱신. 변경 없이 저장하면 유지</td></tr>
+          <tr><td>-</td><td>목록 대상</td><td>상부점으로 지정된 업체만. 업체 용도가 '상부점'이어도 지정 전이면 목록에 없고 지정 모달에서만 검색됨</td></tr>
+          <tr><td>-</td><td>정렬</td><td>최종 수정일시 최신순</td></tr>
+          <tr><td>-</td><td>빈 목록</td><td>"지정된 상부점이 없습니다."</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sp-sec">
+    <div class="sp-num">02</div>
+    <h2>상부점 지정 모달</h2>
+    <div class="sp-grid">
+      <div class="frame">
+        <div class="frame-cap">Frame · 상부점 지정 (업체 검색 중)</div>
+        <div class="fbox center">
+          <div class="s-modal">
+            <div class="s-mh"><b>상부점 지정</b><span>✕</span></div>
+            <div class="s-mb">
+              <div class="rel"><span class="pin" style="top:-4px;right:-4px">7</span>
+                <div class="s-lb">업체<span class="req">*</span></div>
+                <div class="s-in">라이언</div>
+                <div class="s-drop"><div class="on">라이언렌탈 <span class="sub-t">lionr</span></div></div>
+                <div class="s-help" style="margin:8px 0 0">업체 용도가 '상부점'인 승인 업체 중 아직 지정되지 않은 업체만 검색됩니다.</div>
+              </div>
+              <div class="rel"><span class="pin" style="top:-4px;right:-4px">8</span>
+                <div class="s-lb">접수 상품군<span class="req">*</span></div>
+                <div class="s-chips"><span class="c">인터넷</span><span class="c on">렌탈</span><span class="c">알뜰 요금제</span><span class="c">유심만</span><span class="c">모바일</span></div>
+              </div>
+              <div class="rel"><span class="pin" style="top:-4px;right:-4px">9</span>
+                <div class="s-lb">비고</div><div class="s-in" style="height:64px;color:#A9ABB0">비고 입력</div>
+              </div>
+              <div class="s-help" style="margin:0">지정 시 상부점 상태는 '거래 중', 거래 시작일은 지정일로 등록됩니다.</div>
+            </div>
+            <div class="s-mf"><span class="s-btn o">취소</span><span class="s-btn p rel">저장<span class="pin" style="top:-11px;right:-11px">10</span></span></div>
+          </div>
+        </div>
+      </div>
+      <table class="sp-t note">
+        <thead><tr><th>No</th><th>항목</th><th>정의</th></tr></thead>
+        <tbody>
+          <tr><td><span class="pin s">7</span></td><td>업체</td><td>검색형 선택. 상호 또는 고유번호로 검색, 결과에 상호 + 고유번호 표시. 1개만 선택.<br>대상: 업체 상태 승인 + 업체 용도 '상부점' + 아직 상부점으로 지정되지 않은 업체</td></tr>
+          <tr><td><span class="pin s">8</span></td><td>접수 상품군</td><td>5개 중 다중 선택, 최소 1개 필수. 순서 고정</td></tr>
+          <tr><td><span class="pin s">9</span></td><td>비고</td><td>선택 입력, 최대 200자, 글자 수 표시</td></tr>
+          <tr><td><span class="pin s">10</span></td><td>[저장] 활성</td><td>업체 선택 + 접수 상품군 1개 이상</td></tr>
+          <tr><td>-</td><td>상부점 상태</td><td>입력 없음. '거래 중'으로 등록</td></tr>
+          <tr><td>-</td><td>거래 시작일</td><td>입력 없음. 지정일로 등록</td></tr>
+          <tr><td>-</td><td>저장 성공</td><td>토스트 "상부점이 지정되었습니다." + 모달 닫힘 + 목록 갱신</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 class="sp-h3">상태</h3>
+    <div class="states" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+      <div class="st"><div class="frame-cap">A · 진입 직후</div><div class="fbox sm">
+        <div class="s-lb">업체<span class="req">*</span></div><div class="s-in" style="color:#A9ABB0">상호 또는 고유번호 검색</div>
+        <div class="s-lb" style="margin-top:16px">접수 상품군<span class="req">*</span></div><div class="s-chips"><span class="c">인터넷</span><span class="c">렌탈</span><span class="c">…</span></div></div>
+        <p class="st-d">[저장] 비활성.</p></div>
+      <div class="st"><div class="frame-cap">B · 검색 결과 없음</div><div class="fbox sm">
+        <div class="s-lb">업체<span class="req">*</span></div><div class="s-in">네오</div><div class="s-drop"><div class="muted">검색 결과가 없습니다.</div></div></div>
+        <p class="st-d">검색어와 일치하는 지정 가능 업체가 없을 때.</p></div>
+      <div class="st"><div class="frame-cap">C · 지정 가능 업체 없음</div><div class="fbox sm">
+        <div class="s-lb">업체<span class="req">*</span></div>
+        <div class="s-lock">지정할 수 있는 업체가 없습니다. 전체 업체에서 업체 용도 '상부점'을 먼저 지정해주세요.</div></div>
+        <p class="st-d">대상 업체가 0개일 때. 검색 입력 대신 안내만 노출, [저장] 비활성.</p></div>
+    </div>
+  </section>
+
+  <section class="sp-sec">
+    <div class="sp-num">03</div>
+    <h2>상부점 수정 모달</h2>
+    <div class="sp-grid">
+      <div class="frame">
+        <div class="frame-cap">Frame · 상부점 수정 (정책 등록된 상품군 잠금 + 거래 중지 선택)</div>
+        <div class="fbox center">
+          <div class="s-modal">
+            <div class="s-mh"><b>상부점 수정</b><span>✕</span></div>
+            <div class="s-mb">
+              <div><div class="s-lb">업체</div><div class="s-in ro">현대렌탈케어 (hdren)</div></div>
+              <div class="rel"><span class="pin" style="top:-4px;right:-4px">11</span>
+                <div class="s-lb">상부점 상태<span class="req">*</span></div>
+                <div class="s-ck rd">거래 중</div><div class="s-ck rd on">거래 중지</div>
+                <div class="s-help" style="margin:-2px 0 0 26px">거래 중지 시 신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.</div>
+              </div>
+              <div class="rel"><span class="pin" style="top:-4px;right:-4px">12</span>
+                <div class="s-lb">접수 상품군<span class="req">*</span></div>
+                <div class="s-chips"><span class="c">인터넷</span><span class="c on dis">렌탈</span><span class="c">알뜰 요금제</span><span class="c">유심만</span><span class="c">모바일</span></div>
+                <div class="s-err">정책이 등록된 상품군(렌탈)은 해제할 수 없습니다. 정책 관리에서 먼저 정리해주세요.</div>
+              </div>
+              <div><div class="s-lb">비고</div><div class="s-in" style="height:64px"></div></div>
+              <div class="rel"><span class="pin" style="top:-4px;right:-4px">13</span><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div><div class="s-lb">거래 시작일</div><div class="s-in ro">2024-05-11</div></div><div><div class="s-lb">최종 수정일시</div><div class="s-in ro">2026-10-20 15:42</div></div></div></div>
+            </div>
+            <div class="s-mf"><span class="s-btn o">취소</span><span class="s-btn p">저장</span></div>
+          </div>
+        </div>
+      </div>
+      <table class="sp-t note">
+        <thead><tr><th>No</th><th>항목</th><th>정의</th></tr></thead>
+        <tbody>
+          <tr><td><span class="pin s">11</span></td><td>상부점 상태</td><td>거래 중 / 거래 중지 단일 선택. 거래 중지 선택 시 안내 문구 노출</td></tr>
+          <tr><td><span class="pin s">12</span></td><td>접수 상품군</td><td>정책이 등록된 상품군은 선택된 상태로 잠금 + 안내 문구에 잠긴 상품군명 표시. 나머지 상품군은 추가·해제 가능, 최소 1개</td></tr>
+          <tr><td><span class="pin s">13</span></td><td>거래 시작일 · 최종 수정일시</td><td>읽기 전용. 한 행에 나란히 표시</td></tr>
+          <tr><td>-</td><td>업체</td><td>읽기 전용. 상호 (고유번호). 변경 불가</td></tr>
+          <tr><td>-</td><td>저장</td><td>거래 중 → 거래 중지로 바뀌는 경우에만 확인 팝업(04) 후 저장. 그 외 바로 저장<br>성공: 토스트 "상부점 정보가 수정되었습니다." + 모달 닫힘 + 목록 갱신</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="sp-sec">
+    <div class="sp-num">04</div>
+    <h2>팝업·토스트</h2>
+    <div class="toasts">
+      <div><div class="frame-cap">거래 중지 확인 팝업</div>
+        <div class="s-modal" style="width:360px"><div class="s-mh"><b>거래 중지</b></div>
+          <div class="s-mb"><p style="line-height:22px">현대렌탈케어를 거래 중지하시겠습니까?<br>신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.</p></div>
+          <div class="s-mf"><span class="s-btn o">취소</span><span class="s-btn p">거래 중지</span></div></div></div>
+      <div><div class="frame-cap">지정 성공</div><div class="s-toast ok">상부점이 지정되었습니다.</div></div>
+      <div><div class="frame-cap">수정 성공</div><div class="s-toast ok">상부점 정보가 수정되었습니다.</div></div>
+    </div>
+    <p class="sp-desc">확인 팝업은 오버레이 클릭·ESC로 닫히지 않는다(확인성 팝업). [취소] 시 수정 모달로 돌아간다.</p>
+  </section>
+
+  <section class="sp-sec">
+    <div class="sp-num">05</div>
+    <h2>문구 목록</h2>
+    <table class="sp-t">
+      <thead><tr><th>위치</th><th>문구</th></tr></thead>
+      <tbody>
+        <tr><td>페이지 설명</td><td>정책과 접수에 사용할 상부점을 지정·관리합니다.</td></tr>
+        <tr><td>필터 placeholder</td><td>접수 상품군 / 상부점 상태</td></tr>
+        <tr><td>버튼</td><td>상부점 지정 / 변경 내역</td></tr>
+        <tr><td>빈 목록</td><td>지정된 상부점이 없습니다.</td></tr>
+        <tr><td>업체 검색 placeholder</td><td>상호 또는 고유번호 검색</td></tr>
+        <tr><td>업체 검색 헬퍼</td><td>업체 용도가 '상부점'인 승인 업체 중 아직 지정되지 않은 업체만 검색됩니다.</td></tr>
+        <tr><td>검색 결과 없음</td><td>검색 결과가 없습니다.</td></tr>
+        <tr><td>지정 가능 업체 없음</td><td>지정할 수 있는 업체가 없습니다. 전체 업체에서 업체 용도 '상부점'을 먼저 지정해주세요.</td></tr>
+        <tr><td>지정 모달 하단</td><td>지정 시 상부점 상태는 '거래 중', 거래 시작일은 지정일로 등록됩니다.</td></tr>
+        <tr><td>오류 (상품군 0개)</td><td>접수 상품군을 1개 이상 선택해주세요.</td></tr>
+        <tr><td>상품군 잠금</td><td>정책이 등록된 상품군({상품군명})은 해제할 수 없습니다. 정책 관리에서 먼저 정리해주세요.</td></tr>
+        <tr><td>거래 중지 안내</td><td>거래 중지 시 신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.</td></tr>
+        <tr><td>거래 중지 팝업</td><td>{상호}를 거래 중지하시겠습니까? + 거래 중지 안내 문구</td></tr>
+        <tr><td>토스트</td><td>상부점이 지정되었습니다. / 상부점 정보가 수정되었습니다.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="sp-sec">
+    <div class="sp-num">06</div>
+    <h2>정책·CRM 연동 규칙</h2>
+    <table class="sp-t">
+      <thead><tr><th>상황</th><th>규칙</th></tr></thead>
+      <tbody>
+        <tr><td>접수 상품군 해제</td><td>그 상품군에 등록된 정책이 있으면 해제 불가 (화면 잠금 + 서버 검증)</td></tr>
+        <tr><td>거래 중지</td><td>등록된 정책 유지. 신규 상담·접수, 기존 계약서의 상부점 변경 선택지에서 제외. 이미 연결된 계약서·접수 건은 기존대로 조회. 거래 중지 상부점에는 신규 정책 등록 불가</td></tr>
+        <tr><td>정책 메뉴의 상부점 목록</td><td>거래 중 상부점 중 해당 상품군을 접수 상품군으로 가진 상부점만 노출</td></tr>
+        <tr><td>전체 업체 연동</td><td>거래 중 상부점은 전체 업체에서 '상부점' 용도 해제·만료 처리 불가 (PNB-1954)</td></tr>
+        <tr><td>CRM 선택지용 목록</td><td>거래 중 상부점 중 요청 상품군을 접수 상품군으로 가진 상부점</td></tr>
+        <tr><td>CRM 단건 조회</td><td>상부점 sn 기준, 상태 무관(거래 중지 포함). 저장된 상부점 표시·접수 시점 검증용</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="sp-sec">
+    <div class="sp-num">07</div>
+    <h2>기존 거래 관계 이관</h2>
+    <p class="sp-desc">CRM 거래 관계(테넌트–상부점 쌍)를 상부점 1건으로 합쳐 이관한다.</p>
+    <table class="sp-t">
+      <thead><tr><th>항목</th><th>규칙</th></tr></thead>
+      <tbody>
+        <tr><td>거래 시작일</td><td>같은 상부점의 쌍 중 가장 이른 거래 시작일</td></tr>
+        <tr><td>상부점 상태</td><td>쌍 중 하나라도 거래 가능이면 거래 중, 모두 거래 불가면 거래 중지</td></tr>
+        <tr><td>표시 여부</td><td>이관하지 않음 (컬럼 폐기)</td></tr>
+        <tr><td>접수 상품군</td><td>'업체별 기능 관리' 상품군별 정책 관리 토글 값</td></tr>
+        <tr><td>비고</td><td>빈값</td></tr>
+        <tr><td>최종 수정일시</td><td>이관 실행 일시</td></tr>
+        <tr><td>이관 순서</td><td>PNB-1954 업체 용도 '상부점' 지정 이후 실행</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="sp-sec">
+    <div class="sp-num">08</div>
+    <h2>미정·확인 필요</h2>
+    <table class="sp-t">
+      <thead><tr><th>항목</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>하부점 포함 여부</td><td>CRM BE 미팅 결과. 포함 시 '상/하부점 관리' + 구분 추가 (00 확장 자리)</td></tr>
+        <tr><td>거래 중지 시 기존 계약서 조회</td><td>CRM이 상부점 상태로 필터하지 않는지 CRM BE 확인</td></tr>
+        <tr><td>메뉴 코드·URL·권한</td><td>Page 티켓에서 정의</td></tr>
+        <tr><td>업체별 기능 관리 정책 토글</td><td>상부점 관리 오픈 시 토글 숨김 시점</td></tr>
+        <tr><td>이관: 거래 가능 + 표시 안 함 건</td><td>규칙상 거래 중으로 이관되어 상담 선택지에 노출됨. 건수 확인 후 현업 판단</td></tr>
+        <tr><td>이관: 접수 상품군 0개 건</td><td>거래 관계는 있으나 정책 관리 토글이 없는 상부점. 이관 제외 또는 수동 지정</td></tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+</div>
+
+<script>
+const PRODS=['인터넷','렌탈','알뜰 요금제','유심만','모바일'];
+const ord=a=>PRODS.filter(p=>a.includes(p));
+let uppers=[
+ {name:'현대렌탈케어',code:'hdren',prods:['렌탈'],state:'거래 중',at:'2024-05-11',upd:'2026-10-20 15:42',memo:'',policy:['렌탈']},
+ {name:'예스렌탈',code:'yesrt',prods:['렌탈'],state:'거래 중지',at:'2023-04-28',upd:'2026-09-30 10:05',memo:'2026-09 계약 종료',policy:[]},
+ {name:'아정당렌탈',code:'ajdrt',prods:['렌탈'],state:'거래 중',at:'2022-03-15',upd:'2026-10-27 09:10',memo:'',policy:['렌탈']},
+ {name:'어피치통신',code:'apech',prods:['인터넷','모바일'],state:'거래 중',at:'2024-04-02',upd:'2026-10-28 17:30',memo:'',policy:['인터넷']},
+ {name:'죠르디통신',code:'jordy',prods:['인터넷'],state:'거래 중',at:'2025-02-05',upd:'2026-10-15 11:20',memo:'',policy:[]},
+ {name:'니니즈텔레콤',code:'ninz7',prods:['알뜰 요금제','유심만'],state:'거래 중',at:'2025-01-12',upd:'2026-08-04 14:00',memo:'',policy:[]},
+];
+let candidates=[{name:'라이언렌탈',code:'lionr'},{name:'콘통신',code:'conet'}];
+const logs=[];
+const filters={field:'상호',prod:'',state:'',size:'30줄 표시'};
+const DEF={field:{label:'상호',opts:['상호','고유번호'],noAll:true},prod:{label:'접수 상품군',opts:PRODS},state:{label:'상부점 상태',opts:['거래 중','거래 중지']},size:{label:'30줄 표시',opts:['30줄 표시','50줄 표시','100줄 표시'],noAll:true}};
+const $=s=>document.querySelector(s);
+function closeDD(){document.querySelectorAll('.dd.open').forEach(d=>d.classList.remove('open'));}
+document.addEventListener('click',closeDD);
+function buildDD(){document.querySelectorAll('.dd').forEach(dd=>{const k=dd.dataset.key,d=DEF[k],cur=filters[k];
+ dd.innerHTML=`<button class="dd-btn ${cur?'':'placeholder'}">${cur||d.label}</button><div class="dd-menu">${(d.noAll?d.opts:['',...d.opts]).map(o=>`<button data-v="${o}" class="${o===cur?'on':''}">${o||'전체'}</button>`).join('')}</div>`;
+ dd.querySelector('.dd-btn').onclick=e=>{e.stopPropagation();const w=dd.classList.contains('open');closeDD();if(!w)dd.classList.add('open');};
+ dd.querySelectorAll('.dd-menu button').forEach(b=>b.onclick=()=>{filters[k]=b.dataset.v;closeDD();buildDD();render();});});}
+function render(flash){
+ const q=$('#q').value.trim();
+ const rows=uppers.filter(u=>(!q||(filters.field==='상호'?u.name:u.code).includes(q))&&(!filters.prod||u.prods.includes(filters.prod))&&(!filters.state||u.state===filters.state)).sort((a,b)=>b.upd.localeCompare(a.upd));
+ $('#cnt').textContent=rows.length;
+ $('#tb').innerHTML=rows.length?rows.map(u=>`<tr class="${u.code===flash?'flash':''}"><td>${u.name}</td><td>${u.code}</td><td>${ord(u.prods).join(', ')}</td><td>${u.state}</td><td>${u.at}</td><td>${u.upd}</td><td><button class="edit" data-c="${u.code}" aria-label="${u.name} 수정">✎</button></td></tr>`).join('')
+  :`<tr class="empty"><td colspan="7">${uppers.length?'조건에 맞는 상부점이 없습니다.':'지정된 상부점이 없습니다.'}</td></tr>`;
+ document.querySelectorAll('.edit').forEach(b=>b.onclick=()=>openModal(b.dataset.c));}
+$('#q').oninput=()=>render();
+
+let editing=null,picked=null,sel=new Set();
+function today(){const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;}
+function now(){const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;}
+function chips(){const locked=editing?editing.policy:[];
+ $('#chips').innerHTML=PRODS.map(p=>`<button type="button" class="chip" aria-pressed="${sel.has(p)}" data-p="${p}" ${locked.includes(p)&&sel.has(p)?'disabled':''}>${p}</button>`).join('');
+ document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{const p=c.dataset.p;sel.has(p)?sel.delete(p):sel.add(p);c.setAttribute('aria-pressed',sel.has(p));sync();});
+ const lk=locked.filter(p=>sel.has(p));
+ $('#prodLock').hidden=!lk.length;$('#prodLock').textContent=`정책이 등록된 상품군(${ord(lk).join(', ')})은 해제할 수 없습니다. 정책 관리에서 먼저 정리해주세요.`;}
+function stateNow(){const r=document.querySelector('input[name=st]:checked');return r?r.value:null;}
+function sync(){
+ $('#prodErr').hidden=sel.size>0;
+ $('#stopHelp').hidden=stateNow()!=='거래 중지';
+ $('#memoCnt').textContent=$('#memo').value.length;
+ $('#mSave').disabled=!((editing||picked)&&sel.size>0);}
+function openModal(code){
+ editing=code?uppers.find(u=>u.code===code):null;picked=null;
+ $('#mTitle').textContent=editing?'상부점 수정':'상부점 지정';
+ $('#pickWrap').hidden=!!editing;$('#roWrap').hidden=!editing;$('#stateWrap').hidden=!editing;$('#dateWrap').hidden=!editing;$('#autoState').hidden=!!editing;
+ sel=new Set(editing?editing.prods:[]);$('#memo').value=editing?editing.memo:'';
+ if(editing){$('#roName').value=`${editing.name} (${editing.code})`;$('#roDate').value=editing.at;$('#roUpd').value=editing.upd;document.querySelectorAll('input[name=st]').forEach(r=>r.checked=r.value===editing.state);}
+ else{const none=!candidates.length;$('#picker').hidden=none;$('#pickHelp').hidden=none;$('#pickEmpty').hidden=!none;$('#pickQ').value='';$('#pickList').hidden=true;}
+ chips();$('#prodErr').hidden=true;$('#ov').classList.add('open');sync();$('#prodErr').hidden=true;}
+function pickRender(){const q=$('#pickQ').value.trim();const r=candidates.filter(c=>!q||c.name.includes(q)||c.code.includes(q));
+ $('#pickList').hidden=false;
+ $('#pickList').innerHTML=r.length?r.map(c=>`<button type="button" data-c="${c.code}">${c.name} <span class="sub-t">${c.code}</span></button>`).join(''):`<div class="muted" style="padding:8px 12px">검색 결과가 없습니다.</div>`;
+ $('#pickList').querySelectorAll('button').forEach(b=>b.onclick=()=>{picked=candidates.find(c=>c.code===b.dataset.c);$('#pickQ').value=`${picked.name} (${picked.code})`;$('#pickList').hidden=true;sync();});}
+$('#pickQ').onfocus=pickRender;$('#pickQ').oninput=()=>{picked=null;pickRender();sync();};
+document.querySelectorAll('input[name=st]').forEach(r=>r.onchange=sync);
+$('#memo').oninput=sync;
+function closeModal(){$('#ov').classList.remove('open');}
+$('#mClose').onclick=$('#mCancel').onclick=closeModal;$('#ov').onclick=e=>{if(e.target.id==='ov')closeModal();};
+function toast(m,k){const t=$('#toast');t.textContent=m;t.className='toast show '+k;clearTimeout(t._t);t._t=setTimeout(()=>t.className='toast',2600);}
+function commit(){
+ const prods=ord([...sel]),memo=$('#memo').value.trim();
+ if(editing){const st=stateNow(),u=editing,f=a=>a.length?a.join(', '):'-';
+  if(f(u.prods)!==f(prods))logs.unshift({at:now(),name:u.name,item:'접수 상품군',b:f(u.prods),a:f(prods)});
+  if(u.state!==st)logs.unshift({at:now(),name:u.name,item:'상부점 상태',b:u.state,a:st});
+  if(u.memo!==memo)logs.unshift({at:now(),name:u.name,item:'비고',b:u.memo||'-',a:memo||'-'});
+  const changed=f(u.prods)!==f(prods)||u.state!==st||u.memo!==memo;
+  Object.assign(u,{prods,state:st,memo});if(changed)u.upd=now();closeModal();render(u.code);toast('상부점 정보가 수정되었습니다.','ok');}
+ else{const u={name:picked.name,code:picked.code,prods,state:'거래 중',at:today(),upd:now(),memo,policy:[]};uppers.push(u);candidates=candidates.filter(c=>c.code!==picked.code);
+  logs.unshift({at:now(),name:u.name,item:'상부점 지정',b:'-',a:`접수 상품군: ${prods.join(', ')} / 거래 중`});closeModal();render(u.code);toast('상부점이 지정되었습니다.','ok');}}
+$('#mSave').onclick=()=>{
+ if(editing&&editing.state==='거래 중'&&stateNow()==='거래 중지'){
+  $('#cfMsg').innerHTML=`${editing.name}를 거래 중지하시겠습니까?<br>신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.`;
+  $('#cfOv').classList.add('open');return;}
+ commit();};
+$('#cfNo').onclick=()=>$('#cfOv').classList.remove('open');
+$('#cfYes').onclick=()=>{$('#cfOv').classList.remove('open');commit();};
+$('#logBtn').onclick=()=>{$('#logTb').innerHTML=logs.length?logs.map(l=>`<tr><td>${l.at}</td><td>${l.name}</td><td>${l.item}</td><td>${l.b}</td><td>${l.a}</td></tr>`).join(''):`<tr class="empty"><td colspan="5">이 화면에서 변경한 내역이 여기에 쌓입니다.</td></tr>`;$('#logOv').classList.add('open');};
+$('#logClose').onclick=()=>$('#logOv').classList.remove('open');$('#logOv').onclick=e=>{if(e.target.id==='logOv')$('#logOv').classList.remove('open');};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#cfOv').classList.contains('open'))return;closeModal();$('#logOv').classList.remove('open');closeDD();}});
+$('#addBtn').onclick=()=>openModal(null);
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>{x.classList.toggle('on',x===t);x.setAttribute('aria-selected',x===t);});$('#tab-mockup').hidden=t.dataset.t!=='mockup';$('#tab-spec').hidden=t.dataset.t!=='spec';window.scrollTo(0,0);});
+buildDD();render();
+</script>
+
+</body>
+</html>
