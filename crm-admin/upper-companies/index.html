@@ -211,11 +211,11 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
 <body>
 <div class="tabbar" role="tablist" aria-label="보기 전환">
   <span class="tb-title">상부점 관리</span>
-  <button role="tab" class="tab on" aria-selected="true" data-t="mockup">목업</button>
-  <button role="tab" class="tab" aria-selected="false" data-t="spec">화면기획서</button>
+  <button role="tab" class="tab on" aria-selected="true" data-t="spec">화면기획서</button>
+  <button role="tab" class="tab" aria-selected="false" data-t="mockup">목업</button>
 </div>
 
-<div id="tab-mockup">
+<div id="tab-mockup" hidden>
 <div style="min-height:100vh">
   <header class="gnb">
     <div class="logo"><span class="logo-mark">OXC</span>CRM Admin</div>
@@ -273,13 +273,15 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
           <label class="ck"><input type="radio" name="st" value="거래 중">거래 중</label>
           <label class="ck"><input type="radio" name="st" value="거래 중지">거래 중지</label>
         </div>
-        <div class="helper0" id="stopHelp" hidden>거래 중지 시 신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.</div>
+        <div class="helper0" id="stopHelp" hidden>거래 중지 시 신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 정책은 조회만 가능하며, 거래 중으로 바꾸면 다시 적용됩니다.</div>
+        <div class="hint-err" id="resumeErr" hidden>업체 상태가 '승인'이고 업체 용도가 '상부점'인 업체만 거래 중으로 변경할 수 있습니다. 전체 업체에서 먼저 확인해주세요.</div>
       </div>
       <div>
         <span class="flabel">접수 상품군<span class="req">*</span></span>
         <div class="chips" id="chips"></div>
         <div class="hint-err" id="prodErr" hidden>접수 상품군을 1개 이상 선택해주세요.</div>
         <div class="hint-err" id="prodLock" hidden></div>
+        <div class="helper0" id="stopLock" hidden>거래 중지 상태에서는 접수 상품군을 변경할 수 없습니다.</div>
       </div>
       <div>
         <span class="flabel">비고</span>
@@ -320,15 +322,16 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
   <ol style="margin-top:12px">
     <li>[상부점 지정] → 업체 검색(라이언렌탈, 콘통신) → 접수 상품군 선택 → 저장 → 목록에 '거래 중'으로 추가</li>
     <li>라이언렌탈·콘통신을 모두 지정한 뒤 [상부점 지정] → '지정할 수 있는 업체가 없습니다' 안내 확인</li>
-    <li>현대렌탈케어 수정 → 렌탈 칩이 잠겨 있고 정책 안내 문구 확인 (렌탈 정책 등록됨 가정)</li>
-    <li>죠르디통신 수정 → 거래 중지 선택 → 안내 문구 확인 → 저장 → 확인 팝업 → 거래 중지 반영</li>
-    <li>예스렌탈(거래 중지) 수정 → 거래 중으로 변경 → 확인 팝업 없이 저장</li>
+    <li>현대렌탈케어 수정 → 렌탈 칩이 잠겨 있고 유효 정책 안내 문구 확인 (렌탈 유효 정책 있음 가정)</li>
+    <li>죠르디통신 수정 → 거래 중지 선택 → 안내 문구 + 접수 상품군 전체 잠금 확인 → 저장 → 확인 팝업 → 거래 중지 반영</li>
+    <li>예스렌탈(거래 중지) 수정 → 접수 상품군 잠김 확인 → 거래 중으로 변경 → 칩 활성화 → 확인 팝업 없이 저장</li>
+    <li>네오렌탈(거래 중지, 업체 상태 만료) 수정 → 거래 중으로 변경 → 재개 불가 오류 + [저장] 비활성 확인</li>
     <li>접수 상품군 필터 '인터넷', 상부점 상태 필터 '거래 중지'로 조회</li>
     <li>저장 후 [변경 내역]에서 접수 상품군·상부점 상태·비고 변경 기록 확인</li>
   </ol>
 </section>
 </div>
-<div id="tab-spec" hidden>
+<div id="tab-spec">
 <div class="sp">
   <section class="sp-sec">
     <div class="sp-num">00</div>
@@ -458,7 +461,7 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
     <h2>상부점 수정 모달</h2>
     <div class="sp-grid">
       <div class="frame">
-        <div class="frame-cap">Frame · 상부점 수정 (정책 등록된 상품군 잠금 + 거래 중지 선택)</div>
+        <div class="frame-cap">Frame · 상부점 수정 (거래 중, 유효 정책 있는 상품군 잠금)</div>
         <div class="fbox center">
           <div class="s-modal">
             <div class="s-mh"><b>상부점 수정</b><span>✕</span></div>
@@ -466,13 +469,12 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
               <div><div class="s-lb">업체</div><div class="s-in ro">현대렌탈케어 (hdren)</div></div>
               <div class="rel"><span class="pin" style="top:-4px;right:-4px">11</span>
                 <div class="s-lb">상부점 상태<span class="req">*</span></div>
-                <div class="s-ck rd">거래 중</div><div class="s-ck rd on">거래 중지</div>
-                <div class="s-help" style="margin:-2px 0 0 26px">거래 중지 시 신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.</div>
+                <div class="s-ck rd on">거래 중</div><div class="s-ck rd">거래 중지</div>
               </div>
               <div class="rel"><span class="pin" style="top:-4px;right:-4px">12</span>
                 <div class="s-lb">접수 상품군<span class="req">*</span></div>
                 <div class="s-chips"><span class="c">인터넷</span><span class="c on dis">렌탈</span><span class="c">알뜰 요금제</span><span class="c">유심만</span><span class="c">모바일</span></div>
-                <div class="s-err">정책이 등록된 상품군(렌탈)은 해제할 수 없습니다. 정책 관리에서 먼저 정리해주세요.</div>
+                <div class="s-err">유효한 정책이 있는 상품군(렌탈)은 해제할 수 없습니다. 정책 관리에서 먼저 정책을 꺼주세요.</div>
               </div>
               <div><div class="s-lb">비고</div><div class="s-in" style="height:64px"></div></div>
               <div class="rel"><span class="pin" style="top:-4px;right:-4px">13</span><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div><div class="s-lb">거래 시작일</div><div class="s-in ro">2024-05-11</div></div><div><div class="s-lb">최종 수정일시</div><div class="s-in ro">2026-10-20 15:42</div></div></div></div>
@@ -484,13 +486,30 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
       <table class="sp-t note">
         <thead><tr><th>No</th><th>항목</th><th>정의</th></tr></thead>
         <tbody>
-          <tr><td><span class="pin s">11</span></td><td>상부점 상태</td><td>거래 중 / 거래 중지 단일 선택. 거래 중지 선택 시 안내 문구 노출</td></tr>
-          <tr><td><span class="pin s">12</span></td><td>접수 상품군</td><td>정책이 등록된 상품군은 선택된 상태로 잠금 + 안내 문구에 잠긴 상품군명 표시. 나머지 상품군은 추가·해제 가능, 최소 1개</td></tr>
+          <tr><td><span class="pin s">11</span></td><td>상부점 상태</td><td>거래 중 / 거래 중지 단일 선택. 거래 중지 선택 시 안내 문구 노출<br>거래 중 → 거래 중지: 제약 없음 (CRM 상담·계약, 정책 유무 조회 안 함)<br>거래 중지 → 거래 중: 업체 상태 '승인' + 업체 용도 '상부점'일 때만 가능. 아니면 오류 문구 + [저장] 비활성</td></tr>
+          <tr><td><span class="pin s">12</span></td><td>접수 상품군</td><td>유효한 정책이 있는 상품군은 선택된 상태로 잠금 + 안내 문구에 잠긴 상품군명 표시. 나머지는 추가·해제 가능, 최소 1개<br>거래 중지가 선택된 동안은 전체 잠금(추가·해제 불가) + 안내 문구. 거래 중으로 바꾸면 다시 활성</td></tr>
           <tr><td><span class="pin s">13</span></td><td>거래 시작일 · 최종 수정일시</td><td>읽기 전용. 한 행에 나란히 표시</td></tr>
           <tr><td>-</td><td>업체</td><td>읽기 전용. 상호 (고유번호). 변경 불가</td></tr>
           <tr><td>-</td><td>저장</td><td>거래 중 → 거래 중지로 바뀌는 경우에만 확인 팝업(04) 후 저장. 그 외 바로 저장<br>성공: 토스트 "상부점 정보가 수정되었습니다." + 모달 닫힘 + 목록 갱신</td></tr>
         </tbody>
       </table>
+    </div>
+    <h3 class="sp-h3">상태</h3>
+    <div class="states" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+      <div class="st"><div class="frame-cap">A · 거래 중지 선택</div><div class="fbox sm">
+        <div class="s-ck rd">거래 중</div><div class="s-ck rd on">거래 중지</div>
+        <div class="s-help" style="margin:-2px 0 10px 26px">거래 중지 시 신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 정책은 조회만 가능하며, 거래 중으로 바꾸면 다시 적용됩니다.</div>
+        <div class="s-chips"><span class="c dis">인터넷</span><span class="c on dis">렌탈</span><span class="c dis">…</span></div>
+        <div class="s-help" style="margin:8px 0 0">거래 중지 상태에서는 접수 상품군을 변경할 수 없습니다.</div></div>
+        <p class="st-d">거래 중 상부점을 거래 중지로 바꾸거나, 거래 중지 상부점을 열었을 때. 접수 상품군 전체 잠금. 비고만 수정 가능.</p></div>
+      <div class="st"><div class="frame-cap">B · 거래 재개 불가</div><div class="fbox sm">
+        <div class="s-ck rd on">거래 중</div><div class="s-ck rd">거래 중지</div>
+        <div class="s-err" style="margin:-2px 0 0 26px">업체 상태가 '승인'이고 업체 용도가 '상부점'인 업체만 거래 중으로 변경할 수 있습니다. 전체 업체에서 먼저 확인해주세요.</div></div>
+        <p class="st-d">거래 중지 상부점을 거래 중으로 바꿀 때 업체 상태가 승인이 아니거나 업체 용도가 '상부점'이 아닌 경우. [저장] 비활성.</p></div>
+      <div class="st"><div class="frame-cap">C · 거래 재개 가능</div><div class="fbox sm">
+        <div class="s-ck rd on">거래 중</div><div class="s-ck rd">거래 중지</div>
+        <div class="s-chips"><span class="c">인터넷</span><span class="c on">렌탈</span><span class="c">…</span></div></div>
+        <p class="st-d">재개 조건 충족. 접수 상품군 다시 활성, 확인 팝업 없이 저장. 정책은 마지막 설정 그대로 다시 적용.</p></div>
     </div>
   </section>
 
@@ -500,7 +519,7 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
     <div class="toasts">
       <div><div class="frame-cap">거래 중지 확인 팝업</div>
         <div class="s-modal" style="width:360px"><div class="s-mh"><b>거래 중지</b></div>
-          <div class="s-mb"><p style="line-height:22px">현대렌탈케어를 거래 중지하시겠습니까?<br>신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.</p></div>
+          <div class="s-mb"><p style="line-height:22px">'현대렌탈케어' 상부점을 거래 중지하시겠습니까?<br>신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 정책은 조회만 가능하며, 거래 중으로 바꾸면 다시 적용됩니다.</p></div>
           <div class="s-mf"><span class="s-btn o">취소</span><span class="s-btn p">거래 중지</span></div></div></div>
       <div><div class="frame-cap">지정 성공</div><div class="s-toast ok">상부점이 지정되었습니다.</div></div>
       <div><div class="frame-cap">수정 성공</div><div class="s-toast ok">상부점 정보가 수정되었습니다.</div></div>
@@ -524,9 +543,11 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
         <tr><td>지정 가능 업체 없음</td><td>지정할 수 있는 업체가 없습니다. 전체 업체에서 업체 용도 '상부점'을 먼저 지정해주세요.</td></tr>
         <tr><td>지정 모달 하단</td><td>지정 시 상부점 상태는 '거래 중', 거래 시작일은 지정일로 등록됩니다.</td></tr>
         <tr><td>오류 (상품군 0개)</td><td>접수 상품군을 1개 이상 선택해주세요.</td></tr>
-        <tr><td>상품군 잠금</td><td>정책이 등록된 상품군({상품군명})은 해제할 수 없습니다. 정책 관리에서 먼저 정리해주세요.</td></tr>
-        <tr><td>거래 중지 안내</td><td>거래 중지 시 신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.</td></tr>
-        <tr><td>거래 중지 팝업</td><td>{상호}를 거래 중지하시겠습니까? + 거래 중지 안내 문구</td></tr>
+        <tr><td>상품군 잠금</td><td>유효한 정책이 있는 상품군({상품군명})은 해제할 수 없습니다. 정책 관리에서 먼저 정책을 꺼주세요.</td></tr>
+        <tr><td>거래 중지 시 상품군 잠금</td><td>거래 중지 상태에서는 접수 상품군을 변경할 수 없습니다.</td></tr>
+        <tr><td>거래 재개 불가</td><td>업체 상태가 '승인'이고 업체 용도가 '상부점'인 업체만 거래 중으로 변경할 수 있습니다. 전체 업체에서 먼저 확인해주세요.</td></tr>
+        <tr><td>거래 중지 안내</td><td>거래 중지 시 신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 정책은 조회만 가능하며, 거래 중으로 바꾸면 다시 적용됩니다.</td></tr>
+        <tr><td>거래 중지 팝업</td><td>'{상호}' 상부점을 거래 중지하시겠습니까? + 거래 중지 안내 문구</td></tr>
         <tr><td>토스트</td><td>상부점이 지정되었습니다. / 상부점 정보가 수정되었습니다.</td></tr>
       </tbody>
     </table>
@@ -538,11 +559,15 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
     <table class="sp-t">
       <thead><tr><th>상황</th><th>규칙</th></tr></thead>
       <tbody>
-        <tr><td>접수 상품군 해제</td><td>그 상품군에 등록된 정책이 있으면 해제 불가 (화면 잠금 + 서버 검증)</td></tr>
-        <tr><td>거래 중지</td><td>등록된 정책 유지. 신규 상담·접수, 기존 계약서의 상부점 변경 선택지에서 제외. 이미 연결된 계약서·접수 건은 기존대로 조회. 거래 중지 상부점에는 신규 정책 등록 불가</td></tr>
-        <tr><td>정책 메뉴의 상부점 목록</td><td>거래 중 상부점 중 해당 상품군을 접수 상품군으로 가진 상부점만 노출</td></tr>
+        <tr><td>거래 중 → 거래 중지</td><td>제약 없음. CRM 상담·계약 유무, Admin 정책 유무를 조회하지 않음. 업체 상태는 변경하지 않음(만료 처리 없음)</td></tr>
+        <tr><td>거래 중지 → 거래 중</td><td>업체 상태 '승인' + 업체 용도 '상부점'일 때만 가능 (화면 + 서버 검증)</td></tr>
+        <tr><td>거래 중지 중 정책</td><td>정책 유지. 정책 메뉴에서 조회만 가능(수정·추가 불가). 거래 재개 시 마지막 설정 그대로 다시 적용</td></tr>
+        <tr><td>거래 중지 중 접수 상품군</td><td>변경 불가(추가·해제 모두). 재개 시 기존 값 유지</td></tr>
+        <tr><td>접수 상품군 해제</td><td>해당 상품군에 유효한 정책이 있으면 해제 불가 (화면 잠금 + 서버 검증). Admin 내부에서만 확인, CRM 조회 없음. 유효 정책 기준은 08 참고</td></tr>
+        <tr><td>정책 메뉴의 상부점 목록</td><td>거래 중지 상부점 포함 노출. 상부점명 옆에 거래 상태·정책 유무 표시. 거래 중지 상부점은 조회 전용</td></tr>
         <tr><td>전체 업체 연동</td><td>거래 중 상부점은 전체 업체에서 '상부점' 용도 해제·만료 처리 불가 (PNB-1954)</td></tr>
-        <tr><td>CRM 선택지용 목록</td><td>거래 중 상부점 중 요청 상품군을 접수 상품군으로 가진 상부점</td></tr>
+        <tr><td>CRM 제공 공통</td><td>모든 조회 응답에 상부점 상태 포함. CRM이 접수 전송·상담상세 조회 시 상태로 판단</td></tr>
+        <tr><td>CRM 선택지용 목록</td><td>거래 중 상부점</td></tr>
         <tr><td>CRM 단건 조회</td><td>상부점 sn 기준, 상태 무관(거래 중지 포함). 저장된 상부점 표시·접수 시점 검증용</td></tr>
       </tbody>
     </table>
@@ -573,7 +598,9 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
       <thead><tr><th>항목</th><th>내용</th></tr></thead>
       <tbody>
         <tr><td>하부점 포함 여부</td><td>CRM BE 미팅 결과. 포함 시 '상/하부점 관리' + 구분 추가 (00 확장 자리)</td></tr>
-        <tr><td>거래 중지 시 기존 계약서 조회</td><td>CRM이 상부점 상태로 필터하지 않는지 CRM BE 확인</td></tr>
+        <tr><td>유효 정책 기준</td><td>인터넷·유심만·알뜰 요금제: 접수 가능 토글 전체 OFF면 유효 정책 없음. 렌탈: 정책 전부 0원 기준은 PNB 내 재검토 필요(0원 운영 정책과 구분 불가). 모바일: 기준 미정</td></tr>
+        <tr><td>CRM 전체 상부점 목록 API</td><td>거래 중지 포함 전체 목록 제공 방향(미확정). 선택지용 목록과의 관계 포함 상담 스쿼드 BE 협의</td></tr>
+        <tr><td>정책 메뉴 작업 범위</td><td>거래 상태·정책 유무 표시, 거래 중지 상부점 조회 전용 처리. PNB-1973 포함 또는 정책 메뉴 별도 티켓</td></tr>
         <tr><td>메뉴 코드·URL·권한</td><td>Page 티켓에서 정의</td></tr>
         <tr><td>업체별 기능 관리 정책 토글</td><td>상부점 관리 오픈 시 토글 숨김 시점</td></tr>
         <tr><td>이관: 거래 가능 + 표시 안 함 건</td><td>규칙상 거래 중으로 이관되어 상담 선택지에 노출됨. 건수 확인 후 현업 판단</td></tr>
@@ -594,6 +621,7 @@ let uppers=[
  {name:'어피치통신',code:'apech',prods:['인터넷','모바일'],state:'거래 중',at:'2024-04-02',upd:'2026-10-28 17:30',memo:'',policy:['인터넷']},
  {name:'죠르디통신',code:'jordy',prods:['인터넷'],state:'거래 중',at:'2025-02-05',upd:'2026-10-15 11:20',memo:'',policy:[]},
  {name:'니니즈텔레콤',code:'ninz7',prods:['알뜰 요금제','유심만'],state:'거래 중',at:'2025-01-12',upd:'2026-08-04 14:00',memo:'',policy:[]},
+ {name:'네오렌탈',code:'neort',prods:['렌탈'],state:'거래 중지',at:'2023-11-20',upd:'2026-07-15 16:40',memo:'2026-07 업체 만료',policy:['렌탈'],compSt:'만료',use:'상부점'},
 ];
 let candidates=[{name:'라이언렌탈',code:'lionr'},{name:'콘통신',code:'conet'}];
 const logs=[];
@@ -618,17 +646,21 @@ $('#q').oninput=()=>render();
 let editing=null,picked=null,sel=new Set();
 function today(){const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;}
 function now(){const d=new Date(),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;}
-function chips(){const locked=editing?editing.policy:[];
- $('#chips').innerHTML=PRODS.map(p=>`<button type="button" class="chip" aria-pressed="${sel.has(p)}" data-p="${p}" ${locked.includes(p)&&sel.has(p)?'disabled':''}>${p}</button>`).join('');
+function stopped(){return !!editing&&stateNow()==='거래 중지';}
+function canResume(u){return (u.compSt||'승인')==='승인'&&(u.use||'상부점')==='상부점';}
+function chips(){const locked=editing?editing.policy:[];const stp=stopped();if(stp)sel=new Set(editing.prods);
+ $('#chips').innerHTML=PRODS.map(p=>`<button type="button" class="chip" aria-pressed="${sel.has(p)}" data-p="${p}" ${stp||(locked.includes(p)&&sel.has(p))?'disabled':''}>${p}</button>`).join('');
  document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{const p=c.dataset.p;sel.has(p)?sel.delete(p):sel.add(p);c.setAttribute('aria-pressed',sel.has(p));sync();});
  const lk=locked.filter(p=>sel.has(p));
- $('#prodLock').hidden=!lk.length;$('#prodLock').textContent=`정책이 등록된 상품군(${ord(lk).join(', ')})은 해제할 수 없습니다. 정책 관리에서 먼저 정리해주세요.`;}
+ $('#prodLock').hidden=stp||!lk.length;$('#stopLock').hidden=!stp;$('#prodLock').textContent=`유효한 정책이 있는 상품군(${ord(lk).join(', ')})은 해제할 수 없습니다. 정책 관리에서 먼저 정책을 꺼주세요.`;}
 function stateNow(){const r=document.querySelector('input[name=st]:checked');return r?r.value:null;}
 function sync(){
  $('#prodErr').hidden=sel.size>0;
  $('#stopHelp').hidden=stateNow()!=='거래 중지';
  $('#memoCnt').textContent=$('#memo').value.length;
- $('#mSave').disabled=!((editing||picked)&&sel.size>0);}
+ const blockResume=!!editing&&editing.state==='거래 중지'&&stateNow()==='거래 중'&&!canResume(editing);
+ $('#resumeErr').hidden=!blockResume;
+ $('#mSave').disabled=!((editing||picked)&&sel.size>0)||blockResume;}
 function openModal(code){
  editing=code?uppers.find(u=>u.code===code):null;picked=null;
  $('#mTitle').textContent=editing?'상부점 수정':'상부점 지정';
@@ -642,7 +674,7 @@ function pickRender(){const q=$('#pickQ').value.trim();const r=candidates.filter
  $('#pickList').innerHTML=r.length?r.map(c=>`<button type="button" data-c="${c.code}">${c.name} <span class="sub-t">${c.code}</span></button>`).join(''):`<div class="muted" style="padding:8px 12px">검색 결과가 없습니다.</div>`;
  $('#pickList').querySelectorAll('button').forEach(b=>b.onclick=()=>{picked=candidates.find(c=>c.code===b.dataset.c);$('#pickQ').value=`${picked.name} (${picked.code})`;$('#pickList').hidden=true;sync();});}
 $('#pickQ').onfocus=pickRender;$('#pickQ').oninput=()=>{picked=null;pickRender();sync();};
-document.querySelectorAll('input[name=st]').forEach(r=>r.onchange=sync);
+document.querySelectorAll('input[name=st]').forEach(r=>r.onchange=()=>{chips();sync();});
 $('#memo').oninput=sync;
 function closeModal(){$('#ov').classList.remove('open');}
 $('#mClose').onclick=$('#mCancel').onclick=closeModal;$('#ov').onclick=e=>{if(e.target.id==='ov')closeModal();};
@@ -659,7 +691,7 @@ function commit(){
   logs.unshift({at:now(),name:u.name,item:'상부점 지정',b:'-',a:`접수 상품군: ${prods.join(', ')} / 거래 중`});closeModal();render(u.code);toast('상부점이 지정되었습니다.','ok');}}
 $('#mSave').onclick=()=>{
  if(editing&&editing.state==='거래 중'&&stateNow()==='거래 중지'){
-  $('#cfMsg').innerHTML=`${editing.name}를 거래 중지하시겠습니까?<br>신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 등록된 정책과 기존 계약서·접수 건은 유지됩니다.`;
+  $('#cfMsg').innerHTML=`'${editing.name}' 상부점을 거래 중지하시겠습니까?<br>신규 상담·접수와 상부점 변경 선택지에서 제외됩니다. 정책은 조회만 가능하며, 거래 중으로 바꾸면 다시 적용됩니다.`;
   $('#cfOv').classList.add('open');return;}
  commit();};
 $('#cfNo').onclick=()=>$('#cfOv').classList.remove('open');
