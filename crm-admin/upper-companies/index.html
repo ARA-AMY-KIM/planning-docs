@@ -345,7 +345,7 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
   <section class="sp-sec">
     <div class="sp-num">00</div>
     <h2>개요</h2>
-    <p class="sp-desc">CRM Admin &gt; 업체 관리 &gt; 상부점 관리(신규). 전체 업체에서 업체 용도가 '상부점'인 업체를 Admin 상부점으로 지정하고, 접수 상품군과 상부점 상태를 관리한다. 이 탭은 Figma 작업용 화면기획서이며, 실제 동작은 [목업] 탭에서 확인한다.</p>
+    <p class="sp-desc">CRM Admin &gt; 업체 관리 &gt; 상부점 관리(신규). 전체 업체에서 업체 용도가 '상부점'인 업체를 Admin 상부점으로 지정하고, 접수 상품군과 상부점 상태를 관리한다. 이 탭은 Figma 작업용 화면기획서이며, 실제 동작은 [목업] 탭에서 확인한다. 정책·CRM 연동 규칙과 기존 거래 관계 이관 규칙은 <a href="https://ajnetworks.atlassian.net/wiki/spaces/BO/pages/1772224514" target="_blank" rel="noopener">기능 정의서</a>(3.4·3.6·3.7)에서 정의한다.</p>
     <table class="sp-t">
       <thead><tr><th>화면</th><th>구성</th></tr></thead>
       <tbody>
@@ -397,7 +397,7 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
           <tr><td><span class="pin s">3</span></td><td>[상부점 지정]</td><td>상부점 지정 모달 열기</td></tr>
           <tr><td><span class="pin s">4</span></td><td>접수 상품군</td><td>쉼표로 나열. 순서는 인터넷 · 렌탈 · 알뜰 요금제 · 유심만 · 모바일 고정</td></tr>
           <tr><td><span class="pin s">5</span></td><td>상부점 상태</td><td>거래 중 / 거래 중지 텍스트 표시</td></tr>
-          <tr><td><span class="pin s">6</span></td><td>거래 시작일</td><td>YYYY-MM-DD. 신규 지정 건은 지정일, 이관 건은 기존 거래 시작일(07 참고). 수정 불가. 거래 중지 후 재개해도 바뀌지 않음</td></tr>
+          <tr><td><span class="pin s">6</span></td><td>거래 시작일</td><td>YYYY-MM-DD. 신규 지정 건은 지정일, 이관 건은 기존 거래 시작일(기능 정의서 3.7). 수정 불가. 거래 중지 후 재개해도 바뀌지 않음</td></tr>
           <tr><td>-</td><td>최종 수정일시</td><td>YYYY-MM-DD HH:mm. 지정 시 지정 일시, 이후 변경 내역이 남는 저장(상태·접수 상품군·비고 변경) 시 갱신. 변경 없이 저장하면 유지</td></tr>
           <tr><td>-</td><td>목록 대상</td><td>상부점으로 지정된 업체만. 업체 용도가 '상부점'이어도 지정 전이면 목록에 없고 지정 모달에서만 검색됨</td></tr>
           <tr><td>-</td><td>정렬</td><td>거래 시작일 최신순. 같으면 상부점 sn 역순(나중에 지정한 건이 위). 수정해도 행 위치는 바뀌지 않음</td></tr>
@@ -576,55 +576,12 @@ textarea.ta{height:72px;resize:vertical;padding:8px 12px;line-height:20px}
 
   <section class="sp-sec">
     <div class="sp-num">06</div>
-    <h2>정책·CRM 연동 규칙</h2>
-    <table class="sp-t">
-      <thead><tr><th>상황</th><th>규칙</th></tr></thead>
-      <tbody>
-        <tr><td>거래 중 → 거래 중지</td><td>제약 없음. CRM 상담·계약 유무, Admin 정책 유무를 조회하지 않음. 업체 상태는 변경하지 않음(만료 처리 없음)</td></tr>
-        <tr><td>거래 중지 → 거래 중</td><td>업체 상태 '승인' + 업체 용도 '상부점'일 때만 가능 (화면 + 서버 검증)</td></tr>
-        <tr><td>거래 중지 중 정책</td><td>정책 유지. 정책 메뉴에서 조회만 가능(수정·추가 불가). 거래 재개 시 마지막 설정 그대로 다시 적용 (PNB-2047)</td></tr>
-        <tr><td>거래 중지 중 접수 상품군</td><td>변경 불가(추가·해제 모두). 재개 시 기존 값 유지</td></tr>
-        <tr><td>접수 상품군 해제</td><td>정책 등록 여부와 무관하게 해제 가능. 정책 등록 상품군 해제 시 확인 팝업(04)만 노출. Admin 내부에서만 확인, CRM 조회 없음</td></tr>
-        <tr><td>해제된 상품군 정책</td><td>정책 유지. 정책 메뉴에서 조회만 가능(수정·신규 등록 불가). 상품군 재선택 시 기존 정책 다시 적용 (PNB-2047)</td></tr>
-        <tr><td>정책 메뉴의 상부점 목록</td><td>거래 중지·접수 해제 상부점 포함 노출, 조회 전용 (정책 메뉴 작업은 PNB-2047)</td></tr>
-        <tr><td>업체별 기능 관리 정책 토글</td><td>접수 상품군이 역할을 흡수하므로 제거. 이관 실행 → 상부점 관리 오픈 이후 제거, 이관 전 제거 금지(접수 상품군 이관 근거) (PNB-2102)</td></tr>
-        <tr><td>전체 업체 연동</td><td>거래 중 상부점은 전체 업체에서 '상부점' 용도 해제·만료 처리 불가 (PNB-1954)</td></tr>
-        <tr><td>CRM 제공 공통</td><td>모든 조회 응답에 상부점 상태 포함. CRM이 접수 전송·상담상세 조회 시 상태로 판단</td></tr>
-        <tr><td>CRM 선택지용 목록</td><td>거래 중 상부점</td></tr>
-        <tr><td>CRM 단건 조회</td><td>상부점 sn 기준, 상태 무관(거래 중지 포함). 저장된 상부점 표시·접수 시점 검증·기존 계약서 재조회용</td></tr>
-        <tr><td>CRM 전체 상부점 목록</td><td>제공하지 않음 (선택지용 목록 + 단건 조회로 충족, 필요 시 추가)</td></tr>
-        <tr><td>CRM 정책 조회</td><td>상부점 거래 상태와 무관하게 조회 (기존 계약서 재조회용, PNB-2047)</td></tr>
-        <tr><td>company_relation</td><td>폐기. lower company 없음(sn 1 고정). CRM 사용처 교체는 상담 스쿼드 진행(약 1개월)</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="sp-sec">
-    <div class="sp-num">07</div>
-    <h2>기존 거래 관계 이관</h2>
-    <p class="sp-desc">CRM 거래 관계(테넌트–상부점 쌍)를 상부점 1건으로 합쳐 이관한다.</p>
-    <table class="sp-t">
-      <thead><tr><th>항목</th><th>규칙</th></tr></thead>
-      <tbody>
-        <tr><td>거래 시작일</td><td>같은 상부점의 쌍 중 가장 이른 거래 시작일</td></tr>
-        <tr><td>상부점 상태</td><td>쌍 중 하나라도 거래 가능이면 거래 중, 모두 거래 불가면 거래 중지</td></tr>
-        <tr><td>표시 여부</td><td>이관하지 않음 (컬럼 폐기)</td></tr>
-        <tr><td>접수 상품군</td><td>'업체별 기능 관리' 상품군별 정책 관리 토글 값</td></tr>
-        <tr><td>비고</td><td>빈값</td></tr>
-        <tr><td>최종 수정일시</td><td>이관 실행 일시</td></tr>
-        <tr><td>이관 순서</td><td>PNB-1954 업체 용도 '상부점' 지정 이후 실행</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="sp-sec">
-    <div class="sp-num">08</div>
     <h2>미정·확인 필요</h2>
     <table class="sp-t">
       <thead><tr><th>항목</th><th>내용</th></tr></thead>
       <tbody>
         
-        <tr><td>CRM 제공 기준</td><td>11/23 재협의 중 (PNB-1973 댓글). 06의 CRM 행은 협의 후 갱신</td></tr>
+        <tr><td>CRM 제공 기준</td><td>11/23 재협의 중 (PNB-1973 댓글). 협의 후 기능 정의서 3.6 갱신</td></tr>
         <tr><td><s>유효 정책 기준</s></td><td>11/23 상부점 관리에서는 사용하지 않음 (해제 확인 팝업은 정책 등록 건 유무 기준). 정책 메뉴 기준은 PNB-2047</td></tr>
         <tr><td>기존 계약서 저장값</td><td>업체 sn으로 파악(매핑 불필요). 이관 개발 전 CRM BE 최종 확인</td></tr>
         
