@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모바일 상품 옵션 상태 관리 화면기획서</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --g25:#F5F6F7; --g50:#EFEFF1; --g100:#DEE0E3; --g200:#C3C5C9; --g300:#A9ABB0;
+    --g500:#73767A; --g700:#424447; --g900:#131314;
+    --b50:#ECF2FF; --b100:#D9E6FF; --b500:#145CE6;
+    --r50:#FEE6E6; --r500:#C31518;
+    --gr50:#E0FCE0; --gr600:#0A8208;
+    --o50:#FDEBE3; --o100:#FAD8C8; --o700:#9A3412;
+    --p50:#F2ECFF; --p600:#450DBD;
+    --mark:#E8590C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Pretendard",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;color:var(--g900);font-size:14px;line-height:20px;letter-spacing:-0.3px;background:#fff;min-width:1440px}
+  button{font-family:inherit}
+
+  /* ================= 실제 화면 ================= */
+  .gnb{height:56px;border-bottom:1px solid var(--g100);display:flex;align-items:center;padding:0 48px;gap:20px;background:#fff}
+  .gnb .logo{width:215px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;color:var(--g700)}
+  .gnb .logo i{display:inline-block;width:57px;height:24px;background:var(--b500);border-radius:4px;color:#fff;font-style:normal;font-size:12px;font-weight:800;text-align:center;line-height:24px}
+  .gnb nav{flex:1;display:flex;gap:20px}
+  .gnb nav span{padding:6px 12px;border-radius:8px;font-weight:600}
+  .gnb .icons{display:flex;gap:8px;color:var(--g900);font-size:18px}
+  .screen{min-height:100vh;padding:28px 48px 80px;position:relative}
+  .crumb{color:var(--g300)}
+  .ptitle{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:32px;line-height:42px;font-weight:700;letter-spacing:-0.5px}
+  .ptitle .star{font-size:22px;color:var(--g300);font-weight:400}
+  .pdesc{color:var(--g500);margin-top:16px;line-height:22px}
+  .sec-t{font-size:16px;font-weight:700;margin:36px 0 12px;display:flex;align-items:center;justify-content:space-between}
+  .form{border-top:1px solid var(--g100)}
+  .frow{display:flex;border-bottom:1px solid var(--g100);min-height:53px}
+  .fl{width:148px;background:var(--g25);padding:16px;font-weight:400;flex-shrink:0}
+  .fv{flex:1;padding:8px 12px;display:flex;align-items:center;gap:8px}
+  .inp{height:36px;border:1px solid var(--g200);border-radius:8px;padding:8px 12px;background:#fff;display:flex;align-items:center;justify-content:space-between;width:100%}
+  .inp.ro{background:var(--g50);color:var(--g700);border-color:var(--g100)}
+  .inp .caret{color:var(--g500);font-size:10px}
+  .radio{display:flex;gap:16px;align-items:center}
+  .radio label{display:flex;align-items:center;gap:6px}
+  .radio b{width:16px;height:16px;border-radius:50%;border:1px solid var(--g200);display:inline-block}
+  .radio b.on{border:5px solid var(--b500)}
+  .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--g200);border-radius:8px;height:36px;padding:0 12px}
+  .chip .sw{width:18px;height:18px;border-radius:3px;border:1px solid var(--g200)}
+  .btn{height:32px;padding:6px 12px;border-radius:8px;font-weight:600;border:1px solid transparent;background:#fff;white-space:nowrap;cursor:default}
+  .btn.pri{background:var(--b500);color:#fff}
+  .btn.out{border-color:var(--g200);color:var(--g900)}
+  .btn.outp{border-color:var(--b500);color:var(--b500)}
+  .btn.l{height:36px;padding:8px 16px}
+  .ibtn{width:32px;height:32px;border-radius:6px;border:1px solid var(--b500);color:var(--b500);background:#fff;font-size:18px;line-height:28px}
+  .collapsed{border:1px dashed var(--g200);border-radius:8px;padding:16px;color:var(--g500);text-align:center;background:var(--g25)}
+  table.opt{width:100%;border-collapse:collapse}
+  table.opt th{font-size:12px;line-height:16px;color:var(--g500);font-weight:400;padding:8px;border-top:1px solid var(--g100);border-bottom:1px solid var(--g100);text-align:center;white-space:nowrap}
+  table.opt td{padding:8px;border-bottom:1px solid var(--g100);vertical-align:middle}
+  table.opt tr.new td{background:#FAFCFF}
+  .info{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--g500);color:#fff;font-size:10px;line-height:14px;text-align:center;font-weight:700;vertical-align:-2px;margin-left:2px}
+  .rmv{width:28px;height:28px;border-radius:6px;background:var(--g50);border:none;color:var(--g500);font-size:18px;line-height:28px}
+  .foot{display:flex;justify-content:flex-end;gap:8px;margin-top:24px}
+  /* 변경 마커 */
+  .mk{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--mark);color:#fff;font-size:11px;font-weight:700;flex-shrink:0;letter-spacing:0}
+  .hl{outline:2px solid var(--mark);outline-offset:2px;border-radius:8px}
+  .newtag{font-size:11px;color:var(--b500);background:var(--b50);border-radius:4px;padding:1px 6px;margin-left:6px;font-weight:600}
+
+  /* ================= 기획서 ================= */
+  .divider-dash{border-top:2px dashed var(--g100);margin:0}
+  .doc{max-width:1200px;margin:0 auto;padding:56px 48px 120px}
+  .doc-h{border-bottom:2px solid var(--g900);padding-bottom:20px;margin-bottom:36px}
+  .doc-h .type{font-size:12px;color:var(--g500);letter-spacing:.1em;margin-bottom:6px}
+  .doc-h h1{font-size:26px;line-height:36px;font-weight:700;letter-spacing:-0.5px;margin-bottom:12px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 24px;color:var(--g700);font-size:13px}
+  .meta strong{color:var(--g900);margin-right:6px}
+  .meta a{color:var(--b500)}
+  .legend{margin-top:14px;font-size:13px;color:var(--g500)}
+  .doc h2{font-size:20px;line-height:28px;font-weight:700;margin:48px 0 6px;padding-top:24px;border-top:1px solid var(--g100)}
+  .doc h2:first-of-type{border-top:none;padding-top:0;margin-top:0}
+  .doc .h2d{color:var(--g500);font-size:13px;margin-bottom:18px}
+  .doc h3{font-size:15px;font-weight:700;margin:26px 0 10px}
+  .doc p{color:var(--g700);margin-bottom:10px;line-height:22px}
+  .doc ul{margin:0 0 12px 18px;color:var(--g700)}
+  .doc li{margin-bottom:5px;line-height:22px}
+  table.t{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--g100);border-radius:12px;overflow:hidden;margin:8px 0 18px;font-size:14px}
+  table.t th{background:var(--g25);font-weight:600;font-size:13px;text-align:left;padding:10px 14px;border-bottom:1px solid var(--g100)}
+  table.t td{padding:11px 14px;border-bottom:1px solid var(--g100);vertical-align:top;color:var(--g700);line-height:21px}
+  table.t tr:last-child td{border-bottom:none}
+  table.t td b{color:var(--g900)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:4px;margin-right:4px;vertical-align:1px;white-space:nowrap}
+  .tag.s{background:var(--b50);color:var(--b500)}
+  .tag.i{background:var(--o50);color:var(--o700)}
+  .tag.n{background:var(--p50);color:var(--p600)}
+  .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:13px}
+  .bd-on{background:var(--gr50);color:var(--gr600)}
+  .bd-off{background:var(--g50);color:var(--g500)}
+  .bd-red{background:var(--r50);color:var(--r500)}
+  .bd-pur{background:var(--p50);color:var(--p600)}
+  .box{border-radius:8px;padding:12px 16px;margin:10px 0 16px;line-height:22px}
+  .box.note{background:var(--b50);border:1px solid var(--b100);color:var(--g700)}
+  .box.warn{background:var(--o50);border:1px solid var(--o100);color:var(--o700)}
+  .box b{color:inherit}
+  .case{border:1px solid var(--g100);border-radius:12px;padding:20px 24px;margin:14px 0 22px;background:#fff}
+  .case .ct{font-size:13px;font-weight:700;color:var(--g500);margin-bottom:14px}
+  figure{margin:8px 0 20px}
+  figure svg{width:100%;height:auto;display:block}
+  figcaption{font-size:13px;color:var(--g500);margin-top:8px}
+  .toast{display:inline-flex;align-items:center;gap:10px;background:#2B2D30;color:#fff;border-radius:8px;padding:12px 18px;font-size:14px}
+  .toast .dot{width:18px;height:18px;border-radius:50%;background:var(--r500);color:#fff;font-size:12px;text-align:center;line-height:18px;font-weight:700}
+  .dd{position:relative;display:inline-block;width:140px}
+  .dd-menu{position:absolute;top:40px;left:0;width:140px;background:#fff;border:1px solid var(--g100);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:4px 0;z-index:2}
+  .dd-menu div{padding:8px 12px}
+  .dd-menu div.sel{background:var(--b50);color:var(--b500);font-weight:600}
+  .tip{background:#fff;border:1px solid var(--g100);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:12px 14px;font-size:13px;line-height:22px;color:var(--g900);display:inline-block}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+  /* ===== 탭 ===== */
+  .tabbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--g100);display:flex;align-items:flex-end;gap:4px;padding:0 48px;height:52px}
+  .tabbar .ttl{font-weight:700;color:var(--g700);margin-right:24px;align-self:center;font-size:14px}
+  .tab{height:44px;padding:0 18px;border:none;background:none;font-size:15px;font-weight:600;color:var(--g500);border-bottom:2px solid transparent;cursor:pointer}
+  .tab:hover{color:var(--g900)}
+  .tab.on{color:var(--b500);border-bottom-color:var(--b500)}
+  .pane{display:none}
+  .pane.on{display:block}
+  #mockFrame{width:100%;border:0;display:block;min-height:900px}
+  .shot{border:1px solid var(--g100);border-radius:12px;overflow:hidden;margin:8px 0 24px -120px;width:1344px;background:#fff}
+  .shot .gnb nav span,.shot .radio label,.shot .inp,.shot .chip{white-space:nowrap}
+  .shot .gnb{padding:0 32px}
+  .shot .screen{padding:28px 32px 40px}
+  .shot .gnb{position:static}
+</style>
+</head>
+<body>
+
+<div class="tabbar">
+  <span class="ttl">PNB-1813</span>
+  <button class="tab" data-tab="spec">화면기획서</button>
+  <button class="tab" data-tab="mockup">목업</button>
+</div>
+
+<div class="pane" id="pane-spec">
+
+
+<!-- ======================================================================
+     ② 기획서
+     ====================================================================== -->
+<div class="doc">
+
+  <div class="doc-h">
+    <div class="type">화면기획서 · 초안</div>
+    <h1>모바일 상품 옵션 상태 관리 · SN 유지</h1>
+    <div class="meta">
+      <span><strong>메뉴 경로</strong>CRM Admin &gt; 상품 관리 &gt; 모바일 상품 관리 &gt; 상품 관리 탭 &gt; 상품 수정 상세</span>
+      <span><strong>티켓</strong><a href="https://ajnetworks.atlassian.net/browse/PNB-1813">PNB-1813</a></span>
+      <span><strong>기획</strong>김아라</span>
+      <span><strong>BE</strong>최은희</span>
+      <span><strong>요청</strong>박솔·황경배 (플랫폼)</span>
+      <span><strong>작성</strong>2026.11.24</span>
+    </div>
+    <div class="legend">
+      <span class="tag s">명세</span>대화·티켓·화면에서 확인한 내용 &nbsp;
+      <span class="tag i">해석</span>추론 / 확인 필요 &nbsp;
+      <span class="tag n">가안</span>현업 확인 전 &nbsp;
+      <span class="mk" style="width:16px;height:16px;font-size:10px">1</span> 화면 변경 지점
+    </div>
+  </div>
+
+  <!-- 1. 개요 -->
+  <h2>1. 개요</h2>
+  <div class="h2d">왜 바꾸는가</div>
+
+  <h3>1.1 배경</h3>
+  <ul>
+    <li><span class="tag s">명세</span>7/23 Z8 사전예약 등록 시, CRM에서 삭제한 512GB 옵션이 플랫폼 BO로 다시 넘어감.</li>
+    <li><span class="tag s">명세</span>현재 옵션 [삭제]는 실제로 <b>is_use = 0</b> 처리. 같은 통신사+용량으로 다시 등록하면 <b>새 SN이 채번</b>됨.</li>
+    <li><span class="tag s">명세</span>그 결과 같은 상품이 SN 두 개로 존재 → 플랫폼·블링크 중복 노출, 판매 중단한 용량 재유입, CRM 상담의 옵션 참조 끊김("옵션을 다시 선택하세요").</li>
+  </ul>
+
+  <h3>1.2 목적</h3>
+  <p>옵션 삭제를 없애고 옵션별 상태로 판매 여부를 관리하여, <b>한 번 등록된 통신사+용량 조합의 SN이 바뀌지 않도록</b> 한다. 렌탈 '상품 부가 옵션'의 옵션항목 상태와 같은 구조로 맞춘다.</p>
+
+  <h3>1.3 적용 범위</h3>
+  <ul>
+    <li>CRM Admin: 모바일 상품 등록·수정 화면 (기본정보 사용 여부, 용량/출고가 표)</li>
+    <li>CRM 상담: 상담상세의 모바일 상품·옵션 선택 목록, 저장된 상담 표시</li>
+    <li>플랫폼(모바일 스쿼드): 상품 상태 + 옵션 상태 전달 (노출 판단은 플랫폼)</li>
+    <li>데이터: 기존 판매 여부·옵션 is_use 이관, 같은 조합의 중복 SN 정리</li>
+  </ul>
+
+  <!-- 2. AS-IS -->
+  <h2>2. AS-IS</h2>
+  <div class="h2d">현재 화면과 동작 (베타 상품 50718 기준)</div>
+
+  <div class="case">
+    <div class="ct">현재 「용량 / 출고가」 표</div>
+    <table class="opt">
+      <thead><tr><th>통신사</th><th>용량</th><th>모델명</th><th>출고가</th><th>색상</th><th>노출 범위</th><th>옵션 삭제</th></tr></thead>
+      <tbody><tr>
+        <td><div class="inp">SK <span class="caret">▼</span></div></td><td><div class="inp">32GB <span class="caret">▼</span></div></td>
+        <td><div class="inp">AT-M140S</div></td><td><div class="inp ro" style="justify-content:flex-end">237,600 원</div></td>
+        <td><div class="inp">인디고 블랙, 펄 화이트</div></td><td><div class="inp">CRM, 플랫폼, 아정당 폰</div></td>
+        <td style="text-align:center"><span style="display:inline-block;width:28px;height:28px;border-radius:6px;background:var(--r50);color:var(--r500);line-height:28px">🗑</span></td>
+      </tr></tbody>
+    </table>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 1100 200" role="img" aria-label="AS-IS: 삭제하면 is_use만 0이 되고 행이 남으며, 같은 조합 재등록 시 새 SN이 채번되어 SN이 두 개가 된다" font-family="Pretendard, sans-serif">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#424447"/></marker></defs>
+      <g font-size="14" font-weight="700" fill="#131314"><text x="20" y="24">① 등록</text><text x="390" y="24">② [삭제] 클릭</text><text x="760" y="24">③ 같은 조합 재등록</text></g>
+      <rect x="20" y="40" width="300" height="56" rx="8" fill="#fff" stroke="#131314"/>
+      <text x="36" y="64" font-size="13" font-weight="700" fill="#131314">SN 1001 · SK · 512GB</text><text x="36" y="84" font-size="12.5" fill="#424447">is_use = 1</text>
+      <line x1="326" y1="68" x2="384" y2="68" stroke="#424447" stroke-width="1.5" marker-end="url(#ar)"/>
+      <rect x="390" y="40" width="300" height="56" rx="8" fill="#F5F6F7" stroke="#A9ABB0" stroke-dasharray="4 3"/>
+      <text x="406" y="64" font-size="13" font-weight="700" fill="#73767A">SN 1001 · SK · 512GB</text><text x="406" y="84" font-size="12.5" fill="#C2410C" font-weight="700">is_use = 0 (행은 남음)</text>
+      <line x1="696" y1="68" x2="754" y2="68" stroke="#424447" stroke-width="1.5" marker-end="url(#ar)"/>
+      <rect x="760" y="40" width="300" height="56" rx="8" fill="#F5F6F7" stroke="#A9ABB0" stroke-dasharray="4 3"/>
+      <text x="776" y="64" font-size="13" font-weight="700" fill="#73767A">SN 1001 · SK · 512GB</text><text x="776" y="84" font-size="12.5" fill="#424447">is_use = 0</text>
+      <rect x="760" y="106" width="300" height="56" rx="8" fill="#FEE6E6" stroke="#C31518" stroke-width="1.5"/>
+      <text x="776" y="130" font-size="13" font-weight="700" fill="#C31518">SN 2001 · SK · 512GB</text><text x="776" y="150" font-size="12.5" fill="#424447">is_use = 1 ← 새 SN 채번</text>
+      <text x="910" y="186" font-size="13" font-weight="700" fill="#C31518" text-anchor="middle">같은 상품인데 SN이 두 개</text>
+    </svg>
+    <figcaption>중복 체크는 저장 시점에 동작하지만 삭제된(is_use=0) 행은 대상에서 빠지므로 재등록이 가능함. SN 번호는 설명용 예시.</figcaption>
+  </figure>
+
+  <table class="t">
+    <thead><tr><th style="width:180px">항목</th><th>현재</th><th style="width:70px">근거</th></tr></thead>
+    <tbody>
+      <tr><td><b>상품 단위 상태</b></td><td>기본정보 "판매 여부"(판매/미판매) + product_code.is_use</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>옵션 단위 상태</b></td><td>없음. [삭제] = is_use 0, is_delete는 항상 0</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>같은 조합 중복 등록</b></td><td>저장 시 토스트로 차단. 단, 삭제 후에는 재등록 가능 → 새 SN</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>CRM 상담 목록 필터</b></td><td>product_code.is_use 기준으로 조회</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>중계 서버 전달</b></td><td>isUse만 전달 (isDelete 항목 없음)</td><td><span class="tag s">명세</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- 3. TO-BE 정책 -->
+  <h2>3. TO-BE 정책</h2>
+  <div class="h2d">상품은 사용/미사용, 옵션은 판매 상태. 옵션은 삭제하지 않는다</div>
+
+  <h3>3.1 상태 구조</h3>
+  <table class="t">
+    <thead><tr><th style="width:120px">단위</th><th style="width:160px">상태값</th><th>의미</th><th style="width:70px">근거</th></tr></thead>
+    <tbody>
+      <tr><td><b>상품(기기)</b></td><td><span class="badge bd-on">사용</span> <span class="badge bd-off">미사용</span></td><td>아정당 플랫폼·CRM에서 이 모델을 쓰는지 여부. 기존 "판매 여부"를 대체</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>옵션</b><br>(통신사+용량)</td><td><span class="badge bd-on">판매중</span> <span class="badge bd-pur">품절</span><br><span class="badge bd-red">단종</span> <span class="badge bd-off">숨김</span></td><td>옵션별 판매 상태. 렌탈 '옵션항목 상태'와 동일 체계</td><td><span class="tag n">가안</span></td></tr>
+    </tbody>
+  </table>
+  <ul>
+    <li><span class="tag s">명세</span>상품을 사용 → 미사용으로 바꿔도 <b>옵션 상태는 바뀌지 않음</b> (일괄 변경 없음). CRM·플랫폼 노출은 <b>상품 사용 여부 + 옵션 상태 조합</b>으로 제어 (옵션별 노출 범위 필드는 삭제).</li>
+    <li><span class="tag n">가안</span>옵션 상태 4종은 현업 확인 후 바뀔 수 있음.</li>
+  </ul>
+
+  <h3>3.2 옵션 상태 정의 (렌탈 툴팁 기준)</h3>
+  <table class="t">
+    <thead><tr><th style="width:110px">상태</th><th>렌탈 현재 정의 (상담상세·신청서)</th><th>모바일 적용 (이번 범위)</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge bd-on">판매중</span></td><td>노출되며 선택 가능</td><td>CRM 선택 목록 노출 (상품 사용일 때)</td></tr>
+      <tr><td><span class="badge bd-pur">품절</span></td><td>노출되나 품절로 표시, 선택 불가</td><td rowspan="3">CRM 선택 목록 미노출 <span class="tag i">해석</span><br>— 상태별로 다르게 노출하는 건 확장 정책 (3.6)</td></tr>
+      <tr><td><span class="badge bd-red">단종</span></td><td>노출되나 단종으로 표시, 선택 불가</td></tr>
+      <tr><td><span class="badge bd-off">숨김</span></td><td>미노출 (현재의 [삭제] 용도)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.3 SN · 등록 규칙</h3>
+  <table class="t">
+    <thead><tr><th style="width:220px">규칙</th><th>내용</th><th style="width:70px">근거</th></tr></thead>
+    <tbody>
+      <tr><td><b>옵션 삭제 없음</b></td><td>[삭제] 버튼 제거. 하드 딜리트도 하지 않음. 옵션이 한 번 저장되면 그 SN은 계속 점유</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>옵션 식별키 = 통신사 + 용량</b></td><td>저장 후 통신사·용량은 <b>수정 불가(고정 처리)</b>. 모델명·출고가·색상·옵션 상태는 수정 가능. 렌탈 부가옵션의 저장된 옵션항목명이 잠기는 것과 같은 방식</td><td><span class="tag i">해석</span></td></tr>
+      <tr><td><b>같은 조합 중복 등록 불가</b></td><td>같은 기기 안에서 통신사+용량이 같은 옵션은 <b>상태와 관계없이</b> 새로 등록 불가 (품절·단종·숨김 포함). 저장 시점에 차단 (현재 동작 유지)</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>다시 판매할 때</b></td><td>새로 등록하지 않고 기존 옵션의 상태를 판매중으로 변경 → 같은 SN 유지</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>잘못 등록한 경우</b></td><td>통신사·용량을 잘못 고른 옵션은 숨김 처리 후, 올바른 조합으로 새 행 추가. 잘못 만든 조합은 점유된 채 남고, 나중에 필요하면 그 행을 판매중으로 전환</td><td><span class="tag i">해석</span></td></tr>
+      <tr><td><b>저장 전 행</b></td><td>[+]로 추가하고 아직 저장하지 않은 행은 [취소]로 되돌림. 행 단위 제거 버튼은 두지 않음 (삭제 대체 버튼으로 오해 방지) — 필요 여부는 미정 9</td><td><span class="tag i">해석</span></td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <svg viewBox="0 0 1100 150" role="img" aria-label="TO-BE: 판매 중단은 상태 변경으로 처리하고, 다시 판매할 때 같은 행을 판매중으로 바꿔 SN이 유지된다" font-family="Pretendard, sans-serif">
+      <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#424447"/></marker></defs>
+      <g font-size="14" font-weight="700" fill="#131314"><text x="20" y="24">① 등록</text><text x="390" y="24">② 판매 중단 → 상태 변경</text><text x="760" y="24">③ 다시 판매 → 판매중</text></g>
+      <rect x="20" y="40" width="300" height="56" rx="8" fill="#fff" stroke="#131314"/>
+      <text x="36" y="64" font-size="13" font-weight="700" fill="#131314">SN 1001 · SK · 512GB</text><text x="36" y="84" font-size="12.5" fill="#0A8208" font-weight="700">판매중</text>
+      <line x1="326" y1="68" x2="384" y2="68" stroke="#424447" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <rect x="390" y="40" width="300" height="56" rx="8" fill="#F5F6F7" stroke="#A9ABB0" stroke-dasharray="4 3"/>
+      <text x="406" y="64" font-size="13" font-weight="700" fill="#73767A">SN 1001 · SK · 512GB</text><text x="406" y="84" font-size="12.5" fill="#424447" font-weight="700">숨김 / 단종 / 품절</text>
+      <text x="390" y="120" font-size="12" fill="#C2410C">같은 조합 [+] 등록 → 저장 시 차단</text>
+      <line x1="696" y1="68" x2="754" y2="68" stroke="#424447" stroke-width="1.5" marker-end="url(#ar2)"/>
+      <rect x="760" y="40" width="300" height="56" rx="8" fill="#E0FCE0" stroke="#0A8208" stroke-width="1.5"/>
+      <text x="776" y="64" font-size="13" font-weight="700" fill="#0A8208">SN 1001 · SK · 512GB</text><text x="776" y="84" font-size="12.5" fill="#424447">판매중 ← 같은 SN 그대로</text>
+      <text x="910" y="120" font-size="13" font-weight="700" fill="#0A8208" text-anchor="middle">SN은 하나 · 상담 참조 유지</text>
+    </svg>
+  </figure>
+
+  <h3>3.4 CRM 상담 반영</h3>
+  <table class="t">
+    <thead><tr><th style="width:200px">구분</th><th>규칙</th><th style="width:70px">근거</th></tr></thead>
+    <tbody>
+      <tr><td><b>상품·옵션 선택 목록</b></td><td>상품 <b>사용</b> AND 옵션 <b>판매중</b>인 것만 노출</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>저장된 상담 조회</b><br>(SN 기준)</td><td>상품·옵션 상태와 관계없이 그대로 표시하고, 현재 상태를 함께 표시</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>저장된 상담 수정·저장</b></td><td>이미 선택된 옵션은 상태와 관계없이 유지·저장 가능. 필터는 새로 선택하는 목록에만 적용</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>목록 필터 기준 변경</b></td><td>product_code.is_use 기준 → 새 상품 상태 + 옵션 상태 조합으로 변경</td><td><span class="tag i">해석</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.5 플랫폼 반영</h3>
+  <table class="t">
+    <thead><tr><th style="width:200px">구분</th><th>규칙</th><th style="width:70px">근거</th></tr></thead>
+    <tbody>
+      <tr><td><b>전달 항목</b></td><td>상품 상태(사용/미사용) + 옵션 상태(판매중/품절/단종/숨김) 모두 전달</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>노출 판단</b></td><td>플랫폼이 두 값을 조합해 판단</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>합의 필요</b></td><td>"상품 미사용이면 옵션 상태와 관계없이 미노출", 숨김·단종 처리 방식 → 플랫폼과 명시적 합의 (공유 예정)</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>중계 서버 인터페이스</b></td><td>현재 isUse 단일 값 → 상품 상태 + 옵션 상태로 변경 필요</td><td><span class="tag i">해석</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>3.6 확장 정책 (Future Expansion)</h3>
+  <div class="box note">CRM에도 상품 사용 상태 아래 옵션 상태를 나눠서 전달 → 판매중·품절·단종별로 상담상세 노출 방식을 다르게 처리 (렌탈처럼 품절·단종은 표시만 하고 선택 불가). 이번 범위 아님.</div>
+
+  <!-- 4. 화면 정의 -->
+  <h2>4. 화면 정의</h2>
+  <div class="h2d">아래 화면의 ①~④가 변경 지점입니다. 직접 눌러보려면 상단 [목업] 탭을 이용하세요.</div>
+<div class="shot">
+<div class="gnb">
+  <div class="logo"><i>OXC</i>CRM Admin</div>
+  <nav><span>업체 관리</span><span>상품 관리</span><span>정책 관리</span><span>운영 관리</span><span>개발 설정</span><span>어드민 운영</span><span>비즈터널 운영</span></nav>
+  <div class="icons">☆ &nbsp; ◯</div>
+</div>
+
+<div class="screen" style="min-height:auto">
+  <div class="crumb">상품 관리</div>
+  <div class="ptitle">모바일 상품 관리 <span class="star">☆</span></div>
+  <div class="pdesc">모바일 상품의 기기와 판매 정보를 관리합니다.</div>
+
+  <div class="sec-t">기본정보</div>
+  <div class="form">
+    <div class="frow">
+      <div class="fl">상품명</div><div class="fv"><div class="inp">스타일폴더2-죠르디에디션</div></div>
+      <div class="fl">브랜드</div><div class="fv"><div class="inp">삼성 <span class="caret">▼</span></div></div>
+      <div class="fl">모델 유형</div><div class="fv"><div class="inp">고급형 <span class="caret">▼</span></div></div>
+    </div>
+    <div class="frow">
+      <div class="fl">출시일</div><div class="fv"><div class="inp">2025-01-01 <span class="caret">📅</span></div></div>
+      <div class="fl">순서</div><div class="fv"><div class="inp">0</div></div>
+      <div class="fl">모바일 태그</div><div class="fv"><div class="inp ro" style="width:auto;flex:1">#효도폰, 학생폰</div><button class="btn out l">선택</button></div>
+      <div class="fl" style="display:flex;align-items:center;gap:6px">사용 여부 <span class="mk">1</span></div>
+      <div class="fv"><div class="radio hl" style="padding:4px 8px"><label><b class="on"></b>사용</label><label><b></b>미사용</label></div></div>
+    </div>
+    <div class="frow">
+      <div class="fl">색상</div>
+      <div class="fv">
+        <span class="chip"><span class="sw" style="background:#2b2b2b"></span>인디고 블랙 ✎ ✕</span>
+        <span class="chip"><span class="sw" style="background:#f3f3f3"></span>펄 화이트 ✎ ✕</span>
+        <button class="btn outp l">+ 색상 추가</button>
+      </div>
+    </div>
+  </div>
+  <div class="collapsed" style="margin-top:16px">대표 이미지 · 상품 설명 · 상품스펙 — 기존과 동일 (변경 없음)</div>
+
+  <div class="sec-t">
+    <span style="display:flex;align-items:center;gap:8px">용량 / 출고가 <span class="mk">4</span><span style="font-size:12px;font-weight:400;color:var(--g500)">옵션 삭제 · 노출 범위 컬럼 제거</span></span>
+    <button class="ibtn">+</button>
+  </div>
+  <table class="opt">
+    <thead>
+      <tr>
+        <th style="width:150px">통신사 <span class="mk" style="width:16px;height:16px;font-size:10px">2</span></th>
+        <th style="width:130px">용량</th>
+        <th>모델명</th>
+        <th style="width:220px">출고가</th>
+        <th style="width:220px">색상</th>
+        <th style="width:150px">옵션 상태 <span class="info">i</span> <span class="mk" style="width:16px;height:16px;font-size:10px">3</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="inp ro">SK</div></td>
+        <td><div class="inp ro">32GB</div></td>
+        <td><div class="inp">AT-M140S</div></td>
+        <td><div style="display:flex;gap:8px"><div class="inp ro" style="justify-content:flex-end">237,600 원</div><button class="btn outp l">수정</button></div></td>
+        <td><div class="inp">인디고 블랙, 펄 화이트</div></td>
+        <td><div class="inp hl">판매중 <span class="caret">▼</span></div></td>
+      </tr>
+      <tr>
+        <td><div class="inp ro">LG</div></td>
+        <td><div class="inp ro">32GB</div></td>
+        <td><div class="inp">AT-M140L</div></td>
+        <td><div style="display:flex;gap:8px"><div class="inp ro" style="justify-content:flex-end">237,600 원</div><button class="btn outp l">수정</button></div></td>
+        <td><div class="inp">인디고 블랙, 펄 화이트</div></td>
+        <td><div class="inp">품절 <span class="caret">▼</span></div></td>
+      </tr>
+      <tr class="new">
+        <td><div class="inp">KT <span class="caret">▼</span></div></td>
+        <td><div class="inp">32GB <span class="caret">▼</span></div></td>
+        <td><div class="inp" style="color:var(--g300)">모델명 입력</div></td>
+        <td><div style="display:flex;gap:8px"><div class="inp" style="justify-content:flex-end;color:var(--g300)">원</div></div></td>
+        <td><div class="inp" style="color:var(--g300)">색상 선택</div></td>
+        <td><div class="inp">판매중 <span class="caret">▼</span></div></td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:12px;color:var(--g500);margin-top:8px">※ 3행은 [+]로 추가한 저장 전 행 (저장 후에는 통신사·용량이 잠김)</div>
+
+  <div class="foot"><button class="btn out l">취소</button><button class="btn pri l">저장</button></div>
+</div>
+
+</div>
+
+
+  <table class="t">
+    <thead><tr><th style="width:44px">No</th><th style="width:170px">항목</th><th style="width:250px">AS-IS</th><th>TO-BE</th></tr></thead>
+    <tbody>
+      <tr><td><span class="mk">1</span></td><td><b>기본정보 상태 라벨</b></td><td>"판매 여부" 판매 / 미판매</td><td>"사용 여부" 사용 / 미사용. 옵션의 "판매중"과 이름이 겹치지 않도록 라벨 변경. 기본값: 사용</td></tr>
+      <tr><td><span class="mk">2</span></td><td><b>통신사 · 용량</b></td><td>드롭다운 (저장 후에도 활성으로 보임)</td><td>저장 전 행: 드롭다운 선택 가능<br>저장된 행: <b>읽기 전용</b>(회색 배경), 수정 불가</td></tr>
+      <tr><td><span class="mk">3</span></td><td><b>옵션 상태 컬럼</b> (신규)</td><td>없음</td><td>드롭다운: 판매중 / 품절 / 단종 / 숨김. 신규 행 기본값: 판매중<br>헤더 ⓘ 툴팁으로 상태 정의 안내 (5.2)</td></tr>
+      <tr><td><span class="mk">4</span></td><td><b>옵션 삭제 컬럼</b></td><td>🗑 [삭제] 버튼</td><td>컬럼 제거. <b>대체 버튼 없음</b> — 판매하지 않는 옵션은 ③ 옵션 상태로 관리</td></tr>
+      <tr><td><span class="mk">4</span></td><td><b>노출 범위 컬럼</b></td><td>CRM · 플랫폼 · 아정당 폰 선택</td><td>컬럼 제거. 노출은 상품 사용 여부 + 옵션 상태 조합으로 제어 <span class="tag s">명세</span></td></tr>
+      <tr><td>—</td><td><b>그 외</b></td><td colspan="2">모델명·출고가([수정])·색상·[+] 추가·[취소]/[저장]은 기존과 동일</td></tr>
+    </tbody>
+  </table>
+
+  <h3>4.1 저장 정책</h3>
+  <table class="t">
+    <thead><tr><th style="width:200px">항목</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td><b>저장 단위</b></td><td>페이지 하단 [저장] 한 번에 기본정보 + 옵션 전체 저장 (현재와 동일)</td></tr>
+      <tr><td><b>[방어] 중복 조합</b></td><td>같은 기기 안에 같은 통신사+용량이 있으면(상태 무관, 저장 전 행끼리 포함) 저장 차단 + 토스트(red)</td></tr>
+      <tr><td><b>[방어] 식별키 변경</b></td><td>저장된 옵션의 통신사·용량은 API에서도 변경 거부</td></tr>
+      <tr><td><b>반영 시점</b></td><td>저장 즉시 CRM 상담 목록·플랫폼 전달 대상에 반영 <span class="tag i">해석</span> (캐시 갱신 필요 여부 BE 확인)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 5. 케이스 -->
+  <h2>5. 케이스 시안</h2>
+  <div class="h2d">화면 정의에서 다 보이지 않는 상태 ([목업] 탭에서 직접 확인 가능)</div>
+
+  <div class="two">
+    <div class="case">
+      <div class="ct">5.1 옵션 상태 드롭다운 펼침</div>
+      <div class="dd" style="height:200px">
+        <div class="inp" style="border-color:var(--b500)">판매중 <span class="caret">▲</span></div>
+        <div class="dd-menu"><div class="sel">판매중</div><div>품절</div><div>단종</div><div>숨김</div></div>
+      </div>
+    </div>
+    <div class="case">
+      <div class="ct">5.2 옵션 상태 ⓘ 툴팁 <span class="tag n">가안</span></div>
+      <div class="tip">
+        1. 판매중 : 상담상세 및 플랫폼에 노출되며 선택 가능<br>
+        2. 품절 : 상담상세에서 미노출, 플랫폼 노출은 플랫폼 정책을 따름<br>
+        3. 단종 : 상담상세에서 미노출, 플랫폼 노출은 플랫폼 정책을 따름<br>
+        4. 숨김 : 상담상세 및 플랫폼에서 미노출<br>
+        <span style="color:var(--g500)">※ 옵션은 삭제할 수 없습니다. 판매하지 않는 옵션은 상태를 변경해 주세요.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="case">
+    <div class="ct">5.3 같은 통신사+용량으로 저장 시 — 차단</div>
+    <table class="opt" style="margin-bottom:16px">
+      <tbody>
+        <tr><td style="width:150px"><div class="inp ro">SK</div></td><td style="width:130px"><div class="inp ro">512GB</div></td><td><div class="inp">SM-Z8S</div></td><td style="width:150px"><div class="inp">숨김 <span class="caret">▼</span></div></td></tr>
+        <tr class="new"><td><div class="inp" style="border-color:var(--r500)">SK <span class="caret">▼</span></div></td><td><div class="inp" style="border-color:var(--r500)">512GB <span class="caret">▼</span></div></td><td><div class="inp" style="color:var(--g300)">모델명 입력</div></td><td><div class="inp">판매중 <span class="caret">▼</span></div></td></tr>
+      </tbody>
+    </table>
+    <div class="toast"><span class="dot">!</span>이미 등록된 통신사·용량입니다. 기존 옵션의 상태를 변경해 주세요.</div>
+    <p style="margin-top:12px;font-size:13px;color:var(--g500)">토스트 문구는 제안안 <span class="tag i">해석</span> — 현재 저장 차단 토스트 문구를 확인해 맞출 것. 기존 행이 숨김이어도 차단됨.</p>
+  </div>
+
+  <!-- 6. 데이터 이관 -->
+  <h2>6. 데이터 이관</h2>
+  <div class="h2d">적용 전에 끝내야 함 — 중복 체크를 상태 무관으로 넓히면 기존 중복 SN이 규칙 위반이 됨</div>
+
+  <table class="t">
+    <thead><tr><th style="width:220px">대상</th><th>이관 규칙</th><th style="width:70px">근거</th></tr></thead>
+    <tbody>
+      <tr><td><b>상품 판매 여부</b></td><td>판매 → 사용 / 미판매 → 미사용</td><td><span class="tag s">명세</span></td></tr>
+      <tr><td><b>옵션 is_use = 1</b></td><td>판매중</td><td><span class="tag i">해석</span></td></tr>
+      <tr><td><b>옵션 is_use = 0</b></td><td>숨김 (현재 [삭제]로 만들어진 상태 = 렌탈 숨김 용도와 같음)</td><td><span class="tag i">해석</span></td></tr>
+      <tr><td><b>같은 조합에 SN 여러 개</b></td><td>조합별로 남길 SN을 정하고 나머지 처리 방식 결정 (7. 미정 사항)</td><td><span class="tag s">명세</span></td></tr>
+    </tbody>
+  </table>
+
+  <h3>6.1 데이터 추출 요청 항목 (최은희님)</h3>
+  <ul>
+    <li>기기(상품) ID · 상품명 / 통신사 / 용량 / SN</li>
+    <li>is_use / 등록일 / 최근 수정일</li>
+    <li>해당 SN을 참조하는 상담 건수 — <b>확인이 어려우면 생략</b>, 이 경우 남길 SN 기준은 "is_use = 1 → 없으면 최근 등록일"로 대체 <span class="tag i">해석</span></li>
+    <li>조회 범위: ① 같은 조합에 SN 2개 이상인 건 전체 ② 그 외 is_use = 0 행</li>
+  </ul>
+
+  <!-- 7. 미정 -->
+  <h2>7. 미정 사항</h2>
+  <div class="h2d">결정되면 본문 반영 후 변경 이력에 기록</div>
+
+  <table class="t">
+    <thead><tr><th style="width:40px">#</th><th style="width:230px">항목</th><th>내용</th><th style="width:130px">확인 대상</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>옵션 상태 종류</b></td><td>판매중·품절·단종·숨김 유지 여부, 모바일에서 품절이 필요한지</td><td>현업(정책팀)</td></tr>
+      <tr><td>2</td><td><b>노출 범위 삭제 영향</b></td><td><s>노출 범위 vs 숨김</s> → 노출 범위 삭제로 결정(11/24). 채널별로 노출을 다르게 운영하던 케이스(예: CRM만 판매, 플랫폼은 숨김)가 있는지 현업 확인. 기존 노출 범위 데이터는 이관 없이 폐기</td><td>현업(정책팀)</td></tr>
+      <tr><td>3</td><td><b>product_code.is_use 처리</b></td><td>모바일·유심·알뜰폰 공통 컬럼. 모바일에서 더 이상 안 쓸지, 새 상품 상태와 동기화할지</td><td>BE (최은희)</td></tr>
+      <tr><td>4</td><td><b>중복 SN 정리 방식</b></td><td>남기지 않는 SN의 행을 어떻게 처리할지 (중복 체크 대상에서 어떻게 제외할지 포함)</td><td>BE (최은희)</td></tr>
+      <tr><td>5</td><td><b>저장된 행 통신사·용량 잠금</b></td><td>현재 화면에서 드롭다운이 활성으로 보임. 실제로 수정되는지 확인 후 잠금 적용</td><td>BE · FE</td></tr>
+      <tr><td>6</td><td><b>중복 저장 차단 토스트 문구</b></td><td>현재 문구 확인 → 상태 변경 안내 포함 여부 결정</td><td>FE</td></tr>
+      <tr><td>7</td><td><b>상담상세 상태 표기</b></td><td>저장된 상담에서 단종·숨김 옵션을 어떻게 표시할지 (배지 등)</td><td>기획 (CRM 상담)</td></tr>
+      <tr><td>8</td><td><b>플랫폼 합의</b></td><td>상품 미사용 시 미노출, 품절·단종·숨김 노출 규칙, 인터페이스 변경 일정</td><td>박솔 · 황경배</td></tr>
+      <tr><td>9</td><td><b>저장 전 행 제거</b></td><td>[+]로 잘못 추가한 행을 저장 전에 하나만 빼는 기능이 필요한지. 필요하면 삭제와 구분되는 형태로 별도 정의</td><td>기획 · FE</td></tr>
+    </tbody>
+  </table>
+
+  <h2>변경 이력</h2>
+  <table class="t">
+    <thead><tr><th style="width:140px">일시</th><th>내용</th><th style="width:120px">작성자</th></tr></thead>
+    <tbody>
+      <tr><td>2026.11.24</td><td>최초 작성. 옵션 삭제 제거 + 옵션 상태 도입(렌탈 부가옵션 구조), 상품 판매 여부 → 사용 여부, SN 점유 정책 정리</td><td>김아라 (Claude)</td></tr>
+      <tr><td>2026.11.24</td><td>옵션 삭제 자리의 [−] 행 제거 버튼 삭제 — 삭제를 다른 버튼으로 대체한 것처럼 보이는 문제. 저장 전 행 제거는 미정 9로 이동</td><td>김아라 (Claude)</td></tr>
+      <tr><td>2026.11.24</td><td>옵션별 노출 범위 컬럼 삭제 결정 반영 — 노출은 상품 사용 여부 + 옵션 상태 조합으로 제어. 메뉴 경로 수정(상품 관리 탭 &gt; 상품 수정 상세)</td><td>김아라 (Claude)</td></tr>
+      <tr><td>2026.11.24</td><td>화면기획서 / 목업 탭 분리. 정적 화면은 4. 화면 정의로 이동, 목업 탭은 클릭 가능한 화면</td><td>김아라 (Claude)</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+</div>
+
+<div class="pane" id="pane-mockup">
+  <iframe id="mockFrame" title="모바일 상품 관리 목업"></iframe>
+</div>
+
+<script id="mockData" type="text/plain">PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9ImtvIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+66qo67CU7J28IOyDge2SiCDqtIDrpqwgLSBDUk0gQWRtaW48L3RpdGxlPgo8bGluayByZWw9InN0eWxlc2hlZXQiIGhyZWY9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9naC9vcmlvbmNhY3R1cy9wcmV0ZW5kYXJkQHYxLjMuOS9kaXN0L3dlYi9zdGF0aWMvcHJldGVuZGFyZC5taW4uY3NzIj4KPHN0eWxlPgogIDpyb290ewogICAgLS1nMjU6I0Y1RjZGNzsgLS1nNTA6I0VGRUZGMTsgLS1nMTAwOiNERUUwRTM7IC0tZzIwMDojQzNDNUM5OyAtLWczMDA6I0E5QUJCMDsKICAgIC0tZzUwMDojNzM3NjdBOyAtLWc3MDA6IzQyNDQ0NzsgLS1nOTAwOiMxMzEzMTQ7CiAgICAtLWI1MDojRUNGMkZGOyAtLWI1MDA6IzE0NUNFNjsgLS1iNzAwOiMwNzM4OTQ7CiAgICAtLXI1MDojRkVFNkU2OyAtLXI1MDA6I0MzMTUxODsgLS1ncjYwMDojMEE4MjA4OwogIH0KICAqe2JveC1zaXppbmc6Ym9yZGVyLWJveDttYXJnaW46MDtwYWRkaW5nOjB9CiAgYm9keXtmb250LWZhbWlseToiUHJldGVuZGFyZCIsLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsc3lzdGVtLXVpLHNhbnMtc2VyaWY7Y29sb3I6dmFyKC0tZzkwMCk7Zm9udC1zaXplOjE0cHg7bGluZS1oZWlnaHQ6MjBweDtsZXR0ZXItc3BhY2luZzotMC4zcHg7YmFja2dyb3VuZDojZmZmO21pbi13aWR0aDoxNDQwcHh9CiAgYnV0dG9uLHNlbGVjdCxpbnB1dHtmb250LWZhbWlseTppbmhlcml0O2ZvbnQtc2l6ZToxNHB4O2xldHRlci1zcGFjaW5nOi0wLjNweDtjb2xvcjp2YXIoLS1nOTAwKX0KICAuZ25ie2hlaWdodDo1NnB4O2JvcmRlci1ib3R0b206MXB4IHNvbGlkIHZhcigtLWcxMDApO2Rpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7cGFkZGluZzowIDQ4cHg7Z2FwOjIwcHg7YmFja2dyb3VuZDojZmZmO3Bvc2l0aW9uOnN0aWNreTt0b3A6MDt6LWluZGV4OjEwfQogIC5nbmIgLmxvZ297d2lkdGg6MjE1cHg7ZGlzcGxheTpmbGV4O2FsaWduLWl0ZW1zOmNlbnRlcjtnYXA6OHB4O2ZvbnQtd2VpZ2h0OjcwMDtmb250LXNpemU6MTZweDtjb2xvcjp2YXIoLS1nNzAwKX0KICAuZ25iIC5sb2dvIGl7ZGlzcGxheTppbmxpbmUtYmxvY2s7d2lkdGg6NTdweDtoZWlnaHQ6MjRweDtiYWNrZ3JvdW5kOnZhcigtLWI1MDApO2JvcmRlci1yYWRpdXM6NHB4O2NvbG9yOiNmZmY7Zm9udC1zdHlsZTpub3JtYWw7Zm9udC1zaXplOjEycHg7Zm9udC13ZWlnaHQ6ODAwO3RleHQtYWxpZ246Y2VudGVyO2xpbmUtaGVpZ2h0OjI0cHh9CiAgLmduYiBuYXZ7ZmxleDoxO2Rpc3BsYXk6ZmxleDtnYXA6MjBweH0KICAuZ25iIG5hdiBzcGFue3BhZGRpbmc6NnB4IDEycHg7Ym9yZGVyLXJhZGl1czo4cHg7Zm9udC13ZWlnaHQ6NjAwfQogIC5nbmIgbmF2IHNwYW46aG92ZXJ7YmFja2dyb3VuZDp2YXIoLS1nMjUpfQogIC5nbmIgLmljb25ze2Rpc3BsYXk6ZmxleDtnYXA6OHB4O2ZvbnQtc2l6ZToxOHB4fQogIC5zY3JlZW57bWluLWhlaWdodDoxMDB2aDtwYWRkaW5nOjI4cHggNDhweCA4MHB4fQogIC5jcnVtYntjb2xvcjp2YXIoLS1nMzAwKX0KICAucHRpdGxle2Rpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7Z2FwOjhweDttYXJnaW4tdG9wOjRweDtmb250LXNpemU6MzJweDtsaW5lLWhlaWdodDo0MnB4O2ZvbnQtd2VpZ2h0OjcwMDtsZXR0ZXItc3BhY2luZzotMC41cHh9CiAgLnB0aXRsZSAuc3Rhcntmb250LXNpemU6MjJweDtjb2xvcjp2YXIoLS1nMzAwKTtmb250LXdlaWdodDo0MDB9CiAgLnBkZXNje2NvbG9yOnZhcigtLWc1MDApO21hcmdpbi10b3A6MTZweDtsaW5lLWhlaWdodDoyMnB4fQogIC5zZWMtdHtmb250LXNpemU6MTZweDtmb250LXdlaWdodDo3MDA7bWFyZ2luOjM2cHggMCAxMnB4O2Rpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7anVzdGlmeS1jb250ZW50OnNwYWNlLWJldHdlZW59CiAgLmZvcm17Ym9yZGVyLXRvcDoxcHggc29saWQgdmFyKC0tZzEwMCl9CiAgLmZyb3d7ZGlzcGxheTpmbGV4O2JvcmRlci1ib3R0b206MXB4IHNvbGlkIHZhcigtLWcxMDApO21pbi1oZWlnaHQ6NTNweH0KICAuZmx7d2lkdGg6MTQ4cHg7YmFja2dyb3VuZDp2YXIoLS1nMjUpO3BhZGRpbmc6MTZweDtmbGV4LXNocmluazowfQogIC5mdntmbGV4OjE7cGFkZGluZzo4cHggMTJweDtkaXNwbGF5OmZsZXg7YWxpZ24taXRlbXM6Y2VudGVyO2dhcDo4cHh9CiAgLmlucHtoZWlnaHQ6MzZweDtib3JkZXI6MXB4IHNvbGlkIHZhcigtLWcyMDApO2JvcmRlci1yYWRpdXM6OHB4O3BhZGRpbmc6MCAxMnB4O2JhY2tncm91bmQ6I2ZmZjtkaXNwbGF5OmZsZXg7YWxpZ24taXRlbXM6Y2VudGVyO3dpZHRoOjEwMCU7b3V0bGluZTpub25lfQogIC5pbnA6Zm9jdXN7Ym9yZGVyLWNvbG9yOnZhcigtLWI1MDApfQogIC5pbnAucm97YmFja2dyb3VuZDp2YXIoLS1nNTApO2NvbG9yOnZhcigtLWc3MDApO2JvcmRlci1jb2xvcjp2YXIoLS1nMTAwKX0KICAuaW5wLmVycntib3JkZXItY29sb3I6dmFyKC0tcjUwMCl9CiAgaW5wdXQuaW5wOjpwbGFjZWhvbGRlcntjb2xvcjp2YXIoLS1nMzAwKX0KICBzZWxlY3QuaW5we2FwcGVhcmFuY2U6bm9uZTstd2Via2l0LWFwcGVhcmFuY2U6bm9uZTtjdXJzb3I6cG9pbnRlcjtiYWNrZ3JvdW5kOiNmZmYgdXJsKCJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgd2lkdGg9JzEwJyBoZWlnaHQ9JzYnJTNFJTNDcGF0aCBkPSdNMCAwbDUgNiA1LTZ6JyBmaWxsPSclMjM3Mzc2N0EnLyUzRSUzQy9zdmclM0UiKSBuby1yZXBlYXQgcmlnaHQgMTJweCBjZW50ZXI7cGFkZGluZy1yaWdodDozMHB4fQogIHNlbGVjdC5pbnAuZW1wdHl7Y29sb3I6dmFyKC0tZzMwMCl9CiAgLnJhZGlve2Rpc3BsYXk6ZmxleDtnYXA6MTZweDthbGlnbi1pdGVtczpjZW50ZXJ9CiAgLnJhZGlvIGxhYmVse2Rpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7Z2FwOjZweDtjdXJzb3I6cG9pbnRlcn0KICAucmFkaW8gaW5wdXR7YWNjZW50LWNvbG9yOnZhcigtLWI1MDApO3dpZHRoOjE2cHg7aGVpZ2h0OjE2cHh9CiAgLmNoaXB7ZGlzcGxheTppbmxpbmUtZmxleDthbGlnbi1pdGVtczpjZW50ZXI7Z2FwOjhweDtib3JkZXI6MXB4IHNvbGlkIHZhcigtLWcyMDApO2JvcmRlci1yYWRpdXM6OHB4O2hlaWdodDozNnB4O3BhZGRpbmc6MCAxMnB4fQogIC5jaGlwIC5zd3t3aWR0aDoxOHB4O2hlaWdodDoxOHB4O2JvcmRlci1yYWRpdXM6M3B4O2JvcmRlcjoxcHggc29saWQgdmFyKC0tZzIwMCl9CiAgLmJ0bntoZWlnaHQ6MzJweDtwYWRkaW5nOjZweCAxMnB4O2JvcmRlci1yYWRpdXM6OHB4O2ZvbnQtd2VpZ2h0OjYwMDtib3JkZXI6MXB4IHNvbGlkIHRyYW5zcGFyZW50O2JhY2tncm91bmQ6I2ZmZjt3aGl0ZS1zcGFjZTpub3dyYXA7Y3Vyc29yOnBvaW50ZXJ9CiAgLmJ0bi5wcml7YmFja2dyb3VuZDp2YXIoLS1iNTAwKTtjb2xvcjojZmZmfQogIC5idG4ucHJpOmhvdmVye2JhY2tncm91bmQ6dmFyKC0tYjcwMCl9CiAgLmJ0bi5vdXR7Ym9yZGVyLWNvbG9yOnZhcigtLWcyMDApfQogIC5idG4ub3V0OmhvdmVye2JhY2tncm91bmQ6dmFyKC0tZzUwKX0KICAuYnRuLm91dHB7Ym9yZGVyLWNvbG9yOnZhcigtLWI1MDApO2NvbG9yOnZhcigtLWI1MDApfQogIC5idG4ub3V0cDpob3ZlcntiYWNrZ3JvdW5kOnZhcigtLWI1MCl9CiAgLmJ0bi5se2hlaWdodDozNnB4O3BhZGRpbmc6OHB4IDE2cHh9CiAgLmlidG57d2lkdGg6MzJweDtoZWlnaHQ6MzJweDtib3JkZXItcmFkaXVzOjZweDtib3JkZXI6MXB4IHNvbGlkIHZhcigtLWI1MDApO2NvbG9yOnZhcigtLWI1MDApO2JhY2tncm91bmQ6I2ZmZjtmb250LXNpemU6MThweDtsaW5lLWhlaWdodDoyOHB4O2N1cnNvcjpwb2ludGVyfQogIC5pYnRuOmhvdmVye2JhY2tncm91bmQ6dmFyKC0tYjUwKX0KICAuY29sbGFwc2Vke2JvcmRlcjoxcHggZGFzaGVkIHZhcigtLWcyMDApO2JvcmRlci1yYWRpdXM6OHB4O3BhZGRpbmc6MTZweDtjb2xvcjp2YXIoLS1nNTAwKTt0ZXh0LWFsaWduOmNlbnRlcjtiYWNrZ3JvdW5kOnZhcigtLWcyNSk7bWFyZ2luLXRvcDoxNnB4fQogIHRhYmxlLm9wdHt3aWR0aDoxMDAlO2JvcmRlci1jb2xsYXBzZTpjb2xsYXBzZX0KICB0YWJsZS5vcHQgdGh7Zm9udC1zaXplOjEycHg7bGluZS1oZWlnaHQ6MTZweDtjb2xvcjp2YXIoLS1nNTAwKTtmb250LXdlaWdodDo0MDA7cGFkZGluZzo4cHg7Ym9yZGVyLXRvcDoxcHggc29saWQgdmFyKC0tZzEwMCk7Ym9yZGVyLWJvdHRvbToxcHggc29saWQgdmFyKC0tZzEwMCk7dGV4dC1hbGlnbjpjZW50ZXI7d2hpdGUtc3BhY2U6bm93cmFwO3Bvc2l0aW9uOnJlbGF0aXZlfQogIHRhYmxlLm9wdCB0ZHtwYWRkaW5nOjhweDtib3JkZXItYm90dG9tOjFweCBzb2xpZCB2YXIoLS1nMTAwKTt2ZXJ0aWNhbC1hbGlnbjptaWRkbGV9CiAgdGFibGUub3B0IHRyLm5ldyB0ZHtiYWNrZ3JvdW5kOiNGQUZDRkZ9CiAgLnByaWNle2Rpc3BsYXk6ZmxleDtnYXA6OHB4fQogIC5wcmljZSAuaW5we2p1c3RpZnktY29udGVudDpmbGV4LWVuZH0KICAuaW5mb3tkaXNwbGF5OmlubGluZS1ibG9jazt3aWR0aDoxNHB4O2hlaWdodDoxNHB4O2JvcmRlci1yYWRpdXM6NTAlO2JhY2tncm91bmQ6dmFyKC0tZzUwMCk7Y29sb3I6I2ZmZjtmb250LXNpemU6MTBweDtsaW5lLWhlaWdodDoxNHB4O3RleHQtYWxpZ246Y2VudGVyO2ZvbnQtd2VpZ2h0OjcwMDt2ZXJ0aWNhbC1hbGlnbjotMnB4O21hcmdpbi1sZWZ0OjJweDtjdXJzb3I6aGVscH0KICAudGlwe2Rpc3BsYXk6bm9uZTtwb3NpdGlvbjphYnNvbHV0ZTtyaWdodDowO3RvcDozMHB4O3dpZHRoOjQyMHB4O3RleHQtYWxpZ246bGVmdDtiYWNrZ3JvdW5kOiNmZmY7Ym9yZGVyOjFweCBzb2xpZCB2YXIoLS1nMTAwKTtib3JkZXItcmFkaXVzOjhweDtib3gtc2hhZG93OjAgOHB4IDI0cHggcmdiYSgwLDAsMCwuMTIpO3BhZGRpbmc6MTJweCAxNHB4O2ZvbnQtc2l6ZToxM3B4O2xpbmUtaGVpZ2h0OjIycHg7Y29sb3I6dmFyKC0tZzkwMCk7ei1pbmRleDo1O3doaXRlLXNwYWNlOm5vcm1hbH0KICB0aC5oYXMtdGlwOmhvdmVyIC50aXB7ZGlzcGxheTpibG9ja30KICAuc3R7Zm9udC13ZWlnaHQ6NjAwfQogIC5zdC5zLe2MkOunpOykkXtjb2xvcjp2YXIoLS1ncjYwMCl9CiAgLnN0LnMt7ZKI7KCIe2NvbG9yOiM0NTBEQkR9CiAgLnN0LnMt64uo7KKFe2NvbG9yOnZhcigtLXI1MDApfQogIC5zdC5zLeyIqOq5gHtjb2xvcjp2YXIoLS1nNTAwKX0KICAubm90ZXtmb250LXNpemU6MTJweDtjb2xvcjp2YXIoLS1nNTAwKTttYXJnaW4tdG9wOjhweH0KICAuZm9vdHtkaXNwbGF5OmZsZXg7anVzdGlmeS1jb250ZW50OmZsZXgtZW5kO2dhcDo4cHg7bWFyZ2luLXRvcDoyNHB4fQogIC50b2FzdHtwb3NpdGlvbjpmaXhlZDtsZWZ0OjUwJTt0b3A6NzJweDt0cmFuc2Zvcm06dHJhbnNsYXRlWCgtNTAlKSB0cmFuc2xhdGVZKC0xMHB4KTtvcGFjaXR5OjA7dHJhbnNpdGlvbjphbGwgLjJzO2JhY2tncm91bmQ6IzJCMkQzMDtjb2xvcjojZmZmO2JvcmRlci1yYWRpdXM6OHB4O3BhZGRpbmc6MTJweCAxOHB4O2Rpc3BsYXk6ZmxleDthbGlnbi1pdGVtczpjZW50ZXI7Z2FwOjEwcHg7ei1pbmRleDoyMDtwb2ludGVyLWV2ZW50czpub25lfQogIC50b2FzdC5zaG93e29wYWNpdHk6MTt0cmFuc2Zvcm06dHJhbnNsYXRlWCgtNTAlKSB0cmFuc2xhdGVZKDApfQogIC50b2FzdCAuZG90e3dpZHRoOjE4cHg7aGVpZ2h0OjE4cHg7Ym9yZGVyLXJhZGl1czo1MCU7Y29sb3I6I2ZmZjtmb250LXNpemU6MTJweDt0ZXh0LWFsaWduOmNlbnRlcjtsaW5lLWhlaWdodDoxOHB4O2ZvbnQtd2VpZ2h0OjcwMH0KICAudG9hc3Qub2sgLmRvdHtiYWNrZ3JvdW5kOnZhcigtLWdyNjAwKX0KICAudG9hc3QuZXJyIC5kb3R7YmFja2dyb3VuZDp2YXIoLS1yNTAwKX0KICAuZ3VpZGV7Ym9yZGVyLXRvcDoycHggZGFzaGVkIHZhcigtLWcxMDApO3BhZGRpbmc6NDBweCA0OHB4IDgwcHg7Y29sb3I6dmFyKC0tZzcwMCl9CiAgLmd1aWRlIGgye2ZvbnQtc2l6ZToxNnB4O2ZvbnQtd2VpZ2h0OjcwMDttYXJnaW4tYm90dG9tOjEycHg7Y29sb3I6dmFyKC0tZzkwMCl9CiAgLmd1aWRlIHVse21hcmdpbi1sZWZ0OjE4cHh9CiAgLmd1aWRlIGxpe21hcmdpbi1ib3R0b206NnB4O2xpbmUtaGVpZ2h0OjIycHh9CiAgLmd1aWRlIGJ1dHRvbnttYXJnaW4tdG9wOjEycHh9Cjwvc3R5bGU+CjwvaGVhZD4KPGJvZHk+Cgo8ZGl2IGNsYXNzPSJnbmIiPgogIDxkaXYgY2xhc3M9ImxvZ28iPjxpPk9YQzwvaT5DUk0gQWRtaW48L2Rpdj4KICA8bmF2PjxzcGFuPuyXheyytCDqtIDrpqw8L3NwYW4+PHNwYW4+7IOB7ZKIIOq0gOumrDwvc3Bhbj48c3Bhbj7soJXssYUg6rSA66asPC9zcGFuPjxzcGFuPuyatOyYgSDqtIDrpqw8L3NwYW4+PHNwYW4+6rCc67CcIOyEpOyglTwvc3Bhbj48c3Bhbj7slrTrk5zrr7wg7Jq07JiBPC9zcGFuPjxzcGFuPuu5hOymiO2EsOuEkCDsmrTsmIE8L3NwYW4+PC9uYXY+CiAgPGRpdiBjbGFzcz0iaWNvbnMiPuKYhiAmbmJzcDsg4pevPC9kaXY+CjwvZGl2PgoKPGRpdiBjbGFzcz0ic2NyZWVuIj4KICA8ZGl2IGNsYXNzPSJjcnVtYiI+7IOB7ZKIIOq0gOumrDwvZGl2PgogIDxkaXYgY2xhc3M9InB0aXRsZSI+66qo67CU7J28IOyDge2SiCDqtIDrpqwgPHNwYW4gY2xhc3M9InN0YXIiPuKYhjwvc3Bhbj48L2Rpdj4KICA8ZGl2IGNsYXNzPSJwZGVzYyI+66qo67CU7J28IOyDge2SiOydmCDquLDquLDsmYAg7YyQ66ekIOygleuztOulvCDqtIDrpqztlanri4jri6QuPC9kaXY+CgogIDxkaXYgY2xhc3M9InNlYy10Ij7quLDrs7jsoJXrs7Q8L2Rpdj4KICA8ZGl2IGNsYXNzPSJmb3JtIj4KICAgIDxkaXYgY2xhc3M9ImZyb3ciPgogICAgICA8ZGl2IGNsYXNzPSJmbCI+7IOB7ZKI66qFPC9kaXY+PGRpdiBjbGFzcz0iZnYiPjxpbnB1dCBjbGFzcz0iaW5wIiB2YWx1ZT0i7Iqk7YOA7J287Y+0642UMi3so6DrpbTrlJTsl5DrlJTshZgiPjwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJmbCI+67iM656c65OcPC9kaXY+PGRpdiBjbGFzcz0iZnYiPjxzZWxlY3QgY2xhc3M9ImlucCI+PG9wdGlvbj7sgrzshLE8L29wdGlvbj48b3B0aW9uPuyVoO2UjDwvb3B0aW9uPjxvcHRpb24+TEc8L29wdGlvbj48L3NlbGVjdD48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0iZmwiPuuqqOuNuCDsnKDtmJU8L2Rpdj48ZGl2IGNsYXNzPSJmdiI+PHNlbGVjdCBjbGFzcz0iaW5wIj48b3B0aW9uPuqzoOq4ie2YlTwvb3B0aW9uPjxvcHRpb24+67O06riJ7ZiVPC9vcHRpb24+PC9zZWxlY3Q+PC9kaXY+CiAgICA8L2Rpdj4KICAgIDxkaXYgY2xhc3M9ImZyb3ciPgogICAgICA8ZGl2IGNsYXNzPSJmbCI+7Lac7Iuc7J28PC9kaXY+PGRpdiBjbGFzcz0iZnYiPjxpbnB1dCBjbGFzcz0iaW5wIiB0eXBlPSJkYXRlIiB2YWx1ZT0iMjAyNS0wMS0wMSI+PC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9ImZsIj7siJzshJw8L2Rpdj48ZGl2IGNsYXNzPSJmdiI+PGlucHV0IGNsYXNzPSJpbnAiIHZhbHVlPSIwIj48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0iZmwiPuuqqOuwlOydvCDtg5zqt7g8L2Rpdj48ZGl2IGNsYXNzPSJmdiI+PGRpdiBjbGFzcz0iaW5wIHJvIiBzdHlsZT0iZmxleDoxIj4j7Zqo64+E7Y+wLCDtlZnsg53tj7A8L2Rpdj48YnV0dG9uIGNsYXNzPSJidG4gb3V0IGwiPuyEoO2DnTwvYnV0dG9uPjwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJmbCI+7IKs7JqpIOyXrOu2gDwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJmdiI+PGRpdiBjbGFzcz0icmFkaW8iPgogICAgICAgIDxsYWJlbD48aW5wdXQgdHlwZT0icmFkaW8iIG5hbWU9InVzZSIgdmFsdWU9IuyCrOyaqSIgY2hlY2tlZD7sgqzsmqk8L2xhYmVsPgogICAgICAgIDxsYWJlbD48aW5wdXQgdHlwZT0icmFkaW8iIG5hbWU9InVzZSIgdmFsdWU9IuuvuOyCrOyaqSI+66+47IKs7JqpPC9sYWJlbD4KICAgICAgPC9kaXY+PC9kaXY+CiAgICA8L2Rpdj4KICAgIDxkaXYgY2xhc3M9ImZyb3ciPgogICAgICA8ZGl2IGNsYXNzPSJmbCI+7IOJ7IOBPC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9ImZ2Ij4KICAgICAgICA8c3BhbiBjbGFzcz0iY2hpcCI+PHNwYW4gY2xhc3M9InN3IiBzdHlsZT0iYmFja2dyb3VuZDojMmIyYjJiIj48L3NwYW4+7J2465SU6rOgIOu4lOuemSDinI4g4pyVPC9zcGFuPgogICAgICAgIDxzcGFuIGNsYXNzPSJjaGlwIj48c3BhbiBjbGFzcz0ic3ciIHN0eWxlPSJiYWNrZ3JvdW5kOiNmM2YzZjMiPjwvc3Bhbj7tjoQg7ZmU7J207Yq4IOKcjiDinJU8L3NwYW4+CiAgICAgICAgPGJ1dHRvbiBjbGFzcz0iYnRuIG91dHAgbCI+KyDsg4nsg4Eg7LaU6rCAPC9idXR0b24+CiAgICAgIDwvZGl2PgogICAgPC9kaXY+CiAgPC9kaXY+CiAgPGRpdiBjbGFzcz0iY29sbGFwc2VkIj7rjIDtkZwg7J2066+47KeAIMK3IOyDge2SiCDshKTrqoUgwrcg7IOB7ZKI7Iqk7Y6ZIOKAlCDquLDsobTqs7wg64+Z7J28ICjrs4Dqsr0g7JeG7J2MKTwvZGl2PgoKICA8ZGl2IGNsYXNzPSJzZWMtdCI+CiAgICA8c3Bhbj7smqnrn4kgLyDstpzqs6DqsIA8L3NwYW4+CiAgICA8YnV0dG9uIGNsYXNzPSJpYnRuIiBpZD0iYWRkQnRuIiB0aXRsZT0i7Ji17IWYIOy2lOqwgCI+KzwvYnV0dG9uPgogIDwvZGl2PgogIDx0YWJsZSBjbGFzcz0ib3B0Ij4KICAgIDx0aGVhZD4KICAgICAgPHRyPgogICAgICAgIDx0aCBzdHlsZT0id2lkdGg6MTUwcHgiPu2GteyLoOyCrDwvdGg+CiAgICAgICAgPHRoIHN0eWxlPSJ3aWR0aDoxMzBweCI+7Jqp65+JPC90aD4KICAgICAgICA8dGg+66qo642466qFPC90aD4KICAgICAgICA8dGggc3R5bGU9IndpZHRoOjIzMHB4Ij7stpzqs6DqsIA8L3RoPgogICAgICAgIDx0aCBzdHlsZT0id2lkdGg6MjIwcHgiPuyDieyDgTwvdGg+CiAgICAgICAgPHRoIHN0eWxlPSJ3aWR0aDoxNTBweCIgY2xhc3M9Imhhcy10aXAiPuyYteyFmCDsg4Htg5wgPHNwYW4gY2xhc3M9ImluZm8iPmk8L3NwYW4+CiAgICAgICAgICA8ZGl2IGNsYXNzPSJ0aXAiPgogICAgICAgICAgICAxLiDtjJDrp6TspJEgOiDsg4Hri7Tsg4HshLgg67CPIO2UjOueq+2PvOyXkCDrhbjstpzrkJjrqbAg7ISg7YOdIOqwgOuKpTxicj4KICAgICAgICAgICAgMi4g7ZKI7KCIIDog7IOB64u07IOB7IS47JeQ7IScIOuvuOuFuOy2nCwg7ZSM656r7Y+8IOuFuOy2nOydgCDtlIzrnqvtj7wg7KCV7LGF7J2EIOuUsOumhDxicj4KICAgICAgICAgICAgMy4g64uo7KKFIDog7IOB64u07IOB7IS47JeQ7IScIOuvuOuFuOy2nCwg7ZSM656r7Y+8IOuFuOy2nOydgCDtlIzrnqvtj7wg7KCV7LGF7J2EIOuUsOumhDxicj4KICAgICAgICAgICAgNC4g7Iio6rmAIDog7IOB64u07IOB7IS4IOuwjyDtlIzrnqvtj7zsl5DshJwg66+464W47LacPGJyPgogICAgICAgICAgICA8c3BhbiBzdHlsZT0iY29sb3I6dmFyKC0tZzUwMCkiPuKAuyDsmLXshZjsnYAg7IKt7KCc7ZWgIOyImCDsl4bsirXri4jri6QuIO2MkOunpO2VmOyngCDslYrripQg7Ji17IWY7J2AIOyDge2DnOulvCDrs4Dqsr3tlbQg7KO87IS47JqULjwvc3Bhbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgIDwvdGg+CiAgICAgIDwvdHI+CiAgICA8L3RoZWFkPgogICAgPHRib2R5IGlkPSJyb3dzIj48L3Rib2R5PgogIDwvdGFibGU+CiAgPGRpdiBjbGFzcz0ibm90ZSI+4oC7IOyggOyepeuQnCDsmLXshZjsnZgg7Ya17Iug7IKswrfsmqnrn4nsnYAg7IiY7KCV7ZWgIOyImCDsl4bsirXri4jri6QuPC9kaXY+CgogIDxkaXYgY2xhc3M9ImZvb3QiPjxidXR0b24gY2xhc3M9ImJ0biBvdXQgbCIgaWQ9ImNhbmNlbEJ0biI+7Leo7IaMPC9idXR0b24+PGJ1dHRvbiBjbGFzcz0iYnRuIHByaSBsIiBpZD0ic2F2ZUJ0biI+7KCA7J6lPC9idXR0b24+PC9kaXY+CjwvZGl2PgoKPGRpdiBjbGFzcz0iZ3VpZGUiPgogIDxoMj7rqqnsl4Ug7IKs7JqpIOyViOuCtDwvaDI+CiAgPHVsPgogICAgPGxpPjxiPuyYteyFmCDsg4Htg5w8L2I+IOuTnOuhreuLpOyatOyXkOyEnCDtjJDrp6TspJEgLyDtkojsoIggLyDri6jsooUgLyDsiKjquYDsnYQg67CU6r+AIOyImCDsnojsirXri4jri6QuIO2XpOuNlOydmCDik5jsl5Ag66eI7Jqw7Iqk66W8IOyYrOumrOuptCDsg4Htg5wg7KCV7J2Y6rCAIOuztOyeheuLiOuLpC48L2xpPgogICAgPGxpPjxiPlsrXTwvYj7rpbwg64iE66W066m0IOyggOyepSDsoIQg7ZaJ7J20IOy2lOqwgOuQmOqzoCwg7Ya17Iug7IKswrfsmqnrn4nsnYQg6rOg66W8IOyImCDsnojsirXri4jri6QuPC9saT4KICAgIDxsaT48Yj5b7KCA7J6lXTwvYj4g4oCUIOqwmeydgCDthrXsi6Dsgqwr7Jqp65+J7J20IOydtOuvuCDsnojsnLzrqbQo7IOB7YOcIOustOq0gCkg67mo6rCEIO2GoOyKpO2KuOuhnCDssKjri6jrkKnri4jri6QuIOyYiDog7IOIIO2WieyXkOyEnCBTSyArIDMyR0Ig7ISg7YOdIO2bhCDsoIDsnqUuIOyggOyepeyXkCDshLHqs7XtlZjrqbQg7IOIIO2WieydmCDthrXsi6DsgqzCt+yaqeufieydtCDsnqDquYHri4jri6QuPC9saT4KICAgIDxsaT48Yj5b7Leo7IaMXTwvYj4g4oCUIOyggOyepe2VmOyngCDslYrsnYAg7ZaJ6rO8IOuzgOqyvSDrgrTsmqnsnbQg66eI7KeA66eJIOyggOyepSDsg4Htg5zroZwg64+M7JWE6rCR64uI64ukLjwvbGk+CiAgICA8bGk+7Ji17IWYIOyCreygnCDrsoTtirzqs7wg64W47LacIOuylOychCDsubjsnYAg7JeG7Iq164uI64ukLiBDUk3Ct+2UjOueq+2PvCDrhbjstpzsnYAg7IOB7ZKIIOyCrOyaqSDsl6zrtoAgKyDsmLXshZgg7IOB7YOcIOyhsO2VqeycvOuhnCDsoJzslrTtlanri4jri6QuPC9saT4KICA8L3VsPgogIDxidXR0b24gY2xhc3M9ImJ0biBvdXQiIGlkPSJyZXNldEJ0biI+66qp7JeFIOy0iOq4sO2ZlDwvYnV0dG9uPgo8L2Rpdj4KCjxkaXYgY2xhc3M9InRvYXN0IiBpZD0idG9hc3QiPjxzcGFuIGNsYXNzPSJkb3QiIGlkPSJ0b2FzdERvdCI+ITwvc3Bhbj48c3BhbiBpZD0idG9hc3RNc2ciPjwvc3Bhbj48L2Rpdj4KCjxzY3JpcHQ+CiAgY29uc3QgQ0FSUklFUlMgPSBbJ1NLJywnS1QnLCdMRyddOwogIGNvbnN0IENBUFMgPSBbJzMyR0InLCc2NEdCJywnMTI4R0InLCcyNTZHQicsJzUxMkdCJ107CiAgY29uc3QgU1RBVFVTRVMgPSBbJ+2MkOunpOykkScsJ+2SiOygiCcsJ+uLqOyihScsJ+yIqOq5gCddOwogIGNvbnN0IElOSVRJQUwgPSBbCiAgICB7Y2FycmllcjonU0snLCBjYXA6JzMyR0InLCBtb2RlbDonQVQtTTE0MFMnLCBwcmljZTonMjM3LDYwMCcsIGNvbG9yczon7J2465SU6rOgIOu4lOuemSwg7Y6EIO2ZlOydtO2KuCcsIHN0YXR1czon7YyQ66ek7KSRJywgc2F2ZWQ6dHJ1ZX0sCiAgICB7Y2FycmllcjonTEcnLCBjYXA6JzMyR0InLCBtb2RlbDonQVQtTTE0MEwnLCBwcmljZTonMjM3LDYwMCcsIGNvbG9yczon7J2465SU6rOgIOu4lOuemSwg7Y6EIO2ZlOydtO2KuCcsIHN0YXR1czon7ZKI7KCIJywgc2F2ZWQ6dHJ1ZX0KICBdOwogIGxldCByb3dzID0gY2xvbmUoSU5JVElBTCk7CiAgbGV0IHNuYXBzaG90ID0gY2xvbmUoSU5JVElBTCk7CiAgbGV0IGVycklkeCA9IG5ldyBTZXQoKTsKCiAgZnVuY3Rpb24gY2xvbmUodil7IHJldHVybiBKU09OLnBhcnNlKEpTT04uc3RyaW5naWZ5KHYpKTsgfQogIGZ1bmN0aW9uIGVzYyhzKXsgcmV0dXJuIFN0cmluZyhzKS5yZXBsYWNlKC8mL2csJyZhbXA7JykucmVwbGFjZSgvPC9nLCcmbHQ7JykucmVwbGFjZSgvIi9nLCcmcXVvdDsnKTsgfQogIGZ1bmN0aW9uIG9wdHMobGlzdCwgY3VyLCBwbGFjZWhvbGRlcil7CiAgICByZXR1cm4gKHBsYWNlaG9sZGVyID8gYDxvcHRpb24gdmFsdWU9IiIgJHtjdXI9PT0nJz8nc2VsZWN0ZWQnOicnfSBkaXNhYmxlZD4ke3BsYWNlaG9sZGVyfTwvb3B0aW9uPmAgOiAnJykgKwogICAgICBsaXN0Lm1hcCh2ID0+IGA8b3B0aW9uICR7dj09PWN1cj8nc2VsZWN0ZWQnOicnfT4ke3Z9PC9vcHRpb24+YCkuam9pbignJyk7CiAgfQoKICBmdW5jdGlvbiByZW5kZXIoKXsKICAgIGNvbnN0IHRiID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Jvd3MnKTsKICAgIHRiLmlubmVySFRNTCA9IHJvd3MubWFwKChyLGkpID0+IHsKICAgICAgY29uc3QgZXJyID0gZXJySWR4LmhhcyhpKSA/ICcgZXJyJyA6ICcnOwogICAgICBjb25zdCBjYXJyaWVyID0gci5zYXZlZAogICAgICAgID8gYDxkaXYgY2xhc3M9ImlucCBybyI+JHtyLmNhcnJpZXJ9PC9kaXY+YAogICAgICAgIDogYDxzZWxlY3QgY2xhc3M9ImlucCR7ci5jYXJyaWVyPycnOicgZW1wdHknfSR7ZXJyfSIgZGF0YS1pPSIke2l9IiBkYXRhLWs9ImNhcnJpZXIiPiR7b3B0cyhDQVJSSUVSUywgci5jYXJyaWVyLCAn7ISg7YOdJyl9PC9zZWxlY3Q+YDsKICAgICAgY29uc3QgY2FwID0gci5zYXZlZAogICAgICAgID8gYDxkaXYgY2xhc3M9ImlucCBybyI+JHtyLmNhcH08L2Rpdj5gCiAgICAgICAgOiBgPHNlbGVjdCBjbGFzcz0iaW5wJHtyLmNhcD8nJzonIGVtcHR5J30ke2Vycn0iIGRhdGEtaT0iJHtpfSIgZGF0YS1rPSJjYXAiPiR7b3B0cyhDQVBTLCByLmNhcCwgJ+yEoO2DnScpfTwvc2VsZWN0PmA7CiAgICAgIGNvbnN0IHByaWNlID0gci5zYXZlZAogICAgICAgID8gYDxkaXYgY2xhc3M9InByaWNlIj48ZGl2IGNsYXNzPSJpbnAgcm8iPiR7ZXNjKHIucHJpY2UpfSDsm5A8L2Rpdj48YnV0dG9uIGNsYXNzPSJidG4gb3V0cCBsIiB0eXBlPSJidXR0b24iPuyImOyglTwvYnV0dG9uPjwvZGl2PmAKICAgICAgICA6IGA8ZGl2IGNsYXNzPSJwcmljZSI+PGlucHV0IGNsYXNzPSJpbnAiIGRhdGEtaT0iJHtpfSIgZGF0YS1rPSJwcmljZSIgcGxhY2Vob2xkZXI9IuybkCIgdmFsdWU9IiR7ZXNjKHIucHJpY2UpfSIgc3R5bGU9InRleHQtYWxpZ246cmlnaHQiPjwvZGl2PmA7CiAgICAgIHJldHVybiBgPHRyIGNsYXNzPSIke3Iuc2F2ZWQ/Jyc6J25ldyd9Ij4KICAgICAgICA8dGQ+JHtjYXJyaWVyfTwvdGQ+CiAgICAgICAgPHRkPiR7Y2FwfTwvdGQ+CiAgICAgICAgPHRkPjxpbnB1dCBjbGFzcz0iaW5wIiBkYXRhLWk9IiR7aX0iIGRhdGEtaz0ibW9kZWwiIHBsYWNlaG9sZGVyPSLrqqjrjbjrqoUg7J6F66ClIiB2YWx1ZT0iJHtlc2Moci5tb2RlbCl9Ij48L3RkPgogICAgICAgIDx0ZD4ke3ByaWNlfTwvdGQ+CiAgICAgICAgPHRkPjxpbnB1dCBjbGFzcz0iaW5wIiBkYXRhLWk9IiR7aX0iIGRhdGEtaz0iY29sb3JzIiBwbGFjZWhvbGRlcj0i7IOJ7IOBIOyEoO2DnSIgdmFsdWU9IiR7ZXNjKHIuY29sb3JzKX0iPjwvdGQ+CiAgICAgICAgPHRkPjxzZWxlY3QgY2xhc3M9ImlucCBzdCBzLSR7ci5zdGF0dXN9IiBkYXRhLWk9IiR7aX0iIGRhdGEtaz0ic3RhdHVzIj4ke29wdHMoU1RBVFVTRVMsIHIuc3RhdHVzKX08L3NlbGVjdD48L3RkPgogICAgICA8L3RyPmA7CiAgICB9KS5qb2luKCcnKTsKICB9CgogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdyb3dzJykuYWRkRXZlbnRMaXN0ZW5lcignaW5wdXQnLCBlID0+IHsKICAgIGNvbnN0IGVsID0gZS50YXJnZXQsIGkgPSBlbC5kYXRhc2V0LmksIGsgPSBlbC5kYXRhc2V0Lms7CiAgICBpZiAoaSA9PT0gdW5kZWZpbmVkKSByZXR1cm47CiAgICByb3dzW2ldW2tdID0gZWwudmFsdWU7CiAgICBpZiAoayA9PT0gJ2NhcnJpZXInIHx8IGsgPT09ICdjYXAnIHx8IGsgPT09ICdzdGF0dXMnKSB7IGVycklkeC5kZWxldGUoTnVtYmVyKGkpKTsgcmVuZGVyKCk7IH0KICB9KTsKCiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2FkZEJ0bicpLm9uY2xpY2sgPSAoKSA9PiB7CiAgICByb3dzLnB1c2goe2NhcnJpZXI6JycsIGNhcDonJywgbW9kZWw6JycsIHByaWNlOicnLCBjb2xvcnM6JycsIHN0YXR1czon7YyQ66ek7KSRJywgc2F2ZWQ6ZmFsc2V9KTsKICAgIHJlbmRlcigpOwogIH07CgogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzYXZlQnRuJykub25jbGljayA9ICgpID0+IHsKICAgIGVycklkeCA9IG5ldyBTZXQoKTsKICAgIGNvbnN0IHVuc2VsZWN0ZWQgPSByb3dzLm1hcCgocixpKT0+aSkuZmlsdGVyKGkgPT4gIXJvd3NbaV0uc2F2ZWQgJiYgKCFyb3dzW2ldLmNhcnJpZXIgfHwgIXJvd3NbaV0uY2FwKSk7CiAgICBpZiAodW5zZWxlY3RlZC5sZW5ndGgpeyB1bnNlbGVjdGVkLmZvckVhY2goaSA9PiBlcnJJZHguYWRkKGkpKTsgcmVuZGVyKCk7IHJldHVybiB0b2FzdCgn7Ya17Iug7IKs7JmAIOyaqeufieydhCDshKDtg53tlbQg7KO87IS47JqULicsIGZhbHNlKTsgfQogICAgY29uc3Qgc2VlbiA9IHt9OwogICAgcm93cy5mb3JFYWNoKChyLGkpID0+IHsgY29uc3Qga2V5ID0gci5jYXJyaWVyICsgJ3wnICsgci5jYXA7IChzZWVuW2tleV0gPSBzZWVuW2tleV0gfHwgW10pLnB1c2goaSk7IH0pOwogICAgbGV0IGR1cCA9IGZhbHNlOwogICAgT2JqZWN0LnZhbHVlcyhzZWVuKS5mb3JFYWNoKGxpc3QgPT4geyBpZiAobGlzdC5sZW5ndGggPiAxKXsgZHVwID0gdHJ1ZTsgbGlzdC5mb3JFYWNoKGkgPT4geyBpZiAoIXJvd3NbaV0uc2F2ZWQpIGVycklkeC5hZGQoaSk7IH0pOyB9IH0pOwogICAgaWYgKGR1cCl7IHJlbmRlcigpOyByZXR1cm4gdG9hc3QoJ+ydtOuvuCDrk7HroZ3rkJwg7Ya17Iug7IKswrfsmqnrn4nsnoXri4jri6QuIOq4sOyhtCDsmLXshZjsnZgg7IOB7YOc66W8IOuzgOqyve2VtCDso7zshLjsmpQuJywgZmFsc2UpOyB9CiAgICByb3dzLmZvckVhY2gociA9PiB7IHIuc2F2ZWQgPSB0cnVlOyBpZiAoIXIucHJpY2UpIHIucHJpY2UgPSAnMCc7IH0pOwogICAgc25hcHNob3QgPSBjbG9uZShyb3dzKTsKICAgIHJlbmRlcigpOwogICAgdG9hc3QoJ+yggOyepeuQmOyXiOyKteuLiOuLpC4nLCB0cnVlKTsKICB9OwoKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY2FuY2VsQnRuJykub25jbGljayA9ICgpID0+IHsgcm93cyA9IGNsb25lKHNuYXBzaG90KTsgZXJySWR4ID0gbmV3IFNldCgpOyByZW5kZXIoKTsgdG9hc3QoJ+yggOyepe2VmOyngCDslYrsnYAg67OA6rK9IOuCtOyaqeydhCDrkJjrj4zroLjsirXri4jri6QuJywgdHJ1ZSk7IH07CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Jlc2V0QnRuJykub25jbGljayA9ICgpID0+IHsgcm93cyA9IGNsb25lKElOSVRJQUwpOyBzbmFwc2hvdCA9IGNsb25lKElOSVRJQUwpOyBlcnJJZHggPSBuZXcgU2V0KCk7IHJlbmRlcigpOyB3aW5kb3cuc2Nyb2xsVG8oe3RvcDowLGJlaGF2aW9yOidzbW9vdGgnfSk7IH07CgogIGxldCB0bXI7CiAgZnVuY3Rpb24gdG9hc3QobXNnLCBvayl7CiAgICBjb25zdCB0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3RvYXN0Jyk7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndG9hc3RNc2cnKS50ZXh0Q29udGVudCA9IG1zZzsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd0b2FzdERvdCcpLnRleHRDb250ZW50ID0gb2sgPyAn4pyTJyA6ICchJzsKICAgIHQuY2xhc3NOYW1lID0gJ3RvYXN0IHNob3cgJyArIChvayA/ICdvaycgOiAnZXJyJyk7CiAgICBjbGVhclRpbWVvdXQodG1yKTsgdG1yID0gc2V0VGltZW91dCgoKSA9PiB0LmNsYXNzTmFtZSA9ICd0b2FzdCcsIDI2MDApOwogIH0KCiAgcmVuZGVyKCk7Cjwvc2NyaXB0Pgo8L2JvZHk+CjwvaHRtbD4K</script>
+<script>
+  (function(){
+    const b64 = document.getElementById('mockData').textContent.trim();
+    const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+    const html = new TextDecoder('utf-8').decode(bytes);
+    const frame = document.getElementById('mockFrame');
+    let loaded = false;
+    function fit(){ try{ frame.style.height = frame.contentDocument.documentElement.scrollHeight + 'px'; }catch(e){} }
+    frame.addEventListener('load', () => { try{ const st = frame.contentDocument.createElement('style'); st.textContent = '.screen{min-height:820px !important}'; frame.contentDocument.head.appendChild(st); }catch(e){} fit(); setTimeout(fit, 300); });
+    function show(name){
+      if (name !== 'spec' && name !== 'mockup') name = 'spec';
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.tab === name));
+      document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === 'pane-' + name));
+      if (name === 'mockup' && !loaded){ frame.srcdoc = html; loaded = true; }
+      if (name === 'mockup') setTimeout(fit, 50);
+      window.scrollTo(0, 0);
+    }
+    document.querySelectorAll('.tab').forEach(t => t.onclick = () => { history.replaceState(null, '', '#' + t.dataset.tab); show(t.dataset.tab); });
+    window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+    show(location.hash.slice(1));
+  })();
+</script>
+
+</body>
+</html>
