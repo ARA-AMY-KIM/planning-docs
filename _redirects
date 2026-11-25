@@ -4,3 +4,8 @@
 /crm-admin/internet-tags/*          /internet-product/tags/:splat           301
 /crm-admin/attributes/*             /internet-product/attributes/:splat     301
 /crm-admin/product-links/*          /internet-product/product-links/:splat  301
+
+# 2026-11-25 개별 화면기획서를 /specs/ 로 이동
+/crm-admin/companies/*         /specs/companies/:splat         301
+/crm-admin/upper-companies/*   /specs/upper-companies/:splat   301
+/crm-admin/mobile-products/*   /specs/mobile-products/:splat   301
