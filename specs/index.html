@@ -88,6 +88,18 @@
   .hub .name{font-size:19px; font-weight:700; color:var(--g900);}
   .hub .open{font-size:14px; color:var(--g400); white-space:nowrap; flex-shrink:0;}
   .hub .desc{font-size:14px; color:var(--g600); margin-top:6px;}
+  .hub .hrow2{align-items:center;}
+  .hub .right{display:flex; align-items:center; gap:8px; font-size:14px; color:var(--g500); white-space:nowrap; flex-shrink:0;}
+  .hub .sep{color:var(--g200);}
+  .hub .arrow{color:var(--g400); margin-left:6px;}
+  .hub .ticket{color:var(--primary); font-weight:600; cursor:pointer;}
+  .hub .ticket:hover{text-decoration:underline;}
+  /* 배포 완료 표시: 카드 <a>에 class="done" 추가 */
+  .hub .name{display:flex; align-items:center; gap:8px;}
+  .hub a.done .name::before{
+    content:''; flex-shrink:0; width:18px; height:18px; border-radius:50%; background:#1A9E5B
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.2l2.6 2.6L12 5.4' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;
+  }
 
   /* ===== Footer ===== */
   footer{margin-top:40px; padding-top:18px; border-top:1px solid var(--g100); font-size:13px; color:var(--g400); text-align:center;}
@@ -103,6 +115,7 @@
     .btn{flex:1; text-align:center;}
     .hrow{flex-direction:column; align-items:flex-start; gap:14px;}
     .hrow .btn{width:100%; text-align:center;}
+    .hub .hrow2{flex-direction:column; align-items:flex-start; gap:6px;}
   }
 </style>
 </head>
@@ -120,7 +133,9 @@
   <!-- ============================================================
        화면기획서 목록
        * 문서 추가: 아래 hub 카드 블록 하나를 복사해서
-         [문서명 / 링크]만 바꾸면 됩니다. 파일이 어느 폴더에 있든
+         [문서명 / 링크 / 티켓번호(텍스트+data-href) / 배포일]만 바꾸면 됩니다.
+         배포 완료 시 <a href="..." class="done"> 처럼 class="done"만 추가하면
+         작업명 왼쪽에 완료 체크 표시가 붙습니다. 파일이 어느 폴더에 있든
          href 경로만 맞으면 됩니다.
   ============================================================ -->
   <section>
@@ -130,22 +145,36 @@
       <a href="/specs/companies/">
         <div class="hrow2">
           <div class="name">전체 업체 등록 · 수정</div>
-          <div class="open">기획서 열기 &rarr;</div>
+          <div class="right">
+            <span class="ticket" data-href="https://ajnetworks.atlassian.net/browse/PNB-1954">PNB-1954</span>
+            <span class="sep">·</span>
+            <span class="deploy">11/26 배포</span>
+            <span class="arrow">&rarr;</span>
+          </div>
         </div>
-        <div class="desc">풀페이지 등록 · 수정 화면</div>
       </a>
 
       <a href="/specs/upper-companies/">
         <div class="hrow2">
           <div class="name">상부점 관리</div>
-          <div class="open">기획서 열기 &rarr;</div>
+          <div class="right">
+            <span class="ticket" data-href="https://ajnetworks.atlassian.net/browse/PNB-1973">PNB-1973</span>
+            <span class="sep">·</span>
+            <span class="deploy">12/3 배포</span>
+            <span class="arrow">&rarr;</span>
+          </div>
         </div>
       </a>
 
       <a href="/specs/mobile-products/">
         <div class="hrow2">
           <div class="name">모바일 상품 옵션 상태 관리</div>
-          <div class="open">기획서 열기 &rarr;</div>
+          <div class="right">
+            <span class="ticket" data-href="https://ajnetworks.atlassian.net/browse/PNB-1813">PNB-1813</span>
+            <span class="sep">·</span>
+            <span class="deploy">배포일 미정</span>
+            <span class="arrow">&rarr;</span>
+          </div>
         </div>
       </a>
 
@@ -159,5 +188,11 @@
   </footer>
 
 </div>
+<script>
+  // 카드 안 티켓 번호 클릭 시 Jira 새 탭으로 (카드 링크 이동은 막음)
+  document.querySelectorAll('.hub .ticket').forEach(function(el){
+    el.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();window.open(el.dataset.href,'_blank','noopener');});
+  });
+</script>
 </body>
 </html>
