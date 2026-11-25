@@ -86,6 +86,10 @@
   .hub a:hover{border-color:var(--primary);}
   .hub .hrow2{display:flex; align-items:baseline; justify-content:space-between; gap:14px;}
   .hub .name{font-size:19px; font-weight:700; color:var(--g900);}
+  .hub .badge{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.02em;
+    padding:3px 9px; border-radius:999px; background:var(--g50); color:var(--g500);
+    vertical-align:3px; margin-left:8px; white-space:nowrap;}
+  .hub .badge.done{background:#E6F6E6; color:#0A8208;}
   .hub .open{font-size:14px; color:var(--g400); white-space:nowrap; flex-shrink:0;}
   .hub .desc{font-size:14px; color:var(--g600); margin-top:6px;}
 
@@ -127,7 +131,7 @@
 
       <a href="/crm-admin/">
         <div class="hrow2">
-          <div class="name">CRM Admin 신규 구축</div>
+          <div class="name">CRM Admin 신규 구축 <span class="badge done">완료</span></div>
           <div class="open">문서 열기 &rarr;</div>
         </div>
         <div class="desc">역할·계정 정책, 어드민 메뉴별 화면 목업 &amp; 기능정의서</div>
@@ -135,10 +139,18 @@
 
       <a href="/internet-product/">
         <div class="hrow2">
-          <div class="name">인터넷 상품 구조 개선</div>
+          <div class="name">인터넷 상품 구조 개선 <span class="badge done">완료</span></div>
           <div class="open">문서 열기 &rarr;</div>
         </div>
-        <div class="desc">Phase 1 태그 구조 개선 &middot; 전체 일정(WBS)과 화면 시안</div>
+        <div class="desc">상품속성 &middot; 태그 &middot; 상품 조합 구조 개선 — 화면 목업, 기능정의서, 전체 일정(WBS)</div>
+      </a>
+
+      <a href="/specs/">
+        <div class="hrow2">
+          <div class="name">개별 화면기획서</div>
+          <div class="open">문서 열기 &rarr;</div>
+        </div>
+        <div class="desc">프로젝트 단위가 아닌 단건 개선 건의 화면기획서 모음</div>
       </a>
 
       <!-- ▲ 새 프로젝트는 이 줄 위에 카드 블록을 복사해 추가하세요 -->
